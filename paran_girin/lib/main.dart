@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:paran_girin/theme/app_theme.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -21,6 +23,8 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        
+        //fontFamily: 'Noto Sans',
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.
@@ -76,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        backgroundColor: AppTheme.colors.primary1,
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
