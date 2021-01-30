@@ -1,15 +1,16 @@
-/*
 import 'package:flutter/material.dart';
+import 'package:paran_girin/theme/app_theme.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
   final Widget title;
+  //String title;
 
   BaseAppBar({
     this.title,
   });
 
   @override
-  Size get PreferredSize => Size.fromHeight(#56.0);
+  Size get preferredSize => Size.fromHeight(56.0);
   
   @override
   Widget build(BuildContext context) {
@@ -18,12 +19,12 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
         ? IconButton(
           icon: Icon(
             Icons.arrow_back_ios, 
-            color: Colors.#base1,
+            color: AppTheme.colors.base1,
           ),
           onPressed: () {
             Navigator.of(context).pop();
           },
-          iconSize: #30.0,
+          iconSize: 30.0,
           )
         : null,
         backgroundColor: Colors.transparent,
@@ -32,4 +33,3 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
       );
   }
 }
-*/
