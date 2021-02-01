@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/layout/tab_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:paran_girin/login/baby_info.dart';
-import 'package:paran_girin/main.dart';
+import 'package:paran_girin/login/login_page.dart';
 
 class DefaultLayout extends StatefulWidget {
   @override
