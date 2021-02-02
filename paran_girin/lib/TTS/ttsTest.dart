@@ -9,47 +9,45 @@ void main() => runApp(MyApp());
 class MyApp extends StatefulWidget {
   MyApp({Key key}) : super(key: key);
 
-  var speaker = "nara";
-  var volume = "0";
-  var emotion = "0";
-  var speed = "0";
-  var pitch = "0";
-  var format = "mp3";
-  var text = "안녕 호빈 친구";
-
-
-  var client_id = "";
-  var client_secret = "";
-  var lang = "Kor";
-  var url = 'https://naveropenapi.apigw.ntruss.com/voice-premium/v1/tts' + lang;
-
-  void _createPost() async {
-    final response = await http.post(
-      url,
-      body: jsonEncode(
-        {
-          "speaker" : speaker,
-          "volume" : volume,
-          "emotion" : emotion,
-          "text" : text,
-          "speed" : speed,
-          "pitch" : pitch,
-          "format" : format
-        },
-      ),
-      headers: {"X-NCP-APIGW-API-KEY-ID": "NULL","X-NCP-APIGW-API-KEY-ID" : "NULL"},
-    );
-  }
-
   @override
   _MyAppState createState() => _MyAppState();
 
 }
 
+String speaker = "nara";
+String volume = "0";
+String emotion = "0";
+String speed = "0";
+String pitch = "0";
+String format = "mp3";
+String text = "안녕 호빈 친구";
+
+
+String client_id = "";
+String client_secret = "";
+String lang = "Kor";
+String url = 'https://naveropenapi.apigw.ntruss.com/voice-premium/v1/tts' + lang;
+
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-
+    void _createPost() async {
+      final response = await http.post(
+        url,
+        body: jsonEncode(
+          {
+            "speaker" : speaker,
+            "volume" : volume,
+            "emotion" : emotion,
+            "text" : text,
+            "speed" : speed,
+            "pitch" : pitch,
+            "format" : format
+          },
+        ),
+        headers: {"X-NCP-APIGW-API-KEY-ID": "NULL","X-NCP-APIGW-API-KEY-ID" : "NULL"},
+      );
+    }
   }
 
   @override
