@@ -28,16 +28,16 @@ class _BabyInfoState extends State<BabyInfo> {
 
 */
 
-class BabyInfoPage extends StatefulWidget {
-  const BabyInfoPage({Key key, this.title}) : super(key: key);
+class BabyInfo extends StatefulWidget {
+  const BabyInfo({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _BabyInfoPageState createState() => _BabyInfoPageState();
+  _BabyInfoState createState() => _BabyInfoState();
 }
 
-class _BabyInfoPageState extends State<BabyInfoPage> {
+class _BabyInfoState extends State<BabyInfo> {
   @override
   Widget build(BuildContext context) {
   //  printScreenInformation();
@@ -69,13 +69,13 @@ Widget _babyInfoTitle() {
       right: ScreenUtil().setWidth(16)
     ),
     child: Container(
-      width: ScreenUtil().setWidth(165),
+      width: ScreenUtil().setWidth(300),
       child: 
-        Text('파란기린이 아이에 대해 궁금해 해요.',
+        Text('파란기린이 \n아이에 대해 궁금해 해요.',
         style: TextStyle(
         // fontFamily: 'Noto Sans KR',
         fontWeight: FontWeight.w300,
-        fontSize: 24.0),
+        fontSize: ScreenUtil().setSp(24)),
       ),
     ),
   );
@@ -96,7 +96,7 @@ Widget _loginDescription() {
         style: TextStyle(
         // fontFamily: 'Noto Sans KR',
         // fontWeight: FontWeight.w300,
-        fontSize: 12.0),
+        fontSize: ScreenUtil().setSp(12)),
       ),
     ),
   );
@@ -107,7 +107,7 @@ Widget _babyNameInput() {
     decoration: InputDecoration(
       hintText: "아이 이름",
       hintStyle: TextStyle(
-        fontSize: 16.0
+        fontSize: ScreenUtil().setSp(16)
       )
     ),
     keyboardType: TextInputType.name,
@@ -120,7 +120,7 @@ Widget _babyAgeInput() {
     decoration: InputDecoration(
       hintText: "아이 나이",
       hintStyle: TextStyle(
-        fontSize: 16.0
+        fontSize: ScreenUtil().setSp(16)
       )
     ),
     keyboardType: TextInputType.number,
@@ -136,7 +136,7 @@ Widget _babyInfoButton() {
       color: AppTheme.colors.primary2,
       child: Text('가입 완료하기',
         style: TextStyle(
-          fontSize: 18.0
+          fontSize: ScreenUtil().setSp(18)
           ),
         ),
       textColor: Colors.white,
