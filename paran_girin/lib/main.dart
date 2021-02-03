@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:paran_girin/layout/default.dart';
 import 'package:paran_girin/login/baby_info.dart';
 import 'package:paran_girin/theme/app_theme.dart';
+import 'package:paran_girin/Video/videoTest.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:path/path.dart' show join;
+import 'package:path_provider/path_provider.dart';
 
 /*
 void main() {
@@ -82,7 +87,34 @@ class _MyHomePageState extends State<MyHomePage> {
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() => runApp(MyApp());
+
+List<CameraDescription> cameras;
+
+void main(){
+  runApp(MyApp());
+
+  Future<void> func() async {
+    // 디바이스에서 이용가능한 카메라 목록을 받아옵니다.
+    cameras = await availableCameras();
+
+    // 이용가능한 카메라 목록에서 특정 카메라를 얻습니다.
+    final firstCamera = cameras.first;
+    final frontCamera = cameras[1];
+
+  /*  runApp(
+      MaterialApp(
+        theme: ThemeData.dark(),
+        home: TakePictureScreen(
+          // 적절한 카메라를 TakePictureScreen 위젯에게 전달합니다.
+          camera: firstCamera,
+        ),
+      ),
+    );
+  */
+  }
+}
+
+
 
 class MyApp extends StatelessWidget {
   @override
@@ -158,8 +190,14 @@ class _LoginPageState extends State<LoginPage> {
               textColor: Colors.white,
               onPressed: (){
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => BabyInfo()));
-              } 
+
+                  /////////////////////////////////
+                  builder: (context) => TakePictureScreen(
+                    // 적절한 카메라를 TakePictureScreen 위젯에게 전달합니다.
+                    camera: cameras[1]
+                  )));
+                  ////////////////////////////////
+              } //,BabyInfo()
             //child: null
             )
           )
@@ -330,3 +368,4 @@ Widget _loginButton() {
     )
   );
 }
+
