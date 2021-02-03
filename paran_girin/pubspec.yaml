@@ -31,6 +31,9 @@ dependencies:
   flutter_screenutil: ^4.0.2+3
   http: ^0.12.0+1
   fluttertoast: ^7.1.6
+  lottie: ^0.7.0+1
+  rive: ^0.6.7
+  flare_flutter: ^2.0.6
 
 dev_dependencies:
   flutter_test:
@@ -51,9 +54,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - assets/images/a_dot_burr.jpeg
-  #   - assets/images/a_dot_ham.jpeg
+  assets:
+      - assets/avatars/data.json
+      - assets/avatars/lurking-cat.json
+      - assets/avatars/minion.flr
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

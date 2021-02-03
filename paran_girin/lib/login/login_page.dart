@@ -1,34 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:paran_girin/login/baby_info.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/*
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: Size(375, 812),
-      allowFontScaling: false,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter_ScreenUtil',
-        theme: ThemeData(
-          fontFamily: 'Noto Sans KR',
-        ),
-        // 여기 공부
-        initialRoute: '/',
-        routes: {
-          '/login': (context) => LoginPage(),
-
-        },
-        //
-        home: LoginPage(title: 'ParanGirin Login'),
-      ),
-    );
-  }
-}
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key, this.title}) : super(key: key);
@@ -65,7 +39,25 @@ class _LoginPageState extends State<LoginPage> {
             ]
           ),
           SizedBox(height: ScreenUtil().setHeight(75)),
-          _loginButton()
+          //_loginButton()
+          SizedBox(
+            width: ScreenUtil().setWidth(375),
+            height: ScreenUtil().setHeight(55),
+            child: RaisedButton(
+              color: AppTheme.colors.primary2,
+              child: Text('다음',
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(18)
+                  ),
+                ),
+              textColor: Colors.white,
+              onPressed: (){
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => BabyInfo()));
+              } 
+            //child: null
+            )
+          )
         ],
       ),
     );
@@ -81,13 +73,13 @@ Widget _loginTitle() {
       right: ScreenUtil().setWidth(16)
     ),
     child: Container(
-      width: ScreenUtil().setWidth(165),
+      width: ScreenUtil().setWidth(180),
       child: 
-        Text('파란기린은 당신을 환영해요!',
+        Text('파란기린은\n당신을 환영해요!',
         style: TextStyle(
         // fontFamily: 'Noto Sans KR',
         fontWeight: FontWeight.w300,
-        fontSize: 24.0),
+        fontSize: ScreenUtil().setSp(24)),
       ),
     ),
   );
@@ -108,7 +100,7 @@ Widget _loginDescription() {
         style: TextStyle(
         // fontFamily: 'Noto Sans KR',
         // fontWeight: FontWeight.w300,
-        fontSize: 16.0),
+        fontSize: ScreenUtil().setSp(16)),
       ),
     ),
   );
@@ -119,7 +111,7 @@ Widget _loginInput() {
     decoration: InputDecoration(
       hintText: "paran@girin.com",
       hintStyle: TextStyle(
-        fontSize: 16.0
+        fontSize: ScreenUtil().setSp(16)
       )
     ),
     keyboardType: TextInputType.emailAddress,
@@ -138,12 +130,22 @@ Widget _loginWarning() {
       width: ScreenUtil().setWidth(250),
       child: 
         Align(
-          child: Text('계속 진행하면 파란기린의 이용 약관과 개인정보 처리 방침에 동의한 것으로 간주됩니다.',
-            style: TextStyle(
-            // fontFamily: 'Noto Sans KR',
-            // fontWeight: FontWeight.w300,
-            color: AppTheme.colors.base2,
-            fontSize: 12.0),
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: new TextSpan(
+              style: TextStyle(
+              // fontFamily: 'Noto Sans KR',
+              // fontWeight: FontWeight.w300,
+              color: AppTheme.colors.base2,
+              fontSize: ScreenUtil().setSp(12)
+              ),
+              children: <TextSpan>[
+                new TextSpan(text: '계속 진행하면 파란기린의 '),
+                new TextSpan(text: '이용 약관과 개인정보 처리 방침에 동의', 
+                  style: new TextStyle(fontWeight: FontWeight.bold)),
+                new TextSpan(text: '한 것으로 간주됩니다.')
+              ],
+            )
           ),
         ),
     ),
@@ -159,7 +161,7 @@ Widget _loginSNSText() {
       right: ScreenUtil().setWidth(16),
     ),
     child: Container(
-      width: ScreenUtil().setWidth(165),
+      width: ScreenUtil().setWidth(180),
       child: 
         Align(
           alignment: Alignment.bottomRight,
@@ -167,7 +169,7 @@ Widget _loginSNSText() {
             style: TextStyle(
             // fontFamily: 'Noto Sans KR',
             fontWeight: FontWeight.w500,
-            fontSize: 14.0),
+            fontSize: ScreenUtil().setSp(14)),
           ),
         ),
     ),
@@ -212,13 +214,14 @@ Widget _loginButton() {
       color: AppTheme.colors.primary2,
       child: Text('다음',
         style: TextStyle(
-          fontSize: 18.0
+          fontSize: ScreenUtil().setSp(18)
           ),
         ),
       textColor: Colors.white,
-      onPressed: (){}, 
-    //child: null
+      onPressed: (){
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => BabyInfoPage()));
+      } 
     )
   );
 }
-*/

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
@@ -10,7 +11,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
   });
 
   @override
-  Size get preferredSize => Size.fromHeight(56.0);
+  Size get preferredSize => Size.fromHeight(ScreenUtil().setHeight(56));
   
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
           onPressed: () {
             Navigator.of(context).pop();
           },
-          iconSize: 30.0,
+          iconSize: ScreenUtil().radius(30),
           )
         : null,
         backgroundColor: Colors.transparent,
