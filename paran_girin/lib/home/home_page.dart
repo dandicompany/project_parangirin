@@ -46,10 +46,11 @@ class HomePageState extends State<HomePage> {
         builder: (context) {
           return Column(
             children: <Widget>[
+              _homeAvatarLottie(context),
               _homeAvatarRive(context, _isSpeaking),
               RaisedButton(onPressed: () => _startTimer()),
               Text('$_duration',),
-              _homeAvatarLottie(context),
+              
               // _homeAvatarRive(user, speak)
             ],
           );
@@ -66,12 +67,24 @@ Widget _homeAvatarLottie(context) {
       Container(
         width: double.infinity,
         height: ScreenUtil().setHeight(488),
+        child: Lottie.network(
+                'https://assets9.lottiefiles.com/packages/lf20_utsfwa3k.json')
+      ),
+      Container(
+        width: double.infinity,
+        height: ScreenUtil().setHeight(488),
         child: Lottie.asset('assets/avatars/data.json'),
       ),
       Container(
         width: double.infinity,
         height: ScreenUtil().setHeight(488),
         child: Lottie.asset('assets/avatars/lurking-cat.json'),
+      ),
+      Container(
+        width: double.infinity,
+        height: ScreenUtil().setHeight(488),
+        child: Lottie.network(
+                'https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json')
       ),
     ], 
   );
@@ -85,7 +98,7 @@ Widget _homeAvatarRive(context, var _isSpeaking){
     child: FlareActor(
       "assets/avatars/minion.flr",
       animation: _isSpeaking == true ? 'Dance':'Stand',
-      // 'Stand' , 'Dance' , 'Jump' , 'Wave'
+      // animation type: 'Stand' , 'Dance' , 'Jump' , 'Wave'
     )
   );
 }
