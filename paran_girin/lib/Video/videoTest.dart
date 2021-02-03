@@ -9,12 +9,16 @@ import 'package:path_provider/path_provider.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// Future<void> main() async {
+CameraDescription firstCamera;
+CameraDescription frontCamera;
+
+// Future<void> videoFunc() async {
 //   // 디바이스에서 이용가능한 카메라 목록을 받아옵니다.
+//   WidgetsFlutterBinding.ensureInitialized();
 //   final cameras = await availableCameras();
 //
 //   // 이용가능한 카메라 목록에서 특정 카메라를 얻습니다.
-//   final firstCamera = cameras.first;
+//   firstCamera = cameras.first;
 //   final frontCamera = cameras[1];
 //
 //   runApp(
@@ -22,7 +26,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 //       theme: ThemeData.dark(),
 //       home: TakePictureScreen(
 //         // 적절한 카메라를 TakePictureScreen 위젯에게 전달합니다.
-//         camera: firstCamera,
+//         camera: frontCamera,
 //       ),
 //     ),
 //   );
@@ -69,58 +73,67 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Take a picture')),
-      // 카메라 프리뷰를 보여주기 전에 컨트롤러 초기화를 기다려야 합니다. 컨트롤러 초기화가
-      // 완료될 때까지 FutureBuilder를 사용하여 로딩 스피너를 보여주세요.
-      body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            // Future가 완료되면, 프리뷰를 보여줍니다.
-            return CameraPreview(_controller);
-          } else {
-            // 그렇지 않다면, 진행 표시기를 보여줍니다.
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.camera_alt),
-        // onPressed 콜백을 제공합니다.
-        onPressed: () async {
-          // try / catch 블럭에서 사진을 촬영합니다. 만약 뭔가 잘못된다면 에러에
-          // 대응할 수 있습니다.
-          try {
-            // 카메라 초기화가 완료됐는지 확인합니다.
-            await _initializeControllerFuture;
+      if (!_controller.value.isInitialized) {
+        return Container();
+      }
+      return AspectRatio(
+          aspectRatio:
+          _controller.value.aspectRatio,
+          child: CameraPreview(_controller));
+    }
 
-            // path 패키지를 사용하여 이미지가 저장될 경로를 지정합니다.
-            final path = join(
-              // 본 예제에서는 임시 디렉토리에 이미지를 저장합니다. `path_provider`
-              // 플러그인을 사용하여 임시 디렉토리를 찾으세요.
-              (await getTemporaryDirectory()).path,
-              '${DateTime.now()}.png',
-            );
-
-            // 사진 촬영을 시도하고 저장되는 경로를 로그로 남깁니다.
-           /* await _controller.takePicture(path);*/
-
-            // 사진을 촬영하면, 새로운 화면으로 넘어갑니다.
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(imagePath: path),
-              ),
-            );
-          } catch (e) {
-            // 만약 에러가 발생하면, 콘솔에 에러 로그를 남깁니다.
-            print(e);
-          }
-        },
-      ),
-    );
-  }
+    // return Scaffold(
+    //   appBar: AppBar(title: Text('Take a picture')),
+    //   // 카메라 프리뷰를 보여주기 전에 컨트롤러 초기화를 기다려야 합니다. 컨트롤러 초기화가
+    //   // 완료될 때까지 FutureBuilder를 사용하여 로딩 스피너를 보여주세요.
+    //   body: FutureBuilder<void>(
+    //     future: _initializeControllerFuture,
+    //     builder: (context, snapshot) {
+    //       if (snapshot.connectionState == ConnectionState.done) {
+    //         // Future가 완료되면, 프리뷰를 보여줍니다.
+    //         return CameraPreview(_controller);
+    //       } else {
+    //         // 그렇지 않다면, 진행 표시기를 보여줍니다.
+    //         return Center(child: CircularProgressIndicator());
+    //       }
+    //     },
+    //   ),
+    //   floatingActionButton: FloatingActionButton(
+    //     child: Icon(Icons.camera_alt),
+    //     // onPressed 콜백을 제공합니다.
+    //     onPressed: () async {
+    //       // try / catch 블럭에서 사진을 촬영합니다. 만약 뭔가 잘못된다면 에러에
+    //       // 대응할 수 있습니다.
+    //       try {
+    //         // 카메라 초기화가 완료됐는지 확인합니다.
+    //         await _initializeControllerFuture;
+    //
+    //         // path 패키지를 사용하여 이미지가 저장될 경로를 지정합니다.
+    //         final path = join(
+    //           // 본 예제에서는 임시 디렉토리에 이미지를 저장합니다. `path_provider`
+    //           // 플러그인을 사용하여 임시 디렉토리를 찾으세요.
+    //           (await getTemporaryDirectory()).path,
+    //           '${DateTime.now()}.png',
+    //         );
+    //
+    //         // 사진 촬영을 시도하고 저장되는 경로를 로그로 남깁니다.
+    //        /* await _controller.takePicture(path);*/
+    //
+    //         // 사진을 촬영하면, 새로운 화면으로 넘어갑니다.
+    //         Navigator.push(
+    //           context,
+    //           MaterialPageRoute(
+    //             builder: (context) => DisplayPictureScreen(imagePath: path),
+    //           ),
+    //         );
+    //       } catch (e) {
+    //         // 만약 에러가 발생하면, 콘솔에 에러 로그를 남깁니다.
+    //         print(e);
+    //       }
+    //     },
+    //   ),
+    // );
+  //}
 }
 
 // 사용자가 촬영한 사진을 보여주는 위젯
