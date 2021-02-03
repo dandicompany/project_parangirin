@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         // 여기 공부
         initialRoute: '/',
         routes: {
-          '/': (context) => LoginPage(), // SplashPage()
+          '/': (context) => DefaultLayout(), // SplashPage()
           '/login': (context) => LoginPage(),
           '/home': (context) => DefaultLayout(),
         },
