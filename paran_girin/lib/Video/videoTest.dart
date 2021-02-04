@@ -88,15 +88,21 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
+
     if (!_controller.value.isInitialized) {
       return Container();
     }
     return AspectRatio(
-        aspectRatio:
-        _controller.value.aspectRatio,
-        child: CameraPreview(_controller));
+        aspectRatio:_controller.value.aspectRatio,
+        child: Transform(
+          alignment : Alignment.bottomRight,
+          transform : Matrix4.diagonal3Values(0.3, 0.3, 0.3), // (x,y,z)
+          child:CameraPreview(_controller),
+        )
+    );
   }
 
 }
@@ -118,3 +124,4 @@ class DisplayPictureScreen extends StatelessWidget {
     );
   }
 }
+
