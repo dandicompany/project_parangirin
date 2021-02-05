@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,10 @@ CameraDescription camera;
 CameraDescription firstCamera;
 CameraDescription frontCamera;
 
+
+
 Future<void> videoFunc() async {
   // 디바이스에서 이용가능한 카메라 목록을 받아옵니다.
-  print("case2");
   WidgetsFlutterBinding.ensureInitialized();
   final cameras = await availableCameras();
 
@@ -44,6 +46,22 @@ class InitializationState extends State<Initialization>{
   @override
   Widget build(BuildContext context) {
     videoFunc();
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: ScreenUtil().setHeight(66)),
+          //ss_babyInfoTitle(),
+          SizedBox(height: ScreenUtil().setHeight(10)),
+          //_loginDescription(),
+          SizedBox(height: ScreenUtil().setHeight(28)),
+          //_babyNameInput(),
+          SizedBox(height: ScreenUtil().setHeight(41)),
+          //_babyAgeInput(),
+          SizedBox(height: ScreenUtil().setHeight(75)),
+         // _babyInfoButton(),
+        ],
+      ),
+    );
   }
 }
 
@@ -74,7 +92,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       // 이용 가능한 카메라 목록에서 특정 카메라를 가져옵니다.
       widget.camera,
       // 적용할 해상도를 지정합니다.
-      ResolutionPreset.medium,
+      ResolutionPreset.ultraHigh,
     );
 
     // 다음으로 controller를 초기화합니다. 초기화 메서드는 Future를 반환합니다.
@@ -88,24 +106,64 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: Text('Take a Video')),
+        body: FutureBuilder<void>(
+            future: _initializeControllerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Transform(
+                  alignment: Alignment.bottomRight,
+                  transform: Matrix4.diagonal3Values(0.3, 0.3, 0), // (x,y,z)
+                  child: CameraPreview(_controller),
+                );
+              }
 
-    if (!_controller.value.isInitialized) {
-      return Container();
-    }
-    return AspectRatio(
-        aspectRatio:_controller.value.aspectRatio,
-        child: Transform(
-          alignment : Alignment.bottomRight,
-          transform : Matrix4.diagonal3Values(0.3, 0.3, 0.3), // (x,y,z)
-          child:CameraPreview(_controller),
-        )
+              else{
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+        ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.camera_alt),
+
+        // Transfrom(
+        //   alignment: Alignment.bottomCenter,
+        // )
+        onPressed: () async{
+        try{
+        await _initializeControllerFuture;
+        final path = join(
+        (await getTemporaryDirectory()).path,
+        '${DateTime.now()}.png'
+        );
+        await _controller.takePicture();
+        Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayPictureScreen(imagePath: path),
+        ),
+        );
+        }
+        catch(e){
+        print(e);
+        }
+        },
+        ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-
 }
+
+
+//   return AspectRatio(
+//       aspectRatio: 1,
+//       child: Transform(
+//         alignment: Alignment.bottomRight,
+//         transform: Matrix4.diagonal3Values(0.3, 0.3, 0),
+//         // (x,y,z)
+//         child: CameraPreview(_controller),
+//       )
+//   );
 
 
 // 사용자가 촬영한 사진을 보여주는 위젯
@@ -122,6 +180,8 @@ class DisplayPictureScreen extends StatelessWidget {
       // 경로로 `Image.file`을 생성하세요.
       body: Image.file(File(imagePath)),
     );
+
   }
+
 }
 
