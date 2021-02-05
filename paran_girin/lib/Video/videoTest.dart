@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 
@@ -68,6 +69,7 @@ class InitializationState extends State<Initialization>{
 
 // 사용자가 주어진 카메라를 사용하여 사진을 찍을 수 있는 화면
 class TakePictureScreen extends StatefulWidget {
+
   final CameraDescription camera;
 
   const TakePictureScreen({
@@ -128,31 +130,67 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.camera_alt),
-
-        // Transfrom(
-        //   alignment: Alignment.bottomCenter,
-        // )
         onPressed: () async{
-        try{
-        await _initializeControllerFuture;
-        final path = join(
-        (await getTemporaryDirectory()).path,
-        '${DateTime.now()}.png'
-        );
-        await _controller.takePicture();
-        Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayPictureScreen(imagePath: path),
-        ),
-        );
-        }
-        catch(e){
-        print(e);
-        }
+
+          // if (_controller.value.isInitialized){
+          // return null;
+          // }
+          //
+          // if(_controller.value.isRecordingVideo){
+          // return null;
+          // }
+
+          final Directory appDirectory = await getApplicationDocumentsDirectory();
+          final String videoDirectory = '${appDirectory.path}/Videos';
+          await Directory(videoDirectory).create(recursive : true);
+          final String currentTime = DateTime.now().microsecondsSinceEpoch.toString();
+          final String filePath = '$videoDirectory/${currentTime}.mp4';
+
+          print("filePath : " + filePath);
+
+
+          try{
+          await _controller.startVideoRecording();//.then(path : filePath);
+          String videoPath = filePath;
+          } on CameraException catch(e) {
+          // showCameraException(e);
+          // return null;
+          }
+
+          return filePath;
+
+
+
+    //   try{
+        // await _initializeControllerFuture;
+        // final path = join(
+        // (await getTemporaryDirectory()).path,
+        // '${DateTime.now()}.mp4'
+        // );
+        // // await _controller.takePicture();
+        // // Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayPictureScreen(imagePath: path),
+        // //
+        // //
+        // //   ),
+        // // );
+        //   !(num%2 == 0) ? {
+        //     num = num+1,
+        //     _controller.prepareForVideoRecording(),
+        //     _controller.startVideoRecording(),
+        //   }
+        //   :_controller.stopVideoRecording();
+        // }
+        // catch(e){
+        // print(e);
+        // }
         },
-        ),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
+
 }
+
 
 
 //   return AspectRatio(
@@ -165,23 +203,22 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 //       )
 //   );
 
-
-// 사용자가 촬영한 사진을 보여주는 위젯
-class DisplayPictureScreen extends StatelessWidget {
-  final String imagePath;
-
-  const DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Display the Picture')),
-      // 이미지는 디바이스에 파일로 저장됩니다. 이미지를 보여주기 위해 주어진
-      // 경로로 `Image.file`을 생성하세요.
-      body: Image.file(File(imagePath)),
-    );
-
-  }
-
-}
+//
+// // 사용자가 촬영한 사진을 보여주는 위젯
+// class DisplayPictureScreen extends StatelessWidget {
+//   final String imagePath;
+//
+//   const DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text('Display the Picture')),
+//       // 이미지는 디바이스에 파일로 저장됩니다. 이미지를 보여주기 위해 주어진
+//       // 경로로 `Image.file`을 생성하세요.
+//       body: Image.file(File(imagePath)),
+//     );
+//
+//   }
+// }
 
