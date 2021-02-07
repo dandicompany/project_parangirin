@@ -1,20 +1,21 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:path/path.dart' show join;
+import 'package:gallery_saver/gallery_saver.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 
 CameraDescription camera;
 CameraDescription firstCamera;
 CameraDescription frontCamera;
-
+String filePath;
 
 
 Future<void> videoFunc() async {
@@ -47,22 +48,6 @@ class InitializationState extends State<Initialization>{
   @override
   Widget build(BuildContext context) {
     videoFunc();
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          SizedBox(height: ScreenUtil().setHeight(66)),
-          //ss_babyInfoTitle(),
-          SizedBox(height: ScreenUtil().setHeight(10)),
-          //_loginDescription(),
-          SizedBox(height: ScreenUtil().setHeight(28)),
-          //_babyNameInput(),
-          SizedBox(height: ScreenUtil().setHeight(41)),
-          //_babyAgeInput(),
-          SizedBox(height: ScreenUtil().setHeight(75)),
-         // _babyInfoButton(),
-        ],
-      ),
-    );
   }
 }
 
@@ -85,6 +70,8 @@ class TakePictureScreen extends StatefulWidget {
 class TakePictureScreenState extends State<TakePictureScreen> {
   CameraController _controller;
   Future<void> _initializeControllerFuture;
+
+  bool isDisabled = false;
 
   @override
   void initState() {
@@ -116,10 +103,62 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             future: _initializeControllerFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return Transform(
-                  alignment: Alignment.bottomRight,
-                  transform: Matrix4.diagonal3Values(0.3, 0.3, 0), // (x,y,z)
-                  child: CameraPreview(_controller),
+                return Stack(
+                  children: [
+                    Transform(
+                      alignment: Alignment.bottomRight,
+                      transform: Matrix4.diagonal3Values(0.3, 0.3, 0), // (x,y,z)
+                      child: CameraPreview(_controller),
+                    ),
+                    Align(
+                      alignment : Alignment.bottomCenter,
+                      child:!_controller.value.isRecordingVideo
+                      ? RawMaterialButton(onPressed: () async {
+                        try{
+                          await _initializeControllerFuture;
+
+                          filePath = join((await getApplicationDocumentsDirectory()).path,
+                              '${DateTime.now()}.mp4'
+
+                          );
+                          print(filePath);
+                            setState(() {
+                              _controller.startVideoRecording(filePath);//filePath);
+                              isDisabled = true;
+                              isDisabled = !isDisabled;
+                            });
+                            }catch(e){
+                            print(e);
+                        }
+
+                      },
+                        child : Icon(Icons.camera, size : 50.0, color: Colors.yellow,),
+                        padding: EdgeInsets.all(10.0),
+                        shape:  CircleBorder(),
+                      )
+                    :null,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child : _controller.value.isRecordingVideo?
+                          RawMaterialButton(onPressed: (){
+                            setState((){
+                              if(_controller.value.isRecordingVideo){
+                                _controller.stopVideoRecording();
+                                isDisabled = false;
+                                isDisabled = !isDisabled;
+                                GallerySaver.saveVideo(filePath);
+                              }
+                            });
+                          }
+                          ,
+                            child:Icon(Icons.stop,size : 50.0, color: Colors.red,),
+                            padding : EdgeInsets.all(10.0),
+                            shape: CircleBorder(),
+                          ):null
+                        ,
+                    )
+                  ]
                 );
               }
 
@@ -128,68 +167,79 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               }
             },
         ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.camera_alt),
-        onPressed: () async{
-
-          // if (_controller.value.isInitialized){
-          // return null;
-          // }
-          //
-          // if(_controller.value.isRecordingVideo){
-          // return null;
-          // }
-
-          final Directory appDirectory = await getApplicationDocumentsDirectory();
-          final String videoDirectory = '${appDirectory.path}/Videos';
-          await Directory(videoDirectory).create(recursive : true);
-          final String currentTime = DateTime.now().microsecondsSinceEpoch.toString();
-          final String filePath = '$videoDirectory/${currentTime}.mp4';
-
-          print("filePath : " + filePath);
-
-
-          try{
-          await _controller.startVideoRecording();//.then(path : filePath);
-          String videoPath = filePath;
-          } on CameraException catch(e) {
-          // showCameraException(e);
-          // return null;
-          }
-
-          return filePath;
-
-
-
-    //   try{
-        // await _initializeControllerFuture;
-        // final path = join(
-        // (await getTemporaryDirectory()).path,
-        // '${DateTime.now()}.mp4'
-        // );
-        // // await _controller.takePicture();
-        // // Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayPictureScreen(imagePath: path),
-        // //
-        // //
-        // //   ),
-        // // );
-        //   !(num%2 == 0) ? {
-        //     num = num+1,
-        //     _controller.prepareForVideoRecording(),
-        //     _controller.startVideoRecording(),
-        //   }
-        //   :_controller.stopVideoRecording();
-        // }
-        // catch(e){
-        // print(e);
-        // }
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.camera_alt),
+      //   onPressed: () {
+      //     // _startVideoRecording();
+      //   },
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
 }
+
+
+// Future<String> _startVideoRecording() async {
+//
+//   if (!_controller.value.isInitialized) {
+//
+//     return null;
+//
+//   }
+//
+//   // Do nothing if a recording is on progress
+//
+//   if (_controller.value.isRecordingVideo) {
+//
+//     return null;
+//
+//   }
+//   //get storage path
+//
+//   final Directory appDirectory = await getApplicationDocumentsDirectory();
+//
+//   final String videoDirectory = '${appDirectory.path}/Videos';
+//
+//   await Directory(videoDirectory).create(recursive: true);
+//
+//   final String currentTime = DateTime.now().millisecondsSinceEpoch.toString();
+//
+//   final String filePath = '$videoDirectory/${currentTime}.mp4';
+//
+//
+//
+//   try {
+//
+//     await _controller.startVideoRecording(filePath);
+//     GallerySaver.saveVideo(filePath);
+//
+//   } on CameraException catch (e) {
+//
+//
+//     return null;
+//
+//   }
+//
+//
+//   //gives you path of where the video was stored
+//   return filePath;
+//
+// }
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+
 
 
 
