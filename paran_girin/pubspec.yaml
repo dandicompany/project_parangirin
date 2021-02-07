@@ -38,6 +38,7 @@ dependencies:
   lottie: ^0.7.0+1
   rive: ^0.6.7
   flare_flutter: ^2.0.6
+  shared_preferences: ^0.5.12+4
 
 dev_dependencies:
   flutter_test:

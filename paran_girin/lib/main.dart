@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:paran_girin/layout/default.dart';
 import 'package:paran_girin/login/login_page.dart';
+import 'package:paran_girin/question/question_page.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/Video/videoTest.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
-
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'onboarding/onboarding_screen.dart';
 
-void main(){
+int initScreen;
+
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  initScreen = await preferences.getInt('initScreen');
+  await preferences.setInt('initScreen', 1);
   runApp(MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   @override
@@ -29,11 +35,11 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Noto Sans KR',
         ),
         // 여기 공부
-        initialRoute: '/',
+        initialRoute: initScreen == 0 || initScreen == null ? 'onboard' : 'home',
         routes: {
-          '/': (context) => DefaultLayout(), // SplashPage()
-          '/login': (context) => LoginPage(),
-          '/home': (context) => DefaultLayout(),
+          'onboard': (context) => QuestionPage(),//OnboardingScreen(), 
+          'login': (context) => LoginPage(),
+          'home': (context) => DefaultLayout(), // QuestionPage(),
         },
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paran_girin/layout/default.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -53,7 +54,7 @@ class _BabyInfoState extends State<BabyInfo> {
           SizedBox(height: ScreenUtil().setHeight(41)),
           _babyAgeInput(),
           SizedBox(height: ScreenUtil().setHeight(75)),
-          _babyInfoButton(),
+          _babyInfoButton(context),
         ],
       ),
     );
@@ -128,7 +129,7 @@ Widget _babyAgeInput() {
   );
 }
 
-Widget _babyInfoButton() {
+Widget _babyInfoButton(context) {
   return SizedBox(
     width: ScreenUtil().setWidth(375),
     height: ScreenUtil().setHeight(55),
@@ -140,7 +141,10 @@ Widget _babyInfoButton() {
           ),
         ),
       textColor: Colors.white,
-      onPressed: (){}, 
+      onPressed: (){
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => DefaultLayout()));
+        }  
     //child: null
     )
   );
