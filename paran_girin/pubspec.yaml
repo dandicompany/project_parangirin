@@ -29,8 +29,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   flutter_screenutil: ^4.0.2+3
-  http: ^0.12.0+1
+  http: ^0.12.2
   fluttertoast: ^7.1.6
+  camera: ^0.5.8+5
+  path_provider: ^1.6.14
+  path: ^1.7.0
+  gallery_saver: ^2.0.1
   lottie: ^0.7.0+1
   rive: ^0.6.7
   flare_flutter: ^2.0.6
