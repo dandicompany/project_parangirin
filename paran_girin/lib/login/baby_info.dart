@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paran_girin/layout/default.dart';
+import 'package:paran_girin/layout/default_layout.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -76,7 +76,8 @@ Widget _babyInfoTitle() {
         style: TextStyle(
         // fontFamily: 'Noto Sans KR',
         fontWeight: FontWeight.w300,
-        fontSize: ScreenUtil().setSp(24)),
+        fontSize: ScreenUtil().setSp(24)
+        ),
       ),
     ),
   );
