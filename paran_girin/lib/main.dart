@@ -8,9 +8,10 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'onboarding/onboarding_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 int initScreen;
 
@@ -37,11 +38,12 @@ class MyApp extends StatelessWidget {
         // 여기 공부
         initialRoute: initScreen == 0 || initScreen == null ? 'onboard' : 'home',
         routes: {
-          'onboard': (context) => QuestionPage(),//OnboardingScreen(), 
-          'login': (context) => LoginPage(),
-          'home': (context) => DefaultLayout(), // QuestionPage(),
+          'onboard': (context) => QuestionPage(),//OnboardingScreen(),
+           'login': (context) => LoginPage(),
+         'home': (context) => DefaultLayout(), // QuestionPage(),
         },
       ),
     );
   }
 }
+

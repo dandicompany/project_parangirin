@@ -7,6 +7,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/ParanGirin_logo" />
+            android:src="@mipmap/parangirin_logo" />
     </item>
 </layer-list>
