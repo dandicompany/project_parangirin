@@ -19,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   //  printScreenInformation();
   return Scaffold(
       body: Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           SizedBox(height: ScreenUtil().setHeight(66)),
           _loginTitle(),
@@ -30,18 +31,25 @@ class _LoginPageState extends State<LoginPage> {
           _loginWarning(),
           SizedBox(height: ScreenUtil().setHeight(75)),
           _loginSNSText(),
-          SizedBox(height: ScreenUtil().setHeight(75)),
+          SizedBox(height: ScreenUtil().setHeight(15)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget> [
+            children: <Widget> [ 
               _facebookButton(),
               _googleButton(),
             ]
           ),
-          SizedBox(height: ScreenUtil().setHeight(75)),
+          SizedBox(height: ScreenUtil().setHeight(150)),
           //_loginButton()
-          SizedBox(
-            width: ScreenUtil().setWidth(375),
+          // Container(
+          //   width: double.infinity,
+          //   height: ScreenUtil().setHeight(55),
+          Positioned(
+            height: ScreenUtil().setHeight(55),
+            left: 0.0,
+            right: 0.0,
+            child: Container(
+            width: double.infinity,
             height: ScreenUtil().setHeight(55),
             child: RaisedButton(
               color: AppTheme.colors.primary2,
@@ -55,9 +63,9 @@ class _LoginPageState extends State<LoginPage> {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => BabyInfo()));
               } 
-            //child: null
+            )//child: null
             )
-          )
+          ),
         ],
       ),
     );
@@ -107,15 +115,18 @@ Widget _loginDescription() {
 }
 
 Widget _loginInput() {
-  return TextField(
-    decoration: InputDecoration(
-      hintText: "paran@girin.com",
-      hintStyle: TextStyle(
-        fontSize: ScreenUtil().setSp(16)
-      )
-    ),
-    keyboardType: TextInputType.emailAddress,
-   // obscureText: true, // for password
+  return Container(
+    width: ScreenUtil().setWidth(343),
+    child: TextField(
+      decoration: InputDecoration(
+        hintText: "paran@girin.com",
+        hintStyle: TextStyle(
+          fontSize: ScreenUtil().setSp(16)
+        )
+      ),
+      keyboardType: TextInputType.emailAddress,
+    // obscureText: true, // for password
+    )
   );
 }
 
@@ -141,7 +152,7 @@ Widget _loginWarning() {
               ),
               children: <TextSpan>[
                 new TextSpan(text: '계속 진행하면 파란기린의 '),
-                new TextSpan(text: '이용 약관과 개인정보 처리 방침에 동의', 
+                new TextSpan(text: '이용 약관과\n개인정보 처리 방침에 동의', 
                   style: new TextStyle(fontWeight: FontWeight.bold)),
                 new TextSpan(text: '한 것으로 간주됩니다.')
               ],

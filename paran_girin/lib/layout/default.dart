@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:paran_girin/gallery/gallery_page.dart';
 import 'package:paran_girin/home/home_page.dart';
 import 'package:paran_girin/layout/tab_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:paran_girin/login/baby_info.dart';
 import 'package:paran_girin/login/login_page.dart';
 import 'package:paran_girin/my/mypage.dart';
+import 'package:paran_girin/question/question_page.dart';
 
 class DefaultLayout extends StatefulWidget {
   @override
@@ -70,9 +72,9 @@ class _DefaultLayoutState extends State<DefaultLayout>
             case 0:
               return HomePage(); // HomePage();
             case 1:
-              return BabyInfo(); // QuestionPage();
+              return QuestionPage(); // QuestionPage();
             case 2:
-              return LoginPage(); // ArchivePage();
+              return GalleryPage(); // ArchivePage();
             case 3:
               return MyPage(); // MyPage();
           }
