@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paran_girin/layout/default.dart';
+import 'package:paran_girin/layout/default_layout.dart';
 import 'package:paran_girin/login/login_page.dart';
 import 'package:paran_girin/question/question_page.dart';
 import 'package:paran_girin/theme/app_theme.dart';
@@ -36,11 +36,11 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Noto Sans KR',
         ),
         // 여기 공부
-        initialRoute: initScreen == 0 || initScreen == null ? 'onboard' : 'home',
+        initialRoute: initScreen == 0 || initScreen == null ? '/onboard' : '/home',
         routes: {
-          'onboard': (context) => QuestionPage(),//OnboardingScreen(),
-           'login': (context) => LoginPage(),
-         'home': (context) => DefaultLayout(), // QuestionPage(),
+          '/onboard': (context) => OnboardingScreen(), // DefaultLayout(),
+          '/login': (context) => LoginPage(),
+          '/home': (context) => OnboardingScreen(), // DefaultLayout(), // QuestionPage(),
         },
       ),
     );
