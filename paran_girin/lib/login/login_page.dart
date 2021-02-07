@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paran_girin/login/baby_info.dart';
+import 'package:paran_girin/login/login_body.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,56 +19,73 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
   //  printScreenInformation();
   return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          SizedBox(height: ScreenUtil().setHeight(66)),
-          _loginTitle(),
-          SizedBox(height: ScreenUtil().setHeight(111)),
-          _loginDescription(),
-          SizedBox(height: ScreenUtil().setHeight(28)),
-          _loginInput(),
-          SizedBox(height: ScreenUtil().setHeight(41)),
-          _loginWarning(),
-          SizedBox(height: ScreenUtil().setHeight(75)),
-          _loginSNSText(),
-          SizedBox(height: ScreenUtil().setHeight(15)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget> [ 
-              _facebookButton(),
-              _googleButton(),
-            ]
-          ),
-          SizedBox(height: ScreenUtil().setHeight(150)),
-          //_loginButton()
-          // Container(
-          //   width: double.infinity,
-          //   height: ScreenUtil().setHeight(55),
-          Positioned(
-            height: ScreenUtil().setHeight(55),
-            left: 0.0,
-            right: 0.0,
-            child: Container(
-            width: double.infinity,
-            height: ScreenUtil().setHeight(55),
-            child: RaisedButton(
-              color: AppTheme.colors.primary2,
-              child: Text('다음',
-                style: TextStyle(
-                  fontSize: ScreenUtil().setSp(18)
-                  ),
-                ),
-              textColor: Colors.white,
-              onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => BabyInfo()));
-              } 
-            )//child: null
-            )
-          ),
-        ],
+      // body: Body(),
+      body: LoginBody(
+        title: "파란기린은\n당신을 환영해요!",
+        description: "",
+        loginInfo: "로그인 혹은 회원가입을 위해\n이메일을 입력해 주세요",
+        isEmail: true,
       ),
+    );
+  }
+}
+
+class Body extends StatelessWidget {
+  const Body({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        SizedBox(height: ScreenUtil().setHeight(66)),
+        _loginTitle(),
+        SizedBox(height: ScreenUtil().setHeight(111)),
+        _loginDescription(),
+        SizedBox(height: ScreenUtil().setHeight(28)),
+        _loginInput(),
+        SizedBox(height: ScreenUtil().setHeight(41)),
+        _loginWarning(),
+        SizedBox(height: ScreenUtil().setHeight(75)),
+        _loginSNSText(),
+        SizedBox(height: ScreenUtil().setHeight(15)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget> [ 
+            _facebookButton(),
+            _googleButton(),
+          ]
+        ),
+        SizedBox(height: ScreenUtil().setHeight(150)),
+        //_loginButton()
+        // Container(
+        //   width: double.infinity,
+        //   height: ScreenUtil().setHeight(55),
+        Positioned(
+          height: ScreenUtil().setHeight(55),
+          left: 0.0,
+          right: 0.0,
+          child: Container(
+          width: double.infinity,
+          height: ScreenUtil().setHeight(55),
+          child: RaisedButton(
+            color: AppTheme.colors.primary2,
+            child: Text('다음',
+              style: TextStyle(
+                fontSize: ScreenUtil().setSp(18)
+                ),
+              ),
+            textColor: Colors.white,
+            onPressed: (){
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => BabyInfo()));
+            } 
+          )//child: null
+          )
+        ),
+      ],
     );
   }
 }
