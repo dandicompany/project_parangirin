@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/layout/default_botton.dart';
 import 'package:paran_girin/login/login_page.dart';
 import 'package:paran_girin/onboarding/onboard_content.dart';
@@ -72,10 +73,11 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                     text: "바로 시작하기",
                     press: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => LoginPage()));
+                        builder: (context) => Initialization()));
                     },
                   ),
                   Spacer(flex: 1,),
+                  //LoginPage()
                 ],
             ),
           )
