@@ -4,8 +4,6 @@ import 'package:paran_girin/gallery/gallery_page.dart';
 import 'package:paran_girin/home/home_page.dart';
 import 'package:paran_girin/layout/tab_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:paran_girin/login/baby_info.dart';
-import 'package:paran_girin/login/login_page.dart';
 import 'package:paran_girin/my/mypage.dart';
 import 'package:paran_girin/question/question_page.dart';
 
