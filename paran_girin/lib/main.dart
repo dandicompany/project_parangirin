@@ -30,13 +30,13 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: Size(375, 812),
       allowFontScaling: false,
-      builder: () => MaterialApp(
+      // builder: () => MaterialApp(    // for hobin
+      child: MaterialApp(               // for jiyun
         debugShowCheckedModeBanner: false,
         title: 'Paran Girin',
         theme: ThemeData(
           fontFamily: 'Noto Sans KR',
         ),
-        // 여기 공부
         initialRoute: initScreen == 0 || initScreen == null ? '/onboard' : '/home',
         routes: {
           '/onboard': (context) => OnboardingScreen(), // DefaultLayout(),
