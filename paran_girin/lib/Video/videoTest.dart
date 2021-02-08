@@ -10,7 +10,6 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 
 CameraDescription camera;
 CameraDescription firstCamera;

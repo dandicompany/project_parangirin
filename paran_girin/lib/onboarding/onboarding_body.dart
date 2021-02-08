@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/Video/videoTest.dart';
-import 'package:paran_girin/home/home_page.dart';
 import 'package:paran_girin/layout/default_botton.dart';
-import 'package:paran_girin/layout/default_layout.dart';
 import 'package:paran_girin/login/login_page.dart';
 import 'package:paran_girin/onboarding/onboard_content.dart';
 import 'package:paran_girin/theme/app_theme.dart';
