@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:paran_girin/layout/default_botton.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
 class LoginBody extends StatelessWidget {
@@ -12,13 +11,11 @@ class LoginBody extends StatelessWidget {
     this.loginInfo, 
     this.isEmail, 
     this.textPress, 
-    this.buttonPress, 
   }) : super(key: key); 
 
   final String title, description, actionText, loginInfo;
   final bool isEmail;
   final GestureTapCallback textPress;
-  final VoidCallback buttonPress;
 
   @override
   Widget build(BuildContext context) {
@@ -88,10 +85,6 @@ class LoginBody extends StatelessWidget {
               width: double.infinity,
               height: ScreenUtil().setHeight(100),
             ),
-            DefaultButton(
-              text: "다음",
-              press: buttonPress,
-            )
           ],
         ),
       ),
