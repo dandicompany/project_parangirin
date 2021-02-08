@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:paran_girin/layout/default_botton.dart';
 import 'package:paran_girin/login/baby_info.dart';
 import 'package:paran_girin/login/login_body.dart';
+import 'package:paran_girin/login/login_page2.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,11 +22,40 @@ class _LoginPageState extends State<LoginPage> {
   //  printScreenInformation();
   return Scaffold(
       // body: Body(),
-      body: LoginBody(
-        title: "파란기린은\n당신을 환영해요!",
-        description: "",
-        loginInfo: "로그인 혹은 회원가입을 위해\n이메일을 입력해 주세요",
-        isEmail: true,
+      body: Column(
+        children: [
+          LoginBody(
+            title: "파란기린은\n당신을 환영해요!",
+            description: "",
+            actionText: "",
+            loginInfo: "로그인 혹은 회원가입을 위해\n이메일을 입력해 주세요",
+            isEmail: true,
+            textPress: () {},
+          ),
+          _loginSNSText(),
+          SizedBox(height: ScreenUtil().setHeight(15)),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget> [ 
+                _facebookButton(),
+                _googleButton(),
+              ]
+            ),
+          ),
+          SizedBox(height: ScreenUtil().setHeight(60)),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
+            child: DefaultButton(
+              text: "다음",
+              press: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => LoginPage2()));
+              },
+            ),
+          )
+        ],
       ),
     );
   }

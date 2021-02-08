@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:paran_girin/layout/default_botton.dart';
-import 'package:paran_girin/login/login_page2.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
 class LoginBody extends StatelessWidget {
@@ -9,12 +7,15 @@ class LoginBody extends StatelessWidget {
     Key key, 
     this.title, 
     this.description, 
+    this.actionText, 
     this.loginInfo, 
     this.isEmail, 
+    this.textPress, 
   }) : super(key: key); 
 
-  final String title, description, loginInfo;
+  final String title, description, actionText, loginInfo;
   final bool isEmail;
+  final GestureTapCallback textPress;
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +41,28 @@ class LoginBody extends StatelessWidget {
               width: double.infinity,
               height: ScreenUtil().setHeight(3),
             ),
-            Text(
-              description,
-              style: TextStyle(
-                // fontFamily: 'Noto Sans KR',
-                // fontWeight: FontWeight.w300,
-                fontSize: ScreenUtil().setSp(12)
-              ),
+            Row(
+              children: [
+                Text(
+                  description,
+                  style: TextStyle(
+                    // fontFamily: 'Noto Sans KR',
+                    // fontWeight: FontWeight.w300,
+                    fontSize: ScreenUtil().setSp(12)
+                  ),
+                ),
+                GestureDetector(
+                  onTap: textPress,
+                  child: Text(
+                    actionText,
+                    style: TextStyle(
+                      // fontFamily: 'Noto Sans KR',
+                      fontWeight: FontWeight.w700,
+                      fontSize: ScreenUtil().setSp(12)
+                    ),
+                  )
+                )
+              ],
             ),
             SizedBox(
               width: double.infinity,
@@ -69,13 +85,6 @@ class LoginBody extends StatelessWidget {
               width: double.infinity,
               height: ScreenUtil().setHeight(100),
             ),
-            DefaultButton(
-              text: "다음",
-              press: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => LoginPage2()));
-              },
-            )
           ],
         ),
       ),
