@@ -2,6 +2,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:paran_girin/home/home_body.dart';
 import 'package:paran_girin/models/user.dart';
 import 'dart:async';
 
@@ -42,20 +43,21 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Builder(
-        builder: (context) {
-          return Column(
-            children: <Widget>[
-              _homeAvatarLottie(context),
-              _homeAvatarRive(context, _isSpeaking),
-              RaisedButton(onPressed: () => _startTimer()),
-              Text('$_duration',),
+      body: HomeBody(),
+      // body: Builder(
+      //   builder: (context) {
+      //     return Column(
+      //       children: <Widget>[
+      //         _homeAvatarLottie(context),
+      //         _homeAvatarRive(context, _isSpeaking),
+      //         RaisedButton(onPressed: () => _startTimer()),
+      //         Text('$_duration',),
               
-              // _homeAvatarRive(user, speak)
-            ],
-          );
-        },
-      ),
+      //         // _homeAvatarRive(user, speak)
+      //       ],
+      //     );
+      //   },
+      // ),
     );
   }
 }
