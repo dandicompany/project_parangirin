@@ -5,6 +5,7 @@ import 'package:paran_girin/layout/default_botton.dart';
 import 'package:paran_girin/login/login_page.dart';
 import 'package:paran_girin/onboarding/onboard_content.dart';
 import 'package:paran_girin/theme/app_theme.dart';
+import 'package:paran_girin/TTS/ttsTest.dart';
 
 class OnboardingBody extends StatefulWidget {
   @override
@@ -74,7 +75,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                   press: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       // builder: (context) => Initialization()));
-                        builder: (context) => Initialization()));
+                        builder: (context) => textToSpeech()));
                   },
                   //LoginPage()
                 ),
