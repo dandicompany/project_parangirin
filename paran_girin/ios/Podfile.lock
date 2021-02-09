@@ -1,4 +1,6 @@
 PODS:
+  - audioplayers (0.0.1):
+    - Flutter
   - camera (0.0.1):
     - Flutter
   - Flutter (1.0.0)
@@ -14,6 +16,7 @@ PODS:
   - Toast (4.0.0)
 
 DEPENDENCIES:
+  - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
   - camera (from `.symlinks/plugins/camera/ios`)
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
@@ -26,6 +29,8 @@ SPEC REPOS:
     - Toast
 
 EXTERNAL SOURCES:
+  audioplayers:
+    :path: ".symlinks/plugins/audioplayers/ios"
   camera:
     :path: ".symlinks/plugins/camera/ios"
   Flutter:
@@ -40,6 +45,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences/ios"
 
 SPEC CHECKSUMS:
+  audioplayers: 455322b54050b30ea4b1af7cd9e9d105f74efa8c
   camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
