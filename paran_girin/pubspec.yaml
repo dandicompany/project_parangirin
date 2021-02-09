@@ -39,7 +39,7 @@ dependencies:
   flare_flutter: ^2.0.6
   shared_preferences: ^0.5.12+4
   flutter_svg: ^0.19.1
-
+  audioplayers:
 
 dev_dependencies:
   flutter_test:
