@@ -39,17 +39,24 @@ class _DefaultLayoutState extends State<DefaultLayout>
         return true;
       },
       child: Container(
-        color: Colors.white,
-        child: SafeArea(
-          top: false,
-          child: Stack(
+        // color: Colors.white,
+        // child: SafeArea(
+        //   top: false,
+        //   child: Stack(
+        //     alignment: Alignment.bottomCenter,
+        //     children: <Widget>[
+        //       _buildPageView(context),
+        //       _buildBottomTabs(context)
+        //     ],
+        //   ),
+        // ),
+        child: Stack(
             alignment: Alignment.bottomCenter,
             children: <Widget>[
               _buildPageView(context),
               _buildBottomTabs(context)
             ],
           ),
-        ),
       ), 
     );
   }

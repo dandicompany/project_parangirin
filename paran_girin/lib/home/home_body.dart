@@ -6,8 +6,11 @@ import 'package:paran_girin/theme/app_theme.dart';
 class HomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      padding: EdgeInsets.only(bottom: 150),
+      child: Container(
+        width: double.infinity,
+        color: AppTheme.colors.background,
         child: Column(
           children: <Widget>[
             Column(

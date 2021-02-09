@@ -18,9 +18,7 @@ class LoginPage2 extends StatefulWidget {
 class _LoginPage2State extends State<LoginPage2> {
   @override
   Widget build(BuildContext context) {
-  //  printScreenInformation();
   return Scaffold(
-      // body: Body(),
       body: Column(
         children: [
           LoginBody(

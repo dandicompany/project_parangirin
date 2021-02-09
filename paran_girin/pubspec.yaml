@@ -38,7 +38,8 @@ dependencies:
   rive: ^0.6.7
   flare_flutter: ^2.0.6
   shared_preferences: ^0.5.12+4
-  audioplayers:
+  flutter_svg: ^0.19.1
+
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,7 @@ flutter:
       - assets/avatars/lurking-cat.json
       - assets/avatars/minion.flr
       - assets/avatars/
+      - assets/icons/
       - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
