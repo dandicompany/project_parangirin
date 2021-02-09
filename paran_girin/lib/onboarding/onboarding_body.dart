@@ -74,8 +74,9 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                     press: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         // builder: (context) => Initialization()));
-                        builder: (context) => LoginPage()));
+                        builder: (context) => Initialization()));
                     },
+                    //LoginPage()
                   ),
                   Spacer(flex: 1,),
                   //LoginPage()
