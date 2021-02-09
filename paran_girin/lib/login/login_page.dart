@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:paran_girin/layout/default_botton.dart';
-import 'package:paran_girin/login/baby_info.dart';
 import 'package:paran_girin/login/login_body.dart';
 import 'package:paran_girin/login/login_page2.dart';
 import 'package:paran_girin/theme/app_theme.dart';
@@ -61,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
+/*
 class Body extends StatelessWidget {
   const Body({
     Key key,
@@ -212,6 +212,27 @@ Widget _loginWarning() {
   );
 }
 
+Widget _loginButton() {
+  return SizedBox(
+    width: ScreenUtil().setWidth(375),
+    height: ScreenUtil().setHeight(55),
+    child: RaisedButton(
+      color: AppTheme.colors.primary2,
+      child: Text('다음',
+        style: TextStyle(
+          fontSize: ScreenUtil().setSp(18)
+          ),
+        ),
+      textColor: Colors.white,
+      onPressed: (){
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => BabyInfoPage()));
+      } 
+    )
+  );
+}
+*/
+
 Widget _loginSNSText() {
   return Container(
     alignment: Alignment.topLeft,
@@ -266,22 +287,3 @@ Widget _googleButton() {
   );
 }
 
-Widget _loginButton() {
-  return SizedBox(
-    width: ScreenUtil().setWidth(375),
-    height: ScreenUtil().setHeight(55),
-    child: RaisedButton(
-      color: AppTheme.colors.primary2,
-      child: Text('다음',
-        style: TextStyle(
-          fontSize: ScreenUtil().setSp(18)
-          ),
-        ),
-      textColor: Colors.white,
-      onPressed: (){
-        // Navigator.of(context).push(MaterialPageRoute(
-        //   builder: (context) => BabyInfoPage()));
-      } 
-    )
-  );
-}

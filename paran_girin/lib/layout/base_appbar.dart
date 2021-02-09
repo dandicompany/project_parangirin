@@ -3,8 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
-  final Widget title;
-  //String title;
+  final String title;
 
   BaseAppBar({
     this.title,
@@ -25,12 +24,18 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
           onPressed: () {
             Navigator.of(context).pop();
           },
-          iconSize: ScreenUtil().radius(30),
+          iconSize: ScreenUtil().radius(20),
           )
         : null,
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        title: title,
+        title: Text(
+          title,
+          style: TextStyle(
+            color: AppTheme.colors.base1,
+            fontSize: ScreenUtil().setSp(16)
+          ),
+        ),
       );
   }
 }

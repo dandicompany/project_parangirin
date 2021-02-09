@@ -11,6 +11,7 @@ class AppColors {
   final base2 = const Color.fromRGBO(118, 118, 118, 1);
   final base3 = const Color.fromRGBO(163, 163, 163, 1);
   final caution = const Color.fromRGBO(255, 83, 83, 1);
+  final background = const Color.fromRGBO(246, 247, 249, 1);
 
   const AppColors();
 }
