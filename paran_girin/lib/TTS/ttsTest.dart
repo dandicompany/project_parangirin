@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:paran_girin/theme/colors.dart';
 import 'package:http/http.dart' as http;
@@ -52,10 +54,9 @@ class textToSpeechState extends State<textToSpeech> {
     print(response);
     print("body : " + response.body);
 
-    int result = await player.playBytes(response.body);
-    //asset에 있는거 접근할 때, const AudioPath = "click1.mp3"
+    Uint8List byteData = response.bodyBytes; // Load audio as a byte array here.
+    int result = (await player.playBytes(byteData)) as int;
 
-   // player.play(response.body);
   }
 
   @override
