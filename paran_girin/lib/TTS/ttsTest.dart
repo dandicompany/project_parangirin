@@ -51,6 +51,8 @@ class textToSpeechState extends State<textToSpeech> {
     AudioCache player = new AudioCache();
     print(response);
     print("body : " + response.body);
+
+    int result = await player.playBytes(response.body);
     //asset에 있는거 접근할 때, const AudioPath = "click1.mp3"
 
    // player.play(response.body);
