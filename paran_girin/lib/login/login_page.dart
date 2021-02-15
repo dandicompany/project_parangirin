@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paran_girin/layout/default_botton.dart';
+import 'package:paran_girin/login/email_check.dart';
 import 'package:paran_girin/login/login_body.dart';
 import 'package:paran_girin/login/login_page2.dart';
 import 'package:paran_girin/theme/app_theme.dart';
@@ -18,9 +19,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-  //  printScreenInformation();
   return Scaffold(
-      // body: Body(),
       body: Column(
         children: [
           LoginBody(
@@ -48,6 +47,14 @@ class _LoginPageState extends State<LoginPage> {
             margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
             child: DefaultButton(
               text: "다음",
+              // for New user
+              // press: () {
+              //   Navigator.of(context).push(MaterialPageRoute(
+              //           builder: (context) => EmailCheck()));
+              // },
+
+              // for existing user (if account is already existent)
+
               press: () {
                 Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => LoginPage2()));
