@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/my/profile_menu.dart';
 import 'package:paran_girin/my/profile_pic.dart';
+import 'package:paran_girin/myPageDetail/childrenInfo.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
 class MyPage extends StatefulWidget {
@@ -44,7 +45,10 @@ class _MyPageState extends State<MyPage> {
               SizedBox(height: ScreenUtil().setHeight(41)),
               ProfileMenu(
                 text: "자녀 관리",
-                press: () {}
+                press: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => childrenInfo()));
+                }
               ),
               ProfileMenu(
                 text: "알림 설정",
