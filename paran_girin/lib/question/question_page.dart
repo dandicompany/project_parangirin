@@ -22,7 +22,7 @@ class _QuestionPageState extends State<QuestionPage> {
             Container(
               width: double.infinity,
               height: ScreenUtil().setHeight(750),
-              color: Colors.black,
+              color: Colors.red,
             ),
             Container(
               width: double.infinity,

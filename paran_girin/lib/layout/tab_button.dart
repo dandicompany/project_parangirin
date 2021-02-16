@@ -34,20 +34,20 @@ class TabButton extends StatelessWidget {
         */
         child: Container(
           width: double.infinity / 4,
-          height: ScreenUtil().setHeight(66),
+          height: ScreenUtil().setHeight(84),
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border(
               top: BorderSide(
-                width: 1.5,
-                color: bActive ? AppTheme.colors.primary1 : Colors.black, 
-                ), // 원래는 primary1이 아닌 primary임
+                width: 2,
+                color: bActive ? AppTheme.colors.primary2 : Color.fromRGBO(170, 170, 170, 1),
+                ), 
               ),
           ),
           child: Icon(
             icon,
             size: ScreenUtil().radius(iconSize),
-            color: bActive ? AppTheme.colors.primary1 : Colors.black, // 원래는 primary1이 아닌 primary임
+            color: bActive ? Color.fromRGBO(7, 78, 232, 1) : Colors.black, 
           ),
         )
       ),
