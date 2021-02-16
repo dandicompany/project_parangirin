@@ -8,13 +8,13 @@ import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/TTS/ttsTest.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-void permission() async {
-
+// void permission() async {
   //Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.camera]);
   //print('per1 : $permissions');
 
 
-}
+
+// }
 
 
 class OnboardingBody extends StatefulWidget {
@@ -45,7 +45,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
 
   @override
   Widget build(BuildContext context) {
-    permission();
+    // permission();
     return Container(
       padding: EdgeInsets.only(
         top: ScreenUtil().setHeight(100),

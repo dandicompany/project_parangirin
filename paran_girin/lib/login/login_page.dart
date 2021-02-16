@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paran_girin/layout/default_botton.dart';
+import 'package:paran_girin/login/email_check.dart';
 import 'package:paran_girin/login/login_body.dart';
 import 'package:paran_girin/login/login_page2.dart';
 import 'package:paran_girin/theme/app_theme.dart';
@@ -18,9 +19,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-  //  printScreenInformation();
   return Scaffold(
-      // body: Body(),
       body: Column(
         children: [
           LoginBody(
@@ -48,6 +47,14 @@ class _LoginPageState extends State<LoginPage> {
             margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
             child: DefaultButton(
               text: "다음",
+              // for New user
+              // press: () {
+              //   Navigator.of(context).push(MaterialPageRoute(
+              //           builder: (context) => EmailCheck()));
+              // },
+
+              // for existing user (if account is already existent)
+
               press: () {
                 Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => LoginPage2()));
@@ -59,179 +66,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-/*
-class Body extends StatelessWidget {
-  const Body({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        SizedBox(height: ScreenUtil().setHeight(66)),
-        _loginTitle(),
-        SizedBox(height: ScreenUtil().setHeight(111)),
-        _loginDescription(),
-        SizedBox(height: ScreenUtil().setHeight(28)),
-        _loginInput(),
-        SizedBox(height: ScreenUtil().setHeight(41)),
-        _loginWarning(),
-        SizedBox(height: ScreenUtil().setHeight(75)),
-        _loginSNSText(),
-        SizedBox(height: ScreenUtil().setHeight(15)),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget> [ 
-            _facebookButton(),
-            _googleButton(),
-          ]
-        ),
-        SizedBox(height: ScreenUtil().setHeight(150)),
-        //_loginButton()
-        // Container(
-        //   width: double.infinity,
-        //   height: ScreenUtil().setHeight(55),
-        Positioned(
-          height: ScreenUtil().setHeight(55),
-          left: 0.0,
-          right: 0.0,
-          child: Container(
-          width: double.infinity,
-          height: ScreenUtil().setHeight(55),
-          child: RaisedButton(
-            color: AppTheme.colors.primary2,
-            child: Text('다음',
-              style: TextStyle(
-                fontSize: ScreenUtil().setSp(18)
-                ),
-              ),
-            textColor: Colors.white,
-            onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => BabyInfo()));
-            } 
-          )//child: null
-          )
-        ),
-      ],
-    );
-  }
-}
-  
-Widget _loginTitle() {
-  return Container(
-    alignment: Alignment.topLeft,
-    height: ScreenUtil().setHeight(70),
-    padding: EdgeInsets.only(
-      left: ScreenUtil().setWidth(16),
-      right: ScreenUtil().setWidth(16)
-    ),
-    child: Container(
-      width: ScreenUtil().setWidth(180),
-      child: 
-        Text('파란기린은\n당신을 환영해요!',
-        style: TextStyle(
-        // fontFamily: 'Noto Sans KR',
-        fontWeight: FontWeight.w300,
-        fontSize: ScreenUtil().setSp(24)),
-      ),
-    ),
-  );
-}
-
-Widget _loginDescription() {
-  return Container(
-    alignment: Alignment.topLeft,
-    height: ScreenUtil().setHeight(46),
-    padding: EdgeInsets.only(
-      left: ScreenUtil().setWidth(16),
-      right: ScreenUtil().setWidth(16)
-    ),
-    child: Container(
-      width: ScreenUtil().setWidth(188),
-      child: 
-        Text('로그인 혹은 회원가입을 위해 이메일을 입력해 주세요',
-        style: TextStyle(
-        // fontFamily: 'Noto Sans KR',
-        // fontWeight: FontWeight.w300,
-        fontSize: ScreenUtil().setSp(16)),
-      ),
-    ),
-  );
-}
-
-Widget _loginInput() {
-  return Container(
-    width: ScreenUtil().setWidth(343),
-    child: TextField(
-      decoration: InputDecoration(
-        hintText: "paran@girin.com",
-        hintStyle: TextStyle(
-          fontSize: ScreenUtil().setSp(16)
-        )
-      ),
-      keyboardType: TextInputType.emailAddress,
-    // obscureText: true, // for password
-    )
-  );
-}
-
-Widget _loginWarning() {
-  return Container(
-    height: ScreenUtil().setHeight(34),
-    padding: EdgeInsets.only(
-      left: ScreenUtil().setWidth(16),
-      right: ScreenUtil().setWidth(16)
-    ),
-    child: Container(
-      width: ScreenUtil().setWidth(250),
-      child: 
-        Align(
-          child: RichText(
-            textAlign: TextAlign.center,
-            text: new TextSpan(
-              style: TextStyle(
-              // fontFamily: 'Noto Sans KR',
-              // fontWeight: FontWeight.w300,
-              color: AppTheme.colors.base2,
-              fontSize: ScreenUtil().setSp(12)
-              ),
-              children: <TextSpan>[
-                new TextSpan(text: '계속 진행하면 파란기린의 '),
-                new TextSpan(text: '이용 약관과\n개인정보 처리 방침에 동의', 
-                  style: new TextStyle(fontWeight: FontWeight.bold)),
-                new TextSpan(text: '한 것으로 간주됩니다.')
-              ],
-            )
-          ),
-        ),
-    ),
-  );
-}
-
-Widget _loginButton() {
-  return SizedBox(
-    width: ScreenUtil().setWidth(375),
-    height: ScreenUtil().setHeight(55),
-    child: RaisedButton(
-      color: AppTheme.colors.primary2,
-      child: Text('다음',
-        style: TextStyle(
-          fontSize: ScreenUtil().setSp(18)
-          ),
-        ),
-      textColor: Colors.white,
-      onPressed: (){
-        // Navigator.of(context).push(MaterialPageRoute(
-        //   builder: (context) => BabyInfoPage()));
-      } 
-    )
-  );
-}
-*/
 
 Widget _loginSNSText() {
   return Container(
