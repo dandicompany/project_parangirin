@@ -28,6 +28,7 @@ class childrenInfoLayout extends StatelessWidget {
             Image.asset(image,height: 47, width: 41,),
             SizedBox(width: ScreenUtil().setWidth(20)),
             Text(text, style: TextStyle(fontSize: ScreenUtil().setSp(26)),),
+            SizedBox(width: ScreenUtil().setWidth(5),),
             Text(text2,style: TextStyle(fontSize: ScreenUtil().setSp(18)),),
           ],
         ),

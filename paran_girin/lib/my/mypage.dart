@@ -4,6 +4,7 @@ import 'package:paran_girin/my/profile_menu.dart';
 import 'package:paran_girin/my/profile_pic.dart';
 import 'package:paran_girin/myPageDetail/childrenInfo.dart';
 import 'package:paran_girin/theme/app_theme.dart';
+import 'package:paran_girin/myPageDetail/pushAlarm.dart';
 
 class MyPage extends StatefulWidget {
   @override
@@ -52,7 +53,10 @@ class _MyPageState extends State<MyPage> {
               ),
               ProfileMenu(
                 text: "알림 설정",
-                press: () {}
+                press: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => pushAlarm()));
+                }
               ),
               SizedBox(height: ScreenUtil().setHeight(16)),
               ProfileMenu(

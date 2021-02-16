@@ -27,7 +27,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
           iconSize: ScreenUtil().radius(20),
           )
         : null,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0.0,
         title: Text(
           title,
