@@ -9,11 +9,13 @@ import 'package:paran_girin/TTS/ttsTest.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // void permission() async {
+  //Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.camera]);
+  //print('per1 : $permissions');
 
-//   Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.camera]);
-//   print('per1 : $permissions');
+
 
 // }
+
 
 class OnboardingBody extends StatefulWidget {
   @override
@@ -84,7 +86,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                   press: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       // builder: (context) => Initialization()));
-                        // builder: (context) => textToSpeech()));
+                      // builder: (context) => textToSpeech()));
                         builder: (context) => LoginPage()));
                   },
                   //LoginPage()
@@ -112,4 +114,3 @@ class _OnboardingBodyState extends State<OnboardingBody> {
   }
 
 }
-  

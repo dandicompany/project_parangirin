@@ -16,7 +16,7 @@ String speaker = "ndain";
 String volume = "0";
 String emotion = "0";
 String speed = "0";
-String pitch = "0";
+String pitch = "1";
 String format = "mp3";
 String text = "안녕 호빈 친구";
 

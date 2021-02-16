@@ -167,13 +167,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               }
             },
         ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.camera_alt),
-      //   onPressed: () {
-      //     // _startVideoRecording();
-      //   },
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 

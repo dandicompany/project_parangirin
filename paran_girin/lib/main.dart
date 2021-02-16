@@ -41,9 +41,9 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: initScreen == 0 || initScreen == null ? '/onboard' : '/home',
         routes: {
-          '/onboard': (context) => OnboardingScreen(), // DefaultLayout(),
+          '/onboard': (context) => DefaultLayout(), // ,
           '/login': (context) => LoginPage(),
-          '/home': (context) => OnboardingScreen(), // DefaultLayout(), // QuestionPage(),
+          '/home': (context) => DefaultLayout(), // , // QuestionPage(),
         },
       ),
     );
