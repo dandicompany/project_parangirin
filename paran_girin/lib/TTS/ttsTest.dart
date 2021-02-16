@@ -18,7 +18,7 @@ String emotion = "0";
 String speed = "0";
 String pitch = "1";
 String format = "mp3";
-String text = "안녕 호빈 친구";
+String text2 ="안녕 호빈 친구";
 
 
 String client_id = "oipjydjt49";
@@ -28,12 +28,21 @@ String url = 'https://naveropenapi.apigw.ntruss.com/tts-premium/v1/tts';
 
 class textToSpeech extends StatefulWidget {
 
+  const textToSpeech({
+    Key key,
+    this.text,
+  }) : super(key: key);
+
+  final String text;
+
   @override
   textToSpeechState createState() => textToSpeechState();
-
+  
 }
 
 class textToSpeechState extends State<textToSpeech> {
+  get text => null;
+
   void _createPost() async {
     final response = await http.post(
       url,
