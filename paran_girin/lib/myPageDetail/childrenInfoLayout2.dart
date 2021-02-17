@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class childrenInfoLayout extends StatelessWidget {
-  const childrenInfoLayout({
+class childrenInfoLayout2 extends StatelessWidget {
+  const childrenInfoLayout2({
     Key key,
     this.image,
     this.text,
@@ -29,7 +29,7 @@ class childrenInfoLayout extends StatelessWidget {
             Image.asset(image,height: 47, width: 41,),
             SizedBox(width: ScreenUtil().setWidth(16)),
             Container(
-              width: 102,
+              width: 114,
               height: 22,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -38,7 +38,7 @@ class childrenInfoLayout extends StatelessWidget {
                   Text(text2,style: TextStyle(fontSize: ScreenUtil().setSp(12),fontFamily: 'Noto Sans KR',),),
                 ],
               )
-            ),
+            )
 
           ],
         ),

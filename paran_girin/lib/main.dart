@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       designSize: Size(375, 812),
       allowFontScaling: false,
       // builder: () => MaterialApp(    // for hobin
-      child: MaterialApp(               // for jiyun
+      builder: () =>  MaterialApp(               // for jiyun
         debugShowCheckedModeBanner: false,
         title: 'Paran Girin',
         theme: ThemeData(
