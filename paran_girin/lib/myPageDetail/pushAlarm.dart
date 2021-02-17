@@ -59,7 +59,7 @@ class _pushAlarmState extends State<pushAlarm> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("이벤트 및 혜택 알림",style: TextStyle(color: Colors.black, fontSize: 14,fontFamily: 'Noto Sans KR',), textAlign: TextAlign.left, ),
+                      Text("이벤트 및 혜택 알림",style: TextStyle(color: Colors.black, fontSize: 14,fontFamily: 'Noto Sans KR',fontWeight: FontWeight.w500 , ), textAlign: TextAlign.left, ),
                       Switch(
                         value: isSwitched,
                         onChanged: (value) {
