@@ -5,6 +5,7 @@ import 'package:paran_girin/layout/base_appbar.dart';
 import 'package:paran_girin/models/avatar.dart';
 import 'package:paran_girin/my/profile_menu.dart';
 import 'package:paran_girin/myPageDetail/childrenInfoLayout.dart';
+import 'package:paran_girin/myPageDetail/childrenInfoLayout2.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/login/baby_info_add.dart';
 
@@ -34,16 +35,22 @@ class _ChildInfoState extends State<childrenInfo> {
           ),
           child : Column(
             children: [
-              BaseAppBar(title : "자녀관리",),
+              BaseAppBar(title : "자녀 관리",),
               SizedBox(height: ScreenUtil().setHeight(30)),
               childrenInfoLayout(
                 image: "assets/images/onboard_1.png",
                 text: "샐리",
                 text2 : chosen,
                 press: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => childrenInfo()));
                 },
               ),
+              SizedBox(height: ScreenUtil().setHeight(8)),
+              childrenInfoLayout2(
+                image : "assets/images/onboard_1.png",
+                text: "유진",
+                text2 : notchosen,
+                press:(){},
+              )
             ],
           ),
         ),
@@ -80,10 +87,14 @@ class _CustomBorder extends ShapeBorder {
 
   @override
   Path getOuterPath(Rect rect, { TextDirection textDirection }) {
+    print(rect.left);
+    print(rect.top);
+    print(rect.right);
     return Path()
-      ..moveTo(rect.left-ScreenUtil.defaultSize.width/2+80, rect.top)
-      ..lineTo(rect.right+ScreenUtil.defaultSize.width/2-80 ,0 )
-      ..lineTo(rect.right+ScreenUtil.defaultSize.width/2-80, 64)
+      //..moveTo(rect.left-ScreenUtil.defaultSize.width/2+80, rect.top)
+      ..moveTo(rect.left, rect.top)
+      ..lineTo(rect.right + 115 ,0 )
+      ..lineTo(rect.right + 115, 64)
       ..lineTo(rect.left-ScreenUtil.defaultSize.width/2+80, 64)
       ..close();
   }
