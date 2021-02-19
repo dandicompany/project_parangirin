@@ -41,6 +41,7 @@ dependencies:
   flutter_svg: ^0.19.1
   audioplayers:
   permission_handler:
+  table_calendar: ^2.3.3
 
 dev_dependencies:
   flutter_test:
