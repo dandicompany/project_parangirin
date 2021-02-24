@@ -28,6 +28,7 @@ Future<void> videoFunc() async {
 
   runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
       home: TakePictureScreen(
         // 적절한 카메라를 TakePictureScreen 위젯에게 전달합니다.
@@ -98,6 +99,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //debugShowCheckedModeBanner: false,
         appBar: AppBar(title: Text('Take a Video')),
         body: FutureBuilder<void>(
             future: _initializeControllerFuture,
@@ -132,7 +134,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                         }
 
                       },
-                        child : Icon(Icons.camera, size : 50.0, color: Colors.yellow,),
+                        child : ImageIcon( AssetImage("assets/images/video_On.png"), size : 50.0, color: Colors.red,),
                         padding: EdgeInsets.all(10.0),
                         shape:  CircleBorder(),
                       )
@@ -152,7 +154,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                             });
                           }
                           ,
-                            child:Icon(Icons.stop,size : 50.0, color: Colors.red,),
+                            child:ImageIcon(AssetImage("assets/images/video_Off.png"),size : 50.0),
                             padding : EdgeInsets.all(10.0),
                             shape: CircleBorder(),
                           ):null

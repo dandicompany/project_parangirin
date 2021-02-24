@@ -19,7 +19,6 @@ class _CalenderState extends State<galleryVideo>{
           right: ScreenUtil().setWidth(16),
         ),
         child: Column(
-
           children: [
             Text('galleryVideo'),
             // _buildProfile(context),

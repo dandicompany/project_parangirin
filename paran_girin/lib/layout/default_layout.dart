@@ -6,6 +6,7 @@ import 'package:paran_girin/layout/tab_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:paran_girin/my/mypage.dart';
 import 'package:paran_girin/question/question_page.dart';
+import 'package:paran_girin/Video/videoTest.dart';
 
 class DefaultLayout extends StatefulWidget {
   @override
@@ -77,7 +78,7 @@ class _DefaultLayoutState extends State<DefaultLayout>
             case 0:
               return HomePage(); // HomePage();
             case 1:
-              return QuestionPage(); // QuestionPage();
+              return Initialization(); // QuestionPage();
             case 2:
               return GalleryPage(); // ArchivePage();
             case 3:

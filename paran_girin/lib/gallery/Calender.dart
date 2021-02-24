@@ -1,8 +1,10 @@
-import 'package:calendarro/date_utils.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 
 String name = "샐리";
@@ -17,11 +19,12 @@ class _CalenderState extends State<Calender>{
 
   CalendarController _calendarController;
 
-
   @override
   void initState() {
     super.initState();
+
     _calendarController = CalendarController();
+
   }
 
   @override
@@ -30,9 +33,10 @@ class _CalenderState extends State<Calender>{
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    initializeDateFormatting();
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(
@@ -66,30 +70,54 @@ class _CalenderState extends State<Calender>{
                 Container(
                   width: 343,
                   height: 329,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10)
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.1),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   child : SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        TableCalendar(calendarController: _calendarController,
+                        TableCalendar(
+                          calendarController: _calendarController,
+                          locale: 'ko-KR',
                           initialCalendarFormat: CalendarFormat.month,
                           calendarStyle: CalendarStyle(
-                            selectedColor: AppTheme.colors.primary4,
-                            todayStyle: TextStyle(fontWeight: FontWeight.bold),
+                            todayColor: Colors.white,
+                            selectedColor: Colors.white,
+                            todayStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: ScreenUtil().setSp(20), color: Colors.black),
+                            //selectedStyle: TextStyle(color: Colors.black,),
+                            outsideDaysVisible : false,
+                            weekdayStyle: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(20)),
+                            weekendStyle: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(20)),
+                            holidayStyle: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(20)),
+                          ),
+                          headerStyle: HeaderStyle(
+                              formatButtonVisible: false,
+                              //leftChevronMargin: EdgeInsets.only(10/0),
                           ),
                           startingDayOfWeek: StartingDayOfWeek.sunday,
-                        )
+                         // onDaySelected: ,
+                        ),
                       ],
                     ),
                   ),
-
                 ),
-
               ],
             ),
-
-            // _buildProfile(context),
-            // SizedBox(height: ScreenUtil().setHeight(41)),
-            // _buildAccountInfo(context)
           ],
         ),
       ),

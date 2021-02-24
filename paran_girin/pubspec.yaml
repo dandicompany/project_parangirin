@@ -42,6 +42,7 @@ dependencies:
   audioplayers:
   permission_handler:
   table_calendar: ^2.3.3
+  intl:
 
 dev_dependencies:
   flutter_test:
