@@ -67,6 +67,8 @@ flutter:
       - assets/avatars/minion.flr
       - assets/avatars/
       - assets/icons/
+      - assets/icons/circle.svg
+      - assets/icons/check-circle.svg
       - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
