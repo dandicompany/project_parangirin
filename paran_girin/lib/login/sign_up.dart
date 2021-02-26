@@ -25,9 +25,9 @@ class _SignUpState extends State<SignUp> {
         children: [
           LoginBody(
             title: "환영합니다!",
-            description: "앗, 이미 등록되어 있는 회원이신가요? ",
-            actionText: "이전으로 돌아가기",
-            loginInfo: "가입을 위해 6자리 이상의\n새로운 비밀번호를 입력해 주세요",
+            description: " ",
+            actionText: " ",
+            loginInfo: "가입을 위해\n새로운 비밀번호를 입력해 주세요",
             isEmail: false,
             textPress: () {
               Navigator.of(context).push(MaterialPageRoute(

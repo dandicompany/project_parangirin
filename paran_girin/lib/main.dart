@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       designSize: Size(375, 812),
       allowFontScaling: false,
       // builder: () => MaterialApp(    // for hobin
-      builder: () =>  MaterialApp(               // for jiyun
+      child: MaterialApp(               // for jiyun
         debugShowCheckedModeBanner: false,
         title: 'Paran Girin',
         theme: ThemeData(
@@ -41,9 +41,9 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: initScreen == 0 || initScreen == null ? '/onboard' : '/home',
         routes: {
-          '/onboard': (context) => DefaultLayout(), // ,
-          '/login': (context) => LoginPage(),
           '/home': (context) => DefaultLayout(), // , // QuestionPage(),
+          '/onboard': (context) => OnboardingScreen(), // ,
+          '/login': (context) => LoginPage(),
         },
       ),
     );

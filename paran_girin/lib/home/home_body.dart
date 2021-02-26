@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:paran_girin/home/home_avatar_big.dart';
 import 'package:paran_girin/home/post_card.dart';
 import 'package:paran_girin/layout/default_botton.dart';
 import 'package:paran_girin/theme/app_theme.dart';
+import 'package:paran_girin/utils/FadePageRoute.dart';
 
 class HomeBody extends StatelessWidget {
   @override
@@ -112,22 +114,28 @@ class HomeAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      child: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            height: ScreenUtil().setHeight(488),
-            child: Image.asset("assets/avatars/default_background.png"),
-            // child: Lottie.asset("assets/avatars/default_background.png"),
-          ),
-          Container(
-            width: ScreenUtil().setWidth(396),
-            height: ScreenUtil().setHeight(396),
-            child: Lottie.asset('assets/avatars/lurking-cat.json'),
-          ),
-        ],
+    return InkWell(
+      onTap: () {
+        Navigator.of(context)
+        .push(FadePageRoute(widget: HomeAvatarBig()));
+      },
+      child: Container(
+        width: double.infinity,
+        child: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: ScreenUtil().setHeight(488),
+              child: Image.asset("assets/avatars/default_background.png"),
+              // child: Lottie.asset("assets/avatars/default_background.png"),
+            ),
+            Container(
+              width: ScreenUtil().setWidth(396),
+              height: ScreenUtil().setHeight(396),
+              child: Lottie.asset('assets/avatars/lurking-cat.json'),
+            ),
+          ],
+        ),
       ),
     );
   }

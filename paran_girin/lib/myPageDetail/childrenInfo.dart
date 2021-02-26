@@ -7,7 +7,7 @@ import 'package:paran_girin/my/profile_menu.dart';
 import 'package:paran_girin/myPageDetail/childrenInfoLayout.dart';
 import 'package:paran_girin/myPageDetail/childrenInfoLayout2.dart';
 import 'package:paran_girin/theme/app_theme.dart';
-import 'package:paran_girin/login/baby_info_add.dart';
+import 'package:paran_girin/login/baby_info_name.dart';
 
 
 final String chosen = "(으)로 접속중";
@@ -62,7 +62,7 @@ class _ChildInfoState extends State<childrenInfo> {
         label: const Text('자녀 추가하기'),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => BabyInfoAdd()));
+              builder: (context) => BabyInfoName()));
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
