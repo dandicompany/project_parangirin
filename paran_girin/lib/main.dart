@@ -15,8 +15,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 int initScreen;
 
-
-
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences preferences = await SharedPreferences.getInstance();

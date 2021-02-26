@@ -24,7 +24,7 @@ class _CategoryPageState extends State<CategoryPage> {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(
-                vertical: ScreenUtil().setHeight(8.0)
+                vertical: ScreenUtil().setHeight(5.0)
               ),
               child: TextField(
                 // onSubmitted: (_) => _searchPosts(),
@@ -37,9 +37,9 @@ class _CategoryPageState extends State<CategoryPage> {
                       color: AppTheme.colors.base2
                     ),
                   ),
-                  hintText: "질문을 검색해보세요",
+                  hintText: "질문을 검색해보세요 :)",
                   hintStyle: TextStyle(
-                    fontSize: ScreenUtil().setSp(14)
+                    fontSize: ScreenUtil().setSp(16)
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25),
@@ -62,8 +62,6 @@ class _CategoryPageState extends State<CategoryPage> {
               color: Color.fromRGBO(237, 245, 255, 1),
               icon: "assets/icons/society.svg",
               iconColor: AppTheme.colors.primary2,
-              iconWidth: 39,
-              iconHeight: 39
             ),
             SizedBox(height: ScreenUtil().setHeight(12)),
             CategoryCard(
