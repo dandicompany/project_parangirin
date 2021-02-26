@@ -62,7 +62,7 @@ class QuestionCard extends StatelessWidget {
               ),
             ),
             SvgPicture.asset(
-              "assets/icons/arrow_right.svg",
+              "assets/icons/arrow-right.svg",
               width: ScreenUtil().setWidth(6),
               height: ScreenUtil().setHeight(12),
             ),

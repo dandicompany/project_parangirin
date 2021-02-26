@@ -54,6 +54,7 @@ class TabButton extends StatelessWidget {
               height: ScreenUtil().setHeight(svgSize),
               child: SvgPicture.asset(
                 svg,
+                // color: bActive ? AppTheme.colors.primary2 : AppTheme.colors.base1, 
                 color: bActive ? Color.fromRGBO(7, 78, 232, 1) : Colors.black, 
                 fit: BoxFit.cover
               ),
