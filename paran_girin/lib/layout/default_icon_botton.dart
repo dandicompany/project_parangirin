@@ -7,7 +7,7 @@ class DefaultIconButton extends StatelessWidget {
   const DefaultIconButton({
     Key key, 
     this.text, 
-    this.icon,
+    this.icon = "assets/icons/camera.svg",
     this.isInvert = false,
     this.press,
   }) : super(key: key);

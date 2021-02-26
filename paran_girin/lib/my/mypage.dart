@@ -16,7 +16,9 @@ class _MyPageState extends State<MyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(bottom: 150),
+        padding: EdgeInsets.only(
+          bottom: ScreenUtil().setHeight(150)
+        ),
         child: Container(
           width: double.infinity,
           color: AppTheme.colors.background,

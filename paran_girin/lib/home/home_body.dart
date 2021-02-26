@@ -11,7 +11,9 @@ class HomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.only(bottom: 150),
+      padding: EdgeInsets.only(
+        bottom: ScreenUtil().setHeight(150)
+      ),
       child: Container(
         width: double.infinity,
         color: AppTheme.colors.background,
