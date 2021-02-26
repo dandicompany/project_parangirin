@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:paran_girin/layout/default_layout.dart';
 import 'package:paran_girin/login/login_page.dart';
-import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/Video/videoTest.dart';
 import 'package:camera/camera.dart';
 import 'package:path/path.dart' show join;
