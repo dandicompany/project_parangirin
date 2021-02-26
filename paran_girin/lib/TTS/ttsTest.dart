@@ -13,28 +13,35 @@ import 'package:audioplayers/audio_cache.dart';
 
 
 String speaker = "ndain";
-String volume = "0";
+String volume = "2";
 String emotion = "0";
 String speed = "0";
 String pitch = "1";
 String format = "mp3";
-String text2 ="안녕 호빈 친구";
 
 
 String client_id = "oipjydjt49";
 String client_secret = "RpmjMMy7caPJ3Hura6ALqRbxTDm5QaUcU1fPLVg8";
 String url = 'https://naveropenapi.apigw.ntruss.com/tts-premium/v1/tts';
 
+//text에 원하는 문구 담아서 보내면 됨.
 
-class textToSpeech extends StatelessWidget {
-
+class textToSpeech extends StatefulWidget {
   const textToSpeech({
     Key key,
-    this.text,
+    @required this.text,
   }) : super(key: key);
 
   final String text;
 
+  @override
+  textToSpeechState createState() => textToSpeechState();
+
+}
+
+
+
+class textToSpeechState extends State<textToSpeech>  {
   void _createPost() async {
     final response = await http.post(
       url,
@@ -43,7 +50,7 @@ class textToSpeech extends StatelessWidget {
         "speaker": speaker,
         "volume": volume,
         "emotion": emotion,
-        "text": text,
+        "text": widget.text,
         "speed": speed,
         "pitch": pitch,
         "format": format

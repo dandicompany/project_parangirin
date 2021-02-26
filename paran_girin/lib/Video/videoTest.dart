@@ -1,26 +1,35 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
+import 'package:lottie/lottie.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:paran_girin/TTS/ttsTest.dart';
 
 CameraDescription camera;
 CameraDescription firstCamera;
 CameraDescription frontCamera;
 String filePath;
+var cameras;
+
+String formatTime(int milliseconds) {
+  var secs = milliseconds ~/ 1000;
+  var hours = (secs ~/ 3600).toString().padLeft(2, '0');
+  var minutes = ((secs % 3600) ~/ 60).toString().padLeft(2, '0');
+  var seconds = (secs % 60).toString().padLeft(2, '0');
+  return "$hours:$minutes:$seconds";
+}
 
 
 Future<void> videoFunc() async {
   // 디바이스에서 이용가능한 카메라 목록을 받아옵니다.
   WidgetsFlutterBinding.ensureInitialized();
-  final cameras = await availableCameras();
+  cameras = await availableCameras();
 
   // 이용가능한 카메라 목록에서 특정 카메라를 얻습니다.
   firstCamera = cameras.first;
@@ -71,12 +80,14 @@ class TakePictureScreen extends StatefulWidget {
 class TakePictureScreenState extends State<TakePictureScreen> {
   CameraController _controller;
   Future<void> _initializeControllerFuture;
+  Stopwatch _stopwatch;
 
   bool isDisabled = false;
 
   @override
   void initState() {
     super.initState();
+
     // 카메라의 현재 출력물을 보여주기 위해 CameraController를 생성합니다.
     _controller = CameraController(
       // 이용 가능한 카메라 목록에서 특정 카메라를 가져옵니다.
@@ -84,7 +95,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       // 적용할 해상도를 지정합니다.
       ResolutionPreset.ultraHigh,
     );
-
+    _stopwatch = Stopwatch();
     // 다음으로 controller를 초기화합니다. 초기화 메서드는 Future를 반환합니다.
     _initializeControllerFuture = _controller.initialize();
   }
@@ -96,19 +107,53 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     super.dispose();
   }
 
+  void handleStartStop() {
+    if (_stopwatch.isRunning) {
+      _stopwatch.stop();
+    } else {
+      _stopwatch.start();
+    }
+    setState(() {});    // re-render the page
+  }
+
   @override
   Widget build(BuildContext context) {
+    int hour = 0;
+    int min = 0;
+    int sec = 0;
     return Scaffold(
       //debugShowCheckedModeBanner: false,
-        appBar: AppBar(title: Text('Take a Video')),
+        //appBar: AppBar(title: Text('Take a Video')),
         body: FutureBuilder<void>(
             future: _initializeControllerFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 return Stack(
                   children: [
+                    Align(
+                      child:
+                        textToSpeech(text: "안녕 호빈 친구",),
+                    ),
+                    Align(
+                      alignment: Alignment(0.0,0.73),
+                      child: Container(
+                        width: 79,
+                        height: 20,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.all( Radius.circular(40), ),
+                        ),
+                        alignment: Alignment.center,
+                        // margin: const EdgeInsets.all(30.0),
+                        // padding: const EdgeInsets.all(3.0),
+                        //  padding: EdgeInsets.all(110.0),
+                        child: Text(formatTime(_stopwatch.elapsedMilliseconds), style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
+                        //Text("00:00:00", style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
+                      ),
+                    ),
                     Transform(
-                      alignment: Alignment.bottomRight,
+                      alignment: Alignment.topRight,
                       transform: Matrix4.diagonal3Values(0.3, 0.3, 0), // (x,y,z)
                       child: CameraPreview(_controller),
                     ),
@@ -118,13 +163,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                       ? RawMaterialButton(onPressed: () async {
                         try{
                           await _initializeControllerFuture;
-
                           filePath = join((await getApplicationDocumentsDirectory()).path,
                               '${DateTime.now()}.mp4'
-
                           );
                           print(filePath);
                             setState(() {
+                              handleStartStop();
                               _controller.startVideoRecording(filePath);//filePath);
                               isDisabled = true;
                               isDisabled = !isDisabled;
@@ -134,8 +178,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                         }
 
                       },
-                        child : ImageIcon( AssetImage("assets/images/video_On.png"), size : 50.0, color: Colors.red,),
-                        padding: EdgeInsets.all(10.0),
+                        child : ImageIcon(AssetImage("assets/images/video_On.png"), size : ScreenUtil().radius(70), color: Colors.red,),
+                        padding: EdgeInsets.all(15.0),
                         shape:  CircleBorder(),
                       )
                     :null,
@@ -146,20 +190,25 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                           RawMaterialButton(onPressed: (){
                             setState((){
                               if(_controller.value.isRecordingVideo){
+                                handleStartStop();
                                 _controller.stopVideoRecording();
                                 isDisabled = false;
                                 isDisabled = !isDisabled;
                                 GallerySaver.saveVideo(filePath);
                               }
                             });
-                          }
-                          ,
-                            child:ImageIcon(AssetImage("assets/images/video_Off.png"),size : 50.0),
-                            padding : EdgeInsets.all(10.0),
+                          },
+                            child: ImageIcon(AssetImage("assets/images/video_Off.png"),size :  ScreenUtil().radius(70) ,color: Colors.red,),
+                            padding : EdgeInsets.all(15.0),
                             shape: CircleBorder(),
                           ):null
                         ,
-                    )
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: ScreenUtil().setHeight(488),
+                      child: Lottie.asset('assets/avatars/data.json'),
+                    ),
                   ]
                 );
               }
@@ -171,7 +220,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         ),
     );
   }
-
 }
 
 
@@ -226,16 +274,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 //
 //
 //
-
-
-
-
-
-
-
-
-
-
 
 
 //   return AspectRatio(
