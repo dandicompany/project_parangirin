@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/layout/base_appbar.dart';
+import 'package:paran_girin/layout/default_botton.dart';
 import 'package:paran_girin/models/avatar.dart';
 import 'package:paran_girin/my/profile_menu.dart';
 import 'package:paran_girin/myPageDetail/childrenInfoLayout.dart';
@@ -52,62 +53,33 @@ class _ChildInfoState extends State<childrenInfo> {
                 text: "유진",
                 text2 : notchosen,
                 press:(){},
-              )
+              ),
             ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         //elevation: 4.0,
-        shape: _CustomBorder(),
+        //shape: _CustomBorder(),
         //icon: const Icon(Icons.add),
-        label: const Text('자녀 추가하기'),
+
+        shape : RoundedRectangleBorder(borderRadius: BorderRadius.circular(30), ),
+        label: Text('                        자녀 추가하기                        ',
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+            fontSize: ScreenUtil().setSp(16),
+          ),
+        ),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => BabyInfoName()));
         },
+
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
     );
-  }
-}
-
-
-
-class _CustomBorder extends ShapeBorder {
-  const _CustomBorder();
-
-  @override
-  EdgeInsetsGeometry get dimensions {
-    return const EdgeInsets.only();
-  }
-
-  @override
-  Path getInnerPath(Rect rect, { TextDirection textDirection }) {
-    return getOuterPath(rect, textDirection: textDirection);
-  }
-
-  @override
-  Path getOuterPath(Rect rect, { TextDirection textDirection }) {
-    print(rect.left);
-    print(rect.top);
-    print(rect.right);
-    return Path()
-      //..moveTo(rect.left-ScreenUtil.defaultSize.width/2+80, rect.top)
-      ..moveTo(rect.left, rect.top)
-      ..lineTo(rect.right + 115 ,0 )
-      ..lineTo(rect.right + 115, 64)
-      ..lineTo(rect.left-ScreenUtil.defaultSize.width/2+80, 64)
-      ..close();
-  }
-
-  @override
-  void paint(Canvas canvas, Rect rect, { TextDirection textDirection }) {}
-
-  // This border doesn't support scaling.
-  @override
-  ShapeBorder scale(double t) {
-    return null;
   }
 }
 

@@ -1,30 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:paran_girin/theme/app_theme.dart';
 
-class GalleryPage extends StatefulWidget {
+import 'Calender.dart';
+import 'galleryVideos.dart';
+
+class GalleryPage extends StatelessWidget implements PreferredSizeWidget{
+
   @override
-  _GalleryPageState createState() => _GalleryPageState();
-}
+  Size get preferredSize => Size.fromHeight(ScreenUtil().setHeight(46.34));
 
-class _GalleryPageState extends State<GalleryPage> {
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.only(
-          top: ScreenUtil().setHeight(488),
-          left: ScreenUtil().setWidth(16),
-          right: ScreenUtil().setWidth(16),
-        ),
-        child: Column(
-          children: [
-            Text('GalleryPage'),
-            // _buildProfile(context),
-            // SizedBox(height: ScreenUtil().setHeight(41)),
-            // _buildAccountInfo(context)
-          ],
-        ),
-      ),
+    return Container(
+        height: 46.34,
+        width: double.infinity,
+        child : MaterialApp(
+          debugShowCheckedModeBanner:false,
+          home : DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              appBar : AppBar(
+                  backgroundColor: Colors.white,
+                  elevation: 0.0,
+                  bottom: TabBar(
+                    tabs: [
+                      Text("CALENDAR",
+                        style:
+                        TextStyle(
+                          fontSize: ScreenUtil().setSp(14),color: AppTheme.colors.base1,
+                        ),textAlign: TextAlign.center,
+                      ),
+                      Text("VIDEOS", style: TextStyle(fontSize: ScreenUtil().setSp(14),color: AppTheme.colors.base1,),textAlign: TextAlign.center)
+                    ],
+                  )
+              ),
+              body: TabBarView(
+                children: <Widget>[Calender(), galleryVideo()],
+              ),
+            ),
+          ),
+        )
     );
   }
+
 }
