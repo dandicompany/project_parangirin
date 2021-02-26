@@ -40,35 +40,46 @@ class _QuestionPageState extends State<QuestionPage> {
               title: "사회관계",
               hashtag: "#나 #가족 #또래 #지역사회 #우리나라 \n#세계 #사회적가치",
               color: Color.fromRGBO(237, 245, 255, 1),
-              icon: "assets/icons/camera.svg"
+              icon: "assets/icons/society.svg",
+              iconColor: AppTheme.colors.primary2,
+              iconWidth: 39,
+              iconHeight: 39
             ),
             SizedBox(height: ScreenUtil().setHeight(12)),
             CategoryCard(
               title: "자연탐구",
               hashtag: "#호기심 #수학적탐구 #과학적탐구",
               color: Color.fromRGBO(127, 177, 65, 0.1),
-              icon: "assets/icons/camera.svg"
+              icon: "assets/icons/nature.svg",
+              iconColor: Color.fromRGBO(127, 177, 65, 1),
+              iconWidth: 55,
+              iconHeight: 55
             ),
             SizedBox(height: ScreenUtil().setHeight(12)),
             CategoryCard(
               title: "예술",
               hashtag: "#예술감상 #예술표현 #심미적탐색",
               color: Color.fromRGBO(245, 75, 139, 0.1),
-              icon: "assets/icons/camera.svg"
+              icon: "assets/icons/art.svg",
+              iconColor: Color.fromRGBO(245, 75, 139, 1)
             ),
             SizedBox(height: ScreenUtil().setHeight(12)),
             CategoryCard(
               title: "신체",
               hashtag: "#감각기관 #운동하기 #건강한 생활 \n#안전한 생활치",
               color: Color.fromRGBO(250, 184, 95, 0.1),
-              icon: "assets/icons/camera.svg"
+              icon: "assets/icons/body.svg",
+              iconColor: Color.fromRGBO(250, 184, 95, 1)
             ),
             SizedBox(height: ScreenUtil().setHeight(12)),
             CategoryCard(
               title: "의사소통",
               hashtag: "#말하기 #쓰기 #건강한 생활 #안전한 생활",
               color: Color.fromRGBO(110, 97, 213, 0.1),
-              icon: "assets/icons/camera.svg"
+              icon: "assets/icons/communication.svg",
+              iconColor: Color.fromRGBO(110, 97, 213, 1),
+              iconWidth: 42,
+              iconHeight: 42
             ),
           ],
         ),

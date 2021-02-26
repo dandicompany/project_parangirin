@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:paran_girin/gallery/gallery_page.dart';
 import 'package:paran_girin/home/home_page.dart';
 import 'package:paran_girin/layout/tab_button.dart';
@@ -101,7 +102,7 @@ class _DefaultLayoutState extends State<DefaultLayout>
           children: <Widget>[
             Expanded(
               child: TabButton(
-                icon: Icons.home_outlined,
+                svg: "assets/icons/home.svg",
                 index: 0,
                 controller: _pageController,
                 selectedIndex: _selectedTabIndex,
@@ -109,23 +110,25 @@ class _DefaultLayoutState extends State<DefaultLayout>
             ),
             Expanded(
               child: TabButton(
-                icon: Icons.search,
+                svg: "assets/icons/question.svg",
                 index: 1,
+                svgSize: 26,
                 controller: _pageController,
                 selectedIndex: _selectedTabIndex,
               ),
             ),
             Expanded(
               child: TabButton(
-                icon: Icons.archive_outlined,
+                svg: "assets/icons/gallery.svg",
                 index: 2,
+                svgSize: 19,
                 controller: _pageController,
                 selectedIndex: _selectedTabIndex,
               ),
             ),
             Expanded(
               child: TabButton(
-                icon: Icons.person_outlined,
+                svg: "assets/icons/person.svg",
                 index: 3,
                 controller: _pageController,
                 selectedIndex: _selectedTabIndex,

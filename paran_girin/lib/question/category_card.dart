@@ -9,8 +9,21 @@ class CategoryCard extends StatelessWidget {
   final String hashtag;
   final Color color;
   final String icon;
+  final Color iconColor;
+  final double iconWidth;
+  final double iconHeight;
 
-  const CategoryCard({Key key, this.onTap, this.title, this.hashtag, this.color, this.icon}) : super(key: key);
+  const CategoryCard({
+    Key key, 
+    this.onTap, 
+    this.title, 
+    this.hashtag, 
+    this.color, 
+    this.icon, 
+    this.iconColor, 
+    this.iconWidth = 51.0, 
+    this.iconHeight = 51.0
+    }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +35,11 @@ class CategoryCard extends StatelessWidget {
           width: ScreenUtil().setWidth(343),
           height: ScreenUtil().setHeight(110),
           color: Colors.white,
-          padding: EdgeInsets.symmetric(
-            horizontal: ScreenUtil().setWidth(20),
-            vertical: ScreenUtil().setHeight(10),
+          padding: EdgeInsets.only(
+            left: ScreenUtil().setWidth(20),
+            right: ScreenUtil().setWidth(20),
+            top: ScreenUtil().setHeight(8),
+            bottom: ScreenUtil().setHeight(10),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,9 +60,11 @@ class CategoryCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                     child: Container(
                       color: color,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: ScreenUtil().setWidth(6),
-                        vertical: ScreenUtil().setHeight(4),
+                      padding: EdgeInsets.only(
+                        left: ScreenUtil().setWidth(6),
+                        right: ScreenUtil().setWidth(10),
+                        top: ScreenUtil().setHeight(4),
+                        bottom: ScreenUtil().setHeight(5),
                       ),
                       child: Text(
                         hashtag,
@@ -62,9 +79,9 @@ class CategoryCard extends StatelessWidget {
               ),
               SvgPicture.asset(
                 icon,
-                color: color,
-                width: ScreenUtil().setWidth(51),
-                height: ScreenUtil().setHeight(51),
+                color: iconColor,
+                width: ScreenUtil().setWidth(iconWidth),
+                height: ScreenUtil().setHeight(iconHeight),
               ),
             ],
           ),
