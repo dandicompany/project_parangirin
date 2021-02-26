@@ -6,12 +6,9 @@ import 'package:paran_girin/home/home_page.dart';
 import 'package:paran_girin/layout/tab_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:paran_girin/my/mypage.dart';
-<<<<<<< HEAD
 import 'package:paran_girin/question/category_page.dart';
-=======
 import 'package:paran_girin/question/question_page.dart';
 import 'package:paran_girin/Video/videoTest.dart';
->>>>>>> feature2
 
 class DefaultLayout extends StatefulWidget {
   @override
