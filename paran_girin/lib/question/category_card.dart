@@ -52,7 +52,7 @@ class CategoryCard extends StatelessWidget {
                     title,
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(24),
-                      fontWeight: FontWeight.w300,
+                      // fontWeight: FontWeight.w300,
                       color: AppTheme.colors.base1
                     ),
                   ),
@@ -61,8 +61,8 @@ class CategoryCard extends StatelessWidget {
                     child: Container(
                       color: color,
                       padding: EdgeInsets.only(
-                        left: ScreenUtil().setWidth(6),
-                        right: ScreenUtil().setWidth(10),
+                        left: ScreenUtil().setWidth(8),
+                        right: ScreenUtil().setWidth(15),
                         top: ScreenUtil().setHeight(4),
                         bottom: ScreenUtil().setHeight(5),
                       ),
