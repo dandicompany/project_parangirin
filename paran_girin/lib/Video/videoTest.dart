@@ -212,7 +212,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   ]
                 );
               }
-
               else{
                 return Center(child: CircularProgressIndicator());
               }

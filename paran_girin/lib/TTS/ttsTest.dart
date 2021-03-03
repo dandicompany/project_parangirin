@@ -13,7 +13,7 @@ import 'package:audioplayers/audio_cache.dart';
 
 
 String speaker = "ndain";
-String volume = "2";
+String volume = "10";
 String emotion = "0";
 String speed = "0";
 String pitch = "1";

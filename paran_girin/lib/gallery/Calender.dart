@@ -18,6 +18,8 @@ class Calender extends StatefulWidget{
 class _CalenderState extends State<Calender>{
 
   CalendarController _calendarController;
+  Map<DateTime, List<dynamic>> _events;
+  List<dynamic> _selectedEvents;
 
   @override
   void initState() {
@@ -92,14 +94,16 @@ class _CalenderState extends State<Calender>{
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         TableCalendar(
+                          events: _events,
                           calendarController: _calendarController,
                           locale: 'ko-KR',
                           initialCalendarFormat: CalendarFormat.month,
                           calendarStyle: CalendarStyle(
-                            todayColor: Colors.white,
-                            selectedColor: Colors.white,
+                            todayColor: null,
+                            renderSelectedFirst: false,
                             todayStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: ScreenUtil().setSp(20), color: Colors.black),
-                            //selectedStyle: TextStyle(color: Colors.black,),
+                            selectedColor: Colors.white,
+                            selectedStyle: TextStyle(fontSize: ScreenUtil().setSp(20), color: AppTheme.colors.base3),
                             outsideDaysVisible : false,
                             weekdayStyle: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(20)),
                             weekendStyle: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(20)),
@@ -110,7 +114,12 @@ class _CalenderState extends State<Calender>{
                               //leftChevronMargin: EdgeInsets.only(10/0),
                           ),
                           startingDayOfWeek: StartingDayOfWeek.sunday,
-                         // onDaySelected: ,
+
+                          onDaySelected: (date, events,holidays) {
+                            setState(() {
+                              _selectedEvents = events;
+                            });
+                          }, // onDaySelected: ,
                         ),
                       ],
                     ),
