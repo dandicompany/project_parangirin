@@ -36,12 +36,25 @@ class CustomElevation extends StatelessWidget {
       child: Stack(
         children: [
           Column(
+              mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              SizedBox(height: ScreenUtil().setHeight(3)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: ScreenUtil().setWidth(12),),
+                  Text(text1, style: TextStyle(fontSize: 18, color: Colors.black,fontFamily: 'Noto Sans KR' ),),
+                ],
+              ),
+              SizedBox(height: ScreenUtil().setHeight(15),),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: ScreenUtil().setWidth(12)),
+                  Text(text2, style: TextStyle(fontSize: 12, color: Colors.black,fontFamily: 'Noto Sans KR' ),),
+                ],
+              ),
 
-              SizedBox(width: ScreenUtil().setWidth(4)),
-              Text(text1, style: TextStyle(fontSize: 24, color: Colors.black,fontFamily: 'Noto Sans KR' ),),
-              SizedBox(width: ScreenUtil().setWidth(17)),
-              Text(text2, style: TextStyle(fontSize: 12, color: Colors.black,fontFamily: 'Noto Sans KR' ),),
             ]
           ),
           this.child,
