@@ -129,7 +129,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 return Stack(
-                  children: [
+                  children: <Widget>[
                     Align(
                       child:
                         textToSpeech(text: "안녕 호빈 친구",),
@@ -137,19 +137,15 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                     Align(
                       alignment: Alignment(0.0,0.73),
                       child: Container(
-                        width: 79,
-                        height: 20,
+                        width: ScreenUtil().setWidth(79),
+                        height: ScreenUtil().setHeight(20),
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             color: Colors.grey,
                             borderRadius: BorderRadius.all( Radius.circular(40), ),
                         ),
                         alignment: Alignment.center,
-                        // margin: const EdgeInsets.all(30.0),
-                        // padding: const EdgeInsets.all(3.0),
-                        //  padding: EdgeInsets.all(110.0),
                         child: Text(formatTime(_stopwatch.elapsedMilliseconds), style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
-                        //Text("00:00:00", style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
                       ),
                     ),
                     Transform(
