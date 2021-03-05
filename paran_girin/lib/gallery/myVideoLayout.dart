@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
-class PostCard extends StatelessWidget {
+class myVideoLayout extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onTapHeart;
   final String title;
@@ -13,13 +13,13 @@ class PostCard extends StatelessWidget {
   // final Post post; // post model
 
   // const PostCard({Key key, this.onTap, this.onTapHeart, this.post}) : super(key: key);
-  const PostCard({Key key, this.onTap, this.onTapHeart, this.title, this.description, this.profile, this.avatar, this.thumbnail}) : super(key: key);
+  const myVideoLayout({Key key, this.onTap, this.onTapHeart, this.title, this.description, this.profile, this.avatar, this.thumbnail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-              horizontal: ScreenUtil().setWidth(16)
+          horizontal: ScreenUtil().setWidth(10), //16
       ),
       child: Material(
         color: Colors.transparent,
@@ -28,7 +28,7 @@ class PostCard extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: Container(
-              height: ScreenUtil().setHeight(261),
+              height: ScreenUtil().setHeight(261), //261
               color: Colors.white,
               child: Column(
                 children: <Widget>[
@@ -55,8 +55,8 @@ class PostCard extends StatelessWidget {
                   Container(
                     height: ScreenUtil().setHeight(64),
                     padding: EdgeInsets.symmetric(
-                      horizontal:ScreenUtil().setWidth(12),
-                      vertical: ScreenUtil().setHeight(10)),
+                        horizontal:ScreenUtil().setWidth(12),
+                        vertical: ScreenUtil().setHeight(10)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -66,7 +66,7 @@ class PostCard extends StatelessWidget {
                             Text(
                               "세상에 없던 새로운 대답, 계란", // title
                               style: TextStyle(
-                                fontSize: ScreenUtil().setSp(16)
+                                  fontSize: ScreenUtil().setSp(16)
                               ),
                             ),
                             Text(
@@ -81,13 +81,13 @@ class PostCard extends StatelessWidget {
                         CircleAvatar(
                           backgroundImage: AssetImage("assets/images/thumbnail_baby.png"),
                           radius: ScreenUtil().setWidth(32),
-                        ),
+                        )
                       ],
                     ),
                   ),
-
                 ],
               ),
+              //SizedBox(height: ScreenUtil().setHeight(10),),
             ),
           ),
         ),
