@@ -54,7 +54,6 @@ class CustomElevation extends StatelessWidget {
                   Text(text2, style: TextStyle(fontSize: 12, color: Colors.black,fontFamily: 'Noto Sans KR' ),),
                 ],
               ),
-
             ]
           ),
           this.child,

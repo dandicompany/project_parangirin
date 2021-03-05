@@ -12,7 +12,7 @@ int natureNum = 0 ;
 int exerciseNum = 0;
 int socialNum = 0 ;
 
-int sum = bodyNum + natureNum + exerciseNum + socialNum +3;
+int sum = bodyNum + natureNum + exerciseNum + socialNum;
 
 class galleryVideo extends StatefulWidget{
   @override
@@ -29,7 +29,6 @@ class _CalenderState extends State<galleryVideo>{
   @override
   void initState() {
     super.initState();
-
   }
 
 
@@ -105,8 +104,7 @@ class _CalenderState extends State<galleryVideo>{
                   text1: "사회 관계", text2: natureNum.toString() + "개의 영상",),
               ],
             ),
-            yesVideo(),
-            //noVideo(),
+            sum == 0 ? noVideo():yesVideo(),
           ],
 
         ),
@@ -116,7 +114,6 @@ class _CalenderState extends State<galleryVideo>{
 }
 
 class noVideo extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -155,23 +152,12 @@ class yesVideo extends StatelessWidget{
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(height: ScreenUtil().setHeight(50),),
+          SizedBox(height: ScreenUtil().setHeight(45),),
           for (var i = 0 ; i <sum ; i ++) myVideoLayout(),
-        SizedBox(height: ScreenUtil().setHeight(100)),
+          SizedBox(height: ScreenUtil().setHeight(100)),
         ],
       ),
     );
   }
 
 }
-// child: Image.asset(
-// 'assets/images/onboard_2.png',
-// fit: BoxFit.cover,
-// ),
-
-//PostCard() import 하기
-
-
-// _buildProfile(context),
-// SizedBox(height: ScreenUtil().setHeight(41)),
-// _buildAccountInfo(context)
