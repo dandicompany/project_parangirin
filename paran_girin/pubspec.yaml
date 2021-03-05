@@ -51,7 +51,11 @@ dependencies:
   firebase_storage:
   video_player: ^0.10.11+2
   filesize: ^1.0.4
-
+  flutter_uploader: ^1.2.1
+  googleapis_auth: ^0.2.12+1
+  video_compress: ^2.1.1
+  flutter_downloader: ^1.5.2
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

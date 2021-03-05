@@ -18,6 +18,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/login/auth_page.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 int initScreen;
 
@@ -28,6 +29,7 @@ Future<void> main() async {
   initScreen = await preferences.getInt('initScreen');
   await preferences.setInt('initScreen', 1);
   await Firebase.initializeApp();
+  await FlutterDownloader.initialize(debug: true);
   runApp(_MyApp());
 }
 

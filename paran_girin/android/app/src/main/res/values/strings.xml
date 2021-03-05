@@ -3,4 +3,9 @@
     <string name="facebook_app_id">138273764808653</string> 
     <string name="fb_login_protocol_scheme">fb138273764808653</string>
     <string name="app_name">paran_girin</string>
+    <string name="flutter_uploader_notification_started">Upload started</string>
+    <string name="flutter_uploader_notification_in_progress">Upload in progress</string>
+    <string name="flutter_uploader_notification_canceled">Upload canceled</string>
+    <string name="flutter_uploader_notification_failed">Upload failed</string>
+    <string name="flutter_uploader_notification_complete">Upload complete</string>
 </resources>

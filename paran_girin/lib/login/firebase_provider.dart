@@ -5,6 +5,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:paran_girin/models/schema.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import "package:http/http.dart" as http;
+import "package:googleapis_auth/auth_io.dart" as gauth;
 import 'dart:convert';
 
 Logger logger = Logger();
@@ -37,6 +39,35 @@ class FirebaseProvider with ChangeNotifier {
   void setUser(User value) {
     _user = value;
     notifyListeners();
+  }
+
+  Future<String> getServiceAccountToken() async {
+    gauth.ServiceAccountCredentials accountCredentials =
+        gauth.ServiceAccountCredentials.fromJson({
+      "type": "service_account",
+      "project_id": "tonal-baton-245112",
+      "private_key_id": "8da87a101e5274ce9d75e77975706147dd2a5e5b",
+      "private_key":
+          "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCHdHtbg35h8kcf\n4C7LLu/Cvvn5z9j7KWv1xa8+sPIoFhIeoIl5NY0k9dlun0vlocPLtQ1s5njNFWrw\nFc+vrXhaLIa4QKrfgPxtJBL9K/UC5F+gbfEzi2iRBqKgrP4W8UA3gCIzQ9oMXmru\nFOXsHAQvw7o9/u4MxyJmR+z/tzbJtrbuMc2J4+IWs6CSzB5hMGA/NLLSGUNau83a\nYWLdX/uO4gNrrBML/8+G4mSnGJe1vNQbsBQZKeipKNPIfL+pPpcXal7QVcNe6yqv\nS2diGJkWEHqQC3VCRhRH7Yc6b3ZvuxwsHQKdF/krrI8VGP9iVb4dDDGrQ1PTroZb\nz4GmuLL3AgMBAAECggEAMYft/bo5Eh7SVD0ZT1Hz+V31MZyHxtvQLvhhCwcQHYlo\nicuBSZHD8XJ21iUozyjWXFxxstMZ9EAzMOSA48gGfM7QWnrHIOBdLZml2e7jcnHI\n5/Sb4RHGpFVtTVzEsuX36fOQTfevOZui9TkuFCbwfvjO1xGrwX9lvEnrx1wbDCoc\nP3rjF3idtoTI/tD71ZzNSGdHEg8Kxu4XMvlOkagzq/IWiGDuS+f59MpFOIO+UPea\n1hr7+2y6PUTc4KENLXf4oMowjP0IspqfN8rwkh3eaa8sv3v9nWy4xQiohfnCPm2u\nNFYzddSNlCngATnljLYV/ViZ8BipHSJZj+Do1p28VQKBgQC/i26h2ebGgQPxswy9\nBxRd+or3lHH6lO5TPz/Mr+gfSnR/x13v1a7Q+PRTfdwn9PASluK2xXuajm/inCns\n1qAgnV8Uufk7VGiPcXF3iBnNJRSY1ZIQhqmgcbhtiFCxMXF7CNvewwb6TJvfgnLG\nRzm48Hsk+WDXF23y22csK5+LpQKBgQC1CThyhkAFUM+iW8FWwmEoV/tK1hiuL91t\nLWwUkq0lel8ZNRiFNwIBGswXYW0eTAvwgjlsEHbs6PUCDo6+WX0ov5FKv203JuU6\nlmmiMzikUykCtBgeLRJFzwC7+3677Rtk8RtLUr2hbfLzCs/l1F5jY4r+tD04zWn9\ncUltXdfxawKBgQCk1kpD8PCf3YFWbB7HQaNuaOFUxKP94FLkwyaVcMBSxVFScXDO\np9aEseoZO9PNcwVzCfRbE8IWNQPmQTv3PJCa4LNlc9IfE7nTz+20zyRdHc8G46yK\nmki58YOkh03h30nodqw4nR+RIYJ2q504My1ikVl4bT/AesI84EF+iqAHnQKBgQCI\n5MkHaNb+bgYkOofvaBr529XM2CpfhRhGF4PT5roBThCdShYZnefpF+9eerB9qXmZ\ny49KVQTozpt+i62K6LaI2psuT6RxgPrzm4uTOHJLaArp3W8jWmen3AktHNbPmlMN\nuHgwNAfrCu4ctH9Sxoz9UOdpBLgKvOG54TFp/v1sswKBgHd6mZLLJLzGwp/Zbf/s\nXcq60dtEgeX76F8MBz+/xfwjkDyfH7+BOaI6pCWqtlXZlLxI3F/vqgxmcnfmLezI\nJ12bqHpSzq6QoP044jiLBVXHbVkV5dnRWYfSCnMeDNoPuKiviREdhfkjrFzT4RGz\nQLJkbYX+ra7f3Wj5jbVA7uKt\n-----END PRIVATE KEY-----\n",
+      "client_email":
+          "firebase-adminsdk-k4hea@tonal-baton-245112.iam.gserviceaccount.com",
+      "client_id": "110538781544481540436",
+      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+      "token_uri": "https://oauth2.googleapis.com/token",
+      "auth_provider_x509_cert_url":
+          "https://www.googleapis.com/oauth2/v1/certs",
+      "client_x509_cert_url":
+          "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-k4hea%40tonal-baton-245112.iam.gserviceaccount.com"
+    });
+    List<String> scopes = [
+      'https://www.googleapis.com/auth/cloud-platform',
+    ];
+    var client = new http.Client();
+    gauth.AccessCredentials credentials =
+        await gauth.obtainAccessCredentialsViaServiceAccount(
+            accountCredentials, scopes, client);
+    String accessToken = credentials.accessToken.data;
+    return accessToken;
   }
 
   // 최근 Firebase에 로그인한 사용자의 정보 획득

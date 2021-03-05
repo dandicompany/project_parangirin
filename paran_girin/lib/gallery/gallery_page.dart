@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
+import 'package:paran_girin/gallery/video_uploader.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 
@@ -21,7 +22,7 @@ class _GalleryPageState extends State<GalleryPage> {
             left: ScreenUtil().setWidth(16),
             right: ScreenUtil().setWidth(16),
           ),
-          child: CloudStorageDemo()
+          child: App()
           // child: Column(
           //   children: [
           //     Text('GalleryPage'),
