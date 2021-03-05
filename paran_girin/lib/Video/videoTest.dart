@@ -80,9 +80,59 @@ class TakePictureScreen extends StatefulWidget {
 class TakePictureScreenState extends State<TakePictureScreen> {
   CameraController _controller;
   Future<void> _initializeControllerFuture;
-  Stopwatch _stopwatch;
-
   bool isDisabled = false;
+
+  bool startispressed = true;
+  bool stopispressed = true;
+  bool resetispressed = true;
+  String stoptimetodisplay = '00:00:00';
+  var swatch = Stopwatch();
+  final dur = const Duration(seconds:1);
+
+
+
+  void starttimer(){
+    Timer(dur, keeprunning);
+  }
+
+  void keeprunning(){
+    if(swatch.isRunning){
+      starttimer();
+    }
+    setState(() {
+      stoptimetodisplay = swatch.elapsed.inHours.toString().padLeft(2,'0')+":"
+          + (swatch.elapsed.inMinutes%60).toString().padLeft(2, '0')+ ":"
+          + (swatch.elapsed.inSeconds%60).toString().padLeft(2, '0');
+    });
+  }
+
+  void startstopwatch(){
+    setState(() {
+      stopispressed = false;
+      startispressed = false;
+    });
+    swatch.start();
+    starttimer();
+  }
+  void stopstopwatch(){
+    setState(() {
+      stopispressed = true;
+      resetispressed =false;
+    });
+    swatch.stop();
+  }
+
+
+  Widget stopwatch(){
+    return Container(
+        alignment: Alignment.center,
+        child: Text(
+        stoptimetodisplay,
+        style: TextStyle(
+        color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
+    );
+  }
+
 
   @override
   void initState() {
@@ -95,7 +145,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       // 적용할 해상도를 지정합니다.
       ResolutionPreset.ultraHigh,
     );
-    _stopwatch = Stopwatch();
     // 다음으로 controller를 초기화합니다. 초기화 메서드는 Future를 반환합니다.
     _initializeControllerFuture = _controller.initialize();
   }
@@ -107,20 +156,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     super.dispose();
   }
 
-  void handleStartStop() {
-    if (_stopwatch.isRunning) {
-      _stopwatch.stop();
-    } else {
-      _stopwatch.start();
-    }
-    setState(() {});    // re-render the page
-  }
+
 
   @override
   Widget build(BuildContext context) {
-    int hour = 0;
-    int min = 0;
-    int sec = 0;
     return Scaffold(
       //debugShowCheckedModeBanner: false,
         //appBar: AppBar(title: Text('Take a Video')),
@@ -129,7 +168,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 return Stack(
-                  children: <Widget>[
+                  children: [
                     Align(
                       child:
                         textToSpeech(text: "안녕 호빈 친구",),
@@ -145,7 +184,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                             borderRadius: BorderRadius.all( Radius.circular(40), ),
                         ),
                         alignment: Alignment.center,
-                        child: Text(formatTime(_stopwatch.elapsedMilliseconds), style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
+                        child : stopwatch(),
+                        //child: Text(formatTime(_stopwatch.elapsedMilliseconds), style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
+                        //Text("00:00:00", style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
                       ),
                     ),
                     Transform(
@@ -164,7 +205,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                           );
                           print(filePath);
                             setState(() {
-                              handleStartStop();
+                              startstopwatch();
                               _controller.startVideoRecording(filePath);//filePath);
                               isDisabled = true;
                               isDisabled = !isDisabled;
@@ -186,7 +227,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                           RawMaterialButton(onPressed: (){
                             setState((){
                               if(_controller.value.isRecordingVideo){
-                                handleStartStop();
+                                stopstopwatch();
                                 _controller.stopVideoRecording();
                                 isDisabled = false;
                                 isDisabled = !isDisabled;
