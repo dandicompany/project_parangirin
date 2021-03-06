@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
 class TabButton extends StatelessWidget {
-  final IconData icon;
-  final double iconSize;
+  final String svg;
+  final double svgSize;
   final int index;
   final PageController controller;
   final int selectedIndex;
 
   TabButton({
     Key key,
-    this.icon,
-    this.iconSize = 27.0, //screenutil 적용 가능?
+    this.svg,
+    this.svgSize = 24.0, //screenutil 적용 가능?
     @required this.index,
     @required this.controller,
     this.selectedIndex,
@@ -32,23 +33,33 @@ class TabButton extends StatelessWidget {
         radius: ScreenUtil().radius(30), 
         containedInkWell: true,
         */
-        child: Container(
-          width: double.infinity / 4,
-          height: ScreenUtil().setHeight(66),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border(
-              top: BorderSide(
-                width: 1.5,
-                color: bActive ? AppTheme.colors.primary1 : Colors.black, 
-                ), // 원래는 primary1이 아닌 primary임
+        child: Stack(
+          alignment: AlignmentDirectional(0.0, -0.3),
+          children: [
+            Container(
+              width: double.infinity / 4,
+              height: ScreenUtil().setHeight(84),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  top: BorderSide(
+                    width: 2,
+                    color: bActive ? AppTheme.colors.primary2 : Color.fromRGBO(170, 170, 170, 1),
+                    ), 
+                  ),
               ),
-          ),
-          child: Icon(
-            icon,
-            size: ScreenUtil().radius(iconSize),
-            color: bActive ? AppTheme.colors.primary1 : Colors.black, // 원래는 primary1이 아닌 primary임
-          ),
+            ),
+            Container(
+              width: ScreenUtil().setWidth(svgSize),
+              height: ScreenUtil().setHeight(svgSize),
+              child: SvgPicture.asset(
+                svg,
+                // color: bActive ? AppTheme.colors.primary2 : AppTheme.colors.base1, 
+                color: bActive ? Color.fromRGBO(7, 78, 232, 1) : Colors.black, 
+                fit: BoxFit.contain
+              ),
+            ),
+          ],
         )
       ),
     );

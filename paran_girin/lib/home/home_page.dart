@@ -40,6 +40,8 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: HomeBody(),
+      
+      // Lottie & Rive test
       // body: Builder(
       //   builder: (context) {
       //     return Column(

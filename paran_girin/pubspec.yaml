@@ -55,6 +55,9 @@ dependencies:
   googleapis_auth: ^0.2.12+1
   video_compress: ^2.1.1
   flutter_downloader: ^1.5.2
+  flutter_datetime_picker: ^1.5.0
+  table_calendar: ^2.3.3
+  intl:
   
 dev_dependencies:
   flutter_test:
@@ -81,6 +84,8 @@ flutter:
       - assets/avatars/minion.flr
       - assets/avatars/
       - assets/icons/
+      - assets/icons/circle.svg
+      - assets/icons/check-circle.svg
       - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see

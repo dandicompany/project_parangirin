@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:paran_girin/layout/default_layout.dart';
 import 'package:paran_girin/login/login_page.dart';
-import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/Video/videoTest.dart';
 import 'package:camera/camera.dart';
 import 'package:path/path.dart' show join;
@@ -55,9 +54,9 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: Size(375, 812),
       allowFontScaling: false,
-      // builder: () => MaterialApp(    // for hobin
       builder: () => MaterialApp(
-        // for jiyun
+        // for hobin
+        //child: MaterialApp(               // for jiyun
         debugShowCheckedModeBanner: false,
         title: 'Paran Girin',
         theme: ThemeData(
@@ -66,10 +65,9 @@ class MyApp extends StatelessWidget {
         initialRoute:
             initScreen == 0 || initScreen == null ? '/onboard' : '/home',
         routes: {
-          '/onboard': (context) => OnboardingScreen(), // DefaultLayout(),
+          '/home': (context) => DefaultLayout(), // , // QuestionPage(),
+          '/onboard': (context) => OnboardingScreen(), // ,
           '/login': (context) => LoginPage(),
-          '/home': (context) =>
-              OnboardingScreen(), // DefaultLayout(), // QuestionPage(),
         },
       ),
     );

@@ -9,11 +9,11 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../login/auth_page.dart';
 
-void permission() async {
-  Map<Permission, PermissionStatus> permissions =
-      await [Permission.camera].request();
-  print('per1 : $permissions');
-}
+// void permission() async {
+//   Map<Permission, PermissionStatus> permissions =
+//       await [Permission.camera].request();
+//   print('per1 : $permissions');
+// }
 
 class OnboardingBody extends StatefulWidget {
   @override
@@ -43,7 +43,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
 
   @override
   Widget build(BuildContext context) {
-    permission();
+    // permission();
     return Container(
       padding: EdgeInsets.only(
         top: ScreenUtil().setHeight(100),

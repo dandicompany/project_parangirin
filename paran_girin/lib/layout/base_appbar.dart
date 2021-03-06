@@ -27,14 +27,15 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
           iconSize: ScreenUtil().radius(20),
           )
         : null,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0.0,
         title: Text(
           title,
           style: TextStyle(
             color: AppTheme.colors.base1,
-            fontSize: ScreenUtil().setSp(16)
+            fontSize: ScreenUtil().setSp(16),
           ),
+          textAlign: TextAlign.center,
         ),
       );
   }

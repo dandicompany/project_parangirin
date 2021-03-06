@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/my/profile_menu.dart';
 import 'package:paran_girin/my/profile_pic.dart';
+import 'package:paran_girin/myPageDetail/childrenInfo.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:paran_girin/myPageDetail/pushAlarm.dart';
 
 class MyPage extends StatefulWidget {
   @override
@@ -18,7 +20,7 @@ class _MyPageState extends State<MyPage> {
     fp = Provider.of<FirebaseProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(bottom: 150),
+        padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(150)),
         child: Container(
           width: double.infinity,
           color: AppTheme.colors.background,
@@ -43,8 +45,18 @@ class _MyPageState extends State<MyPage> {
                 style: TextStyle(fontSize: ScreenUtil().setSp(18)),
               ),
               SizedBox(height: ScreenUtil().setHeight(41)),
-              ProfileMenu(text: "자녀 관리", press: () {}),
-              ProfileMenu(text: "알림 설정", press: () {}),
+              ProfileMenu(
+                  text: "자녀 관리",
+                  press: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => childrenInfo()));
+                  }),
+              ProfileMenu(
+                  text: "알림 설정",
+                  press: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => pushAlarm()));
+                  }),
               SizedBox(height: ScreenUtil().setHeight(16)),
               ProfileMenu(text: "공지 사항", press: () {}),
               ProfileMenu(text: "의견 보내기", press: () {}),
