@@ -362,7 +362,7 @@ class _LoginPageState extends State<LoginPage> {
           icon: Icon(Icons.ac_unit),
           iconSize: 40.0, // * screenUtil 씌워줘야함
           onPressed: () {
-            fp.signInWithFacebookAccount();
+            // fp.signInWithFacebookAccount();
           },
         ));
   }

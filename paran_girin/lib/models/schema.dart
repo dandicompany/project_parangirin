@@ -20,14 +20,12 @@ class UserModel {
 
 class UserInDB {
   String sharedID;
-  String id;
   String avatar;
   String currentChild;
   List<String> children = List<String>();
   UserInDB.sharedID(this.sharedID);
   Map<String, dynamic> toJson() => {
         'sharedID': sharedID,
-        'id': id,
         'avatar': avatar,
         'currentChild': currentChild,
         'children': children,
@@ -35,14 +33,14 @@ class UserInDB {
 }
 
 class Child {
-  int ageInMonth;
+  int birthday;
   String name;
   String profileURL;
   Map<String, String> answers;
   Map<String, dynamic> toJson() => {
         'name': name,
         'profileURL': profileURL,
-        'ageInMonth': ageInMonth,
+        'birthday': birthday,
         'answers': answers
       };
 }
