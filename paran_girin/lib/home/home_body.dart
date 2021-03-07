@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:paran_girin/home/home_avatar_big.dart';
+import 'package:paran_girin/home/home_no_answers.dart';
 import 'package:paran_girin/home/post_card.dart';
 import 'package:paran_girin/layout/default_botton.dart';
 import 'package:paran_girin/theme/app_theme.dart';
@@ -47,7 +48,12 @@ class HomeBody extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: ScreenUtil().setHeight(24)),
-                PostCard(),
+                PostCard(
+                  onTap: () {
+                    Navigator.of(context)
+                    .push(FadePageRoute(widget: HomeNoAnswers()));
+                  },
+                ),
                 SizedBox(height: ScreenUtil().setHeight(8)),
                 PostCard(),
                 SizedBox(height: ScreenUtil().setHeight(8)),
@@ -60,7 +66,10 @@ class HomeBody extends StatelessWidget {
                   child: DefaultButton(
                     text: "우리 아이 뽐내기",
                     isInvert: true,
-                    press: () {}
+                    press: () {
+                      Navigator.of(context)
+                      .push(FadePageRoute(widget: HomeNoAnswers()));
+                    },
                   ),
                 ),
                 SizedBox(height: ScreenUtil().setHeight(48)),
