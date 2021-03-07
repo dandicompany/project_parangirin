@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:lottie/lottie.dart';
+import 'package:paran_girin/home/home_body.dart';
+import 'package:paran_girin/home/home_page.dart';
+import 'package:paran_girin/layout/default_layout.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:paran_girin/theme/app_theme.dart';
@@ -16,6 +19,7 @@ CameraDescription firstCamera;
 CameraDescription frontCamera;
 String filePath;
 var cameras;
+String filepath;
 
 String formatTime(int milliseconds) {
   var secs = milliseconds ~/ 1000;
@@ -89,6 +93,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   var swatch = Stopwatch();
   final dur = const Duration(seconds:1);
 
+  var todayDate ;
 
 
   void starttimer(){
@@ -171,7 +176,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   children: [
                     Align(
                       child:
-                        textToSpeech(text: "안녕 호빈 친구",),
+                        textToSpeech(text: "안녕"),
+                      // 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아. 혹시 너도 동물이 되어보고 싶은 적 없어? 하루동안 동물이 된다면, 어떤 동물이 되고싶니?",),
                     ),
                     Align(
                       alignment: Alignment(0.0,0.73),
@@ -203,9 +209,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                           filePath = join((await getApplicationDocumentsDirectory()).path,
                               '${DateTime.now()}.mp4'
                           );
-                          print(filePath);
                             setState(() {
                               startstopwatch();
+                              changeCameraView();
                               _controller.startVideoRecording(filePath);//filePath);
                               isDisabled = true;
                               isDisabled = !isDisabled;
@@ -231,7 +237,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                 _controller.stopVideoRecording();
                                 isDisabled = false;
                                 isDisabled = !isDisabled;
+                                saveVideo();
                                 GallerySaver.saveVideo(filePath);
+
                               }
                             });
                           },
@@ -246,7 +254,28 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                       height: ScreenUtil().setHeight(488),
                       child: Lottie.asset('assets/avatars/data.json'),
                     ),
-                  ]
+                    !isDisabled? changeCameraView():saveVideo(),
+                      Container(
+                        child: GestureDetector(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => DefaultLayout()));
+                        },
+
+                          child: Align(
+                            alignment: Alignment(-0.9, -0.9),
+                            child: Container(
+                              width: ScreenUtil().setWidth(24),
+                              height: ScreenUtil().setHeight(24),
+                          //padding: EdgeInsets.all(15.0),
+                              child: Image.asset(
+                                "assets/images/cameraBack.png",
+                              ),
+                            ),
+                         ),
+                        )
+                      ),
+                  ],
                 );
               }
               else{
@@ -254,6 +283,56 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               }
             },
         ),
+    );
+  }
+}
+
+class changeCameraView extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: GestureDetector(
+          onTap: (){
+
+          },
+          child: Align(
+            alignment: Alignment(0.7, 0.919),
+            child: Container(
+              width: ScreenUtil().setWidth(38),
+              height: ScreenUtil().setHeight(38),
+              //padding: EdgeInsets.all(15.0),
+              child: Image.asset(
+                "assets/images/changeCamera.png",
+              ),
+            ),
+          ),
+        )
+    );
+  }
+}
+
+
+
+class saveVideo extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: GestureDetector(
+          onTap: (){
+
+          },
+          child: Align(
+            alignment: Alignment(0.7, 0.919),
+            child: Container(
+              width: ScreenUtil().setWidth(38),
+              height: ScreenUtil().setHeight(38),
+              //padding: EdgeInsets.all(15.0),
+              child: Image.asset(
+                "assets/images/saveVideo.png",
+              ),
+            ),
+          ),
+        )
     );
   }
 }

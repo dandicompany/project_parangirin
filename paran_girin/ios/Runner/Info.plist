@@ -24,6 +24,40 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>CFBundleURLTypes</key> 
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb138273764808653</string> 
+				<string>com.googleusercontent.apps.334982258294-l3ho0nlfdnsgejabfvoh10ajbq5kokvc</string> 
+			</array> 
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>138273764808653</string>
+	<key>FacebookDisplayName</key>
+	<string>paran_girin</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	<string>fbapi</string>
+	<string>fbapi20130214</string>
+	<string>fbapi20130410</string>
+	<string>fbapi20130702</string>
+	<string>fbapi20131010</string>
+	<string>fbapi20131219</string>
+	<string>fbapi20140410</string>
+	<string>fbapi20140116</string>
+	<string>fbapi20150313</string>
+	<string>fbapi20150629</string>
+	<string>fbapi20160328</string>
+	<string>fbauth</string>
+	<string>fb-messenger-share-api</string>
+	<string>fbauth2</string>
+	<string>fbshareextension</string>
+	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>${PRODUCT_NAME} Camera Usage</string>
 	<key>UILaunchStoryboardName</key>

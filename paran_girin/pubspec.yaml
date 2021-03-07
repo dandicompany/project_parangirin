@@ -36,11 +36,24 @@ dependencies:
   gallery_saver: ^2.0.1
   lottie: ^0.7.0+1
   rive: ^0.6.7
-  flare_flutter: ^2.0.6
   shared_preferences: ^0.5.12+4
   flutter_svg: ^0.19.1
-  audioplayers: ^0.17.0
-  permission_handler:
+  audioplayers: ^0.17.3
+  permission_handler: ^5.1.0
+  cloud_firestore: ^0.16.0
+  firebase_core: "^0.7.0"
+  firebase_auth: "^0.20.0+1" 
+  logger: ^0.9.4
+  provider: ^3.1.0+1
+  google_sign_in: ^4.0.11
+  flutter_facebook_auth: ^2.0.1
+  image_picker:
+  firebase_storage:
+  filesize: ^1.0.4
+  flutter_uploader: ^1.2.1
+  googleapis_auth: ^0.2.12+1
+  video_compress: ^2.1.1
+  flutter_downloader: ^1.5.2
   flutter_datetime_picker: ^1.5.0
   table_calendar: ^2.3.3
   intl:

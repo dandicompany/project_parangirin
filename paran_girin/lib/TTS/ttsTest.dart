@@ -10,15 +10,12 @@ import 'package:audioplayers/audio_cache.dart';
 // @override
 // InitializationState createState() => InitializationState();
 
-
-
 String speaker = "ndain";
-String volume = "1";
+String volume = "2";
 String emotion = "0";
 String speed = "0";
 String pitch = "1";
 String format = "mp3";
-
 
 String client_id = "oipjydjt49";
 String client_secret = "RpmjMMy7caPJ3Hura6ALqRbxTDm5QaUcU1fPLVg8";
@@ -36,17 +33,13 @@ class textToSpeech extends StatefulWidget {
 
   @override
   textToSpeechState createState() => textToSpeechState();
-
 }
 
-
-
-class textToSpeechState extends State<textToSpeech>  {
+class textToSpeechState extends State<textToSpeech> {
   void _createPost() async {
     final response = await http.post(
       url,
-      body:
-      {
+      body: {
         "speaker": speaker,
         "volume": volume,
         "emotion": emotion,
@@ -67,7 +60,7 @@ class textToSpeechState extends State<textToSpeech>  {
     print("body : " + response.body);
 
     Uint8List byteData = response.bodyBytes; // Load audio as a byte array here.
-    int result = (await player.playBytes(byteData)) as int;
+    // int result = (await player.playBytes(byteData)) as int;
   }
 
   @override

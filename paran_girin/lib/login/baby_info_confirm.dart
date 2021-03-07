@@ -33,6 +33,7 @@ class _BabyInfoConfirmState extends State<BabyInfoConfirm> {
                     color: AppTheme.colors.base2
                   ),
                 ),
+
                 GestureDetector(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(

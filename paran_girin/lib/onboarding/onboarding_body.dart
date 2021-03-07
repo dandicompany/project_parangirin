@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/layout/default_botton.dart';
-import 'package:paran_girin/login/login_page.dart';
 import 'package:paran_girin/onboarding/onboard_content.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/TTS/ttsTest.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../login/auth_page.dart';
+
 // void permission() async {
-  //Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.camera]);
-  //print('per1 : $permissions');
-
-
-
+//   Map<Permission, PermissionStatus> permissions =
+//       await [Permission.camera].request();
+//   print('per1 : $permissions');
 // }
-
 
 class OnboardingBody extends StatefulWidget {
   @override
@@ -24,7 +22,7 @@ class OnboardingBody extends StatefulWidget {
 
 class _OnboardingBodyState extends State<OnboardingBody> {
   int currentPage = 0;
-  List<Map<String, String>> onboardText= [
+  List<Map<String, String>> onboardText = [
     {
       "text1": "아이와의 대화!",
       "text2": "\n어떻게 하고 있나요?",
@@ -50,7 +48,8 @@ class _OnboardingBodyState extends State<OnboardingBody> {
       padding: EdgeInsets.only(
         top: ScreenUtil().setHeight(100),
         left: ScreenUtil().setWidth(16),
-        right: ScreenUtil().setWidth(16),),
+        right: ScreenUtil().setWidth(16),
+      ),
       child: Column(
         children: <Widget>[
           Expanded(
@@ -67,31 +66,35 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                   text2: onboardText[index]["text2"],
                   image: "assets/images/onboard_$index.png",
                 ),
-              )
-          ),
+              )),
           Expanded(
             flex: 5,
             child: Column(
               children: <Widget>[
-                Spacer(flex: 1,),
+                Spacer(
+                  flex: 1,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
-                      onboardText.length, (index) => buildDot(index: index)
-                  ),
+                      onboardText.length, (index) => buildDot(index: index)),
                 ),
-                Spacer(flex: 1,),
+                Spacer(
+                  flex: 1,
+                ),
                 DefaultButton(
                   text: "바로 시작하기",
                   press: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      // builder: (context) => Initialization()));
-                      // builder: (context) => textToSpeech()));
-                        builder: (context) => LoginPage()));
+                        // builder: (context) => Initialization()));
+                        // builder: (context) => textToSpeech()));
+                        builder: (context) => AuthPage()));
                   },
                   //LoginPage()
                 ),
-                Spacer(flex: 1,),
+                Spacer(
+                  flex: 1,
+                ),
                 //LoginPage()
               ],
             ),
@@ -108,9 +111,10 @@ class _OnboardingBodyState extends State<OnboardingBody> {
       height: ScreenUtil().setHeight(8),
       width: ScreenUtil().setWidth(8),
       decoration: BoxDecoration(
-          color: currentPage == index ? AppTheme.colors.primary2 : AppTheme.colors.primary4,
+          color: currentPage == index
+              ? AppTheme.colors.primary2
+              : AppTheme.colors.primary4,
           borderRadius: BorderRadius.circular(3)),
     );
   }
-
 }

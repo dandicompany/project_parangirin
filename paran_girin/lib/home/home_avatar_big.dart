@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/layout/default_icon_botton.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
@@ -101,7 +102,10 @@ class HomeAvatarBig extends StatelessWidget {
               text: "추천 질문으로 대화하기",
               icon: "assets/icons/camera.svg",
               isInvert: true,
-              press: () {}
+              press: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Initialization()));
+              }
             ),
           ),
         ],

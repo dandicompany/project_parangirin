@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/layout/base_appbar.dart';
 import 'package:paran_girin/layout/default_icon_botton.dart';
 import 'package:paran_girin/theme/app_theme.dart';
@@ -157,7 +158,10 @@ class _QuestionPostState extends State<QuestionPost> {
               child: DefaultIconButton(
                 text: "파란 기린과 대화하기 ",
                 isInvert: false,
-                press: () {}
+                press: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Initialization()));
+                }
               ),
             )
           ],

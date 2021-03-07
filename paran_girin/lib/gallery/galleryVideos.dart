@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/gallery/myVideoLayout.dart';
 import 'package:paran_girin/gallery/chewie_list_item.dart';
 import 'package:paran_girin/gallery/videoShowWidget.dart';
@@ -134,7 +135,10 @@ class noVideo extends StatelessWidget {
             child: DefaultIconButton(
                 text: "파란 기린과 대화하기 ",
                 isInvert: false,
-                press: () {}
+                press: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Initialization()));
+                }
             ),
           )
         ],
