@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:paran_girin/TTS/ttsTest.dart';
 import 'package:paran_girin/gallery/gallery_page.dart';
 import 'package:paran_girin/home/home_page.dart';
 import 'package:paran_girin/layout/tab_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:paran_girin/my/mypage.dart';
 import 'package:paran_girin/question/category_page.dart';
+import 'package:paran_girin/question/question_page.dart';
+import 'package:paran_girin/gallery/video_downloader.dart';
+import 'package:paran_girin/Video/videoTest.dart';
 
 class DefaultLayout extends StatefulWidget {
   @override
@@ -13,15 +17,15 @@ class DefaultLayout extends StatefulWidget {
 }
 
 class _DefaultLayoutState extends State<DefaultLayout>
-  with TickerProviderStateMixin {
-    // GlobalKey<LoadingWrapperState> _lodingWrapperKey = GlobalKey<LoadingWrapperState>();
-  
+    with TickerProviderStateMixin {
+  // GlobalKey<LoadingWrapperState> _lodingWrapperKey = GlobalKey<LoadingWrapperState>();
+
   PageController _pageController = PageController();
   int _selectedTabIndex = 0;
 
   // Back 버튼 두 번 누르면 앱 종료
   DateTime currentBackPressTime = DateTime.now();
-  
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -32,7 +36,7 @@ class _DefaultLayoutState extends State<DefaultLayout>
           Fluttertoast.showToast(
             msg: "뒤로 가기 버튼을 한 번 더 누르면 종료됩니다.",
             toastLength: Toast.LENGTH_SHORT,
-            fontSize: ScreenUtil().setSp(10), 
+            fontSize: ScreenUtil().setSp(10),
           );
           return false;
         }
@@ -51,41 +55,41 @@ class _DefaultLayoutState extends State<DefaultLayout>
         //   ),
         // ),
         child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: <Widget>[
-              _buildPageView(context),
-              _buildBottomTabs(context)
-            ],
-          ),
-      ), 
+          alignment: Alignment.bottomCenter,
+          children: <Widget>[
+            _buildPageView(context),
+            _buildBottomTabs(context)
+          ],
+        ),
+      ),
     );
   }
 
   Widget _buildPageView(context) {
     return Positioned.fill(
-      child: PageView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        onPageChanged: (idx) {
-          setState(() {
-            _selectedTabIndex = idx;
-          });
-        },
-        controller: _pageController,
-        itemCount: 4,
-        itemBuilder: (context, idx) {
-          switch (idx) {
-            case 0:
-              return HomePage(); // HomePage();
-            case 1:
-              return CategoryPage(); // QuestionPage();
-            case 2:
-              return GalleryPage(); // ArchivePage();
-            case 3:
-              return MyPage(); // MyPage();
-          }
-        },
-      )
-    );
+        child: PageView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      onPageChanged: (idx) {
+        setState(() {
+          _selectedTabIndex = idx;
+        });
+      },
+      controller: _pageController,
+      itemCount: 4,
+      itemBuilder: (context, idx) {
+        switch (idx) {
+          case 0:
+            return HomePage(); // HomePage();
+          case 1:
+            //return CategoryPage(); // QuestionPage();
+            return Initialization(); // hobin test
+          case 2:
+            return GalleryPage(); // ArchivePage();
+          case 3:
+            return MyPage(); // MyPage();
+        }
+      },
+    ));
   }
 
   Widget _buildBottomTabs(context) {
@@ -138,7 +142,4 @@ class _DefaultLayoutState extends State<DefaultLayout>
       ),
     );
   }
-
-
 }
-
