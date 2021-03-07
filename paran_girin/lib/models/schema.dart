@@ -54,15 +54,23 @@ class Avatar {
 
 class Question {
   int qid;
-  int date;
-  String intro;
+  String category;
+  String story;
   String question;
+  String narration1;
+  String narration2;
   String guide;
+  String tag;
   String videoURL;
   Map<String, dynamic> toJson() => {
-        'intro': intro,
+        'qid': qid,
+        'category': category,
+        'story': story,
         'question': question,
+        'narration1': narration1,
+        'narration2': narration2,
         'guide': guide,
+        'tag': tag,
         'videoURL': videoURL
       };
 }
