@@ -16,7 +16,7 @@ class FirebaseProvider with ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseAuth fAuth = FirebaseAuth.instance; // Firebase 인증 플러그인의 인스턴스
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FacebookAuth _facebookAuth = FacebookAuth.instance;
+  // final FacebookAuth _facebookAuth = FacebookAuth.instance;
   User _user; // Firebase에 로그인 된 사용자
   UserModel _info;
   String _lastFirebaseResponse = ""; // Firebase로부터 받은 최신 메시지(에러 처리용)
@@ -219,24 +219,24 @@ class FirebaseProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> signInWithFacebookAccount() async {
-    try {
-      AccessToken accessToken = await _facebookAuth.login();
-      AuthCredential credential =
-          FacebookAuthProvider.credential(accessToken.token);
-      UserCredential authResult = await fAuth.signInWithCredential(credential);
-      User user = authResult.user;
-      logger.d(user);
-      // await loadInfoFromUser();
-      setUser(user);
-      return true;
-    } on Exception catch (e) {
-      logger.e(e.toString());
-      List<String> result = e.toString().split(", ");
-      setLastFBMessage(result[1]);
-      return false;
-    }
-  }
+  // Future<bool> signInWithFacebookAccount() async {
+  //   try {
+  //     AccessToken accessToken = await _facebookAuth.login();
+  //     AuthCredential credential =
+  //         FacebookAuthProvider.credential(accessToken.token);
+  //     UserCredential authResult = await fAuth.signInWithCredential(credential);
+  //     User user = authResult.user;
+  //     logger.d(user);
+  //     // await loadInfoFromUser();
+  //     setUser(user);
+  //     return true;
+  //   } on Exception catch (e) {
+  //     logger.e(e.toString());
+  //     List<String> result = e.toString().split(", ");
+  //     setLastFBMessage(result[1]);
+  //     return false;
+  //   }
+  // }
 
   // Firebase로부터 로그아웃
   signOut() async {
