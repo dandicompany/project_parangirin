@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>334982258294-l3ho0nlfdnsgejabfvoh10ajbq5kokvc.apps.googleusercontent.com</string>
+	<string>334982258294-3p9lf28h8rsg88fcvo1tnoeg2bq88qft.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.334982258294-l3ho0nlfdnsgejabfvoh10ajbq5kokvc</string>
+	<string>com.googleusercontent.apps.334982258294-3p9lf28h8rsg88fcvo1tnoeg2bq88qft</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>334982258294-q13pbkbb3fnod2m5079077280fc0aloo.apps.googleusercontent.com</string>
+	<string>334982258294-lp6nom8eilhkam0om9l6tdpmd05idp1d.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBpHQQsWr4PChdOMl8MPHC50E1InXldXm8</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.paranGirin</string>
+	<string>com.company.paran-girin</string>
 	<key>PROJECT_ID</key>
 	<string>tonal-baton-245112</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:334982258294:ios:4d22e543be7c1ef3e00957</string>
+	<string>1:334982258294:ios:acbc8b4e27461a8be00957</string>
 </dict>
 </plist>
