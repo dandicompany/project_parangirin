@@ -54,6 +54,7 @@ class PostCard extends StatelessWidget {
                   ),
                   Container(
                     height: ScreenUtil().setHeight(64),
+
                     padding: EdgeInsets.symmetric(
                       horizontal:ScreenUtil().setWidth(12),
                       vertical: ScreenUtil().setHeight(10)),

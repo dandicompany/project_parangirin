@@ -81,8 +81,8 @@ class _DefaultLayoutState extends State<DefaultLayout>
           case 0:
             return HomePage(); // HomePage();
           case 1:
-            //return CategoryPage(); // QuestionPage();
-            return Initialization(); // hobin test
+            return CategoryPage(); // QuestionPage();
+            //return Initialization(); // hobin test
           case 2:
             return GalleryPage(); // ArchivePage();
           case 3:

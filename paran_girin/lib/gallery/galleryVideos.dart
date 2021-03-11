@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/gallery/myVideoLayout.dart';
+import 'package:paran_girin/gallery/chewie_list_item.dart';
+import 'package:paran_girin/gallery/videoShowWidget.dart';
 import 'package:paran_girin/layout/default_icon_botton.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/layout/flatbuttonShadow.dart';
@@ -29,6 +32,7 @@ class _CalenderState extends State<galleryVideo>{
   @override
   void initState() {
     super.initState();
+    sum = 3;
   }
 
 
@@ -131,7 +135,10 @@ class noVideo extends StatelessWidget {
             child: DefaultIconButton(
                 text: "파란 기린과 대화하기 ",
                 isInvert: false,
-                press: () {}
+                press: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Initialization()));
+                }
             ),
           )
         ],
@@ -153,7 +160,12 @@ class yesVideo extends StatelessWidget{
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(height: ScreenUtil().setHeight(45),),
-          for (var i = 0 ; i <sum ; i ++) myVideoLayout(),
+          for (var i = 0 ; i <sum ; i ++) myVideoLayout(
+            onTap: (){
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => videoShowWidget()));//VideoPlayerScreen()));
+            },
+          ),
           SizedBox(height: ScreenUtil().setHeight(100)),
         ],
       ),
