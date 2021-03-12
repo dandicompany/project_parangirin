@@ -14,8 +14,7 @@ class videoShowWidget extends StatelessWidget{
       ),
       child: Container(
           child : ChewieListItem(
-              videoPlayerController: VideoPlayerController.network(
-                  'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4'),
+              videoPlayerController: VideoPlayerController.asset('assets/videoEx/videoTest.mp4'),
               looping: true,
               ),
         ),
