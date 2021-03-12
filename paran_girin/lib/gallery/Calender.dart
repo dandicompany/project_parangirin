@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/theme/app_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -20,13 +23,41 @@ class _CalenderState extends State<Calender>{
   CalendarController _calendarController;
   Map<DateTime, List<dynamic>> _events;
   List<dynamic> _selectedEvents;
+  TextEditingController _eventController;
+  SharedPreferences prefs;
+
+  Map<String, dynamic> encodeMap(Map<DateTime, dynamic> map) {
+    Map<String, dynamic> newMap = {};
+    map.forEach((key, value) {
+      newMap[key.toString()] = map[key];
+    });
+    return newMap;
+  }
+  Map<DateTime, dynamic> decodeMap(Map<String, dynamic> map) {
+    Map<DateTime, dynamic> newMap = {};
+    map.forEach((key, value) {
+      newMap[DateTime.parse(key)] = map[key];
+    });
+    return newMap;
+  }
+
+  prefsData() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _events = Map<DateTime, List<dynamic>>.from(
+          decodeMap(json.decode(prefs.getString("events") ?? "{}")));
+    });
+  }
 
   @override
   void initState() {
     super.initState();
 
     _calendarController = CalendarController();
-
+    _eventController = TextEditingController();
+    _events = {};
+    _selectedEvents = [];
+    prefsData();
   }
 
   @override
@@ -108,6 +139,7 @@ class _CalenderState extends State<Calender>{
                             weekdayStyle: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(20)),
                             weekendStyle: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(20)),
                             holidayStyle: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(20)),
+                            eventDayStyle: TextStyle(color: Colors.red, fontSize : ScreenUtil().setSp(20)),
                           ),
                           headerStyle: HeaderStyle(
                               formatButtonVisible: false,
@@ -118,6 +150,8 @@ class _CalenderState extends State<Calender>{
                           onDaySelected: (date, events,holidays) {
                             setState(() {
                               _selectedEvents = events;
+                              print(date);
+                              //print(events);
                             });
                           }, // onDaySelected: ,
                         ),
