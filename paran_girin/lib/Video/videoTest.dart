@@ -87,7 +87,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   var swatch = Stopwatch();
   final dur = const Duration(seconds: 1);
 
-  var todayDate;
+  var todayDate = new DateTime.now();
+
 
   void starttimer() {
     Timer(dur, keeprunning);
@@ -239,6 +240,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                             setState(() {
                               if (_controller.value.isRecordingVideo) {
                                 stopstopwatch();
+                                
                                 _controller.stopVideoRecording();
                                 isDisabled = false;
                                 isDisabled = !isDisabled;
@@ -292,17 +294,22 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   }
 }
 
+
+
 class changeCameraView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: GestureDetector(
         onTap: () {
-          if (cameraview == true)
+          if (cameraview == true){
             cameraview = false;
-          else
+            print("case1");
+          }
+          else{
             cameraview = true;
-          videoFunc();
+            print("case2");
+          }
         },
         child: Align(
           alignment: Alignment(0.7, 0.919),

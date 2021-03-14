@@ -21,6 +21,9 @@ class _ChildInfoState extends State<childrenInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: BaseAppBar(
+        title: "자녀 관리",
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(150)),
         child: Container(
@@ -33,9 +36,6 @@ class _ChildInfoState extends State<childrenInfo> {
           ),
           child: Column(
             children: [
-              BaseAppBar(
-                title: "자녀 관리",
-              ),
               SizedBox(height: ScreenUtil().setHeight(30)),
               childrenInfoLayout(
                 image: "assets/images/onboard_1.png",
