@@ -56,8 +56,6 @@ class textToSpeechState extends State<textToSpeech> {
     );
 
     AudioCache player = new AudioCache();
-    print(response);
-    print("body : " + response.body);
 
     Uint8List byteData = response.bodyBytes; // Load audio as a byte array here.
     await player.playBytes(byteData);
