@@ -19,8 +19,8 @@ CameraDescription firstCamera;
 CameraDescription frontCamera;
 String filePath;
 var cameras;
-
-bool cameraview = true; //true면 전면, false면 후면
+String filepath;
+bool cameraview = true;
 
 String formatTime(int milliseconds) {
   var secs = milliseconds ~/ 1000;
@@ -36,7 +36,8 @@ Future<void> videoFunc() async {
   cameras = await availableCameras();
 
   // 이용가능한 카메라 목록에서 특정 카메라를 얻습니다.
-  firstCamera = cameraview ? cameras[1] : cameras[0];
+  firstCamera = cameras.first;
+  final frontCamera = cameras[1];
 
   runApp(
     MaterialApp(
@@ -44,7 +45,7 @@ Future<void> videoFunc() async {
       theme: ThemeData.dark(),
       home: TakePictureScreen(
         // 적절한 카메라를 TakePictureScreen 위젯에게 전달합니다.
-        camera: firstCamera,
+        camera: frontCamera,
       ),
     ),
   );
@@ -163,6 +164,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //debugShowCheckedModeBanner: false,
       //appBar: AppBar(title: Text('Take a Video')),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
@@ -171,9 +173,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             return Stack(
               children: [
                 Align(
-                  child: textToSpeech(
-                      text:
-                          "안녕"), //샐리야! 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아."),
+                  child: textToSpeech(text: "안녕"),
                   // 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아. 혹시 너도 동물이 되어보고 싶은 적 없어? 하루동안 동물이 된다면, 어떤 동물이 되고싶니?",),
                 ),
                 Align(
@@ -244,8 +244,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                 _controller.stopVideoRecording();
                                 isDisabled = false;
                                 isDisabled = !isDisabled;
-                                saveVideo();
-                                GallerySaver.saveVideo(filePath);
+
+                                //GallerySaver.saveVideo(filePath);
                               }
                             });
                           },
@@ -304,11 +304,9 @@ class changeCameraView extends StatelessWidget {
         onTap: () {
           if (cameraview == true){
             cameraview = false;
-            print("case1");
           }
           else{
             cameraview = true;
-            print("case2");
           }
         },
         child: Align(
@@ -320,10 +318,9 @@ class changeCameraView extends StatelessWidget {
             child: Image.asset(
               "assets/images/changeCamera.png",
             ),
-          ),
         ),
       ),
-    );
+    ));
   }
 }
 
@@ -332,7 +329,10 @@ class saveVideo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: GestureDetector(
-      onTap: () {},
+      onTap: () {
+        saveVideo();
+        print("now time : " + filePath);
+      },
       child: Align(
         alignment: Alignment(0.7, 0.919),
         child: Container(
@@ -348,6 +348,7 @@ class saveVideo extends StatelessWidget {
   }
 }
 
+/*"/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4"*/
 // Future<String> _startVideoRecording() async {
 //
 //   if (!_controller.value.isInitialized) {
