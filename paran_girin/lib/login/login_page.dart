@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paran_girin/layout/default_botton.dart';
-import 'package:paran_girin/login/email_check.dart';
 import 'package:paran_girin/login/login_body.dart';
-import 'package:paran_girin/login/login_page2.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -362,7 +360,7 @@ class _LoginPageState extends State<LoginPage> {
           icon: Icon(Icons.ac_unit),
           iconSize: 40.0, // * screenUtil 씌워줘야함
           onPressed: () {
-            // fp.signInWithFacebookAccount();
+            fp.signInWithFacebookAccount();
           },
         ));
   }

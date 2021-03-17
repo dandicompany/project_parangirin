@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/my/profile_menu.dart';
 import 'package:paran_girin/my/profile_pic.dart';
+import 'package:paran_girin/myPageDetail/Notice.dart';
 import 'package:paran_girin/myPageDetail/childrenInfo.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
@@ -58,7 +59,12 @@ class _MyPageState extends State<MyPage> {
                         MaterialPageRoute(builder: (context) => pushAlarm()));
                   }),
               SizedBox(height: ScreenUtil().setHeight(16)),
-              ProfileMenu(text: "공지 사항", press: () {}),
+              ProfileMenu(
+                  text: "공지 사항",
+                  press: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Notice()));
+                  }),
               ProfileMenu(text: "의견 보내기", press: () {}),
               ProfileMenu(text: "파란 기린 소개", press: () {}),
               SizedBox(height: ScreenUtil().setHeight(16)),

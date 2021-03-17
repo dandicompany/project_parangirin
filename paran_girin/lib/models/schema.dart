@@ -1,32 +1,18 @@
 class UserModel {
-  String sharedID;
   String id;
   String displayName;
   String email;
-  String avatar;
-  String currentChild;
-  bool isVerified;
-  List<String> children;
-  // Map<String, dynamic> toJson() => {
-  //       'shared': sharedID,
-  //       'id': id,
-  //       'displayName': displayName,
-  //       'email': email,
-  //       'avatar': avatar,
-  //       'isVerified': isVerified,
-  //       'children': children
-  //     };
+  UserInDB userInDB;
+  Child currentChild;
 }
 
 class UserInDB {
   String sharedID;
-  String avatar;
   String currentChild;
   List<String> children = List<String>();
   UserInDB.sharedID(this.sharedID);
   Map<String, dynamic> toJson() => {
         'sharedID': sharedID,
-        'avatar': avatar,
         'currentChild': currentChild,
         'children': children,
       };
@@ -36,6 +22,7 @@ class Child {
   int birthday;
   String name;
   String profileURL;
+  String avatar;
   Map<String, String> answers;
   Map<String, dynamic> toJson() => {
         'name': name,
