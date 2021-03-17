@@ -143,7 +143,7 @@ class HomeAvatar extends StatelessWidget {
             Container(
               width: ScreenUtil().setWidth(396),
               height: ScreenUtil().setHeight(396),
-              child: Lottie.asset('assets/avatars/lurking-cat.json'),
+              child: Image.asset('assets/avatars/home.gif'),
             ),
           ],
         ),

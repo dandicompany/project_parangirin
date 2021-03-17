@@ -82,6 +82,7 @@ flutter:
   assets:
       - assets/avatars/data.json
       - assets/avatars/lurking-cat.json
+      - assets/avatars/home.gif
       - assets/avatars/minion.flr
       - assets/avatars/
       - assets/icons/

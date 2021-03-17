@@ -90,7 +90,7 @@ class FirebaseProvider with ChangeNotifier {
 
   Future<bool> loadInfoFromUser() async {
     if (_user != null) {
-      _info.isVerified =
+      bool isVerified =
           confirmedProvider.contains(_user.providerData[0].providerId) ||
               _user.emailVerified;
       _info.email = _user.email;
