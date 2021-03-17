@@ -59,6 +59,7 @@ dependencies:
   intl:
   video_player:
   chewie:
+  mailer:
 
 dev_dependencies:
   flutter_test:

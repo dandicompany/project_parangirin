@@ -33,7 +33,6 @@ class _ChewieListItemState extends State<ChewieListItem> {
       aspectRatio: 422 / 509,
       autoInitialize: true,
       looping: widget.looping,
-      // autoplay true or not?????????
       autoPlay: true,
       errorBuilder: (context, errorMessage) {
         return Center(
