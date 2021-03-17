@@ -90,27 +90,39 @@ class FirebaseProvider with ChangeNotifier {
 
   Future<bool> loadInfoFromUser() async {
     if (_user != null) {
-      _info.isVerified =
-          confirmedProvider.contains(_user.providerData[0].providerId) ||
-              _user.emailVerified;
+      // _isVerified =
+      //     confirmedProvider.contains(_user.providerData[0].providerId) ||
+      //         _user.emailVerified;
+      _info = UserModel();
+      _info.id = _user.uid;
       _info.email = _user.email;
       _info.displayName = _user.displayName;
       DocumentReference userRef = firestore.collection('users').doc(_user.uid);
       DocumentSnapshot snap = await userRef.get();
-      Map<String, dynamic> temp;
       if (snap.exists) {
         logger.d('Loading Document...');
-        temp = snap.data();
+        _info.userInDB = UserInDB.fromJson(snap.data());
+        String currentChild = _info.userInDB.currentChild;
+        if (currentChild != null) {
+          DocumentReference childRef =
+              firestore.collection('children').doc(currentChild);
+          DocumentSnapshot snap = await childRef.get();
+          if (snap.exists) {
+            _info.currentChild = Child.fromJson(snap.data());
+          }
+        }
+        
+        while (true) {
+
+          }
+        }
       } else {
         logger.d('Document does not exist on the database');
-        // newInfo.sharedID = _user.uid;
-        temp = UserInDB.sharedID(_user.uid).toJson();
-        await userRef.set(temp);
+        UserInDB temp = UserInDB.sharedID(_user.uid);
+        await userRef.set(temp.toJson());
+        _info.userInDB = temp;
       }
-      _info.id = temp["id"];
-      _info.children = temp["children"].cast<String>();
-      _info.sharedID = temp["sharedID"];
-      logger.d(_info.children);
+      logger.d(_info.userInDB.children);
     }
     return true;
   }
@@ -141,7 +153,8 @@ class FirebaseProvider with ChangeNotifier {
     if (_user == null) {
       return false;
     } else {
-      return _info.isVerified;
+      return confirmedProvider.contains(_user.providerData[0].providerId) ||
+          _user.emailVerified;
     }
   }
 
