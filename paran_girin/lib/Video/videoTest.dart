@@ -20,6 +20,7 @@ CameraDescription frontCamera;
 String filePath;
 var cameras;
 String filepath;
+bool cameraview = true;
 
 String formatTime(int milliseconds) {
   var secs = milliseconds ~/ 1000;
@@ -28,7 +29,6 @@ String formatTime(int milliseconds) {
   var seconds = (secs % 60).toString().padLeft(2, '0');
   return "$hours:$minutes:$seconds";
 }
-
 
 Future<void> videoFunc() async {
   // 디바이스에서 이용가능한 카메라 목록을 받아옵니다.
@@ -51,24 +51,20 @@ Future<void> videoFunc() async {
   );
 }
 
-class Initialization extends StatefulWidget{
-
+class Initialization extends StatefulWidget {
   @override
   InitializationState createState() => InitializationState();
-  
 }
 
-class InitializationState extends State<Initialization>{
+class InitializationState extends State<Initialization> {
   @override
   Widget build(BuildContext context) {
     videoFunc();
   }
 }
 
-
 // 사용자가 주어진 카메라를 사용하여 사진을 찍을 수 있는 화면
 class TakePictureScreen extends StatefulWidget {
-
   final CameraDescription camera;
 
   const TakePictureScreen({
@@ -80,7 +76,6 @@ class TakePictureScreen extends StatefulWidget {
   TakePictureScreenState createState() => TakePictureScreenState();
 }
 
-
 class TakePictureScreenState extends State<TakePictureScreen> {
   CameraController _controller;
   Future<void> _initializeControllerFuture;
@@ -91,27 +86,29 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   bool resetispressed = true;
   String stoptimetodisplay = '00:00:00';
   var swatch = Stopwatch();
-  final dur = const Duration(seconds:1);
+  final dur = const Duration(seconds: 1);
 
-  var todayDate ;
+  var todayDate = new DateTime.now();
 
 
-  void starttimer(){
+  void starttimer() {
     Timer(dur, keeprunning);
   }
 
-  void keeprunning(){
-    if(swatch.isRunning){
+  void keeprunning() {
+    if (swatch.isRunning) {
       starttimer();
     }
     setState(() {
-      stoptimetodisplay = swatch.elapsed.inHours.toString().padLeft(2,'0')+":"
-          + (swatch.elapsed.inMinutes%60).toString().padLeft(2, '0')+ ":"
-          + (swatch.elapsed.inSeconds%60).toString().padLeft(2, '0');
+      stoptimetodisplay = swatch.elapsed.inHours.toString().padLeft(2, '0') +
+          ":" +
+          (swatch.elapsed.inMinutes % 60).toString().padLeft(2, '0') +
+          ":" +
+          (swatch.elapsed.inSeconds % 60).toString().padLeft(2, '0');
     });
   }
 
-  void startstopwatch(){
+  void startstopwatch() {
     setState(() {
       stopispressed = false;
       startispressed = false;
@@ -119,25 +116,28 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     swatch.start();
     starttimer();
   }
-  void stopstopwatch(){
+
+  void stopstopwatch() {
     setState(() {
       stopispressed = true;
-      resetispressed =false;
+      resetispressed = false;
     });
     swatch.stop();
   }
 
-
-  Widget stopwatch(){
+  Widget stopwatch() {
     return Container(
-        alignment: Alignment.center,
-        child: Text(
+      alignment: Alignment.center,
+      child: Text(
         stoptimetodisplay,
         style: TextStyle(
-        color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
+          color: Colors.white,
+          fontSize: ScreenUtil().setSp(12),
+        ),
+        textAlign: TextAlign.center,
+      ),
     );
   }
-
 
   @override
   void initState() {
@@ -161,183 +161,194 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //debugShowCheckedModeBanner: false,
-        //appBar: AppBar(title: Text('Take a Video')),
-        body: FutureBuilder<void>(
-            future: _initializeControllerFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Stack(
-                  children: [
-                    Align(
-                      child:
-                        textToSpeech(text: "안녕"),
-                      // 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아. 혹시 너도 동물이 되어보고 싶은 적 없어? 하루동안 동물이 된다면, 어떤 동물이 되고싶니?",),
-                    ),
-                    Align(
-                      alignment: Alignment(0.0,0.73),
-                      child: Container(
-                        width: ScreenUtil().setWidth(79),
-                        height: ScreenUtil().setHeight(20),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.all( Radius.circular(40), ),
-                        ),
-                        alignment: Alignment.center,
-                        child : stopwatch(),
-                        //child: Text(formatTime(_stopwatch.elapsedMilliseconds), style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
-                        //Text("00:00:00", style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
+      //appBar: AppBar(title: Text('Take a Video')),
+      body: FutureBuilder<void>(
+        future: _initializeControllerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Stack(
+              children: [
+                Align(
+                  child: textToSpeech(text: "안녕"),
+                  // 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아. 혹시 너도 동물이 되어보고 싶은 적 없어? 하루동안 동물이 된다면, 어떤 동물이 되고싶니?",),
+                ),
+                Align(
+                  alignment: Alignment(0.0, 0.73),
+                  child: Container(
+                    width: ScreenUtil().setWidth(79),
+                    height: ScreenUtil().setHeight(20),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(40),
                       ),
                     ),
-                    Transform(
-                      alignment: Alignment.topRight,
-                      transform: Matrix4.diagonal3Values(0.3, 0.3, 0), // (x,y,z)
-                      child: CameraPreview(_controller),
-                    ),
-                    Align(
-                      alignment : Alignment.bottomCenter,
-                      child:!_controller.value.isRecordingVideo
-                      ? RawMaterialButton(onPressed: () async {
-                        try{
-                          await _initializeControllerFuture;
-                          filePath = join((await getApplicationDocumentsDirectory()).path,
-                              '${DateTime.now()}.mp4'
-                          );
+                    alignment: Alignment.center,
+                    child: stopwatch(),
+                    //child: Text(formatTime(_stopwatch.elapsedMilliseconds), style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
+                    //Text("00:00:00", style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
+                  ),
+                ),
+                Transform(
+                  alignment: Alignment.topRight,
+                  transform: Matrix4.diagonal3Values(0.3, 0.3, 0), // (x,y,z)
+                  child: CameraPreview(_controller),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: !_controller.value.isRecordingVideo
+                      ? RawMaterialButton(
+                          onPressed: () async {
+                            try {
+                              await _initializeControllerFuture;
+                              filePath = join(
+                                  (await getApplicationDocumentsDirectory())
+                                      .path,
+                                  '${DateTime.now()}.mp4');
+                              setState(() {
+                                startstopwatch();
+                                changeCameraView();
+                                _controller
+                                    .startVideoRecording(filePath); //filePath);
+                                isDisabled = true;
+                                isDisabled = !isDisabled;
+                              });
+                            } catch (e) {
+                              print(e);
+                            }
+                          },
+                          child: ImageIcon(
+                            AssetImage("assets/images/video_On.png"),
+                            size: ScreenUtil().radius(70),
+                            color: Colors.red,
+                          ),
+                          padding: EdgeInsets.all(15.0),
+                          shape: CircleBorder(),
+                        )
+                      : null,
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: _controller.value.isRecordingVideo
+                      ? RawMaterialButton(
+                          onPressed: () {
                             setState(() {
-                              startstopwatch();
-                              changeCameraView();
-                              _controller.startVideoRecording(filePath);//filePath);
-                              isDisabled = true;
-                              isDisabled = !isDisabled;
-                            });
-                            }catch(e){
-                            print(e);
-                        }
-
-                      },
-                        child : ImageIcon(AssetImage("assets/images/video_On.png"), size : ScreenUtil().radius(70), color: Colors.red,),
-                        padding: EdgeInsets.all(15.0),
-                        shape:  CircleBorder(),
-                      )
-                    :null,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child : _controller.value.isRecordingVideo?
-                          RawMaterialButton(onPressed: (){
-                            setState((){
-                              if(_controller.value.isRecordingVideo){
+                              if (_controller.value.isRecordingVideo) {
                                 stopstopwatch();
+                                
                                 _controller.stopVideoRecording();
                                 isDisabled = false;
                                 isDisabled = !isDisabled;
-                                saveVideo();
-                                GallerySaver.saveVideo(filePath);
 
+                                //GallerySaver.saveVideo(filePath);
                               }
                             });
                           },
-                            child: ImageIcon(AssetImage("assets/images/video_Off.png"),size :  ScreenUtil().radius(70) ,color: Colors.red,),
-                            padding : EdgeInsets.all(15.0),
-                            shape: CircleBorder(),
-                          ):null
-                        ,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: ScreenUtil().setHeight(488),
-                      child: Lottie.asset('assets/avatars/data.json'),
-                    ),
-                    !isDisabled? changeCameraView():saveVideo(),
-                      Container(
-                        child: GestureDetector(
-                        onTap: (){
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => DefaultLayout()));
-                        },
-
-                          child: Align(
-                            alignment: Alignment(-0.9, -0.9),
-                            child: Container(
-                              width: ScreenUtil().setWidth(24),
-                              height: ScreenUtil().setHeight(24),
-                          //padding: EdgeInsets.all(15.0),
-                              child: Image.asset(
-                                "assets/images/cameraBack.png",
-                              ),
-                            ),
-                         ),
+                          child: ImageIcon(
+                            AssetImage("assets/images/video_Off.png"),
+                            size: ScreenUtil().radius(70),
+                            color: Colors.red,
+                          ),
+                          padding: EdgeInsets.all(15.0),
+                          shape: CircleBorder(),
                         )
+                      : null,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: ScreenUtil().setHeight(488),
+                  child: Lottie.asset('assets/avatars/data.json'),
+                ),
+                !isDisabled ? changeCameraView() : saveVideo(),
+                Container(
+                    child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => DefaultLayout()));
+                  },
+                  child: Align(
+                    alignment: Alignment(-0.9, -0.9),
+                    child: Container(
+                      width: ScreenUtil().setWidth(24),
+                      height: ScreenUtil().setHeight(24),
+                      //padding: EdgeInsets.all(15.0),
+                      child: Image.asset(
+                        "assets/images/cameraBack.png",
                       ),
-                  ],
-                );
-              }
-              else{
-                return Center(child: CircularProgressIndicator());
-              }
-            },
+                    ),
+                  ),
+                )),
+              ],
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+    );
+  }
+}
+
+
+
+class changeCameraView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: GestureDetector(
+        onTap: () {
+          if (cameraview == true){
+            cameraview = false;
+          }
+          else{
+            cameraview = true;
+          }
+        },
+        child: Align(
+          alignment: Alignment(0.7, 0.919),
+          child: Container(
+            width: ScreenUtil().setWidth(38),
+            height: ScreenUtil().setHeight(38),
+            //padding: EdgeInsets.all(15.0),
+            child: Image.asset(
+              "assets/images/changeCamera.png",
+            ),
         ),
-    );
+      ),
+    ));
   }
 }
 
-class changeCameraView extends StatelessWidget{
+class saveVideo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
         child: GestureDetector(
-          onTap: (){
-
-          },
-          child: Align(
-            alignment: Alignment(0.7, 0.919),
-            child: Container(
-              width: ScreenUtil().setWidth(38),
-              height: ScreenUtil().setHeight(38),
-              //padding: EdgeInsets.all(15.0),
-              child: Image.asset(
-                "assets/images/changeCamera.png",
-              ),
-            ),
+      onTap: () {
+        saveVideo();
+        print("now time : " + filePath);
+      },
+      child: Align(
+        alignment: Alignment(0.7, 0.919),
+        child: Container(
+          width: ScreenUtil().setWidth(38),
+          height: ScreenUtil().setHeight(38),
+          //padding: EdgeInsets.all(15.0),
+          child: Image.asset(
+            "assets/images/saveVideo.png",
           ),
-        )
-    );
+        ),
+      ),
+    ));
   }
 }
 
-
-
-class saveVideo extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: GestureDetector(
-          onTap: (){
-
-          },
-          child: Align(
-            alignment: Alignment(0.7, 0.919),
-            child: Container(
-              width: ScreenUtil().setWidth(38),
-              height: ScreenUtil().setHeight(38),
-              //padding: EdgeInsets.all(15.0),
-              child: Image.asset(
-                "assets/images/saveVideo.png",
-              ),
-            ),
-          ),
-        )
-    );
-  }
-}
-
-
+/*"/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4"*/
 // Future<String> _startVideoRecording() async {
 //
 //   if (!_controller.value.isInitialized) {
@@ -390,7 +401,6 @@ class saveVideo extends StatelessWidget{
 //
 //
 
-
 //   return AspectRatio(
 //       aspectRatio: 1,
 //       child: Transform(
@@ -419,4 +429,3 @@ class saveVideo extends StatelessWidget{
 //
 //   }
 // }
-
