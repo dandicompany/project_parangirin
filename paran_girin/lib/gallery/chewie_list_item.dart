@@ -7,7 +7,7 @@ import 'package:paran_girin/theme/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:video_player/video_player.dart';
 
-class ChewieListItem extends StatefulWidget{
+class ChewieListItem extends StatefulWidget {
   final VideoPlayerController videoPlayerController;
   final bool looping;
 
@@ -15,35 +15,30 @@ class ChewieListItem extends StatefulWidget{
     @required this.videoPlayerController,
     this.looping,
     Key key,
-  }) : super(key:key);
+  }) : super(key: key);
 
   @override
   _ChewieListItemState createState() => _ChewieListItemState();
-
 }
-
 
 class _ChewieListItemState extends State<ChewieListItem> {
   ChewieController _chewieControlloer;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
     _chewieControlloer = ChewieController(
-      videoPlayerController : widget.videoPlayerController,
-      aspectRatio: 422/509,
-
+      videoPlayerController: widget.videoPlayerController,
+      aspectRatio: 422 / 509,
       autoInitialize: true,
       looping: widget.looping,
-
-      errorBuilder: (context, errorMessage){
+      errorBuilder: (context, errorMessage) {
         return Center(
-          child: Text(
-            errorMessage,
-            style: TextStyle(color: Colors.white),
-          )
-        );
+            child: Text(
+          errorMessage,
+          style: TextStyle(color: Colors.white),
+        ));
       },
     );
   }
@@ -59,26 +54,13 @@ class _ChewieListItemState extends State<ChewieListItem> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
 
     widget.videoPlayerController.dispose();
     _chewieControlloer.dispose();
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // class VideoPlayerScreen extends StatefulWidget {
 //   VideoPlayerScreen({Key key}) : super(key: key);

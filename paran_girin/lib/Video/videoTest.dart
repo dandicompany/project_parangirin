@@ -319,7 +319,7 @@ class saveVideo extends StatelessWidget {
         child: GestureDetector(
       onTap: () {
         saveVideo();
-        print("now time : " + filePath);
+        //filepath 서버에 올리기
       },
       child: Align(
         alignment: Alignment(0.7, 0.919),
