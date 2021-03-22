@@ -40,33 +40,49 @@ class _SendCommentsState extends State<SendComments> {
       appBar: BaseAppBar(
         title: '의견 보내기',
       ),
-      body: Column(
-        children: [
-          Container(
+      body: Container(
             padding: EdgeInsets.only(
-              top: ScreenUtil().setHeight(20),
+              top: ScreenUtil().setHeight(16),
               left: ScreenUtil().setWidth(16),
               right: ScreenUtil().setWidth(16),
             ),
-            child: RichText(
-                text: new TextSpan(
-              style: TextStyle(
-                  // fontFamily: 'Noto Sans KR',
-                  // fontWeight: FontWeight.w300,
-                  color: AppTheme.colors.base2,
-                  fontSize: ScreenUtil().setSp(12)),
-              children: <TextSpan>[
-                new TextSpan(
-                    text:
-                        '더욱 발전하는 파란기린이 되기 위해 오늘도 여러분의 목소리에 귀를 기울입니다! 소중한 의견에 보답하기 위해 '),
-                new TextSpan(
-                    text: '매일 한 분을 선발해 파란기린 굿즈를 보내드려요',
-                    style: new TextStyle(color: AppTheme.colors.primary2)),
+            child: Column(
+              children: [
+                RichText(
+                    text: new TextSpan(
+                  style: TextStyle(
+                      // fontFamily: 'Noto Sans KR',
+                      // fontWeight: FontWeight.w300,
+                      color: AppTheme.colors.base2,
+                      fontSize: ScreenUtil().setSp(12)),
+                  children: <TextSpan>[
+                    new TextSpan(
+                        text:
+                            '더욱 발전하는 파란기린이 되기 위해 오늘도 여러분의 목소리에 귀를 기울입니다! 소중한 의견에 보답하기 위해 '),
+                    new TextSpan(
+                        text: '매일 한 분을 선발해 파란기린 굿즈를 보내드려요',
+                        style: new TextStyle(color: AppTheme.colors.primary2)),
+                  ],
+                )),
+                SizedBox(
+                  width: double.infinity,
+                  height: ScreenUtil().setHeight(40)
+                ),
+                Text(
+                  "창의적인 질문을 추천해주세요!",
+                  style: TextStyle(
+                    fontSize: ScreenUtil().setSp(18),
+                  )
+                ),
+                SizedBox(height: ScreenUtil().setHeight(8)),
+                Container(
+                  width: double.infinity,
+                  height: ScreenUtil().setHeight(120)
+                  )
               ],
-            )),
+            ),
           ),
-        ],
-      ),
+          
     );
   }
 }
