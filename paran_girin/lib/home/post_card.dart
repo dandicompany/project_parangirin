@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/theme/app_theme.dart';
+import 'package:paran_girin/gallery/videoStreamWidget.dart';
+import 'package:paran_girin/models/schema.dart';
+import 'package:paran_girin/login/firebase_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class PostCard extends StatelessWidget {
-  final VoidCallback onTap;
-  final VoidCallback onTapHeart;
-  final String title;
-  final String description;
-  final Image profile;
-  final Image avatar;
-  final Image thumbnail;
+  final Post post;
   // final Post post; // post model
-
+  FirebaseProvider fp;
   // const PostCard({Key key, this.onTap, this.onTapHeart, this.post}) : super(key: key);
-  const PostCard({Key key, this.onTap, this.onTapHeart, this.title, this.description, this.profile, this.avatar, this.thumbnail}) : super(key: key);
+  PostCard(this.post);
 
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
     return Padding(
-      padding: EdgeInsets.symmetric(
-              horizontal: ScreenUtil().setWidth(16)
-      ),
+      padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: onTap,
+          onTap: () async {
+            Reference file = fp.getFirestorage().ref(post.videoURL);
+            String url = await file.getDownloadURL();
+            logger.d(url);
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    VideoStreamWidget(url))); //VideoPlayerScreen()));
+          },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: Container(
@@ -54,10 +59,9 @@ class PostCard extends StatelessWidget {
                   ),
                   Container(
                     height: ScreenUtil().setHeight(64),
-
                     padding: EdgeInsets.symmetric(
-                      horizontal:ScreenUtil().setWidth(12),
-                      vertical: ScreenUtil().setHeight(10)),
+                        horizontal: ScreenUtil().setWidth(12),
+                        vertical: ScreenUtil().setHeight(10)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -66,9 +70,8 @@ class PostCard extends StatelessWidget {
                           children: [
                             Text(
                               "세상에 없던 새로운 대답, 계란", // title
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(16)
-                              ),
+                              style:
+                                  TextStyle(fontSize: ScreenUtil().setSp(16)),
                             ),
                             Text(
                               "타임캡슐에 담고 싶은 나의 물건은?", // description
@@ -80,13 +83,13 @@ class PostCard extends StatelessWidget {
                           ],
                         ),
                         CircleAvatar(
-                          backgroundImage: AssetImage("assets/images/thumbnail_baby.png"),
+                          backgroundImage:
+                              AssetImage("assets/images/thumbnail_baby.png"),
                           radius: ScreenUtil().setWidth(32),
                         ),
                       ],
                     ),
                   ),
-
                 ],
               ),
             ),

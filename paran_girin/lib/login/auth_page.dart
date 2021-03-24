@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:paran_girin/login/login_page.dart';
 import 'package:paran_girin/login/baby_info.dart';
 import 'package:paran_girin/layout/splash.dart';
+import 'package:paran_girin/login/baby_info_name.dart';
 
 AuthPageState pageState;
 
@@ -33,9 +34,9 @@ class AuthPageState extends State<AuthPage> {
             logger.d("user: ${fp.getUser()}");
             if (fp.checkVerifiedUser()) {
               // Todo: check user info
-              if (fp.getUserInfo().children.length == 0) {
-                // return BabyInfo();
-                return DefaultLayout();
+              if (fp.getUserInfo().userInDB.children.length == 0) {
+                return BabyInfoName();
+                // return DefaultLayout();
               } else {
                 return DefaultLayout();
               }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:paran_girin/home/home_body.dart';
-import 'package:paran_girin/models/schema.dart';
 import 'dart:async';
 
 class HomePage extends StatefulWidget {
@@ -40,7 +39,7 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: HomeBody(),
-      
+
       // Lottie & Rive test
       // body: Builder(
       //   builder: (context) {

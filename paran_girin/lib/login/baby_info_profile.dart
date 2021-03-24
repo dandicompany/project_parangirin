@@ -19,57 +19,49 @@ class _BabyInfoProfileState extends State<BabyInfoProfile> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => DefaultLayout()));
-                },
-                child: Column(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(75),
-                      height: ScreenUtil().setHeight(75),
-                      child: Image.asset(
-                        "assets/images/thumbnail_avatar.png",
-                        fit: BoxFit.cover
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => DefaultLayout()));
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(75),
+                        height: ScreenUtil().setHeight(75),
+                        child: Image.asset("assets/images/thumbnail_avatar.png",
+                            fit: BoxFit.cover),
                       ),
-                    ),
-                    Text(
-                      "샐리",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w200,
-                        fontSize: ScreenUtil().setSp(18),
-                        color: AppTheme.colors.base1
+                      Text(
+                        "샐리",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w200,
+                            fontSize: ScreenUtil().setSp(18),
+                            color: AppTheme.colors.base1),
                       ),
-                    ),
-                  ],
-                )
-              ),
+                    ],
+                  )),
               GestureDetector(
-                onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => DefaultLayout()));
-                },
-                child: Column(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(75),
-                      height: ScreenUtil().setHeight(75),
-                      child: Image.asset(
-                        "assets/images/thumbnail_avatar.png",
-                        fit: BoxFit.cover
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => DefaultLayout()));
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(75),
+                        height: ScreenUtil().setHeight(75),
+                        child: Image.asset("assets/images/thumbnail_avatar.png",
+                            fit: BoxFit.cover),
                       ),
-                    ),
-                    Text(
-                      "지현",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w200,
-                        fontSize: ScreenUtil().setSp(18),
-                        color: AppTheme.colors.base1
+                      Text(
+                        "지현",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w200,
+                            fontSize: ScreenUtil().setSp(18),
+                            color: AppTheme.colors.base1),
                       ),
-                    ),
-                  ],
-                )
-              ),
+                    ],
+                  )),
             ],
           ),
         ],

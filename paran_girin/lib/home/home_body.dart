@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -7,84 +8,103 @@ import 'package:paran_girin/home/post_card.dart';
 import 'package:paran_girin/layout/default_botton.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/utils/FadePageRoute.dart';
+import 'package:paran_girin/login/firebase_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:paran_girin/models/schema.dart';
 
-class HomeBody extends StatelessWidget {
+class HomeBody extends StatefulWidget {
+  _HomeBody createState() => _HomeBody();
+}
+
+class _HomeBody extends State<HomeBody> {
+  FirebaseProvider fp;
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
     return SingleChildScrollView(
-      padding: EdgeInsets.only(
-        bottom: ScreenUtil().setHeight(150)
-      ),
+      padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(150)),
       child: Container(
-        width: double.infinity,
-        color: AppTheme.colors.background,
-        child: Column(
-          children: <Widget>[
+          width: double.infinity,
+          color: AppTheme.colors.background,
+          child: Column(children: <Widget>[
             Column(
               children: <Widget>[
                 HomeAvatar(),
                 SizedBox(height: ScreenUtil().setHeight(28)),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: ScreenUtil().setWidth(16)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "생각 뽐내기",
                         style: TextStyle(
-                          color: AppTheme.colors.base1,
-                          fontWeight: FontWeight.w700,
-                          fontSize: ScreenUtil().setSp(18)
-                        ),
+                            color: AppTheme.colors.base1,
+                            fontWeight: FontWeight.w700,
+                            fontSize: ScreenUtil().setSp(18)),
                       ),
                       Text(
                         "2021년 2월 둘째 주",
                         style: TextStyle(
-                          color: AppTheme.colors.base2,
-                          fontSize: ScreenUtil().setSp(12)
-                        ),
+                            color: AppTheme.colors.base2,
+                            fontSize: ScreenUtil().setSp(12)),
                       )
                     ],
                   ),
                 ),
                 SizedBox(height: ScreenUtil().setHeight(24)),
-                PostCard(
-                  onTap: () {
-                    Navigator.of(context)
-                    .push(FadePageRoute(widget: HomeNoAnswers()));
-                  },
+                SizedBox(
+                  height: 600,
+                  child: StreamBuilder(
+                      stream: fp.getFirestore().collection('posts').snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.active) {
+                          List<QueryDocumentSnapshot> posts =
+                              snapshot.data.docs;
+                          return ListView.separated(
+                              itemBuilder: (context, index) {
+                                Post post = Post.fromJson(posts[index].data());
+                                return PostCard(post);
+                              },
+                              separatorBuilder: (context, index) {
+                                return SizedBox(
+                                    height: ScreenUtil().setHeight(8));
+                              },
+                              itemCount: posts.length);
+                        } else {
+                          return SizedBox.shrink();
+                        }
+                      }),
                 ),
-                SizedBox(height: ScreenUtil().setHeight(8)),
-                PostCard(),
-                SizedBox(height: ScreenUtil().setHeight(8)),
-                PostCard(),
                 SizedBox(height: ScreenUtil().setHeight(16)),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: ScreenUtil().setWidth(16)
-                  ),
+                      horizontal: ScreenUtil().setWidth(16)),
                   child: DefaultButton(
                     text: "우리 아이 뽐내기",
                     isInvert: true,
                     press: () {
                       Navigator.of(context)
-                      .push(FadePageRoute(widget: HomeNoAnswers()));
+                          .push(FadePageRoute(widget: HomeNoAnswers()));
                     },
                   ),
                 ),
                 SizedBox(height: ScreenUtil().setHeight(48)),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: ScreenUtil().setWidth(16)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "의견 보내기",
                         style: TextStyle(
-                          color: AppTheme.colors.base1,
-                          fontWeight: FontWeight.w700,
-                          fontSize: ScreenUtil().setSp(18)
-                        ),
+                            color: AppTheme.colors.base1,
+                            fontWeight: FontWeight.w700,
+                            fontSize: ScreenUtil().setSp(18)),
                       ),
                       SizedBox(height: ScreenUtil().setHeight(23)),
                       ClipRRect(
@@ -101,9 +121,8 @@ class HomeBody extends StatelessWidget {
                           "재미있는 아이디어, 소중한 질문, 불만족스러운 의견 등\n파란기린이 발전할 수 있도록 다양한 의견을 공유해주세요!",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: AppTheme.colors.base3,
-                            fontSize: ScreenUtil().setSp(12)
-                          ),
+                              color: AppTheme.colors.base3,
+                              fontSize: ScreenUtil().setSp(12)),
                         ),
                       ),
                     ],
@@ -111,9 +130,7 @@ class HomeBody extends StatelessWidget {
                 ),
               ],
             ),
-          ]
-        )
-      ),
+          ])),
     );
   }
 }
@@ -127,8 +144,7 @@ class HomeAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context)
-        .push(FadePageRoute(widget: HomeAvatarBig()));
+        Navigator.of(context).push(FadePageRoute(widget: HomeAvatarBig()));
       },
       child: Container(
         width: double.infinity,

@@ -9,6 +9,9 @@ import 'package:paran_girin/gallery/videoShowWidget.dart';
 import 'package:paran_girin/layout/default_icon_botton.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/layout/flatbuttonShadow.dart';
+import 'package:paran_girin/login/firebase_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:paran_girin/models/schema.dart';
 
 int bodyNum = 0;
 int natureNum = 0;
@@ -27,7 +30,6 @@ class _CalenderState extends State<galleryVideo> {
   bool buttonClickedState2 = true;
   bool buttonClickedState3 = true;
   bool buttonClickedState4 = true;
-
   //영상 개수 가져오기
   @override
   void initState() {
@@ -180,8 +182,10 @@ class noVideo extends StatelessWidget {
 }
 
 class yesVideo extends StatelessWidget {
+  FirebaseProvider fp;
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
     return Container(
       //width: ScreenUtil().setWidth(330),
       //height: double.infinity,
@@ -197,6 +201,11 @@ class yesVideo extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
                         videoShowWidget())); //VideoPlayerScreen()));
+              },
+              onLongPress: () async {
+                String path = await fp.getUploadManager().uploadVideo("test",
+                    "/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4");
+                fp.addPost(path, null);
               },
             ),
           SizedBox(height: ScreenUtil().setHeight(100)),
