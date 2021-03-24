@@ -153,13 +153,27 @@ class HomeAvatar extends StatelessWidget {
             Container(
               width: double.infinity,
               height: ScreenUtil().setHeight(488),
-              child: Image.asset("assets/avatars/default_background.png"),
-              // child: Lottie.asset("assets/avatars/default_background.png"),
+              child: Image.asset(
+                "assets/background/background-7.jpg",
+                fit: BoxFit.cover,
+                ),
             ),
-            Container(
-              width: ScreenUtil().setWidth(396),
-              height: ScreenUtil().setHeight(396),
-              child: Image.asset('assets/avatars/home.gif'),
+            Column(
+              children: [
+                SizedBox(
+                  width: ScreenUtil().setWidth(426),
+                  height: ScreenUtil().setHeight(44),
+                ),
+                Container(
+                  width: ScreenUtil().setWidth(426),
+                  height: ScreenUtil().setHeight(426),
+                  child: Image.asset(
+                    'assets/avatars/home.gif',
+                    fit: BoxFit.cover,
+                    alignment: Alignment.bottomCenter,
+                    ),
+                ),
+              ]
             ),
           ],
         ),

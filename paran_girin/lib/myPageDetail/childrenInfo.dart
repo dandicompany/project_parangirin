@@ -65,7 +65,7 @@ class _ChildInfoState extends State<childrenInfo> {
                             press: () {},
                           );
                         } else {
-                          return childrenInfoLayout2(
+                          return childrenInfoLayout(
                             image: "assets/images/onboard_1.png",
                             text: child.nickName ?? "",
                             text2: notchosen,

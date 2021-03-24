@@ -26,15 +26,16 @@ class childrenInfoLayout extends StatelessWidget {
         child: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(image,height: 47, width: 41,),
+            Image.asset(image,height: ScreenUtil().setHeight(47), width: ScreenUtil().setWidth(41),),
             SizedBox(width: ScreenUtil().setWidth(16)),
             Container(
-              width: 102,
-              height: 22,
+              width: ScreenUtil().setWidth(240),
+              // height: 22,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(text, style: TextStyle(fontSize: ScreenUtil().setSp(18), fontFamily: 'Noto Sans KR',),),
+                  SizedBox(width: ScreenUtil().setWidth(3),),
                   Text(text2,style: TextStyle(fontSize: ScreenUtil().setSp(12),fontFamily: 'Noto Sans KR',),),
                 ],
               )

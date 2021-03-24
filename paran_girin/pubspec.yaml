@@ -89,8 +89,10 @@ flutter:
       - assets/icons/
       - assets/icons/circle.svg
       - assets/icons/check-circle.svg
+      - assets/icons/google.svg
+      - assets/icons/facebook.svg
       - assets/images/
-      - assets/videoEx/videoTest.mp4
+      - assets/background/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
