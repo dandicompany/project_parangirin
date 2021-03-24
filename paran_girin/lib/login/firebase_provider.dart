@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logger/logger.dart';
@@ -8,15 +9,18 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import "package:http/http.dart" as http;
 import "package:googleapis_auth/auth_io.dart" as gauth;
 import 'dart:convert';
+import 'package:paran_girin/gallery/video_uploader.dart';
 
 Logger logger = Logger();
 
 class FirebaseProvider with ChangeNotifier {
   final List<String> confirmedProvider = ["facebook.com", "google.com"];
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseStorage firestorage = FirebaseStorage.instance;
   final FirebaseAuth fAuth = FirebaseAuth.instance; // Firebase 인증 플러그인의 인스턴스
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FacebookAuth _facebookAuth = FacebookAuth.instance;
+  final UploadManager _uploadManager = UploadManager();
   User _user; // Firebase에 로그인 된 사용자
   UserModel _info;
   String _lastFirebaseResponse = ""; // Firebase로부터 받은 최신 메시지(에러 처리용)
@@ -28,6 +32,14 @@ class FirebaseProvider with ChangeNotifier {
     _info = UserModel();
   }
 
+  FirebaseFirestore getFirestore() {
+    return firestore;
+  }
+
+  FirebaseStorage getFirestorage() {
+    return firestorage;
+  }
+
   User getUser() {
     return _user;
   }
@@ -36,38 +48,13 @@ class FirebaseProvider with ChangeNotifier {
     return _info;
   }
 
+  UploadManager getUploadManager() {
+    return _uploadManager;
+  }
+
   void setUser(User value) {
     _user = value;
     notifyListeners();
-  }
-
-  Future<String> getServiceAccountToken() async {
-    gauth.ServiceAccountCredentials accountCredentials =
-        gauth.ServiceAccountCredentials.fromJson({
-      "type": "service_account",
-      "project_id": "tonal-baton-245112",
-      "private_key_id": "8da87a101e5274ce9d75e77975706147dd2a5e5b",
-      "private_key":
-          "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCHdHtbg35h8kcf\n4C7LLu/Cvvn5z9j7KWv1xa8+sPIoFhIeoIl5NY0k9dlun0vlocPLtQ1s5njNFWrw\nFc+vrXhaLIa4QKrfgPxtJBL9K/UC5F+gbfEzi2iRBqKgrP4W8UA3gCIzQ9oMXmru\nFOXsHAQvw7o9/u4MxyJmR+z/tzbJtrbuMc2J4+IWs6CSzB5hMGA/NLLSGUNau83a\nYWLdX/uO4gNrrBML/8+G4mSnGJe1vNQbsBQZKeipKNPIfL+pPpcXal7QVcNe6yqv\nS2diGJkWEHqQC3VCRhRH7Yc6b3ZvuxwsHQKdF/krrI8VGP9iVb4dDDGrQ1PTroZb\nz4GmuLL3AgMBAAECggEAMYft/bo5Eh7SVD0ZT1Hz+V31MZyHxtvQLvhhCwcQHYlo\nicuBSZHD8XJ21iUozyjWXFxxstMZ9EAzMOSA48gGfM7QWnrHIOBdLZml2e7jcnHI\n5/Sb4RHGpFVtTVzEsuX36fOQTfevOZui9TkuFCbwfvjO1xGrwX9lvEnrx1wbDCoc\nP3rjF3idtoTI/tD71ZzNSGdHEg8Kxu4XMvlOkagzq/IWiGDuS+f59MpFOIO+UPea\n1hr7+2y6PUTc4KENLXf4oMowjP0IspqfN8rwkh3eaa8sv3v9nWy4xQiohfnCPm2u\nNFYzddSNlCngATnljLYV/ViZ8BipHSJZj+Do1p28VQKBgQC/i26h2ebGgQPxswy9\nBxRd+or3lHH6lO5TPz/Mr+gfSnR/x13v1a7Q+PRTfdwn9PASluK2xXuajm/inCns\n1qAgnV8Uufk7VGiPcXF3iBnNJRSY1ZIQhqmgcbhtiFCxMXF7CNvewwb6TJvfgnLG\nRzm48Hsk+WDXF23y22csK5+LpQKBgQC1CThyhkAFUM+iW8FWwmEoV/tK1hiuL91t\nLWwUkq0lel8ZNRiFNwIBGswXYW0eTAvwgjlsEHbs6PUCDo6+WX0ov5FKv203JuU6\nlmmiMzikUykCtBgeLRJFzwC7+3677Rtk8RtLUr2hbfLzCs/l1F5jY4r+tD04zWn9\ncUltXdfxawKBgQCk1kpD8PCf3YFWbB7HQaNuaOFUxKP94FLkwyaVcMBSxVFScXDO\np9aEseoZO9PNcwVzCfRbE8IWNQPmQTv3PJCa4LNlc9IfE7nTz+20zyRdHc8G46yK\nmki58YOkh03h30nodqw4nR+RIYJ2q504My1ikVl4bT/AesI84EF+iqAHnQKBgQCI\n5MkHaNb+bgYkOofvaBr529XM2CpfhRhGF4PT5roBThCdShYZnefpF+9eerB9qXmZ\ny49KVQTozpt+i62K6LaI2psuT6RxgPrzm4uTOHJLaArp3W8jWmen3AktHNbPmlMN\nuHgwNAfrCu4ctH9Sxoz9UOdpBLgKvOG54TFp/v1sswKBgHd6mZLLJLzGwp/Zbf/s\nXcq60dtEgeX76F8MBz+/xfwjkDyfH7+BOaI6pCWqtlXZlLxI3F/vqgxmcnfmLezI\nJ12bqHpSzq6QoP044jiLBVXHbVkV5dnRWYfSCnMeDNoPuKiviREdhfkjrFzT4RGz\nQLJkbYX+ra7f3Wj5jbVA7uKt\n-----END PRIVATE KEY-----\n",
-      "client_email":
-          "firebase-adminsdk-k4hea@tonal-baton-245112.iam.gserviceaccount.com",
-      "client_id": "110538781544481540436",
-      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-      "token_uri": "https://oauth2.googleapis.com/token",
-      "auth_provider_x509_cert_url":
-          "https://www.googleapis.com/oauth2/v1/certs",
-      "client_x509_cert_url":
-          "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-k4hea%40tonal-baton-245112.iam.gserviceaccount.com"
-    });
-    List<String> scopes = [
-      'https://www.googleapis.com/auth/cloud-platform',
-    ];
-    var client = new http.Client();
-    gauth.AccessCredentials credentials =
-        await gauth.obtainAccessCredentialsViaServiceAccount(
-            accountCredentials, scopes, client);
-    String accessToken = credentials.accessToken.data;
-    return accessToken;
   }
 
   // 최근 Firebase에 로그인한 사용자의 정보 획득
@@ -90,32 +77,99 @@ class FirebaseProvider with ChangeNotifier {
 
   Future<bool> loadInfoFromUser() async {
     if (_user != null) {
-      bool isVerified =
-          confirmedProvider.contains(_user.providerData[0].providerId) ||
-              _user.emailVerified;
+      // _isVerified =
+      //     confirmedProvider.contains(_user.providerData[0].providerId) ||
+      //         _user.emailVerified;
+      // _info = UserModel();
+      _info.id = _user.uid;
       _info.email = _user.email;
       _info.displayName = _user.displayName;
       DocumentReference userRef = firestore.collection('users').doc(_user.uid);
       DocumentSnapshot snap = await userRef.get();
-      Map<String, dynamic> temp;
       if (snap.exists) {
         logger.d('Loading Document...');
-        temp = snap.data();
+        _info.userInDB = UserInDB.fromJson(snap.data());
+        String currentChild = _info.userInDB.currentChild;
+        logger.d(currentChild);
+        if (currentChild != null) {
+          DocumentReference childRef =
+              firestore.collection('children').doc(currentChild);
+          DocumentSnapshot snap = await childRef.get();
+          if (snap.exists) {
+            _info.currentChild = Child.fromJson(snap.data());
+          } else {
+            _info.currentChild = null;
+          }
+        }
+        if (_info.currentChild == null) {
+          while (_info.userInDB.children.length > 0) {
+            logger.d("setting first child");
+            currentChild = _info.userInDB.children.first;
+            DocumentReference childRef =
+                firestore.collection('children').doc(currentChild);
+            DocumentSnapshot snap = await childRef.get();
+            if (snap.exists) {
+              _info.currentChild = Child.fromJson(snap.data());
+              _info.userInDB.currentChild = currentChild;
+              logger.d("got children");
+              break;
+            } else {
+              _info.userInDB.children.removeAt(0);
+            }
+          }
+        }
       } else {
         logger.d('Document does not exist on the database');
-        // newInfo.sharedID = _user.uid;
-        temp = UserInDB.sharedID(_user.uid).toJson();
-        await userRef.set(temp);
+        UserInDB temp = UserInDB.sharedID(_user.uid);
+        await userRef.set(temp.toJson());
+        _info.userInDB = temp;
       }
-      _info.id = temp["id"];
-      _info.children = temp["children"].cast<String>();
-      _info.sharedID = temp["sharedID"];
-      logger.d(_info.children);
+      logger.d(_info.userInDB.children);
     }
     return true;
   }
 
-  Future<void> addChild(String name, String age) {}
+  Future<void> addPost(String path, String comment) async {
+    logger.d("adding post");
+    Post post = Post(DateTime.now().millisecondsSinceEpoch,
+        _info.userInDB.currentChild, path, comment);
+    DocumentReference postRef =
+        await firestore.collection('posts').add(post.toJson());
+    logger.d("added child");
+  }
+
+  Future<void> addChild(String name, String nickName, int birthday) async {
+    logger.d("adding child");
+    Child child = Child(name, null, nickName, birthday, null);
+    DocumentReference childRef =
+        await firestore.collection('children').add(child.toJson());
+    _info.userInDB.children.add(childRef.id);
+    _info.userInDB.currentChild = childRef.id;
+    DocumentReference userRef = firestore.collection('users').doc(_user.uid);
+    await userRef.set(_info.userInDB.toJson());
+    _info.currentChild = child;
+    logger.d("added child");
+  }
+
+  void switchChild(String child) async {
+    logger.d("switching child to $child");
+    _info.userInDB.currentChild = child;
+    DocumentReference userRef = firestore.collection('users').doc(_user.uid);
+    await userRef.set(_info.userInDB.toJson());
+    DocumentReference docRef = firestore.collection('children').doc(child);
+    _info.currentChild = Child.fromJson((await docRef.get()).data());
+  }
+
+  Future<Map<String, dynamic>> getFromFB(String colName, String docName) async {
+    DocumentReference userRef = firestore.collection(colName).doc(docName);
+    DocumentSnapshot snap = await userRef.get();
+    if (snap.exists) {
+      logger.d(snap.data());
+      return snap.data();
+    } else {
+      return null;
+    }
+  }
 
   Future<bool> initializeUserState() async {
     // _user = fAuth.currentUser;
@@ -141,7 +195,8 @@ class FirebaseProvider with ChangeNotifier {
     if (_user == null) {
       return false;
     } else {
-      return _info.isVerified;
+      return confirmedProvider.contains(_user.providerData[0].providerId) ||
+          _user.emailVerified;
     }
   }
 

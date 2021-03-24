@@ -17,7 +17,10 @@ class BabyInfo extends StatefulWidget {
 
 class _BabyInfoState extends State<BabyInfo> {
   FirebaseProvider fp;
-  TextEditingController _nameCon, _ageCon;
+  TextEditingController _nameCon = TextEditingController();
+  TextEditingController _ageCon = TextEditingController();
+  String name, nickname;
+  int birthday;
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
@@ -33,8 +36,9 @@ class _BabyInfoState extends State<BabyInfo> {
             child: DefaultButton(
               text: "가입 완료하기",
               press: () {
-                // fp.addChild(_nameCon.text, _ageCon.text);
-                fp.reloadUser();
+                logger.d("before adding child");
+                fp.addChild(_nameCon.text, _ageCon.text, null);
+                //fp.reloadUser();
               },
             ),
           )
@@ -90,7 +94,7 @@ class _BabyInfoState extends State<BabyInfo> {
               Container(
                 width: ScreenUtil().setWidth(106),
                 child: TextField(
-                  controller: _nameCon,
+                  controller: this._nameCon,
                   keyboardType: TextInputType.name,
                 ),
               ),
@@ -114,7 +118,7 @@ class _BabyInfoState extends State<BabyInfo> {
               Container(
                 width: ScreenUtil().setWidth(98),
                 child: TextField(
-                  controller: _ageCon,
+                  controller: this._ageCon,
                   keyboardType: TextInputType.name,
                 ),
               ),
