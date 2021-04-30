@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/gallery/video_uploader.dart';
 
-class myVideoLayout extends StatelessWidget {
+class MyVideoLayout extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onLongPress;
   final VoidCallback onTapHeart;
@@ -15,7 +15,7 @@ class myVideoLayout extends StatelessWidget {
   // final Post post; // post model
 
   // const PostCard({Key key, this.onTap, this.onTapHeart, this.post}) : super(key: key);
-  const myVideoLayout(
+  const MyVideoLayout(
       {Key key,
       this.onTap,
       this.onLongPress,
@@ -31,8 +31,8 @@ class myVideoLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: ScreenUtil().setWidth(10),
-        vertical: ScreenUtil().setHeight(8), //16
+        // horizontal: ScreenUtil().setWidth(10),
+        vertical: ScreenUtil().setHeight(10),
       ),
       child: Material(
         color: Colors.transparent,

@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
     _checkState();
     _textCon.clear();
     return Scaffold(
-      // body: Body(),
+      resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       body: Column(
         children: [
@@ -43,12 +43,12 @@ class _LoginPageState extends State<LoginPage> {
           _loginSNSText(),
           SizedBox(height: ScreenUtil().setHeight(15)),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
+            margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(105)),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  _facebookButton(),
                   _googleButton(),
+                  _facebookButton(),
                 ]),
           ),
           SizedBox(height: ScreenUtil().setHeight(60)),
@@ -336,15 +336,17 @@ class _LoginPageState extends State<LoginPage> {
         right: ScreenUtil().setWidth(16),
       ),
       child: Container(
-        width: ScreenUtil().setWidth(180),
+        width: double.infinity,
         child: Align(
-          alignment: Alignment.bottomRight,
+          alignment: Alignment.center,
           child: Text(
             '혹은 SNS 계정으로 함께 해요',
             style: TextStyle(
                 // fontFamily: 'Noto Sans KR',
                 fontWeight: FontWeight.w500,
-                fontSize: ScreenUtil().setSp(14)),
+                fontSize: ScreenUtil().setSp(14),
+                color: AppTheme.colors.base2
+            ),
           ),
         ),
       ),
@@ -356,8 +358,8 @@ class _LoginPageState extends State<LoginPage> {
       onTap: () {
         fp.signInWithFacebookAccount();
       },
-      child: SvgPicture.asset(
-        "assets/icons/facebook.svg",
+      child: Image.asset(
+        "assets/icons/facebook.png",
         width: ScreenUtil().setWidth(62),
         height: ScreenUtil().setHeight(62),
       )

@@ -65,7 +65,7 @@ class _BabyInfoConfirmState extends State<BabyInfoConfirm> {
               text: "완료",
               press: () {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => childrenInfo()));
+                    MaterialPageRoute(builder: (context) => ChildrenInfo()));
               },
             )
           ],

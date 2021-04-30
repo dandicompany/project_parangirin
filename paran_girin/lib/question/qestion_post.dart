@@ -37,7 +37,8 @@ class _QuestionPostState extends State<QuestionPost> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(
-              widget.image,
+              // widget.image,
+              _setImage(),
               fit: BoxFit.cover
             ),
             Padding(
@@ -168,5 +169,20 @@ class _QuestionPostState extends State<QuestionPost> {
         ),
       )
     );
+  }
+
+  String _setImage() {
+    switch (widget.categoryTitle) {
+      case '사회관계':
+        return 'assets/images/category_society.png'; 
+      case '자연탐구':
+        return 'assets/images/category_nature.png';
+      case '예술':
+        return 'assets/images/category_art.png';
+      case '신체':
+        return 'assets/images/category_body.png'; 
+      case '의사소통':
+        return 'assets/images/category_communication.png'; 
+    }
   }
 }

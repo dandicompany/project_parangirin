@@ -78,7 +78,7 @@ class _CalenderState extends State<Calender> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: ScreenUtil().setHeight(77)),
+            SizedBox(height: ScreenUtil().setHeight(164)),
             Row(
               children: [
                 SizedBox(
@@ -87,7 +87,7 @@ class _CalenderState extends State<Calender> {
                 Text(
                   "안녕, " + name + "!",
                   style: TextStyle(
-                    fontSize: ScreenUtil().setSp(24),
+                    fontSize: ScreenUtil().setSp(32),
                     fontFamily: 'Noto Sans KR',
                   ),
                 ),

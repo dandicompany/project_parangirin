@@ -6,6 +6,7 @@ import 'package:paran_girin/home/home_avatar_big.dart';
 import 'package:paran_girin/home/home_no_answers.dart';
 import 'package:paran_girin/home/post_card.dart';
 import 'package:paran_girin/layout/default_botton.dart';
+import 'package:paran_girin/myPageDetail/send_comments.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/utils/FadePageRoute.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
@@ -65,6 +66,7 @@ class _HomeBody extends State<HomeBody> {
                           List<QueryDocumentSnapshot> posts =
                               snapshot.data.docs;
                           return ListView.separated(
+                            physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 Post post = Post.fromJson(posts[index].data());
                                 return PostCard(post);
@@ -100,20 +102,20 @@ class _HomeBody extends State<HomeBody> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "의견 보내기",
+                        "여러분의 피드백이 필요합니다!",
                         style: TextStyle(
                             color: AppTheme.colors.base1,
                             fontWeight: FontWeight.w700,
                             fontSize: ScreenUtil().setSp(18)),
                       ),
                       SizedBox(height: ScreenUtil().setHeight(23)),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(27),
-                        child: Container(
-                          width: double.infinity,
-                          height: ScreenUtil().setHeight(54),
-                          color: Colors.white,
-                        ),
+                      DefaultButton(
+                        text: "의견 보내기",
+                        isInvert: true,
+                        press: () {
+                          Navigator.of(context)
+                              .push(FadePageRoute(widget: SendComments()));
+                        },
                       ),
                       SizedBox(height: ScreenUtil().setHeight(14)),
                       Center(
@@ -122,7 +124,8 @@ class _HomeBody extends State<HomeBody> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: AppTheme.colors.base3,
-                              fontSize: ScreenUtil().setSp(12)),
+                              fontSize: ScreenUtil().setSp(12),
+                              height: 1.4),
                         ),
                       ),
                     ],

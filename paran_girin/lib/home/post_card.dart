@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:paran_girin/home/post_detail.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/gallery/videoStreamWidget.dart';
 import 'package:paran_girin/models/schema.dart';
@@ -22,14 +23,19 @@ class PostCard extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () async {
-            Reference file = fp.getFirestorage().ref(post.videoURL);
-            String url = await file.getDownloadURL();
-            logger.d(url);
+          onTap: (){
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) =>
-                    VideoStreamWidget(url))); //VideoPlayerScreen()));
+                builder: (context) => PostDetail(this.post)));
           },
+          // onTap: () async {
+            // Reference file = fp.getFirestorage().ref(post.videoURL);
+            // String url = await file.getDownloadURL();
+            // logger.d(url);
+            // Navigator.of(context).push(MaterialPageRoute(
+            //     builder: (context) =>
+            //         VideoStreamWidget(url))); //VideoPlayerScreen()));
+            
+          // },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: Container(

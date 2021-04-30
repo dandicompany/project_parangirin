@@ -2,18 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:paran_girin/layout/top_tab_button.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/gallery/video_uploader.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:paran_girin/theme/app_theme.dart';
 
-import 'Calender.dart';
-import 'galleryVideos.dart';
+import 'package:paran_girin/gallery/Calender.dart';
+import 'package:paran_girin/gallery/galleryVideos.dart';
 
+
+class GalleryPage extends StatefulWidget {
+  @override
+  _GalleryPageState createState() => _GalleryPageState();
+}
+
+class _GalleryPageState extends State<GalleryPage> {
+
+  PageController _pageController = PageController();
+  int _selectedTabIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: <Widget>[
+        _buildPageView(context),
+        _buildTopTabs(context)
+        ],
+    );
+  }
+
+
+/*
 class GalleryPage extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(ScreenUtil().setHeight(46.34));
+
+  PageController _pageController = PageController();
+  int _selectedTabIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -170,5 +198,61 @@ class GalleryPage extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
         ));
+  }
+
+*/
+  Widget _buildPageView(context) {
+    return Positioned.fill(
+        child: PageView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      onPageChanged: (idx) {
+        setState(() {
+          _selectedTabIndex = idx;
+        });
+      },
+      controller: _pageController,
+      itemCount: 2,
+      itemBuilder: (context, idx) {
+        switch (idx) {
+          case 0:
+            return Calender(); // HomePage();
+          case 1:
+            return galleryVideo(); 
+        }
+      },
+    ));
+  }
+
+
+  Widget _buildTopTabs(context) {
+    return Positioned(
+      height: ScreenUtil().setHeight(102),
+      left: 0.0,
+      right: 0.0,
+      child: Container(
+        width: double.infinity,
+        height: ScreenUtil().setHeight(102),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: TopTabButton(
+                txt: "CALENDAR",
+                index: 0,
+                controller: _pageController,
+                selectedIndex: _selectedTabIndex,
+              ),
+            ),
+            Expanded(
+              child: TopTabButton(
+                txt: "VIDEOS",
+                index: 1,
+                controller: _pageController,
+                selectedIndex: _selectedTabIndex,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

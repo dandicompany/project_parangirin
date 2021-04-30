@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:paran_girin/Video/videoTest.dart';
+import 'package:paran_girin/layout/base_appbar.dart';
 import 'package:paran_girin/layout/default_icon_botton.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
@@ -12,103 +13,168 @@ class HomeAvatarBig extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      child: Stack(
-        alignment: Alignment(0.0, 0.85),
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20)
-            ),
-            child: Container(
-              width: double.infinity,
-              // height: ScreenUtil().setHeight(728),
-              height: ScreenUtil().setHeight(812),
-              child: Image.asset(
-                "assets/avatars/default_background.png",
-                fit: BoxFit.cover
+    final bool todayDone = false;
+    return Scaffold(
+      body: Container(
+        width: double.infinity,
+        child: Stack(
+          alignment: Alignment(0.0, 0.85),
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20)
               ),
-              // child: Lottie.asset("assets/avatars/default_background.png"),
-            ),
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                horizontal: ScreenUtil().setWidth(16.0)
-              ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      height: ScreenUtil().setHeight(74)
-                      ),
-                    Text(
-                      "오늘의 질문에 이미 답변을 하셨네요",
-                      // todayDone ? "오늘의 질문에 이미 답변을 하셨네요":"오늘의 질문",
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(16),
-                        color: AppTheme.colors.base2,
-                        fontWeight: FontWeight.w300
-                      ),
-                    ),
-                    SizedBox(height: ScreenUtil().setHeight(15)),
-                    Text(
-                      // todayDone ? "내일은 어떤 질문이\n기다리고 있을까요?":"타임 캡슐에 담고 싶은\n나의 물건은?",
-                      "내일은 어떤 질문이\n기다리고 있을까요?",
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(24),
-                        // color: todayDone ? AppTheme.colors.base2:AppTheme.colors.base1,
-                        color: AppTheme.colors.base1,
-                        fontWeight: FontWeight.w300
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
+              child: Container(
                 width: double.infinity,
-                height: ScreenUtil().setHeight(595),
+                // height: ScreenUtil().setHeight(728),
+                height: ScreenUtil().setHeight(812),
                 child: Image.asset(
-                  'assets/images/onboard_2.png',
-                  fit: BoxFit.cover,
+                  "assets/avatars/default_background.png",
+                  fit: BoxFit.cover
                 ),
-                // child: Lottie.asset(
-                //   'assets/avatars/lurking-cat.json',
-                //   fit: BoxFit.cover,
-                // ),
+                // child: Lottie.asset("assets/avatars/default_background.png"),
               ),
-            ],
-          ),
-          // 버튼에 겹쳐져서 안보임
-          // GestureDetector(
-          //   onTap: () {},
-          //   child: Text(
-          //     "새로운 질문을 추천해주세요!",
-          //     style: TextStyle(
-          //       // fontFamily: 'Noto Sans KR',
-          //       fontSize: ScreenUtil().setSp(12),
-          //       color: AppTheme.colors.base2
-          //     ),
-          //   )
-          // ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: ScreenUtil().setWidth(16.0)),
-            child: DefaultIconButton(
-              text: "추천 질문으로 대화하기",
-              icon: "assets/icons/camera.svg",
-              isInvert: true,
-              press: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Initialization()));
-              }
             ),
-          ),
-        ],
+            Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                  horizontal: ScreenUtil().setWidth(16.0)
+                ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        // height: ScreenUtil().setHeight(74)
+                        height: ScreenUtil().setHeight(50)
+                      ),
+                      Navigator.of(context).canPop()
+                      ? IconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios, 
+                          color: AppTheme.colors.base1,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        iconSize: ScreenUtil().radius(20),
+                        )
+                      : null,
+                      Text(
+                        todayDone ? "오늘의 질문에 이미 답변을 하셨네요":"오늘의 질문",
+                        // "오늘의 질문에 이미 답변을 하셨네요",
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(16),
+                          color: AppTheme.colors.base2,
+                          fontWeight: FontWeight.w300
+                        ),
+                      ),
+                      SizedBox(height: ScreenUtil().setHeight(15)),
+                      Text(
+                        todayDone ? "내일은 어떤 질문이\n기다리고 있을까요?":"타임 캡슐에 담고 싶은\n나의 물건은?",
+                        // "내일은 어떤 질문이\n기다리고 있을까요?",
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(24),
+                          // color: todayDone ? AppTheme.colors.base2:AppTheme.colors.base1,
+                          color: AppTheme.colors.base1,
+                          fontWeight: FontWeight.w300
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: ScreenUtil().setHeight(595),
+                  // child: Image.asset(
+                  //   'assets/images/onboard_2.png',
+                  //   fit: BoxFit.cover,
+                  // ),
+                  // child: Lottie.asset(
+                  //   'assets/avatars/lurking-cat.json',
+                  //   fit: BoxFit.cover,
+                  // ),
+                  child: Image.asset(
+                    'assets/avatars/home.gif',
+                    fit: BoxFit.cover,
+                    alignment: Alignment.bottomCenter,
+                  ),
+                ),
+              ],
+            ),
+            // 버튼에 겹쳐져서 안보임
+            // GestureDetector(
+            //   onTap: () {},
+            //   child: Text(
+            //     "새로운 질문을 추천해주세요!",
+            //     style: TextStyle(
+            //       // fontFamily: 'Noto Sans KR',
+            //       fontSize: ScreenUtil().setSp(12),
+            //       color: AppTheme.colors.base2
+            //     ),
+            //   )
+            // ),
+            todayDone ?
+            ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(27)),
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 45,
+                  vertical: 10
+                ),
+                color: Colors.white,
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: new TextSpan(
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(16),
+                      color: AppTheme.colors.base1
+                    ),
+                    children: <TextSpan>[
+                      new TextSpan(text: '새로운 질문이 생성되기까지\n'),
+                      new TextSpan(
+                        text: '10',
+                        style: new TextStyle(
+                          fontSize: ScreenUtil().setSp(20)
+                        )
+                      ),
+                      new TextSpan(text: '시간 '),
+                      new TextSpan(
+                        text: '55',
+                        style: new TextStyle(
+                          fontSize: ScreenUtil().setSp(20)
+                        )
+                      ),
+                      new TextSpan(text: '분 '),
+                      new TextSpan(
+                        text: '37',
+                        style: new TextStyle(
+                          fontSize: ScreenUtil().setSp(20)
+                        )
+                      ),
+                      new TextSpan(text: '초 남았어요')
+                    ]
+                  ),
+                ),
+              ),
+            ):
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: ScreenUtil().setWidth(16.0)),
+              child: DefaultIconButton(
+                text: "추천 질문으로 대화하기",
+                icon: "assets/icons/camera.svg",
+                isInvert: true,
+                press: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Initialization()));
+                }
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
