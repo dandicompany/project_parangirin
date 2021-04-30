@@ -40,101 +40,103 @@ class _CalenderState extends State<galleryVideo> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.only(
-          left: ScreenUtil().setWidth(16),
-          right: ScreenUtil().setWidth(16),
-        ),
-        child: Column(
-          children: [
-            SizedBox(
-              width: double.infinity,
-              height: ScreenUtil().setHeight(40),
-            ),
-            Row(
-              children: [
-                CustomElevation(
-                  child: FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        buttonClickedState = !buttonClickedState;
-                      });
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(
+            left: ScreenUtil().setWidth(16),
+            right: ScreenUtil().setWidth(16),
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: ScreenUtil().setHeight(132),
+              ),
+              Row(
+                children: [
+                  CustomElevation(
+                    child: FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          buttonClickedState = !buttonClickedState;
+                        });
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      minWidth: ScreenUtil().setWidth(164),
+                      height: ScreenUtil().setHeight(71),
                     ),
-                    minWidth: ScreenUtil().setWidth(164),
-                    height: ScreenUtil().setHeight(71),
+                    text1: "신체",
+                    text2: bodyNum.toString() + "개의 영상",
                   ),
-                  text1: "신체",
-                  text2: bodyNum.toString() + "개의 영상",
-                ),
-                SizedBox(
-                  width: ScreenUtil().setWidth(15),
-                ),
-                CustomElevation(
-                  child: FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        buttonClickedState2 = !buttonClickedState2;
-                      });
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                  SizedBox(
+                    width: ScreenUtil().setWidth(15),
+                  ),
+                  CustomElevation(
+                    child: FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          buttonClickedState2 = !buttonClickedState2;
+                        });
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      minWidth: ScreenUtil().setWidth(164),
+                      height: ScreenUtil().setHeight(71),
                     ),
-                    minWidth: ScreenUtil().setWidth(164),
-                    height: ScreenUtil().setHeight(71),
-                  ),
-                  text1: "자연 탐구",
-                  text2: natureNum.toString() + "개의 영상",
-                )
-              ],
-            ),
-            SizedBox(
-              height: ScreenUtil().setHeight(10),
-            ),
-            Row(
-              children: [
-                CustomElevation(
-                  child: FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        buttonClickedState3 = !buttonClickedState3;
-                      });
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    text1: "자연 탐구",
+                    text2: natureNum.toString() + "개의 영상",
+                  )
+                ],
+              ),
+              SizedBox(
+                height: ScreenUtil().setHeight(10),
+              ),
+              Row(
+                children: [
+                  CustomElevation(
+                    child: FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          buttonClickedState3 = !buttonClickedState3;
+                        });
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      minWidth: ScreenUtil().setWidth(164),
+                      height: ScreenUtil().setHeight(71),
                     ),
-                    minWidth: ScreenUtil().setWidth(164),
-                    height: ScreenUtil().setHeight(71),
+                    text1: "운동",
+                    text2: bodyNum.toString() + "개의 영상",
                   ),
-                  text1: "운동",
-                  text2: bodyNum.toString() + "개의 영상",
-                ),
-                SizedBox(
-                  width: ScreenUtil().setWidth(15),
-                ),
-                CustomElevation(
-                  child: FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        buttonClickedState3 = !buttonClickedState3;
-                      });
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                  SizedBox(
+                    width: ScreenUtil().setWidth(15),
+                  ),
+                  CustomElevation(
+                    child: FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          buttonClickedState3 = !buttonClickedState3;
+                        });
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      minWidth: ScreenUtil().setWidth(164),
+                      height: ScreenUtil().setHeight(71),
                     ),
-                    minWidth: ScreenUtil().setWidth(164),
-                    height: ScreenUtil().setHeight(71),
+                    text1: "사회 관계",
+                    text2: natureNum.toString() + "개의 영상",
                   ),
-                  text1: "사회 관계",
-                  text2: natureNum.toString() + "개의 영상",
-                ),
-              ],
-            ),
-            sum == 0 ? noVideo() : yesVideo(),
-          ],
+                ],
+              ),
+              sum == 0 ? noVideo() : yesVideo(),
+            ],
+          ),
         ),
       ),
     );
@@ -161,20 +163,18 @@ class noVideo extends StatelessWidget {
           Text(
             "아직 촬영한 영상이 없어요",
             style: TextStyle(
-                fontSize: ScreenUtil().setSp(16), fontFamily: 'Noto Sans KR'),
+                fontSize: ScreenUtil().setSp(16), 
+                color: AppTheme.colors.base2,
+                fontFamily: 'Noto Sans KR'),
           ),
           SizedBox(height: ScreenUtil().setHeight(80)),
-          Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
-            child: DefaultIconButton(
-                text: "파란 기린과 대화하기 ",
-                isInvert: false,
-                press: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Initialization()));
-                }),
-          )
+          DefaultIconButton(
+              text: "파란 기린과 대화하기 ",
+              isInvert: false,
+              press: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Initialization()));
+              })
         ],
       ),
     );
@@ -196,7 +196,7 @@ class yesVideo extends StatelessWidget {
             height: ScreenUtil().setHeight(45),
           ),
           for (var i = 0; i < sum; i++)
-            myVideoLayout(
+            MyVideoLayout(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>

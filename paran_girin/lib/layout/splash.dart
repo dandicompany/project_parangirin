@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paran_girin/theme/app_theme.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -14,23 +15,15 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CircularProgressIndicator(
-                backgroundColor: Colors.white, strokeWidth: 6),
-            SizedBox(height: 20),
-            Text('Now loading...',
-                style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                    shadows: <Shadow>[
-                      Shadow(offset: Offset(4, 4), color: Colors.white10)
-                    ],
-                    decorationStyle: TextDecorationStyle.solid))
+              backgroundColor: AppTheme.colors.primary1, 
+              strokeWidth: 6
+            ),
           ],
         ),
       ),

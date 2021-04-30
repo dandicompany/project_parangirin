@@ -46,6 +46,8 @@ class QuestionCard extends StatelessWidget {
                 children: [
                   Text(
                     qTitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(18),
                       color: AppTheme.colors.base1
@@ -53,6 +55,8 @@ class QuestionCard extends StatelessWidget {
                   ),
                   Text(
                     qDescription,
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(12),
                       color: AppTheme.colors.base3

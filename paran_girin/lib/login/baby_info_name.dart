@@ -18,6 +18,7 @@ class _BabyInfoNameState extends State<BabyInfoName> {
   Widget build(BuildContext context) {
     //  printScreenInformation();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: <Widget>[
           _babyInfoTitle(),

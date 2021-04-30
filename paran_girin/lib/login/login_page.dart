@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:paran_girin/layout/default_botton.dart';
 import 'package:paran_girin/login/login_body.dart';
 import 'package:paran_girin/theme/app_theme.dart';
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
     _checkState();
     _textCon.clear();
     return Scaffold(
-      // body: Body(),
+      resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       body: Column(
         children: [
@@ -42,12 +43,12 @@ class _LoginPageState extends State<LoginPage> {
           _loginSNSText(),
           SizedBox(height: ScreenUtil().setHeight(15)),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
+            margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(105)),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  _facebookButton(),
                   _googleButton(),
+                  _facebookButton(),
                 ]),
           ),
           SizedBox(height: ScreenUtil().setHeight(60)),
@@ -335,15 +336,17 @@ class _LoginPageState extends State<LoginPage> {
         right: ScreenUtil().setWidth(16),
       ),
       child: Container(
-        width: ScreenUtil().setWidth(180),
+        width: double.infinity,
         child: Align(
-          alignment: Alignment.bottomRight,
+          alignment: Alignment.center,
           child: Text(
             '혹은 SNS 계정으로 함께 해요',
             style: TextStyle(
                 // fontFamily: 'Noto Sans KR',
                 fontWeight: FontWeight.w500,
-                fontSize: ScreenUtil().setSp(14)),
+                fontSize: ScreenUtil().setSp(14),
+                color: AppTheme.colors.base2
+            ),
           ),
         ),
       ),
@@ -351,32 +354,28 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _facebookButton() {
-    return Ink(
-        decoration: ShapeDecoration(
-          color: Colors.white,
-          shape: CircleBorder(),
-        ),
-        child: IconButton(
-          icon: Icon(Icons.ac_unit),
-          iconSize: 40.0, // * screenUtil 씌워줘야함
-          onPressed: () {
-            fp.signInWithFacebookAccount();
-          },
-        ));
+    return InkWell(
+      onTap: () {
+        fp.signInWithFacebookAccount();
+      },
+      child: Image.asset(
+        "assets/icons/facebook.png",
+        width: ScreenUtil().setWidth(62),
+        height: ScreenUtil().setHeight(62),
+      )
+    );
   }
 
   Widget _googleButton() {
-    return Ink(
-        decoration: ShapeDecoration(
-          color: AppTheme.colors.base3,
-          shape: CircleBorder(),
-        ),
-        child: IconButton(
-          icon: Icon(Icons.access_alarm),
-          iconSize: 40.0, // * screenUtil 씌워줘야함
-          onPressed: () {
-            fp.signInWithGoogleAccount();
-          },
-        ));
+    return InkWell(
+      onTap: () {
+        fp.signInWithGoogleAccount();
+      },
+      child: SvgPicture.asset(
+        "assets/icons/google.svg",
+        width: ScreenUtil().setWidth(62),
+        height: ScreenUtil().setHeight(62),
+      )
+    );
   }
 }

@@ -18,7 +18,7 @@ class DefaultIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+      width: ScreenUtil().setWidth(343),
       height: ScreenUtil().setHeight(54),
       child: FlatButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),

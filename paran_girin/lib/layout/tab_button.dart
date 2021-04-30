@@ -13,7 +13,7 @@ class TabButton extends StatelessWidget {
   TabButton({
     Key key,
     this.svg,
-    this.svgSize = 24.0, //screenutil 적용 가능?
+    this.svgSize = 24.0, 
     @required this.index,
     @required this.controller,
     this.selectedIndex,
