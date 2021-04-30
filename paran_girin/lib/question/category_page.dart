@@ -8,7 +8,6 @@ import 'package:paran_girin/question/qestion_post.dart';
 import 'package:paran_girin/question/question_card.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/material.dart';
 import 'package:paran_girin/models/schema.dart';
 
 class CategoryPage extends StatefulWidget {

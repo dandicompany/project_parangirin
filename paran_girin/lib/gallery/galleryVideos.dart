@@ -200,7 +200,7 @@ class yesVideo extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
-                        videoShowWidget())); //VideoPlayerScreen()));
+                        VideoShowWidget())); //VideoPlayerScreen()));
               },
               onLongPress: () async {
                 String path = await fp.getUploadManager().uploadVideo("test",

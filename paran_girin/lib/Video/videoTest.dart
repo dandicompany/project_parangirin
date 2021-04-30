@@ -173,7 +173,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             return Stack(
               children: [
                 Align(
-                  child: textToSpeech(text: "안녕"),
+                  child: TextToSpeech(text: "안녕"),
                   // 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아. 혹시 너도 동물이 되어보고 싶은 적 없어? 하루동안 동물이 된다면, 어떤 동물이 되고싶니?",),
                 ),
                 Align(
@@ -212,7 +212,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                   '${DateTime.now()}.mp4');
                               setState(() {
                                 startstopwatch();
-                                changeCameraView();
+                                ChangeCameraView();
                                 _controller
                                     .startVideoRecording(filePath); //filePath);
                                 isDisabled = true;
@@ -264,7 +264,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   height: ScreenUtil().setHeight(488),
                   child: Lottie.asset('assets/avatars/data.json'),
                 ),
-                !isDisabled ? changeCameraView() : saveVideo(),
+                !isDisabled ? ChangeCameraView() : SaveVideo(),
                 Container(
                     child: GestureDetector(
                   onTap: () {
@@ -296,7 +296,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
 
 
-class changeCameraView extends StatelessWidget {
+class ChangeCameraView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -324,13 +324,13 @@ class changeCameraView extends StatelessWidget {
   }
 }
 
-class saveVideo extends StatelessWidget {
+class SaveVideo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
         child: GestureDetector(
       onTap: () {
-        saveVideo();
+        SaveVideo();
         //filepath 서버에 올리기
       },
       child: Align(

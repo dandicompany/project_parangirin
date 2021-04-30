@@ -60,7 +60,7 @@ class _MyPageState extends State<MyPage> {
                   text: "알림 설정",
                   press: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => pushAlarm()));
+                        MaterialPageRoute(builder: (context) => PushAlarm()));
                   }),
               SizedBox(height: ScreenUtil().setHeight(16)),
               ProfileMenu(
