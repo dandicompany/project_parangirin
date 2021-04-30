@@ -186,6 +186,8 @@ class _QuestionPostState extends State<QuestionPost> {
         return 'assets/images/category_body.png'; 
       case '의사소통':
         return 'assets/images/category_communication.png'; 
+      default:
+        return 'assets/images/category_society.png'; 
     }
   }
 }

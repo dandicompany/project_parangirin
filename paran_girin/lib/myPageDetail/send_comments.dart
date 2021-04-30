@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
 import 'package:paran_girin/layout/base_appbar.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
@@ -11,30 +9,8 @@ class SendComments extends StatefulWidget {
 }
 
 class _SendCommentsState extends State<SendComments> {
-  // sendMail() async {
-  //   String username = EMAIL;
-  //   String password = PASS;
-
-  //   final smtpServer = gmail(username, password);
-
-  //   final message = Message()
-  //     ..from = Address(username, 'Your name')
-  //     ..recipients.add('wldbs6124@gmail.com')
-  //     ..subject = '파란 기린에게 의견 보냅니다 :: 😀 :: ${DateTime.now()}'
-  //     ..text = '내용 어쩌구 저쩌구';
-
-  //   try {
-  //     final sendReport = await send(message, smtpServer);
-  //     print('Message sent: ' + sendReport.toString());
-  //   } on MailerException catch (e) {
-  //     print('Message not sent.');
-  //     for (var p in e.problems) {
-  //       print('Problem: ${p.code}: ${p.msg}');
-  //     }
-  //   }
-  // }
-
   @override
+  
   Widget build(BuildContext context) {
     TextEditingController textCon1;
     TextEditingController textCon2;
@@ -78,7 +54,7 @@ class _SendCommentsState extends State<SendComments> {
                   // add press
                   _buildGetComment(textCon1, true),
                   SizedBox(height: ScreenUtil().setHeight(29)),
-                  _buildGetComment(textCon1, false)
+                  _buildGetComment(textCon2, false)
                 ],
               ),
             ),

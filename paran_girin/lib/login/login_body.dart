@@ -94,7 +94,7 @@ class LoginBody extends StatelessWidget {
 }
 
 class EmailForm extends StatefulWidget {
-  TextEditingController textCon;
+  final TextEditingController textCon;
   EmailForm(this.textCon);
   @override
   _EmailFormState createState() => _EmailFormState(textCon);
@@ -125,7 +125,7 @@ class _EmailFormState extends State<EmailForm> {
 }
 
 class PasswordForm extends StatefulWidget {
-  TextEditingController textCon;
+  final TextEditingController textCon;
   PasswordForm(this.textCon);
   @override
   _PasswordFormState createState() => _PasswordFormState(textCon);

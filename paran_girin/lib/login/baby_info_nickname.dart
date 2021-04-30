@@ -5,7 +5,7 @@ import 'package:paran_girin/login/baby_info_birth.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
 class BabyInfoNickname extends StatefulWidget {
-  String name;
+  final String name;
   BabyInfoNickname(this.name);
   @override
   _BabyInfoNicknameState createState() => _BabyInfoNicknameState(this.name);

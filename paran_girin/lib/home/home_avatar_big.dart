@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lottie/lottie.dart';
 import 'package:paran_girin/Video/videoTest.dart';
-import 'package:paran_girin/layout/base_appbar.dart';
 import 'package:paran_girin/layout/default_icon_botton.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 

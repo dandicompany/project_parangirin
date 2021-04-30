@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lottie/lottie.dart';
 import 'package:paran_girin/home/home_avatar_big.dart';
 import 'package:paran_girin/home/home_no_answers.dart';
 import 'package:paran_girin/home/post_card.dart';

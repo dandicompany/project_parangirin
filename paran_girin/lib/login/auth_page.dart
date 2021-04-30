@@ -5,7 +5,6 @@ import 'package:paran_girin/login/baby_info.dart';
 import 'package:paran_girin/main.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/login/login_page.dart';
-import 'package:paran_girin/login/baby_info.dart';
 import 'package:paran_girin/layout/splash.dart';
 import 'package:paran_girin/login/baby_info_name.dart';
 

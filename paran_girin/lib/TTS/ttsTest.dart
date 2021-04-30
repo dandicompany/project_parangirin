@@ -1,9 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:paran_girin/theme/colors.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:convert';
 import 'package:audioplayers/audio_cache.dart';
 
@@ -23,8 +21,8 @@ String url = 'https://naveropenapi.apigw.ntruss.com/tts-premium/v1/tts';
 
 //text에 원하는 문구 담아서 보내면 됨.
 
-class textToSpeech extends StatefulWidget {
-  const textToSpeech({
+class TextToSpeech extends StatefulWidget {
+  const TextToSpeech({
     Key key,
     @required this.text,
   }) : super(key: key);
@@ -32,10 +30,10 @@ class textToSpeech extends StatefulWidget {
   final String text;
 
   @override
-  textToSpeechState createState() => textToSpeechState();
+  TextToSpeechState createState() => TextToSpeechState();
 }
 
-class textToSpeechState extends State<textToSpeech> {
+class TextToSpeechState extends State<TextToSpeech> {
   void _createPost() async {
     final response = await http.post(
       url,

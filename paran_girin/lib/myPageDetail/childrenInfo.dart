@@ -5,7 +5,6 @@ import 'package:paran_girin/layout/base_appbar.dart';
 import 'package:paran_girin/layout/default_botton.dart';
 import 'package:paran_girin/my/profile_menu.dart';
 import 'package:paran_girin/myPageDetail/childrenInfoLayout.dart';
-import 'package:paran_girin/myPageDetail/childrenInfoLayout2.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/login/baby_info_name.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
@@ -60,14 +59,14 @@ class _ChildrenInfoState extends State<ChildrenInfo> {
                       }
                       if (children[index - 1] ==
                           fp.getUserInfo().userInDB.currentChild) {
-                        return childrenInfoLayout(
+                        return ChildrenInfoLayout(
                           image: "assets/images/onboard_1.png",
                           text: child.nickName ?? "",
                           text2: chosen,
                           press: () {},
                         );
                       } else {
-                        return childrenInfoLayout(
+                        return ChildrenInfoLayout(
                           image: "assets/images/onboard_1.png",
                           text: child.nickName ?? "",
                           text2: notchosen,

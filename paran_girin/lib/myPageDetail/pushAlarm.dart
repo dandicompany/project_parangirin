@@ -5,16 +5,15 @@ import 'package:paran_girin/my/profile_menu.dart';
 import 'package:paran_girin/myPageDetail/childrenInfoLayout.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
-class pushAlarm extends StatefulWidget {
+class PushAlarm extends StatefulWidget {
   @override
-  _pushAlarmState createState() => _pushAlarmState();
+  _PushAlarmState createState() => _PushAlarmState();
 }
 
-class _pushAlarmState extends State<pushAlarm> {
+class _PushAlarmState extends State<PushAlarm> {
   bool isSwitched = true;
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
         appBar: BaseAppBar(
           title: "알림 설정",
