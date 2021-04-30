@@ -12,12 +12,12 @@ import 'package:intl/date_symbol_data_local.dart';
 String name = "샐리";
 int num = 0;
 
-class Calender extends StatefulWidget {
+class Calendar extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _CalenderState();
+  State<StatefulWidget> createState() => _CalendarState();
 }
 
-class _CalenderState extends State<Calender> {
+class _CalendarState extends State<Calendar> {
   CalendarController _calendarController;
   Map<DateTime, List<dynamic>> _events;
   List<dynamic> _selectedEvents;

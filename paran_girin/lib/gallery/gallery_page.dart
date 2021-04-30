@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:paran_girin/theme/app_theme.dart';
 
-import 'package:paran_girin/gallery/Calender.dart';
+import 'package:paran_girin/gallery/calendar.dart';
 import 'package:paran_girin/gallery/galleryVideos.dart';
 
 
@@ -215,7 +215,7 @@ class GalleryPage extends StatelessWidget implements PreferredSizeWidget {
       itemBuilder: (context, idx) {
         switch (idx) {
           case 0:
-            return Calender(); // HomePage();
+            return Calendar(); // HomePage();
           case 1:
             return galleryVideo(); 
         }

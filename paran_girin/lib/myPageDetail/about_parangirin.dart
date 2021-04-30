@@ -152,8 +152,8 @@ class AboutParanGirin extends StatelessWidget {
             ),
             Image.asset(
               "assets/images/aboutParan_3.png",
-              width: ScreenUtil().setWidth(36),
-              height: ScreenUtil().setHeight(52),
+              width: ScreenUtil().setWidth(54),
+              height: ScreenUtil().setHeight(78),
             ),
             SizedBox(height: ScreenUtil().setHeight(60))
           ],
