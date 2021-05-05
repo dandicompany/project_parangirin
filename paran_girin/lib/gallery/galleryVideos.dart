@@ -134,7 +134,7 @@ class _CalenderState extends State<galleryVideo> {
                   ),
                 ],
               ),
-              sum == 0 ? noVideo() : yesVideo(),
+              sum == 0 ? NoVideo() : YesVideo(),
             ],
           ),
         ),
@@ -143,7 +143,7 @@ class _CalenderState extends State<galleryVideo> {
   }
 }
 
-class noVideo extends StatelessWidget {
+class NoVideo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -181,36 +181,32 @@ class noVideo extends StatelessWidget {
   }
 }
 
-class yesVideo extends StatelessWidget {
+class YesVideo extends StatelessWidget {
   FirebaseProvider fp;
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
-    return Container(
-      //width: ScreenUtil().setWidth(330),
-      //height: double.infinity,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: ScreenUtil().setHeight(45),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: ScreenUtil().setHeight(45),
+        ),
+        for (var i = 0; i < sum; i++)
+          MyVideoLayout(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) =>
+                      VideoShowWidget())); //VideoPlayerScreen()));
+            },
+            onLongPress: () async {
+              String path = await fp.getUploadManager().uploadVideo("test",
+                  "/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4");
+              fp.addPost(path, null);
+            },
           ),
-          for (var i = 0; i < sum; i++)
-            MyVideoLayout(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        VideoShowWidget())); //VideoPlayerScreen()));
-              },
-              onLongPress: () async {
-                String path = await fp.getUploadManager().uploadVideo("test",
-                    "/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4");
-                fp.addPost(path, null);
-              },
-            ),
-          SizedBox(height: ScreenUtil().setHeight(100)),
-        ],
-      ),
+        SizedBox(height: ScreenUtil().setHeight(100)),
+      ],
     );
   }
 }

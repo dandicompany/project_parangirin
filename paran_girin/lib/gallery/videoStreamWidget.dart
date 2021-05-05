@@ -8,7 +8,7 @@ var file = File(
     "/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4");
 
 class VideoStreamWidget extends StatelessWidget {
-  String url;
+  final String url;
   VideoStreamWidget(this.url);
   @override
   Widget build(BuildContext context) {
