@@ -62,7 +62,6 @@ class HomeAvatarBig extends StatelessWidget {
                       : null,
                       Text(
                         todayDone ? "오늘의 질문에 이미 답변을 하셨네요":"오늘의 질문",
-                        // "오늘의 질문에 이미 답변을 하셨네요",
                         style: TextStyle(
                           fontSize: ScreenUtil().setSp(16),
                           color: AppTheme.colors.base2,
@@ -72,7 +71,6 @@ class HomeAvatarBig extends StatelessWidget {
                       SizedBox(height: ScreenUtil().setHeight(15)),
                       Text(
                         todayDone ? "내일은 어떤 질문이\n기다리고 있을까요?":"타임 캡슐에 담고 싶은\n나의 물건은?",
-                        // "내일은 어떤 질문이\n기다리고 있을까요?",
                         style: TextStyle(
                           fontSize: ScreenUtil().setSp(24),
                           // color: todayDone ? AppTheme.colors.base2:AppTheme.colors.base1,
@@ -86,14 +84,6 @@ class HomeAvatarBig extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   height: ScreenUtil().setHeight(595),
-                  // child: Image.asset(
-                  //   'assets/images/onboard_2.png',
-                  //   fit: BoxFit.cover,
-                  // ),
-                  // child: Lottie.asset(
-                  //   'assets/avatars/lurking-cat.json',
-                  //   fit: BoxFit.cover,
-                  // ),
                   child: Image.asset(
                     'assets/avatars/home.gif',
                     fit: BoxFit.cover,
