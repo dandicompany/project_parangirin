@@ -21,6 +21,8 @@ String filePath;
 var cameras;
 String filepath;
 bool cameraview = true;
+bool girinchange = true;
+
 
 String formatTime(int milliseconds) {
   var secs = milliseconds ~/ 1000;
@@ -172,9 +174,21 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           if (snapshot.connectionState == ConnectionState.done) {
             return Stack(
               children: [
+                Container(
+                  width: double.infinity,
+                  height: ScreenUtil().setHeight(812),
+                  //alignment: Alignment.center,
+                  child :
+                      Image.asset("assets/avatars/default_background.png",
+                      fit: BoxFit.cover,
+                      alignment: Alignment.bottomCenter),
+                ),
                 Align(
                   child: TextToSpeech(text: "안녕"),
                   // 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아. 혹시 너도 동물이 되어보고 싶은 적 없어? 하루동안 동물이 된다면, 어떤 동물이 되고싶니?",),
+                ),
+                Container(
+                  child : girin_speak()
                 ),
                 Align(
                   alignment: Alignment(0.0, 0.73),
@@ -197,7 +211,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 Transform(
                   alignment: Alignment.topRight,
                   transform: Matrix4.diagonal3Values(0.3, 0.3, 0), // (x,y,z)
-                  child: CameraPreview(_controller),
+                  child:
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 64,horizontal: 19),
+                      child:CameraPreview(_controller),
+                    ),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
@@ -212,7 +230,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                   '${DateTime.now()}.mp4');
                               setState(() {
                                 startstopwatch();
-                                ChangeCameraView();
+                                //ChangeCameraView();
                                 _controller
                                     .startVideoRecording(filePath); //filePath);
                                 isDisabled = true;
@@ -250,7 +268,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                             });
                           },
                           child: ImageIcon(
-                            AssetImage("assets/images/video_Off.png"),
+                            AssetImage("assets/images/video_On.png"),
                             size: ScreenUtil().radius(70),
                             color: Colors.red,
                           ),
@@ -259,32 +277,27 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                         )
                       : null,
                 ),
-                Container(
-                  width: double.infinity,
-                  height: ScreenUtil().setHeight(488),
-                  child: Lottie.asset('assets/avatars/data.json'),
-                ),
-                !isDisabled ? ChangeCameraView() : SaveVideo(),
+                !isDisabled ? Container() : SaveVideo(),
                 Container(
                     child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => DefaultLayout()));
-                  },
-                  child: Align(
-                    alignment: Alignment(-0.9, -0.9),
-                    child: Container(
-                      width: ScreenUtil().setWidth(24),
-                      height: ScreenUtil().setHeight(24),
-                      //padding: EdgeInsets.all(15.0),
-                      child: Image.asset(
-                        "assets/images/cameraBack.png",
-                      ),
-                    ),
-                  ),
-                )),
-              ],
-            );
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => DefaultLayout()));
+                      },
+                        child: Align(
+                              alignment: Alignment(-0.9, -0.9),
+                               child: Container(
+                                 width: ScreenUtil().setWidth(24),
+                                  height: ScreenUtil().setHeight(24),
+                                   //padding: EdgeInsets.all(15.0),
+                                 child: Image.asset(
+                                      "assets/images/cameraBack.png",
+                                ),
+                               ),
+                              ),
+                             )),
+                            ],
+                           );
           } else {
             return Center(child: CircularProgressIndicator());
           }
@@ -294,7 +307,56 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   }
 }
 
-
+class girin_hi extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return Align(
+      alignment : Alignment.center ,
+      child: Container(
+        width: ScreenUtil().setWidth(512),
+        height: ScreenUtil().setHeight(512),
+        child : Image.asset("assets/avatars/hi.gif",
+            fit : BoxFit.cover),
+      )
+    );
+  }
+}
+class girin_speak extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: Future.delayed(Duration(milliseconds: 2000)),
+        builder: (context, snapshot) {
+        // Checks whether the future is resolved, ie the duration is over
+          if (snapshot.connectionState == ConnectionState.done){
+            girinchange = false;
+            return Align(
+                alignment : Alignment.center ,
+                child: Container(
+                  width: ScreenUtil().setWidth(512),
+                  height: ScreenUtil().setHeight(512),
+                  child : Image.asset("assets/avatars/speaking.gif",
+                      fit : BoxFit.cover),
+                )
+            );}
+          else if(girinchange == true) {
+            return girin_hi();
+          }
+          else
+            return Align(
+                alignment : Alignment.center ,
+                child: Container(
+                  width: ScreenUtil().setWidth(512),
+                  height: ScreenUtil().setHeight(512),
+                  child : Image.asset("assets/avatars/speaking.gif",
+                      fit : BoxFit.cover),
+                )
+            );
+        // Return empty container to avoid build errors
+        }
+    );
+  }
+}
 
 class ChangeCameraView extends StatelessWidget {
   @override
@@ -329,19 +391,18 @@ class SaveVideo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: GestureDetector(
-      onTap: () {
-        SaveVideo();
-        //filepath 서버에 올리기
-      },
-      child: Align(
-        alignment: Alignment(0.7, 0.919),
-        child: Container(
-          width: ScreenUtil().setWidth(38),
-          height: ScreenUtil().setHeight(38),
-          //padding: EdgeInsets.all(15.0),
-          child: Image.asset(
-            "assets/images/saveVideo.png",
-          ),
+          onTap: () {
+            //SaveVideo();
+          },
+          child: Align(
+          alignment: Alignment(0.7, 0.919),
+             child: Container(
+                width: ScreenUtil().setWidth(38),
+                height: ScreenUtil().setHeight(38),
+                //padding: EdgeInsets.all(15.0),
+                child: Image.asset(
+                  "assets/images/saveVideo.png",
+                ),
         ),
       ),
     ));

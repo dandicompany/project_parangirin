@@ -110,7 +110,6 @@ class _CalendarState extends State<Calendar> {
                   ),
                 ),
               ],
-              //
             ),
             SizedBox(
               height: ScreenUtil().setHeight(27),
@@ -170,9 +169,12 @@ class _CalendarState extends State<Calendar> {
                                 color: AppTheme.colors.base3,
                                 fontSize: ScreenUtil().setSp(20)),
                             eventDayStyle: TextStyle(
-                                color: Colors.red,
+                                color: AppTheme.colors.base3,
                                 fontSize: ScreenUtil().setSp(20)),
+                            markersColor: AppTheme.colors.primary3,
+                            markersMaxAmount:1,
                           ),
+
                           headerStyle: HeaderStyle(
                             formatButtonVisible: false,
                             //leftChevronMargin: EdgeInsets.only(10/0),
@@ -182,11 +184,41 @@ class _CalendarState extends State<Calendar> {
                           onDaySelected: (date, events, holidays) {
                             setState(() {
                               _selectedEvents = events;
+                              print(events);
                               print(date);
-                              //print(events);
+
+                              if (_events[_calendarController.selectedDay] != null) {
+                                _events[_calendarController.selectedDay]
+                                    .add(_eventController.text);
+                                print(_eventController.text);
+                              } else {
+                                _events[_calendarController.selectedDay] = [
+                                  _eventController.text
+                                ];
+                              }
+                              prefs.setString("events", json.encode(encodeMap(_events)));
+                              _eventController.clear();
                             });
                           }, // onDaySelected: ,
                         ),
+
+                        ..._selectedEvents.map((event) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: MediaQuery.of(context).size.height/20,
+                            width: MediaQuery.of(context).size.width/2,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Colors.white,
+                                border: Border.all(color: Colors.grey)
+                            ),
+                            child: Center(
+                                child: Text(event,
+                                  style: TextStyle(color: Colors.blue,
+                                      fontWeight: FontWeight.bold,fontSize: 16),)
+                            ),
+                          ),
+                        )),
                       ],
                     ),
                   ),
