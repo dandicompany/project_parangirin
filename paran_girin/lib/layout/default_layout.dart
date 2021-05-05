@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:paran_girin/TTS/ttsTest.dart';
 import 'package:paran_girin/gallery/gallery_page.dart';
 import 'package:paran_girin/home/home_page.dart';
 import 'package:paran_girin/layout/tab_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:paran_girin/my/mypage.dart';
 import 'package:paran_girin/question/category_page.dart';
-import 'package:paran_girin/question/question_page.dart';
-import 'package:paran_girin/gallery/video_downloader.dart';
-import 'package:paran_girin/Video/videoTest.dart';
 
 class DefaultLayout extends StatefulWidget {
   @override
@@ -79,14 +75,16 @@ class _DefaultLayoutState extends State<DefaultLayout>
       itemBuilder: (context, idx) {
         switch (idx) {
           case 0:
-            return HomePage(); // HomePage();
+            return HomePage(); 
           case 1:
-            return CategoryPage(); // QuestionPage();
+            return CategoryPage(); 
             //return Initialization(); // hobin test
           case 2:
-            return GalleryPage(); // ArchivePage();
+            return GalleryPage(); 
           case 3:
-            return MyPage(); // MyPage();
+            return MyPage(); 
+          default:
+            return HomePage();
         }
       },
     ));

@@ -3,8 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/my/profile_menu.dart';
 import 'package:paran_girin/my/profile_pic.dart';
 import 'package:paran_girin/myPageDetail/Notice.dart';
+import 'package:paran_girin/myPageDetail/about_parangirin.dart';
 import 'package:paran_girin/myPageDetail/childrenInfo.dart';
+import 'package:paran_girin/myPageDetail/privacy_policy.dart';
 import 'package:paran_girin/myPageDetail/send_comments.dart';
+import 'package:paran_girin/myPageDetail/terms_conditions.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
@@ -51,13 +54,13 @@ class _MyPageState extends State<MyPage> {
                   text: "자녀 관리",
                   press: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => childrenInfo()));
+                        builder: (context) => ChildrenInfo()));
                   }),
               ProfileMenu(
                   text: "알림 설정",
                   press: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => pushAlarm()));
+                        MaterialPageRoute(builder: (context) => PushAlarm()));
                   }),
               SizedBox(height: ScreenUtil().setHeight(16)),
               ProfileMenu(
@@ -72,10 +75,25 @@ class _MyPageState extends State<MyPage> {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => SendComments()));
                   }),
-              ProfileMenu(text: "파란 기린 소개", press: () {}),
+              ProfileMenu(
+                text: "파란 기린 소개", 
+                press: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AboutParanGirin()));
+                  }),
               SizedBox(height: ScreenUtil().setHeight(16)),
-              ProfileMenu(text: "이용약관", press: () {}),
-              ProfileMenu(text: "개인 정보 처리 방침", press: () {}),
+              ProfileMenu(
+                  text: "이용약관",
+                  press: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => TermsConditions()));
+                  }),
+              ProfileMenu(
+                  text: "개인 정보 처리 방침", 
+                  press: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => PrivacyPolicy()));
+                  }),
               ProfileMenu(text: "도움말", press: () {}),
               ProfileMenu(
                   text: "로그아웃",

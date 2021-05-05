@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/layout/default_botton.dart';
 import 'package:paran_girin/onboarding/onboard_content.dart';
 import 'package:paran_girin/theme/app_theme.dart';
-import 'package:paran_girin/TTS/ttsTest.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '../login/auth_page.dart';
 

@@ -7,7 +7,7 @@ import 'package:video_player/video_player.dart';
 var file = File(
     "/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4");
 
-class videoShowWidget extends StatelessWidget {
+class VideoShowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

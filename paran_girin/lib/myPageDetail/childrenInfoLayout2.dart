@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class childrenInfoLayout2 extends StatelessWidget {
-  const childrenInfoLayout2({
+class ChildrenInfoLayout2 extends StatelessWidget {
+  const ChildrenInfoLayout2({
     Key key,
     this.image,
     this.text,

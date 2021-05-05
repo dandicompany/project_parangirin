@@ -5,7 +5,6 @@ import 'package:paran_girin/layout/base_appbar.dart';
 import 'package:paran_girin/layout/default_botton.dart';
 import 'package:paran_girin/my/profile_menu.dart';
 import 'package:paran_girin/myPageDetail/childrenInfoLayout.dart';
-import 'package:paran_girin/myPageDetail/childrenInfoLayout2.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/login/baby_info_name.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
@@ -15,30 +14,32 @@ import 'package:paran_girin/models/schema.dart';
 final String chosen = "(으)로 접속중";
 final String notchosen = "(으)로 접속하기";
 
-class childrenInfo extends StatefulWidget {
+
+class ChildrenInfo extends StatefulWidget {
   @override
-  _ChildInfoState createState() => _ChildInfoState();
+  _ChildrenInfoState createState() => _ChildrenInfoState();
 }
 
-class _ChildInfoState extends State<childrenInfo> {
+class _ChildrenInfoState extends State<ChildrenInfo> {
   FirebaseProvider fp;
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
     List<String> children = fp.getUserInfo().userInDB.children;
+
     return Scaffold(
       appBar: BaseAppBar(
         title: "자녀 관리",
       ),
-      body: Container(
-          width: double.infinity,
-          color: AppTheme.colors.background,
-          padding: EdgeInsets.only(
-            top: ScreenUtil().setHeight(0),
-            left: ScreenUtil().setWidth(16),
-            right: ScreenUtil().setWidth(16),
-          ),
-          child: ListView.separated(
+      // body: Column(      // for another type of button
+      body: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: ScreenUtil().setHeight(715),
+            // height: ScreenUtil().setHeight(450),
+            color: AppTheme.colors.background,
+            child: ListView.separated(
               padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(150)),
               itemCount: children.length + 1,
               itemBuilder: (context, index) {
@@ -47,65 +48,84 @@ class _ChildInfoState extends State<childrenInfo> {
                   return SizedBox(height: ScreenUtil().setHeight(30));
                 }
                 return FutureBuilder(
-                    future: fp.getFromFB('children', children[index - 1]),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        logger.d(snapshot.data);
+                  future: fp.getFromFB('children', children[index - 1]),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      logger.d(snapshot.data);
 
-                        Child child = Child.fromJson(snapshot.data);
-                        if (child == null) {
-                          return SizedBox.shrink();
-                        }
-                        if (children[index - 1] ==
-                            fp.getUserInfo().userInDB.currentChild) {
-                          return childrenInfoLayout(
-                            image: "assets/images/onboard_1.png",
-                            text: child.nickName ?? "",
-                            text2: chosen,
-                            press: () {},
-                          );
-                        } else {
-                          return childrenInfoLayout2(
-                            image: "assets/images/onboard_1.png",
-                            text: child.nickName ?? "",
-                            text2: notchosen,
-                            press: () {
-                              fp.switchChild(children[index - 1]);
-                              setState(() {});
-                            },
-                          );
-                        }
-                      } else {
+                      Child child = Child.fromJson(snapshot.data);
+                      if (child == null) {
                         return SizedBox.shrink();
                       }
-                    });
+                      if (children[index - 1] ==
+                          fp.getUserInfo().userInDB.currentChild) {
+                        return ChildrenInfoLayout(
+                          image: "assets/images/onboard_1.png",
+                          text: child.nickName ?? "",
+                          text2: chosen,
+                          press: () {},
+                        );
+                      } else {
+                        return ChildrenInfoLayout(
+                          image: "assets/images/onboard_1.png",
+                          text: child.nickName ?? "",
+                          text2: notchosen,
+                          press: () {
+                            fp.switchChild(children[index - 1]);
+                            setState(() {});
+                          },
+                        );
+                      }
+                    } else {
+                      return SizedBox.shrink();
+                    }
+                  }
+                );
               },
               separatorBuilder: (context, index) {
                 if (index == 0) return SizedBox.shrink();
                 return SizedBox(height: ScreenUtil().setHeight(8));
-              })),
-      floatingActionButton: FloatingActionButton.extended(
-        //elevation: 4.0,
-        //shape: _CustomBorder(),
-        //icon: const Icon(Icons.add),
-
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        label: Text(
-          '                        자녀 추가하기                        ',
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
-            fontSize: ScreenUtil().setSp(16),
+              }
+            )
           ),
-        ),
-        onPressed: () {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => BabyInfoName()));
-        },
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.of(context).pushReplacement(
+          //       MaterialPageRoute(builder: (context) => BabyInfoName()));
+          //   },
+          //   child: Container(
+          //     width: double.infinity,
+          //     height: ScreenUtil().setHeight(64),
+          //     padding: EdgeInsets.symmetric(
+          //       vertical: ScreenUtil().setHeight(20)
+          //     ),
+          //     color: Colors.white,
+          //     child: Text(
+          //       "자녀 추가하기",
+          //       textAlign: TextAlign.center,
+          //       style: TextStyle(
+          //         fontSize: ScreenUtil().setSp(16)
+          //       ),
+          //     )
+          //   ),
+          // )
+          Positioned(
+            bottom: ScreenUtil().setHeight(50),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: ScreenUtil().setWidth(16)),
+              child: DefaultButton(
+                text: "자녀 추가하기",
+                isInvert: false,
+                press: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => BabyInfoName()));
+                }
+              ),
+            ),
+          ),
+        ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
