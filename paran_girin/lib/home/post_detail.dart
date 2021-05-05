@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:paran_girin/Video/videoTest.dart';
+import 'package:paran_girin/gallery/videoShowWidget.dart';
+import 'package:paran_girin/layout/default_botton.dart';
 import 'package:paran_girin/layout/default_icon_botton.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/models/schema.dart';
@@ -22,6 +24,9 @@ class PostDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
+    // Post model에 Question 정보 없어도 되나? 
+    // Child.answers를 이용해서 이 질문에 대답했는지 안했는지 판단하기
+    bool questionDone = false;
     return Scaffold(
       body: Column(
         children: [
@@ -105,15 +110,39 @@ class PostDetail extends StatelessWidget {
                           fontSize: ScreenUtil().setSp(12),
                           fontWeight: FontWeight.w400,
                           color: AppTheme.colors.base2,
-                          height: 1.6
+                          height: 1.7
                         ),
                       ),
                     ],
                   ),
                 ),
                 Positioned(
-                  bottom: ScreenUtil().setHeight(50),
-                  child: DefaultIconButton(
+                  bottom: questionDone ? ScreenUtil().setHeight(58) : ScreenUtil().setHeight(50),
+                  child: questionDone ? Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => VideoShowWidget()));
+                        },
+                        child: Text(
+                          "대답한 영상 보기",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: ScreenUtil().setSp(12),
+                            color: AppTheme.colors.base2,
+                            decoration: TextDecoration.underline
+                          ),
+                        )),
+                        SizedBox(height: ScreenUtil().setHeight(8)),
+                        DefaultButton(
+                          text: "이미 대답한 질문이에요",
+                          color: AppTheme.colors.base2,
+                          isInvert: false,
+                          press: () {}),
+                      ],
+                    )
+                    : DefaultIconButton(
                     text: "이 질문으로 대화하기",
                     icon: "assets/icons/camera.svg",
                     isInvert: false,

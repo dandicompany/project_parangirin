@@ -3,11 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
-  final String title;
-
   BaseAppBar({
+    Key key, 
     this.title,
-  });
+    this.showSend = false,
+    this.isSend = false,
+  }) : super(key: key);
+
+  final String title;
+  final bool showSend;
+  final bool isSend;
 
   @override
   Size get preferredSize => Size.fromHeight(ScreenUtil().setHeight(56));
@@ -37,6 +42,23 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
           ),
           textAlign: TextAlign.center,
         ),
+        actions: showSend ?[
+          Center(
+            child: Padding(
+              padding: EdgeInsets.only(
+                right: ScreenUtil().setWidth(17)
+              ),
+              child: Text(
+                "보내기",
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(16),
+                  color: isSend ? AppTheme.colors.primary2 : AppTheme.colors.base2,
+                ),
+              ),
+            ),
+          )
+        ]
+        : [],
       );
   }
 }
