@@ -184,6 +184,7 @@ class _CalendarState extends State<Calendar> {
                           onDaySelected: (date, events, holidays) {
                             setState(() {
                               _selectedEvents = events;
+                              print(events);
                               print(date);
 
                               if (_events[_calendarController.selectedDay] != null) {

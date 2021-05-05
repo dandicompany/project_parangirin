@@ -230,7 +230,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                   '${DateTime.now()}.mp4');
                               setState(() {
                                 startstopwatch();
-                                ChangeCameraView();
+                                //ChangeCameraView();
                                 _controller
                                     .startVideoRecording(filePath); //filePath);
                                 isDisabled = true;
@@ -268,7 +268,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                             });
                           },
                           child: ImageIcon(
-                            AssetImage("assets/images/video_Off.png"),
+                            AssetImage("assets/images/video_On.png"),
                             size: ScreenUtil().radius(70),
                             color: Colors.red,
                           ),
@@ -277,7 +277,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                         )
                       : null,
                 ),
-                !isDisabled ? ChangeCameraView() : SaveVideo(),
+                !isDisabled ? Container() : SaveVideo(),
                 Container(
                     child: GestureDetector(
                       onTap: () {
@@ -329,6 +329,7 @@ class girin_speak extends StatelessWidget {
         builder: (context, snapshot) {
         // Checks whether the future is resolved, ie the duration is over
           if (snapshot.connectionState == ConnectionState.done){
+            girinchange = false;
             return Align(
                 alignment : Alignment.center ,
                 child: Container(
@@ -338,8 +339,20 @@ class girin_speak extends StatelessWidget {
                       fit : BoxFit.cover),
                 )
             );}
+          else if(girinchange == true) {
+            return girin_hi();
+          }
           else
-            return girin_hi(); // Return empty container to avoid build errors
+            return Align(
+                alignment : Alignment.center ,
+                child: Container(
+                  width: ScreenUtil().setWidth(512),
+                  height: ScreenUtil().setHeight(512),
+                  child : Image.asset("assets/avatars/speaking.gif",
+                      fit : BoxFit.cover),
+                )
+            );
+        // Return empty container to avoid build errors
         }
     );
   }
@@ -379,8 +392,7 @@ class SaveVideo extends StatelessWidget {
     return Container(
         child: GestureDetector(
           onTap: () {
-            SaveVideo();
-            //filepath 서버에 올리기
+            //SaveVideo();
           },
           child: Align(
           alignment: Alignment(0.7, 0.919),
