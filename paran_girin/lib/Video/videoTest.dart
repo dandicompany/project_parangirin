@@ -3,6 +3,8 @@ import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:paran_girin/layout/default_layout.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -17,7 +19,6 @@ CameraDescription firstCamera;
 CameraDescription frontCamera;
 String filePath;
 var cameras;
-String filepath;
 bool cameraview = true;
 bool girinchange = true;
 
@@ -207,10 +208,13 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   top: ScreenUtil().setHeight(64),
                   right: ScreenUtil().setWidth(10),
                   child:
-                    Container(
-                      height: ScreenUtil().setHeight(190),
-                      width: ScreenUtil().setWidth(120),
-                      child:CameraPreview(_controller),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Container(
+                        height: ScreenUtil().setHeight(190),
+                        width: ScreenUtil().setWidth(120),
+                        child:CameraPreview(_controller),
+                      ),
                     ),
                 ),
                 // ---- camera buttons
@@ -274,10 +278,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                             onPressed: () async {
                               try {
                                 await _initializeControllerFuture;
-                                filePath = join(
-                                    (await getApplicationDocumentsDirectory())
-                                        .path,
-                                    '${DateTime.now()}.mp4');
+                                // 0513
+                                // filePath = join(
+                                //     (await getApplicationDocumentsDirectory())
+                                //         .path,
+                                //     '${DateTime.now()}.mp4');
+                                filePath = "/assets/videoEx/sample1.mp4";
                                 setState(() {
                                   startstopwatch();
                                   //ChangeCameraView();
