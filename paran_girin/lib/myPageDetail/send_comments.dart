@@ -16,12 +16,12 @@ class _SendCommentsState extends State<SendComments> {
     TextEditingController textCon2;
     
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: BaseAppBar(
         title: '의견 보내기',
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(150)),
+        padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(100)),
         child: Container(
               padding: EdgeInsets.only(
                 top: ScreenUtil().setHeight(16),

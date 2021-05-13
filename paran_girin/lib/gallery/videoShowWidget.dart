@@ -5,7 +5,8 @@ import 'package:paran_girin/gallery/chewie_list_item.dart';
 import 'package:video_player/video_player.dart';
 
 var file = File(
-    "/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4");
+  "/assets/videoEx/sample1.mp4");
+    // "/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4");
 
 class VideoShowWidget extends StatelessWidget {
   @override

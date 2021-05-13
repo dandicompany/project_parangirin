@@ -26,7 +26,7 @@ class PostDetail extends StatelessWidget {
     fp = Provider.of<FirebaseProvider>(context);
     // Post model에 Question 정보 없어도 되나? 
     // Child.answers를 이용해서 이 질문에 대답했는지 안했는지 판단하기
-    bool questionDone = false;
+    bool questionDone = true;
     return Scaffold(
       body: Column(
         children: [
