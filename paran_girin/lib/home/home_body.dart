@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/home/home_avatar_big.dart';
-import 'package:paran_girin/home/home_no_answers.dart';
+import 'package:paran_girin/home/sharing_my_answers.dart';
 import 'package:paran_girin/home/post_card.dart';
 import 'package:paran_girin/layout/default_botton.dart';
 import 'package:paran_girin/myPageDetail/send_comments.dart';
@@ -89,7 +89,7 @@ class _HomeBody extends State<HomeBody> {
                     isInvert: true,
                     press: () {
                       Navigator.of(context)
-                          .push(FadePageRoute(widget: HomeNoAnswers()));
+                          .push(FadePageRoute(widget: SharingMyAnswers()));
                     },
                   ),
                 ),
@@ -101,7 +101,7 @@ class _HomeBody extends State<HomeBody> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "여러분의 피드백이 필요합니다!",
+                        "의견 보내기",
                         style: TextStyle(
                             color: AppTheme.colors.base1,
                             fontWeight: FontWeight.w700,
@@ -109,7 +109,7 @@ class _HomeBody extends State<HomeBody> {
                       ),
                       SizedBox(height: ScreenUtil().setHeight(23)),
                       DefaultButton(
-                        text: "의견 보내기",
+                        text: "바로 가기",
                         isInvert: true,
                         press: () {
                           Navigator.of(context)

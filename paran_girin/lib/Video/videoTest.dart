@@ -1,4 +1,5 @@
 import 'dart:async';
+// import 'dart:html';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -187,116 +188,146 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   // 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아. 혹시 너도 동물이 되어보고 싶은 적 없어? 하루동안 동물이 된다면, 어떤 동물이 되고싶니?",),
                 ),
                 Container(
-                  child : girin_speak()
+                  child : GirinSpeak()
                 ),
-                Align(
-                  alignment: Alignment(0.0, 0.73),
-                  child: Container(
-                    width: ScreenUtil().setWidth(79),
-                    height: ScreenUtil().setHeight(20),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(40),
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    child: stopwatch(),
-                    //child: Text(formatTime(_stopwatch.elapsedMilliseconds), style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
-                    //Text("00:00:00", style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
-                  ),
-                ),
-                Transform(
-                  alignment: Alignment.topRight,
-                  transform: Matrix4.diagonal3Values(0.3, 0.3, 0), // (x,y,z)
+                // ---- front camera
+                // Transform(
+                //   alignment: Alignment.topRight,
+                //   transform: Matrix4.diagonal3Values(0.3, 0.3, 0), // (x,y,z)
+                //   child:
+                //     Container(
+                //       padding: EdgeInsets.symmetric(
+                //         vertical: ScreenUtil().setHeight(64),
+                //         horizontal: ScreenUtil().setWidth(19)
+                //       ),
+                //       child:CameraPreview(_controller),
+                //     ),
+                // ),
+                Positioned(
+                  top: ScreenUtil().setHeight(64),
+                  right: ScreenUtil().setWidth(10),
                   child:
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 64,horizontal: 19),
+                      height: ScreenUtil().setHeight(190),
+                      width: ScreenUtil().setWidth(120),
                       child:CameraPreview(_controller),
                     ),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: !_controller.value.isRecordingVideo
-                      ? RawMaterialButton(
-                          onPressed: () async {
-                            try {
-                              await _initializeControllerFuture;
-                              filePath = join(
-                                  (await getApplicationDocumentsDirectory())
-                                      .path,
-                                  '${DateTime.now()}.mp4');
+                // ---- camera buttons
+                Positioned(
+                  bottom: ScreenUtil().setHeight(49),
+                  // left: ScreenUtil().setWidth(152),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(79),
+                        height: ScreenUtil().setHeight(20),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(40),
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: stopwatch(),
+                        //child: Text(formatTime(_stopwatch.elapsedMilliseconds), style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
+                        //Text("00:00:00", style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
+                      ),
+                      SizedBox( 
+                        width: ScreenUtil().setWidth(375),
+                        height: 18,
+                        // child: Text("hi"),
+                      ),
+                      Row(
+                        children: [
+                          !isDisabled ? ChangeCameraView() : Container(
+                            width: ScreenUtil().setWidth(38),
+                            height: ScreenUtil().setHeight(38),
+                            color: Colors.transparent
+                          ),
+                          SizedBox(width: ScreenUtil().setWidth(60)),
+                          _controller.value.isRecordingVideo
+                          ? RawMaterialButton(
+                            onPressed: () {
                               setState(() {
-                                startstopwatch();
-                                //ChangeCameraView();
-                                _controller
-                                    .startVideoRecording(filePath); //filePath);
-                                isDisabled = true;
-                                isDisabled = !isDisabled;
-                              });
-                            } catch (e) {
-                              print(e);
-                            }
-                          },
-                          child: ImageIcon(
-                            AssetImage("assets/images/video_On.png"),
-                            size: ScreenUtil().radius(70),
-                            color: Colors.red,
-                          ),
-                          padding: EdgeInsets.all(15.0),
-                          shape: CircleBorder(),
-                        )
-                      : null,
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: _controller.value.isRecordingVideo
-                      ? RawMaterialButton(
-                          onPressed: () {
-                            setState(() {
-                              if (_controller.value.isRecordingVideo) {
-                                stopstopwatch();
-                                
-                                _controller.stopVideoRecording();
-                                isDisabled = false;
-                                isDisabled = !isDisabled;
+                                if (_controller.value.isRecordingVideo) {
+                                  stopstopwatch();
+                                  
+                                  _controller.stopVideoRecording();
+                                  isDisabled = false;
+                                  isDisabled = !isDisabled;
 
-                                //GallerySaver.saveVideo(filePath);
+                                  //GallerySaver.saveVideo(filePath);
+                                }
+                              });
+                            },
+                            child: ImageIcon(
+                              AssetImage("assets/icons/video_Off.png"),
+                              size: ScreenUtil().setWidth(70),
+                              color: Colors.red,
+                            ),
+                            shape: CircleBorder(),
+                          )
+                          : RawMaterialButton(
+                            onPressed: () async {
+                              try {
+                                await _initializeControllerFuture;
+                                filePath = join(
+                                    (await getApplicationDocumentsDirectory())
+                                        .path,
+                                    '${DateTime.now()}.mp4');
+                                setState(() {
+                                  startstopwatch();
+                                  //ChangeCameraView();
+                                  _controller
+                                      .startVideoRecording(filePath); //filePath);
+                                  isDisabled = true;
+                                  isDisabled = !isDisabled;
+                                });
+                              } catch (e) {
+                                print(e);
                               }
-                            });
-                          },
-                          child: ImageIcon(
-                            AssetImage("assets/images/video_On.png"),
-                            size: ScreenUtil().radius(70),
-                            color: Colors.red,
+                            },
+                            child: ImageIcon(
+                              AssetImage("assets/icons/video_On.png"),
+                              size: ScreenUtil().setWidth(70),
+                              color: Colors.red,
+                            ),
+                            shape: CircleBorder(),
                           ),
-                          padding: EdgeInsets.all(15.0),
-                          shape: CircleBorder(),
-                        )
-                      : null,
+                          SizedBox(width: ScreenUtil().setWidth(60)),
+                          // if isDisable is not true, recording
+                          !isDisabled ? Container(
+                            width: ScreenUtil().setWidth(38),
+                            height: ScreenUtil().setHeight(38),
+                            color: Colors.transparent
+                          ) : SaveVideo(),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                !isDisabled ? Container() : SaveVideo(),
-                Container(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => DefaultLayout()));
-                      },
-                        child: Align(
-                              alignment: Alignment(-0.9, -0.9),
-                               child: Container(
-                                 width: ScreenUtil().setWidth(24),
-                                  height: ScreenUtil().setHeight(24),
-                                   //padding: EdgeInsets.all(15.0),
-                                 child: Image.asset(
-                                      "assets/images/cameraBack.png",
-                                ),
-                               ),
-                              ),
-                             )),
-                            ],
-                           );
+                // ---- cancel button (top-left)
+                Positioned(
+                  top: ScreenUtil().setHeight(53),
+                  left: ScreenUtil().setWidth(24),
+                  child: GestureDetector(
+                    onTap: () {
+                          Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      width: ScreenUtil().setWidth(24),
+                      height: ScreenUtil().setHeight(24),
+                        //padding: EdgeInsets.all(15.0),
+                      child: Image.asset(
+                          "assets/icons/cancel.png",
+                      ),
+                    ),
+                  )
+                ),
+              ],
+            );
           } else {
             return Center(child: CircularProgressIndicator());
           }
@@ -306,7 +337,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   }
 }
 
-class girin_hi extends StatelessWidget{
+class GirinHi extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Align(
@@ -320,7 +351,7 @@ class girin_hi extends StatelessWidget{
     );
   }
 }
-class girin_speak extends StatelessWidget {
+class GirinSpeak extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -339,7 +370,7 @@ class girin_speak extends StatelessWidget {
                 )
             );}
           else if(girinchange == true) {
-            return girin_hi();
+            return GirinHi();
           }
           else
             return Align(
@@ -370,16 +401,13 @@ class ChangeCameraView extends StatelessWidget {
             cameraview = true;
           }
         },
-        child: Align(
-          alignment: Alignment(0.7, 0.919),
-          child: Container(
-            width: ScreenUtil().setWidth(38),
-            height: ScreenUtil().setHeight(38),
-            //padding: EdgeInsets.all(15.0),
-            child: Image.asset(
-              "assets/images/changeCamera.png",
-            ),
-        ),
+        child: Container(
+          width: ScreenUtil().setWidth(38),
+          height: ScreenUtil().setHeight(38),
+          //padding: EdgeInsets.all(15.0),
+          child: Image.asset(
+            "assets/icons/changeCamera.png",
+          ),
       ),
     ));
   }
@@ -389,22 +417,20 @@ class SaveVideo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: GestureDetector(
-          onTap: () {
-            //SaveVideo();
-          },
-          child: Align(
-          alignment: Alignment(0.7, 0.919),
-             child: Container(
-                width: ScreenUtil().setWidth(38),
-                height: ScreenUtil().setHeight(38),
-                //padding: EdgeInsets.all(15.0),
-                child: Image.asset(
-                  "assets/images/saveVideo.png",
-                ),
+      child: GestureDetector(
+        onTap: () {
+          //SaveVideo();
+        },
+        child: Container(
+          width: ScreenUtil().setWidth(38),
+          height: ScreenUtil().setHeight(38),
+          //padding: EdgeInsets.all(15.0),
+          child: Image.asset(
+            "assets/icons/saveVideo.png",
+          ),
         ),
-      ),
-    ));
+      )
+    );
   }
 }
 
