@@ -2,17 +2,14 @@ import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gallery_saver/gallery_saver.dart';
-import 'package:lottie/lottie.dart';
-import 'package:paran_girin/home/home_body.dart';
-import 'package:paran_girin/home/home_page.dart';
 import 'package:paran_girin/layout/default_layout.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/TTS/ttsTest.dart';
+import 'package:paran_girin/login/firebase_provider.dart';
+import 'package:provider/provider.dart';
 
 CameraDescription camera;
 CameraDescription firstCamera;
@@ -92,6 +89,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   var todayDate = new DateTime.now();
 
+  FirebaseProvider fp;
 
   void starttimer() {
     Timer(dur, keeprunning);
@@ -165,6 +163,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
     return Scaffold(
       //debugShowCheckedModeBanner: false,
       //appBar: AppBar(title: Text('Take a Video')),
