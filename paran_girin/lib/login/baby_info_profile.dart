@@ -28,7 +28,7 @@ class _BabyInfoProfileState extends State<BabyInfoProfile> {
                       Container(
                         width: ScreenUtil().setWidth(75),
                         height: ScreenUtil().setHeight(75),
-                        child: Image.asset("assets/images/thumbnail_avatar.png",
+                        child: Image.asset("assets/images/thumbnail_pink.png",
                             fit: BoxFit.cover),
                       ),
                       Text(
@@ -50,7 +50,7 @@ class _BabyInfoProfileState extends State<BabyInfoProfile> {
                       Container(
                         width: ScreenUtil().setWidth(75),
                         height: ScreenUtil().setHeight(75),
-                        child: Image.asset("assets/images/thumbnail_avatar.png",
+                        child: Image.asset("assets/images/thumbnail_pink.png",
                             fit: BoxFit.cover),
                       ),
                       Text(
