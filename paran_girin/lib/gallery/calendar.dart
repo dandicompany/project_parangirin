@@ -20,7 +20,7 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   CalendarController _calendarController;
   Map<DateTime, List<dynamic>> _events;
-  List<dynamic> _selectedEvents;
+  //List<dynamic> _selectedEvents;
   TextEditingController _eventController;
   SharedPreferences prefs;
 
@@ -55,8 +55,10 @@ class _CalendarState extends State<Calendar> {
     _calendarController = CalendarController();
     _eventController = TextEditingController();
     _events = {};
-    _selectedEvents = [];
+
+
     prefsData();
+
   }
 
   @override
@@ -68,6 +70,7 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting();
+    _events[DateTime(2021,06,04)] = ["a"];
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(
@@ -183,42 +186,13 @@ class _CalendarState extends State<Calendar> {
 
                           onDaySelected: (date, events, holidays) {
                             setState(() {
-                              _selectedEvents = events;
-                              print(events);
-                              print(date);
-
                               if (_events[_calendarController.selectedDay] != null) {
-                                _events[_calendarController.selectedDay]
-                                    .add(_eventController.text);
-                                print(_eventController.text);
-                              } else {
-                                _events[_calendarController.selectedDay] = [
-                                  _eventController.text
-                                ];
+                                print(_calendarController.selectedDay.toString());
                               }
-                              prefs.setString("events", json.encode(encodeMap(_events)));
-                              _eventController.clear();
+
                             });
                           }, // onDaySelected: ,
                         ),
-
-                        ..._selectedEvents.map((event) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height/20,
-                            width: MediaQuery.of(context).size.width/2,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: Colors.white,
-                                border: Border.all(color: Colors.grey)
-                            ),
-                            child: Center(
-                                child: Text(event,
-                                  style: TextStyle(color: Colors.blue,
-                                      fontWeight: FontWeight.bold,fontSize: 16),)
-                            ),
-                          ),
-                        )),
                       ],
                     ),
                   ),

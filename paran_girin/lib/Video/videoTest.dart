@@ -11,6 +11,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/TTS/ttsTest.dart';
+// import 'package:paran_girin/login/firebase_provider.dart';
+// import 'package:provider/provider.dart';
 
 CameraDescription camera;
 CameraDescription firstCamera;
@@ -76,6 +78,8 @@ class TakePictureScreen extends StatefulWidget {
 }
 
 class TakePictureScreenState extends State<TakePictureScreen> {
+  // FirebaseProvider fp;
+
   CameraController _controller;
   Future<void> _initializeControllerFuture;
   bool isDisabled = false;
@@ -88,7 +92,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   final dur = const Duration(seconds: 1);
 
   var todayDate = new DateTime.now();
-
 
   void starttimer() {
     Timer(dur, keeprunning);
@@ -162,6 +165,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // fp = Provider.of<FirebaseProvider>(context);
     return Scaffold(
       //debugShowCheckedModeBanner: false,
       //appBar: AppBar(title: Text('Take a Video')),
@@ -182,8 +186,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 ),
                 Align(
                   child: TextToSpeech(text: "안녕"),
-                  // 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아. 혹시 너도 동물이 되어보고 싶은 적 없어? 하루동안 동물이 된다면, 어떤 동물이 되고싶니?",),
-                ),
+                      //", 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아. 혹시 너도 동물이 되어보고 싶은 적 없어? 하루동안 동물이 된다면, 어떤 동물이 되고싶니?",),
+                  ),
                 Container(
                   child : GirinSpeak()
                 ),
@@ -241,7 +245,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                       ),
                       Row(
                         children: [
-                          !isDisabled ? ChangeCameraView() : Container(
+                          //!isDisabled ? ChangeCameraView() : Container(
+                          Container(
                             width: ScreenUtil().setWidth(38),
                             height: ScreenUtil().setHeight(38),
                             color: Colors.transparent
