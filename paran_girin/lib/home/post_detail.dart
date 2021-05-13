@@ -32,10 +32,45 @@ class PostDetail extends StatelessWidget {
         children: [
           Stack(
             children: [
-              Container(
-                width: double.infinity,
-                height: ScreenUtil().setHeight(331),
-                color: Colors.black,
+              Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: ScreenUtil().setHeight(331),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: Image.asset(
+                            "assets/images/thumbnail_pink.png",
+                            // width: ScreenUtil().setWidth(187),
+                            // height: ScreenUtil().setHeight(331),
+                            fit: BoxFit.cover,
+                            alignment: Alignment.topCenter,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Image.asset(
+                            "assets/images/thumbnail_baby.png",
+                            width: ScreenUtil().setWidth(187),
+                            height: ScreenUtil().setHeight(331),
+                            fit: BoxFit.cover
+                          ),
+                        ),
+                        // Use 'CachedNetworkImage' later
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Image.asset(
+                      "assets/icons/play_button.png",
+                      width: ScreenUtil().setWidth(60),
+                      height: ScreenUtil().setHeight(60),
+                    )
+                  )
+                ],
               ),
               Positioned(
                 bottom: ScreenUtil().setHeight(13),
@@ -54,7 +89,7 @@ class PostDetail extends StatelessWidget {
                       style: TextStyle(
                         fontSize: ScreenUtil().setSp(12),
                         fontWeight: FontWeight.w300,
-                        color: Colors.white
+                        color: AppTheme.colors.base2
                       )
                     ),
                   ],
@@ -72,6 +107,22 @@ class PostDetail extends StatelessWidget {
                     color: Colors.white
                   )
                 )
+              ),
+              Positioned(
+                top: ScreenUtil().setHeight(44),
+                left: ScreenUtil().setWidth(16),
+                child: Navigator.of(context).canPop()
+                ? IconButton(
+                  icon: Icon(
+                    Icons.arrow_back_ios, 
+                    color: AppTheme.colors.base1,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  iconSize: ScreenUtil().radius(20),
+                  )
+                : null,
               )
             ]
           ),
