@@ -44,8 +44,8 @@ class _OnboardingBodyState extends State<OnboardingBody> {
     return Container(
       padding: EdgeInsets.only(
         top: ScreenUtil().setHeight(100),
-        left: ScreenUtil().setWidth(16),
-        right: ScreenUtil().setWidth(16),
+        // left: ScreenUtil().setWidth(16),
+        // right: ScreenUtil().setWidth(16),
       ),
       child: Column(
         children: <Widget>[
@@ -61,7 +61,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                 itemBuilder: (context, index) => OnboardContent(
                   text1: onboardText[index]["text1"],
                   text2: onboardText[index]["text2"],
-                  image: "assets/images/onboard_$index.png",
+                  image: "assets/onboarding/onboard_$index.gif",
                 ),
               )),
           Expanded(
