@@ -224,8 +224,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Container(
-                      height: ScreenUtil().setHeight(190),
-                      width: ScreenUtil().setWidth(120),
+                      height: ScreenUtil().setHeight(210),
+                      width: ScreenUtil().setWidth(118),
                       child: CameraPreview(_controller),
                     ),
                   ),

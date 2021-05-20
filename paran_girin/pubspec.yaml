@@ -61,6 +61,7 @@ dependencies:
   chewie:
   mailer:
   video_thumbnail: ^0.2.1
+  sliding_up_panel: 
 
 dev_dependencies:
   flutter_test:
@@ -95,6 +96,10 @@ flutter:
       - assets/videoEx/sample1.mp4
       - assets/videoEx/sample2.mp4
       - assets/videoEx/videoTest.mp4
+      - assets/onboarding/onboard_0.gif
+      - assets/onboarding/onboard_1.gif
+      - assets/onboarding/onboard_2.gif
+      - assets/onboarding/onboard_3.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

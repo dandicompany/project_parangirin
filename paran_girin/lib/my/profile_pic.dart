@@ -23,7 +23,7 @@ class ProfilePic extends StatelessWidget {
         children: [
           CircleAvatar(
             backgroundImage: galleryFile == null
-                ? AssetImage("assets/images/thumbnail_baby.png")
+                ? AssetImage("assets/images/default_profile.png")
                 : Image.file(galleryFile)),
           Positioned(
             right: 0,
