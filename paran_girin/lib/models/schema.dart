@@ -1,3 +1,7 @@
+class StaticInfo {
+  Map<String, Question> questions = Map<String, Question>();
+}
+
 class UserModel {
   String id;
   String displayName;
@@ -89,40 +93,62 @@ class Question {
         'tag': tag,
         'videoURL': videoURL
       };
+  bool containsKeyWord(String key) {
+    Map<String, dynamic> json = this.toJson();
+    for (var s in json.values) {
+      if (s.replaceAll(' ', '').contains(key)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 class Answer {
   int date;
   String videoURL;
+  String thumbnail;
   bool posted;
-  Answer(this.date, this.videoURL, this.posted);
+  Answer(this.date, this.videoURL, this.thumbnail, this.posted);
   Answer.fromJson(Map<String, dynamic> json)
       : this.date = json['date'],
         this.videoURL = json['videoURL'],
+        this.thumbnail = json['thumbnail'],
         this.posted = json['posted'];
-  Map<String, dynamic> toJson() => {'videoURL': videoURL, 'posted': posted};
+  Map<String, dynamic> toJson() => {
+        'date': date,
+        'videoURL': videoURL,
+        'thumbnail': thumbnail,
+        'posted': posted
+      };
 }
 
 class Post {
   int date;
   int likes = 0;
+  String qid;
   String child;
   String videoURL;
+  String thumbURL;
   String comment = "";
   List<String> likedPPL = List<String>();
   Post(this.date, this.child, this.videoURL, this.comment);
   Post.fromJson(Map<String, dynamic> json)
       : this.date = json['date'],
+        this.qid = json['qid'],
         this.likes = json['likes'],
         this.child = json['child'],
         this.videoURL = json['videoURL'],
+        this.thumbURL = json['thumbURL'],
         this.comment = json['comment'],
         this.likedPPL = json['likedPPL'].cast<String>();
   Map<String, dynamic> toJson() => {
         'date': date,
+        'qid': qid,
         'likes': likes,
         'child': child,
         'videoURL': videoURL,
+        'thumbURL': thumbURL,
         'comment': comment,
         'likedPPL': likedPPL
       };

@@ -11,13 +11,17 @@ import 'package:paran_girin/layout/flatbuttonShadow.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/models/schema.dart';
+import 'package:paran_girin/home/home_avatar_big.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:paran_girin/layout/splash.dart';
 
 int bodyNum = 0;
 int natureNum = 0;
-int exerciseNum = 0;
+int artNum = 0;
 int socialNum = 0;
-
-int sum = bodyNum + natureNum + exerciseNum + socialNum;
+int commuNum = 0;
+int sum = bodyNum + natureNum + artNum + socialNum;
 
 class galleryVideo extends StatefulWidget {
   @override
@@ -29,6 +33,7 @@ class _CalenderState extends State<galleryVideo> {
   bool buttonClickedState2 = true;
   bool buttonClickedState3 = true;
   bool buttonClickedState4 = true;
+  FirebaseProvider fp;
   //영상 개수 가져오기
   @override
   void initState() {
@@ -39,6 +44,34 @@ class _CalenderState extends State<galleryVideo> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    fp = Provider.of<FirebaseProvider>(context);
+    artNum = 0;
+    bodyNum = 0;
+    natureNum = 0;
+    socialNum = 0;
+    commuNum = 0;
+    for (var key in fp.getUserInfo().currentChild.answers.keys) {
+      Question q = fp.getStaticInfo().questions[key];
+      switch (q.category) {
+        case "예술":
+          artNum += 1;
+          break;
+        case "신체":
+          bodyNum += 1;
+          break;
+        case "자연탐구":
+          natureNum += 1;
+          break;
+        case "의사소통":
+          socialNum += 1;
+          break;
+        case "사회관계":
+          commuNum += 1;
+          break;
+        default:
+      }
+    }
+    sum = bodyNum + natureNum + artNum + socialNum + artNum;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -109,8 +142,8 @@ class _CalenderState extends State<galleryVideo> {
                       minWidth: ScreenUtil().setWidth(164),
                       height: ScreenUtil().setHeight(71),
                     ),
-                    text1: "운동",
-                    text2: bodyNum.toString() + "개의 영상",
+                    text1: "예술",
+                    text2: artNum.toString() + "개의 영상",
                   ),
                   SizedBox(
                     width: ScreenUtil().setWidth(15),
@@ -129,7 +162,7 @@ class _CalenderState extends State<galleryVideo> {
                       height: ScreenUtil().setHeight(71),
                     ),
                     text1: "사회 관계",
-                    text2: natureNum.toString() + "개의 영상",
+                    text2: socialNum.toString() + "개의 영상",
                   ),
                 ],
               ),
@@ -162,7 +195,7 @@ class NoVideo extends StatelessWidget {
           Text(
             "아직 촬영한 영상이 없어요",
             style: TextStyle(
-                fontSize: ScreenUtil().setSp(16), 
+                fontSize: ScreenUtil().setSp(16),
                 color: AppTheme.colors.base2,
                 fontFamily: 'Noto Sans KR'),
           ),
@@ -171,8 +204,8 @@ class NoVideo extends StatelessWidget {
               text: "파란 기린과 대화하기 ",
               isInvert: false,
               press: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Initialization()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => HomeAvatarBig()));
               })
         ],
       ),
@@ -185,23 +218,67 @@ class YesVideo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
+    Map<String, String> answers = fp.getUserInfo().currentChild.answers;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(
           height: ScreenUtil().setHeight(45),
         ),
-        for (var i = 0; i < sum; i++)
-          MyVideoLayout(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>
-                      VideoShowWidget())); //VideoPlayerScreen()));
-            },
-            onLongPress: () async {
-              String path = await fp.getUploadManager().uploadVideo("test",
-                  "/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4");
-              fp.addPost(path, null);
+        // for (var i = 0; i < sum; i++)
+        for (var key in answers.keys)
+          FutureBuilder(
+            future: () async {
+              logger.d("loading answers...");
+              Answer answer =
+                  Answer.fromJson(await fp.getFromFB("answers", answers[key]));
+              logger.d("answers loaded");
+              // answer.thumbnail = (await getTemporaryDirectory()).path;
+              // answer.thumbnail = null;
+              // (await getApplicationDocumentsDirectory()).path;
+              // logger.d("path identified: " + answer.thumbnail);
+              // try {
+              //   logger.d(answer.videoURL);
+              //   final thumb = await VideoThumbnail.thumbnailData(
+              //     video: answer.videoURL,
+              //     // thumbnailPath: answer.thumbnail,
+              //     imageFormat: ImageFormat.PNG,
+              //     maxHeight:
+              //         64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+              //     quality: 75,
+              //   );
+              // } catch (e) {
+              //   logger.d(e);
+              // }
+
+              // answer.thumbnail = thumb.pat
+              // logger.d("thumbnail extracted");
+              return answer;
+            }(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                logger.d(snapshot.data);
+                Answer answer = snapshot.data;
+                return MyVideoLayout(
+                  title: fp.getStaticInfo().questions[key].title,
+                  date: DateTime.fromMillisecondsSinceEpoch(answer.date)
+                      .toString(),
+                  thumbnail: answer.thumbnail,
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => VideoShowWidget.initURL(
+                            answer.videoURL))); //VideoPlayerScreen()));
+                  },
+                  onLongPress: () async {
+                    String path = await fp.getUploadManager().uploadVideo(
+                        "/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4");
+                    // String thumbnail = await fp.getUploadManager().upload
+                    fp.addPost(path, null);
+                  },
+                );
+              } else {
+                return SizedBox.shrink();
+              }
             },
           ),
         SizedBox(height: ScreenUtil().setHeight(100)),

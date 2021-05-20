@@ -60,6 +60,7 @@ dependencies:
   video_player:
   chewie:
   mailer:
+  video_thumbnail: ^0.2.1
 
 dev_dependencies:
   flutter_test:

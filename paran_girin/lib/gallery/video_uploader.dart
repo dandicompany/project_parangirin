@@ -108,13 +108,52 @@ class UploadManager {
     }
   }
 
-  Future<String> uploadVideo(String name, String path) async {
-    var video = await ImagePicker.pickVideo(source: ImageSource.gallery);
-    logger.d(video.path);
+  Future<String> uploadImage(String path) async {
+    // var video = await ImagePicker.pickVideo(source: ImageSource.gallery);
+    logger.d(path);
+    File file = File(path);
+    logger.d(file.path);
+
+    // MediaInfo mediaInfo = await VideoCompress.compressVideo(
+    //   video.path,
+    //   quality: VideoQuality.MediumQuality,
+    //   deleteOrigin: false, // It's false by default
+    // );
+    // File thumbnail = await VideoCompress.getFileThumbnail(video.path);
+
+    logger.d(file.length());
+    final String savedDir = dirname(file.path);
+    final String filename = basename(file.path);
+    final tag = "video upload ${_tasks.length + 1} size: ${file.path}";
+    final url = _uploadUrl(binary: false, name: filename);
+
+    var fileItem = FileItem(
+      filename: filename,
+      savedDir: savedDir,
+      fieldname: "file",
+    );
+
+    var taskId = await uploader.enqueue(
+      url: url,
+      headers: {
+        "Authorization": "Bearer ${await getServiceAccountToken()}",
+        "Content-Type": "video/mp4"
+      },
+      files: [fileItem],
+      method: UploadMethod.POST,
+      tag: tag,
+      showNotification: true,
+    );
+    return filename;
+  }
+
+  Future<String> uploadVideo(String path) async {
+    // var video = await ImagePicker.pickVideo(source: ImageSource.gallery);
+    logger.d(path);
     File file = File(path);
     logger.d(file.path);
     MediaInfo mediaInfo = await VideoCompress.compressVideo(
-      video.path,
+      path,
       quality: VideoQuality.MediumQuality,
       deleteOrigin: false, // It's false by default
     );

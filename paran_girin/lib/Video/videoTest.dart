@@ -11,8 +11,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/TTS/ttsTest.dart';
-// import 'package:paran_girin/login/firebase_provider.dart';
-// import 'package:provider/provider.dart';
+import 'package:paran_girin/login/firebase_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:paran_girin/layout/splash.dart';
+import 'package:paran_girin/models/schema.dart';
+import 'package:video_compress/video_compress.dart';
 
 CameraDescription camera;
 CameraDescription firstCamera;
@@ -21,7 +24,7 @@ String filePath;
 var cameras;
 bool cameraview = true;
 bool girinchange = true;
-
+String question;
 
 String formatTime(int milliseconds) {
   var secs = milliseconds ~/ 1000;
@@ -31,7 +34,7 @@ String formatTime(int milliseconds) {
   return "$hours:$minutes:$seconds";
 }
 
-Future<void> videoFunc() async {
+Future<Widget> videoFunc() async {
   // 디바이스에서 이용가능한 카메라 목록을 받아옵니다.
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
@@ -40,27 +43,41 @@ Future<void> videoFunc() async {
   firstCamera = cameras.first;
   final frontCamera = cameras[1];
 
-  runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
-      home: TakePictureScreen(
-        // 적절한 카메라를 TakePictureScreen 위젯에게 전달합니다.
-        camera: frontCamera,
-      ),
-    ),
-  );
+  // return MaterialApp(
+  //   debugShowCheckedModeBanner: false,
+  //   theme: ThemeData.dark(),
+  //   home: TakePictureScreen(
+  //     // 적절한 카메라를 TakePictureScreen 위젯에게 전달합니다.
+  //     camera: frontCamera,
+  //   ),
+  // );
+  logger.d("!!!!!!!!!!!!!!!!!!!!!!!");
+  return TakePictureScreen(camera: frontCamera);
 }
 
 class Initialization extends StatefulWidget {
+  String _question;
+  Initialization(this._question);
   @override
-  InitializationState createState() => InitializationState();
+  InitializationState createState() => InitializationState(_question);
 }
 
 class InitializationState extends State<Initialization> {
+  String _question;
+  InitializationState(this._question);
   @override
   Widget build(BuildContext context) {
-    videoFunc();
+    question = _question;
+    return FutureBuilder(
+        future: videoFunc(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            logger.d("page loaded");
+            return snapshot.data;
+          } else {
+            return SplashScreen();
+          }
+        });
   }
 }
 
@@ -173,24 +190,21 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
+            print("connection done");
             return Stack(
               children: [
                 Container(
                   width: double.infinity,
                   height: ScreenUtil().setHeight(812),
                   //alignment: Alignment.center,
-                  child :
-                      Image.asset("assets/avatars/default_background.png",
-                      fit: BoxFit.cover,
-                      alignment: Alignment.bottomCenter),
+                  child: Image.asset("assets/avatars/default_background.png",
+                      fit: BoxFit.cover, alignment: Alignment.bottomCenter),
                 ),
                 Align(
                   child: TextToSpeech(text: "안녕"),
-                      //", 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아. 혹시 너도 동물이 되어보고 싶은 적 없어? 하루동안 동물이 된다면, 어떤 동물이 되고싶니?",),
-                  ),
-                Container(
-                  child : GirinSpeak()
+                  //", 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아. 혹시 너도 동물이 되어보고 싶은 적 없어? 하루동안 동물이 된다면, 어떤 동물이 되고싶니?",),
                 ),
+                Container(child: GirinSpeak()),
                 // ---- front camera
                 // Transform(
                 //   alignment: Alignment.topRight,
@@ -207,15 +221,14 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 Positioned(
                   top: ScreenUtil().setHeight(64),
                   right: ScreenUtil().setWidth(10),
-                  child:
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Container(
-                        height: ScreenUtil().setHeight(190),
-                        width: ScreenUtil().setWidth(120),
-                        child:CameraPreview(_controller),
-                      ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Container(
+                      height: ScreenUtil().setHeight(190),
+                      width: ScreenUtil().setWidth(120),
+                      child: CameraPreview(_controller),
                     ),
+                  ),
                 ),
                 // ---- camera buttons
                 Positioned(
@@ -238,7 +251,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                         //child: Text(formatTime(_stopwatch.elapsedMilliseconds), style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
                         //Text("00:00:00", style: TextStyle(color:Colors.white,fontSize: ScreenUtil().setSp(12),),textAlign: TextAlign.center,),
                       ),
-                      SizedBox( 
+                      SizedBox(
                         width: ScreenUtil().setWidth(375),
                         height: 18,
                         // child: Text("hi"),
@@ -247,69 +260,70 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                         children: [
                           //!isDisabled ? ChangeCameraView() : Container(
                           Container(
-                            width: ScreenUtil().setWidth(38),
-                            height: ScreenUtil().setHeight(38),
-                            color: Colors.transparent
-                          ),
+                              width: ScreenUtil().setWidth(38),
+                              height: ScreenUtil().setHeight(38),
+                              color: Colors.transparent),
                           SizedBox(width: ScreenUtil().setWidth(60)),
                           _controller.value.isRecordingVideo
-                          ? RawMaterialButton(
-                            onPressed: () {
-                              setState(() {
-                                if (_controller.value.isRecordingVideo) {
-                                  stopstopwatch();
-                                  
-                                  _controller.stopVideoRecording();
-                                  isDisabled = false;
-                                  isDisabled = !isDisabled;
+                              ? RawMaterialButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      if (_controller.value.isRecordingVideo) {
+                                        stopstopwatch();
 
-                                  //GallerySaver.saveVideo(filePath);
-                                }
-                              });
-                            },
-                            child: ImageIcon(
-                              AssetImage("assets/icons/video_Off.png"),
-                              size: ScreenUtil().setWidth(70),
-                              color: Colors.red,
-                            ),
-                            shape: CircleBorder(),
-                          )
-                          : RawMaterialButton(
-                            onPressed: () async {
-                              try {
-                                await _initializeControllerFuture;
-                                // 0513
-                                // filePath = join(
-                                //     (await getApplicationDocumentsDirectory())
-                                //         .path,
-                                //     '${DateTime.now()}.mp4');
-                                filePath = "/assets/videoEx/sample1.mp4";
-                                setState(() {
-                                  startstopwatch();
-                                  //ChangeCameraView();
-                                  _controller
-                                      .startVideoRecording(filePath); //filePath);
-                                  isDisabled = true;
-                                  isDisabled = !isDisabled;
-                                });
-                              } catch (e) {
-                                print(e);
-                              }
-                            },
-                            child: ImageIcon(
-                              AssetImage("assets/icons/video_On.png"),
-                              size: ScreenUtil().setWidth(70),
-                              color: Colors.red,
-                            ),
-                            shape: CircleBorder(),
-                          ),
+                                        _controller.stopVideoRecording();
+                                        isDisabled = false;
+                                        isDisabled = !isDisabled;
+
+                                        //GallerySaver.saveVideo(filePath);
+                                      }
+                                    });
+                                  },
+                                  child: ImageIcon(
+                                    AssetImage("assets/icons/video_Off.png"),
+                                    size: ScreenUtil().setWidth(70),
+                                    color: Colors.red,
+                                  ),
+                                  shape: CircleBorder(),
+                                )
+                              : RawMaterialButton(
+                                  onPressed: () async {
+                                    try {
+                                      await _initializeControllerFuture;
+                                      // 0513
+                                      filePath = join(
+                                          (await getApplicationDocumentsDirectory())
+                                              .path,
+                                          '${DateTime.now().day}12345.mp4');
+                                      logger.d(filePath);
+                                      // filePath = "/assets/videoEx/sample1.mp4";
+                                      setState(() {
+                                        startstopwatch();
+                                        //ChangeCameraView();
+                                        _controller.startVideoRecording(
+                                            filePath); //filePath);
+                                        isDisabled = true;
+                                        isDisabled = !isDisabled;
+                                      });
+                                    } catch (e) {
+                                      print(e);
+                                    }
+                                  },
+                                  child: ImageIcon(
+                                    AssetImage("assets/icons/video_On.png"),
+                                    size: ScreenUtil().setWidth(70),
+                                    color: Colors.red,
+                                  ),
+                                  shape: CircleBorder(),
+                                ),
                           SizedBox(width: ScreenUtil().setWidth(60)),
                           // if isDisable is not true, recording
-                          !isDisabled ? Container(
-                            width: ScreenUtil().setWidth(38),
-                            height: ScreenUtil().setHeight(38),
-                            color: Colors.transparent
-                          ) : SaveVideo(),
+                          !isDisabled
+                              ? Container(
+                                  width: ScreenUtil().setWidth(38),
+                                  height: ScreenUtil().setHeight(38),
+                                  color: Colors.transparent)
+                              : SaveVideo(),
                         ],
                       ),
                     ],
@@ -317,22 +331,21 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 ),
                 // ---- cancel button (top-left)
                 Positioned(
-                  top: ScreenUtil().setHeight(53),
-                  left: ScreenUtil().setWidth(24),
-                  child: GestureDetector(
-                    onTap: () {
-                          Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      width: ScreenUtil().setWidth(24),
-                      height: ScreenUtil().setHeight(24),
+                    top: ScreenUtil().setHeight(53),
+                    left: ScreenUtil().setWidth(24),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        width: ScreenUtil().setWidth(24),
+                        height: ScreenUtil().setHeight(24),
                         //padding: EdgeInsets.all(15.0),
-                      child: Image.asset(
+                        child: Image.asset(
                           "assets/icons/cancel.png",
+                        ),
                       ),
-                    ),
-                  )
-                ),
+                    )),
               ],
             );
           } else {
@@ -344,54 +357,49 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   }
 }
 
-class GirinHi extends StatelessWidget{
+class GirinHi extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Align(
-      alignment : Alignment.center ,
-      child: Container(
-        width: ScreenUtil().setWidth(512),
-        height: ScreenUtil().setHeight(512),
-        child : Image.asset("assets/avatars/hi.gif",
-            fit : BoxFit.cover),
-      )
-    );
+        alignment: Alignment.center,
+        child: Container(
+          width: ScreenUtil().setWidth(512),
+          height: ScreenUtil().setHeight(512),
+          child: Image.asset("assets/avatars/hi.gif", fit: BoxFit.cover),
+        ));
   }
 }
+
 class GirinSpeak extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: Future.delayed(Duration(milliseconds: 2000)),
         builder: (context, snapshot) {
-        // Checks whether the future is resolved, ie the duration is over
-          if (snapshot.connectionState == ConnectionState.done){
+          // Checks whether the future is resolved, ie the duration is over
+          if (snapshot.connectionState == ConnectionState.done) {
             girinchange = false;
             return Align(
-                alignment : Alignment.center ,
+                alignment: Alignment.center,
                 child: Container(
                   width: ScreenUtil().setWidth(512),
                   height: ScreenUtil().setHeight(512),
-                  child : Image.asset("assets/avatars/speaking.gif",
-                      fit : BoxFit.cover),
-                )
-            );}
-          else if(girinchange == true) {
+                  child: Image.asset("assets/avatars/speaking.gif",
+                      fit: BoxFit.cover),
+                ));
+          } else if (girinchange == true) {
             return GirinHi();
-          }
-          else
+          } else
             return Align(
-                alignment : Alignment.center ,
+                alignment: Alignment.center,
                 child: Container(
                   width: ScreenUtil().setWidth(512),
                   height: ScreenUtil().setHeight(512),
-                  child : Image.asset("assets/avatars/speaking.gif",
-                      fit : BoxFit.cover),
-                )
-            );
-        // Return empty container to avoid build errors
-        }
-    );
+                  child: Image.asset("assets/avatars/speaking.gif",
+                      fit: BoxFit.cover),
+                ));
+          // Return empty container to avoid build errors
+        });
   }
 }
 
@@ -399,45 +407,60 @@ class ChangeCameraView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: GestureDetector(
-        onTap: () {
-          if (cameraview == true){
-            cameraview = false;
-          }
-          else{
-            cameraview = true;
-          }
-        },
-        child: Container(
-          width: ScreenUtil().setWidth(38),
-          height: ScreenUtil().setHeight(38),
-          //padding: EdgeInsets.all(15.0),
-          child: Image.asset(
-            "assets/icons/changeCamera.png",
-          ),
+        child: GestureDetector(
+      onTap: () {
+        if (cameraview == true) {
+          cameraview = false;
+        } else {
+          cameraview = true;
+        }
+      },
+      child: Container(
+        width: ScreenUtil().setWidth(38),
+        height: ScreenUtil().setHeight(38),
+        //padding: EdgeInsets.all(15.0),
+        child: Image.asset(
+          "assets/icons/changeCamera.png",
+        ),
       ),
     ));
   }
 }
 
 class SaveVideo extends StatelessWidget {
+  FirebaseProvider fp;
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
     return Container(
-      child: GestureDetector(
-        onTap: () {
-          //SaveVideo();
-        },
-        child: Container(
-          width: ScreenUtil().setWidth(38),
-          height: ScreenUtil().setHeight(38),
-          //padding: EdgeInsets.all(15.0),
-          child: Image.asset(
-            "assets/icons/saveVideo.png",
-          ),
+        child: GestureDetector(
+      onTap: () {
+        saveVideo();
+      },
+      child: Container(
+        width: ScreenUtil().setWidth(38),
+        height: ScreenUtil().setHeight(38),
+        //padding: EdgeInsets.all(15.0),
+        child: Image.asset(
+          "assets/icons/saveVideo.png",
         ),
-      )
-    );
+      ),
+    ));
+  }
+
+  void saveVideo() async {
+    File thumb;
+    logger.d("!!!!!!!!!!!!!!!!!path");
+    try {
+      thumb = await VideoCompress.getFileThumbnail(filePath,
+          quality: 50, // default(100)
+          position: -1 // default(-1)
+          );
+    } catch (e) {
+      logger.d(e);
+    }
+    logger.d("!!!!!!!!!!!!!!!!!path: ${thumb.path}");
+    fp.addAnswer(question, filePath, thumb.path);
   }
 }
 
