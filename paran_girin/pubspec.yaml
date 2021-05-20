@@ -60,6 +60,7 @@ dependencies:
   video_player:
   chewie:
   mailer:
+  video_thumbnail: ^0.2.1
   sliding_up_panel: 
 
 dev_dependencies:
@@ -84,7 +85,7 @@ flutter:
   assets:
       - assets/avatars/data.json
       - assets/avatars/home.gif
-      - assets/avatars/hi.mov
+      - assets/avatars/hi2.gif
       - assets/avatars/
       - assets/icons/
       - assets/icons/circle.svg

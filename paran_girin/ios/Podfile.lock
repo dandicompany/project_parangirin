@@ -367,6 +367,15 @@ PODS:
   - image_picker (0.0.1):
     - Flutter
   - leveldb-library (1.22.1)
+  - libwebp (1.2.0):
+    - libwebp/demux (= 1.2.0)
+    - libwebp/mux (= 1.2.0)
+    - libwebp/webp (= 1.2.0)
+  - libwebp/demux (1.2.0):
+    - libwebp/webp
+  - libwebp/mux (1.2.0):
+    - libwebp/demux
+  - libwebp/webp (1.2.0)
   - nanopb (2.30906.0):
     - nanopb/decode (= 2.30906.0)
     - nanopb/encode (= 2.30906.0)
@@ -384,6 +393,9 @@ PODS:
     - Flutter
   - video_player (0.0.1):
     - Flutter
+  - video_thumbnail (0.0.1):
+    - Flutter
+    - libwebp
   - wakelock (0.0.1):
     - Flutter
 
@@ -407,6 +419,7 @@ DEPENDENCIES:
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - video_compress (from `.symlinks/plugins/video_compress/ios`)
   - video_player (from `.symlinks/plugins/video_player/ios`)
+  - video_thumbnail (from `.symlinks/plugins/video_thumbnail/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
 SPEC REPOS:
@@ -431,6 +444,7 @@ SPEC REPOS:
     - GTMAppAuth
     - GTMSessionFetcher
     - leveldb-library
+    - libwebp
     - nanopb
     - PromisesObjC
     - Toast
@@ -474,6 +488,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/video_compress/ios"
   video_player:
     :path: ".symlinks/plugins/video_player/ios"
+  video_thumbnail:
+    :path: ".symlinks/plugins/video_thumbnail/ios"
   wakelock:
     :path: ".symlinks/plugins/wakelock/ios"
 
@@ -512,6 +528,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   image_picker: 9c3312491f862b28d21ecd8fdf0ee14e601b3f09
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
+  libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
@@ -520,6 +537,7 @@ SPEC CHECKSUMS:
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   video_compress: fce97e4fb1dfd88175aa07d2ffc8a2f297f87fbe
   video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
+  video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1
   wakelock: bfc7955c418d0db797614075aabbc58a39ab5107
 
 PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d

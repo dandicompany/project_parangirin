@@ -10,7 +10,7 @@ class MyVideoLayout extends StatelessWidget {
   final String title;
   final Image profile;
   final Image avatar;
-  final Image thumbnail;
+  final String thumbnail;
   final String date;
   // final Post post; // post model
 
@@ -59,7 +59,8 @@ class MyVideoLayout extends StatelessWidget {
                             alignment: Alignment.topCenter,
                           ),
                           Image.asset(
-                            "assets/images/thumbnail_baby.png",
+                            // "assets/images/thumbnail_baby.png",
+                            thumbnail,
                             width: ScreenUtil().setHeight(198),
                             height: ScreenUtil().setHeight(197),
                           ),
