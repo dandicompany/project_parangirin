@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:paran_girin/gallery/chewie_list_item.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:video_player/video_player.dart';
@@ -21,11 +22,13 @@ class VideoShowWidget extends StatelessWidget {
             padding: EdgeInsets.only(
               top: ScreenUtil().setHeight(70),
               left: ScreenUtil().setWidth(28),
+              right: ScreenUtil().setWidth(28)
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       '계란을 우주로 보낸다면?',
@@ -33,6 +36,15 @@ class VideoShowWidget extends StatelessWidget {
                         fontSize: ScreenUtil().setSp(24),
                         color: AppTheme.colors.base1
                       ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                      },
+                      child: SvgPicture.asset(
+                        "assets/icons/more-horizontal.svg",
+                        width: ScreenUtil().setWidth(24),
+                        height: ScreenUtil().setHeight(24),
+                      )
                     ),
                   ],
                 ),
