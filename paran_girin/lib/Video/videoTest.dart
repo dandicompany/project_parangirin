@@ -294,7 +294,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                       filePath = join(
                                           (await getApplicationDocumentsDirectory())
                                               .path,
-                                          '${DateTime.now().day}12345.mp4');
+                                          '${DateTime.now().millisecondsSinceEpoch}.mp4');
                                       logger.d(filePath);
                                       // filePath = "/assets/videoEx/sample1.mp4";
                                       setState(() {
@@ -449,18 +449,7 @@ class SaveVideo extends StatelessWidget {
   }
 
   void saveVideo() async {
-    File thumb;
-    logger.d("!!!!!!!!!!!!!!!!!path");
-    try {
-      thumb = await VideoCompress.getFileThumbnail(filePath,
-          quality: 50, // default(100)
-          position: -1 // default(-1)
-          );
-    } catch (e) {
-      logger.d(e);
-    }
-    logger.d("!!!!!!!!!!!!!!!!!path: ${thumb.path}");
-    fp.addAnswer(question, filePath, thumb.path);
+    fp.addAnswer(question, filePath);
   }
 }
 

@@ -109,18 +109,13 @@ class Answer {
   String videoURL;
   String thumbnail;
   bool posted;
-  Answer(this.date, this.videoURL, this.thumbnail, this.posted);
+  Answer(this.date, this.videoURL, this.posted);
   Answer.fromJson(Map<String, dynamic> json)
       : this.date = json['date'],
         this.videoURL = json['videoURL'],
-        this.thumbnail = json['thumbnail'],
         this.posted = json['posted'];
-  Map<String, dynamic> toJson() => {
-        'date': date,
-        'videoURL': videoURL,
-        'thumbnail': thumbnail,
-        'posted': posted
-      };
+  Map<String, dynamic> toJson() =>
+      {'date': date, 'videoURL': videoURL, 'posted': posted};
 }
 
 class Post {

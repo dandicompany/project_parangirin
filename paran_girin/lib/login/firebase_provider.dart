@@ -161,10 +161,9 @@ class FirebaseProvider with ChangeNotifier {
         await firestore.collection('posts').add(post.toJson());
   }
 
-  Future<void> addAnswer(String question, String path, String thumbPath) async {
+  Future<void> addAnswer(String question, String path) async {
     logger.d("adding answer");
-    Answer answer =
-        Answer(DateTime.now().millisecondsSinceEpoch, path, thumbPath, false);
+    Answer answer = Answer(DateTime.now().millisecondsSinceEpoch, path, false);
     DocumentReference ansRef =
         await firestore.collection('answers').add(answer.toJson());
     _info.currentChild.answers[question] = ansRef.id;
