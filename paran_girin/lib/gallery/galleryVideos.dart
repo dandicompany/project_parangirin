@@ -19,12 +19,12 @@ int socialNum = 0;
 
 int sum = bodyNum + natureNum + exerciseNum + socialNum;
 
-class galleryVideo extends StatefulWidget {
+class GalleryVideo extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _CalenderState();
 }
 
-class _CalenderState extends State<galleryVideo> {
+class _CalenderState extends State<GalleryVideo> {
   bool buttonClickedState = true;
   bool buttonClickedState2 = true;
   bool buttonClickedState3 = true;

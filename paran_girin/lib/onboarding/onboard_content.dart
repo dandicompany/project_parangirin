@@ -18,25 +18,33 @@ class OnboardContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-          RichText(
-          text: new TextSpan(
-            style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: ScreenUtil().setSp(24)
+          Padding(
+            padding: EdgeInsets.only(
+              left: ScreenUtil().setWidth(16),
+              right: ScreenUtil().setWidth(16),
             ),
-            children: <TextSpan>[
-              new TextSpan(text: text1,
-                style: new TextStyle(color: AppTheme.colors.primary2,)),
-              new TextSpan(text: text2,
-                style: new TextStyle(color: AppTheme.colors.base2,))
-            ],
-          )
+            child: RichText(
+            text: new TextSpan(
+              style: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: ScreenUtil().setSp(24)
+              ),
+              children: <TextSpan>[
+                new TextSpan(text: text1,
+                  style: new TextStyle(color: AppTheme.colors.primary2,)),
+                new TextSpan(text: text2,
+                  style: new TextStyle(color: AppTheme.colors.base2,))
+              ],
+            )
         ),
+          ),
         Spacer(flex: 1,),
         Image.asset(
           image,
           height: ScreenUtil().setHeight(363),
           width: ScreenUtil().setWidth(363),
+          fit: BoxFit.fitWidth,
+          alignment: Alignment(0.0, -0.4),
         )
       ],
     );
