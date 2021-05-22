@@ -51,7 +51,7 @@ class _GalleryPageState extends State<GalleryPage> {
           case 0:
             return Calendar(); // HomePage();
           case 1:
-            return galleryVideo(); 
+            return GalleryVideo(); 
         }
       },
     ));

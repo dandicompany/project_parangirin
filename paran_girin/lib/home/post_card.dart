@@ -23,18 +23,18 @@ class PostCard extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: (){
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => PostDetail(this.post)));
+          onTap: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => PostDetail(this.post)));
           },
           // onTap: () async {
-            // Reference file = fp.getFirestorage().ref(post.videoURL);
-            // String url = await file.getDownloadURL();
-            // logger.d(url);
-            // Navigator.of(context).push(MaterialPageRoute(
-            //     builder: (context) =>
-            //         VideoStreamWidget(url))); //VideoPlayerScreen()));
-            
+          // Reference file = fp.getFirestorage().ref(post.videoURL);
+          // String url = await file.getDownloadURL();
+          // logger.d(url);
+          // Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (context) =>
+          //         VideoStreamWidget(url))); //VideoPlayerScreen()));
+
           // },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
@@ -48,15 +48,15 @@ class PostCard extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Image.asset(
-                          "assets/images/thumbnail_avatar.png",
-                          width: ScreenUtil().setHeight(145),
+                          "assets/images/thumbnail_pink.png",
+                          width: ScreenUtil().setWidth(145),
                           height: ScreenUtil().setHeight(197),
                           fit: BoxFit.cover,
                           alignment: Alignment.topCenter,
                         ),
                         Image.asset(
                           "assets/images/thumbnail_baby.png",
-                          width: ScreenUtil().setHeight(198),
+                          width: ScreenUtil().setWidth(198),
                           height: ScreenUtil().setHeight(197),
                         ),
                         // Use 'CachedNetworkImage' later
@@ -80,7 +80,8 @@ class PostCard extends StatelessWidget {
                                   TextStyle(fontSize: ScreenUtil().setSp(16)),
                             ),
                             Text(
-                              "타임캡슐에 담고 싶은 나의 물건은?", // description
+                              // "타임캡슐에 담고 싶은 나의 물건은?", // description
+                              fp.getStaticInfo().questions[post.qid].question,
                               style: TextStyle(
                                 fontSize: ScreenUtil().setSp(12),
                                 color: AppTheme.colors.base2,

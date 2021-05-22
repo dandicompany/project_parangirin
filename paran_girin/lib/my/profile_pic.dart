@@ -23,7 +23,10 @@ class ProfilePic extends StatelessWidget {
         fit: StackFit.expand,
         overflow: Overflow.visible,
         children: [
-          Profileimg(),
+          CircleAvatar(
+            backgroundImage: galleryFile == null
+                ? AssetImage("assets/images/default_profile.png")
+                : Image.file(galleryFile)),
           Positioned(
             right: 0,
             bottom: 0,
@@ -67,7 +70,7 @@ class Profileimg extends StatelessWidget {
         builder: (context, snapshot) {
           if (galleryFile != null) {
             return CircleAvatar(
-                backgroundImage: Image.file(galleryFile)
+                //backgroundImage: Image.file(galleryFile)
             );
           } else {
             return CircleAvatar(

@@ -23,6 +23,7 @@ class FirebaseProvider with ChangeNotifier {
   final UploadManager _uploadManager = UploadManager();
   User _user; // Firebase에 로그인 된 사용자
   UserModel _info;
+  StaticInfo _static;
   String _lastFirebaseResponse = ""; // Firebase로부터 받은 최신 메시지(에러 처리용)
   String _lastFirebaseExceptionCode = "";
 
@@ -30,6 +31,8 @@ class FirebaseProvider with ChangeNotifier {
     logger.d("init FirebaseProvider");
     _user = fAuth.currentUser;
     _info = UserModel();
+    _static = StaticInfo();
+    loadStaticInfo();
   }
 
   FirebaseFirestore getFirestore() {
@@ -46,6 +49,10 @@ class FirebaseProvider with ChangeNotifier {
 
   UserModel getUserInfo() {
     return _info;
+  }
+
+  StaticInfo getStaticInfo() {
+    return _static;
   }
 
   UploadManager getUploadManager() {
@@ -73,6 +80,23 @@ class FirebaseProvider with ChangeNotifier {
         setUser(null);
       }
     }
+  }
+
+  Future<bool> loadStaticInfo() async {
+    QuerySnapshot snapshot = await firestore.collection('questions').get();
+    List<QueryDocumentSnapshot> posts = snapshot.docs.toList();
+    posts.forEach((element) {
+      // if (element.id.length > 4) {
+      //   firestore.collection('questions').doc(element.id).delete();
+      // }
+      Question q = Question.fromJson(element.data());
+      _static.questions[element.id] = q;
+      // firestore
+      //     .collection('questions')
+      //     .doc(q.qid.toString())
+      //     .set(element.data());
+    });
+    logger.d(_static.questions);
   }
 
   Future<bool> loadInfoFromUser() async {
@@ -135,7 +159,19 @@ class FirebaseProvider with ChangeNotifier {
         _info.userInDB.currentChild, path, comment);
     DocumentReference postRef =
         await firestore.collection('posts').add(post.toJson());
-    logger.d("added child");
+  }
+
+  Future<void> addAnswer(String question, String path) async {
+    logger.d("adding answer");
+    Answer answer = Answer(DateTime.now().millisecondsSinceEpoch, path, false);
+    DocumentReference ansRef =
+        await firestore.collection('answers').add(answer.toJson());
+    _info.currentChild.answers[question] = ansRef.id;
+    DocumentReference childRef =
+        firestore.collection('children').doc(_info.userInDB.currentChild);
+    childRef.set(_info.currentChild.toJson());
+    logger.d("answer added");
+    reloadUser();
   }
 
   Future<void> addChild(String name, String nickName, int birthday) async {

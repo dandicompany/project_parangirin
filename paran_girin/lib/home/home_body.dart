@@ -56,7 +56,7 @@ class _HomeBody extends State<HomeBody> {
                 ),
                 SizedBox(height: ScreenUtil().setHeight(24)),
                 SizedBox(
-                  height: 600,
+                  height: 500,
                   child: StreamBuilder(
                       stream: fp.getFirestore().collection('posts').snapshots(),
                       builder: (context, snapshot) {
@@ -65,7 +65,7 @@ class _HomeBody extends State<HomeBody> {
                           List<QueryDocumentSnapshot> posts =
                               snapshot.data.docs;
                           return ListView.separated(
-                            physics: const NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 Post post = Post.fromJson(posts[index].data());
                                 return PostCard(post);
@@ -158,25 +158,23 @@ class HomeAvatar extends StatelessWidget {
               child: Image.asset(
                 "assets/background/background-7.jpg",
                 fit: BoxFit.cover,
-                ),
+              ),
             ),
-            Column(
-              children: [
-                SizedBox(
-                  width: ScreenUtil().setWidth(426),
-                  height: ScreenUtil().setHeight(44),
+            Column(children: [
+              SizedBox(
+                width: ScreenUtil().setWidth(426),
+                height: ScreenUtil().setHeight(44),
+              ),
+              Container(
+                width: ScreenUtil().setWidth(426),
+                height: ScreenUtil().setHeight(426),
+                child: Image.asset(
+                  'assets/avatars/home.gif',
+                  fit: BoxFit.cover,
+                  alignment: Alignment.bottomCenter,
                 ),
-                Container(
-                  width: ScreenUtil().setWidth(426),
-                  height: ScreenUtil().setHeight(426),
-                  child: Image.asset(
-                    'assets/avatars/home.gif',
-                    fit: BoxFit.cover,
-                    alignment: Alignment.bottomCenter,
-                    ),
-                ),
-              ]
-            ),
+              ),
+            ]),
           ],
         ),
       ),

@@ -38,7 +38,7 @@ class _VideoForSharingState extends State<VideoForSharing> {
                         child: Row(
                           children: <Widget>[
                             Image.asset(
-                              "assets/images/thumbnail_avatar.png",
+                              "assets/images/thumbnail_pink.png",
                               width: ScreenUtil().setHeight(145),
                               height: ScreenUtil().setHeight(197),
                               fit: BoxFit.cover,
