@@ -5,6 +5,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:image_picker/image_picker.dart';
 
+
+File galleryFile;
+
 class ProfilePic extends StatelessWidget {
   const ProfilePic({
     Key key,
@@ -12,7 +15,6 @@ class ProfilePic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    File galleryFile;
     bool image_change = false;
     return SizedBox(
       width: ScreenUtil().setWidth(120),
@@ -21,10 +23,7 @@ class ProfilePic extends StatelessWidget {
         fit: StackFit.expand,
         overflow: Overflow.visible,
         children: [
-          CircleAvatar(
-            backgroundImage: galleryFile == null
-                ? AssetImage("assets/images/thumbnail_baby.png")
-                : Image.file(galleryFile)),
+          Profileimg(),
           Positioned(
             right: 0,
             bottom: 0,
@@ -46,7 +45,7 @@ class ProfilePic extends StatelessWidget {
                     // maxHeight: 50.0,
                     // maxWidth: 50.0,
                   );
-                  // setState(() {});
+                  image_change = true;
                 },
                 child: SvgPicture.asset(
                   "assets/icons/camera.svg",
@@ -57,5 +56,24 @@ class ProfilePic extends StatelessWidget {
         ],
       )
     );
+  }
+}
+
+class Profileimg extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<String>(
+        //future: //_fetchNetworkData(),
+        builder: (context, snapshot) {
+          if (galleryFile != null) {
+            return CircleAvatar(
+                backgroundImage: Image.file(galleryFile)
+            );
+          } else {
+            return CircleAvatar(
+                backgroundImage: AssetImage("assets/images/thumbnail_baby.png")
+            );
+          }
+        });
   }
 }
