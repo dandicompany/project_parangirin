@@ -5,15 +5,22 @@ import 'package:flutter_svg/svg.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProfilePic extends StatelessWidget {
+
+
+
+class ProfilePic extends StatefulWidget{
   const ProfilePic({
     Key key,
   }) : super(key: key);
 
   @override
+  _ProfilePic createState() => _ProfilePic();
+}
+
+class _ProfilePic extends State<ProfilePic> {
+  File galleryFile;
+  @override
   Widget build(BuildContext context) {
-    File galleryFile;
-    bool image_change = false;
     return SizedBox(
       width: ScreenUtil().setWidth(120),
       height: ScreenUtil().setHeight(120),
@@ -24,7 +31,7 @@ class ProfilePic extends StatelessWidget {
           CircleAvatar(
             backgroundImage: galleryFile == null
                 ? AssetImage("assets/images/default_profile.png")
-                : Image.file(galleryFile)),
+                : FileImage(File(galleryFile.path))),
           Positioned(
             right: 0,
             bottom: 0,
@@ -40,13 +47,8 @@ class ProfilePic extends StatelessWidget {
                   )
                 ),
                 color: Colors.white,
-                onPressed: () async {
-                  galleryFile = await ImagePicker.pickImage(
-                    source: ImageSource.gallery,
-                    // maxHeight: 50.0,
-                    // maxWidth: 50.0,
-                  );
-                  // setState(() {});
+                onPressed: ()  {
+                  takePhoto(ImageSource.gallery);
                 },
                 child: SvgPicture.asset(
                   "assets/icons/camera.svg",
@@ -58,4 +60,15 @@ class ProfilePic extends StatelessWidget {
       )
     );
   }
+  void takePhoto(ImageSource source) async {
+    final pickedFile = await ImagePicker.pickImage(
+        source:source
+    );
+    setState((){
+      galleryFile = pickedFile;
+    });
+  }
 }
+
+
+
