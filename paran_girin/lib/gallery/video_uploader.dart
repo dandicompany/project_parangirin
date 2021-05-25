@@ -108,10 +108,9 @@ class UploadManager {
     }
   }
 
-  Future<String> uploadImage(String path) async {
+  Future<String> uploadImage(File file) async {
     // var video = await ImagePicker.pickVideo(source: ImageSource.gallery);
-    logger.d(path);
-    File file = File(path);
+    String path = file.path;
     logger.d(file.path);
 
     // MediaInfo mediaInfo = await VideoCompress.compressVideo(
@@ -152,18 +151,17 @@ class UploadManager {
     logger.d(path);
     File file = File(path);
     logger.d(file.path);
-    MediaInfo mediaInfo = await VideoCompress.compressVideo(
-      path,
-      quality: VideoQuality.MediumQuality,
-      deleteOrigin: false, // It's false by default
-    );
+    MediaInfo mediaInfo = await VideoCompress.compressVideo(path,
+        quality: VideoQuality.LowQuality,
+        deleteOrigin: false, // It's false by default
+        frameRate: 25);
     // File thumbnail = await VideoCompress.getFileThumbnail(video.path);
 
     logger.d(mediaInfo.filesize);
     final String savedDir = dirname(mediaInfo.path);
     final String filename = basename(mediaInfo.path);
     final tag = "video upload ${_tasks.length + 1} size: ${mediaInfo.filesize}";
-    final url = _uploadUrl(binary: false, name: filename);
+    final url = _uploadUrl(binary: false, name: basename(path));
 
     var fileItem = FileItem(
       filename: filename,
@@ -182,7 +180,7 @@ class UploadManager {
       tag: tag,
       showNotification: true,
     );
-    return filename;
+    return basename(path);
   }
 }
 

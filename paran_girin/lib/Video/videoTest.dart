@@ -436,6 +436,7 @@ class SaveVideo extends StatelessWidget {
         child: GestureDetector(
       onTap: () {
         saveVideo();
+        Navigator.of(context).pop();
       },
       child: Container(
         width: ScreenUtil().setWidth(38),
@@ -450,6 +451,7 @@ class SaveVideo extends StatelessWidget {
 
   void saveVideo() async {
     fp.addAnswer(question, filePath);
+    fp.reloadUser();
   }
 }
 

@@ -24,59 +24,100 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   bool searched = false;
+  String query;
   TextEditingController textCon = TextEditingController();
   FirebaseProvider fp;
   ScrollController scrollController = ScrollController();
 
   Widget _searchQuestions() {
-    logger.d(textCon.text.split(" ").join().split("#"));
-    return StreamBuilder(
-        stream: fp
-            .getFirestore()
-            .collection('questions')
-            .where('tag',
-                arrayContainsAny: textCon.text.split(" ").join().split("#"))
-            .snapshots(),
-        builder: (context, snapshot) {
-          logger.d(snapshot);
-          if (snapshot.connectionState == ConnectionState.active) {
-            QuerySnapshot qSnapshot = snapshot.data;
-            List<QueryDocumentSnapshot> docs = qSnapshot.docs;
-            return ListView.separated(
-              controller: scrollController,
-              itemCount: docs.length,
-              itemBuilder: (BuildContext context, int idx) {
-                Question question = Question.fromJson(docs[idx].data());
-                return QuestionCard(
-                  qTitle: question.title ?? "제목없음",
-                  qDescription: question.question ?? "질문없음",
-                  isDone: fp
-                      .getUserInfo()
-                      .currentChild
-                      .answers
-                      .containsKey(question.qid),
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => QuestionPost(
-                              categoryTitle: question.category ?? "카테고리없음",
-                              image: "assets/images/category_nature.png",
-                              qTitle: question.title ?? "제목없음",
-                              question: question.question ?? "질문없음",
-                              storyText: question.story ?? "스토리없음",
-                              guide: question.guide ?? "가이드없음",
-                            )));
-                  },
-                );
-              },
-              separatorBuilder: (BuildContext context, int i) {
-                return Divider(height: 1);
-              },
-            );
-          } else {
-            return SizedBox.shrink();
-          }
-        });
+    // logger.d(textCon.text.split(" ").join().split("#"));
+    String key = query;
+    logger.d(query);
+    List<Question> results = List<Question>();
+    fp.getStaticInfo().questions.values.forEach((element) {
+      if (element.containsKeyWord(key)) {
+        results.add(element);
+      }
+    });
+    return ListView.separated(
+      controller: scrollController,
+      itemCount: results.length,
+      itemBuilder: (BuildContext context, int idx) {
+        Question question = results[idx];
+        return QuestionCard(
+          qTitle: question.title ?? "제목없음",
+          qDescription: question.question ?? "질문없음",
+          isDone:
+              fp.getUserInfo().currentChild.answers.containsKey(question.qid),
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => QuestionPost(
+                      categoryTitle: question.category ?? "카테고리없음",
+                      image: "assets/images/category_nature.png",
+                      qTitle: question.title ?? "제목없음",
+                      question: question.question ?? "질문없음",
+                      storyText: question.story ?? "스토리없음",
+                      guide: question.guide ?? "가이드없음",
+                    )));
+          },
+        );
+      },
+      separatorBuilder: (BuildContext context, int i) {
+        return Divider(height: 1);
+      },
+    );
   }
+
+  // Widget _searchQuestions() {
+  //   // logger.d(textCon.text.split(" ").join().split("#"));
+  //   logger.d(textCon.text.replaceAll(" ", ""));
+  //   return StreamBuilder(
+  //       stream: fp
+  //           .getFirestore()
+  //           .collection('questions')
+  //           .where('tag',
+  //               arrayContainsAny: textCon.text.split(" ").join().split("#"))
+  //           .snapshots(),
+  //       builder: (context, snapshot) {
+  //         logger.d(snapshot);
+  //         if (snapshot.connectionState == ConnectionState.active) {
+  //           QuerySnapshot qSnapshot = snapshot.data;
+  //           List<QueryDocumentSnapshot> docs = qSnapshot.docs;
+  //           return ListView.separated(
+  //             controller: scrollController,
+  //             itemCount: docs.length,
+  //             itemBuilder: (BuildContext context, int idx) {
+  //               Question question = Question.fromJson(docs[idx].data());
+  //               return QuestionCard(
+  //                 qTitle: question.title ?? "제목없음",
+  //                 qDescription: question.question ?? "질문없음",
+  //                 isDone: fp
+  //                     .getUserInfo()
+  //                     .currentChild
+  //                     .answers
+  //                     .containsKey(question.qid),
+  //                 onTap: () {
+  //                   Navigator.of(context).push(MaterialPageRoute(
+  //                       builder: (context) => QuestionPost(
+  //                             categoryTitle: question.category ?? "카테고리없음",
+  //                             image: "assets/images/category_nature.png",
+  //                             qTitle: question.title ?? "제목없음",
+  //                             question: question.question ?? "질문없음",
+  //                             storyText: question.story ?? "스토리없음",
+  //                             guide: question.guide ?? "가이드없음",
+  //                           )));
+  //                 },
+  //               );
+  //             },
+  //             separatorBuilder: (BuildContext context, int i) {
+  //               return Divider(height: 1);
+  //             },
+  //           );
+  //         } else {
+  //           return SizedBox.shrink();
+  //         }
+  //       });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -97,14 +138,17 @@ class _CategoryPageState extends State<CategoryPage> {
                     EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(5.0)),
                 child: TextField(
                   // onSubmitted: (_) => _searchPosts(),
+                  textInputAction: TextInputAction.search,
+                  onSubmitted: (value) {
+                    setState(() {
+                      query = value;
+                      searched = (query.length > 0);
+                    });
+                  },
                   controller: textCon,
                   decoration: InputDecoration(
                     prefixIcon: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          searched = (textCon.text.length > 0);
-                        });
-                      },
+                      onTap: () {},
                       child: Icon(Icons.search, color: AppTheme.colors.base2),
                     ),
                     hintText: "질문을 검색해보세요 :)",

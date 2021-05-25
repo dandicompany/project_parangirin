@@ -25,27 +25,28 @@ class AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
-    return FutureBuilder(
-        future: fp.initializeUserState(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            logger.d(snapshot.data);
-            logger.d("user: ${fp.getUser()}");
-            if (fp.checkVerifiedUser()) {
-              // Todo: check user info
-              if (fp.getUserInfo().userInDB.children.length == 0) {
-                return BabyInfoName();
-                // return DefaultLayout();
-              } else {
-                return DefaultLayout();
-              }
-            } else {
-              print("gaegegagegagaegaegeg");
-              return LoginPage();
-            }
+    return FutureBuilder(future: () async {
+      await fp.loadStaticInfo();
+      return await fp.initializeUserState();
+    }(), builder: (BuildContext context, AsyncSnapshot snapshot) {
+      if (snapshot.connectionState == ConnectionState.done) {
+        logger.d(snapshot.data);
+        logger.d("user: ${fp.getUser()}");
+        if (fp.checkVerifiedUser()) {
+          // Todo: check user info
+          if (fp.getUserInfo().userInDB.children.length == 0) {
+            return BabyInfoName();
+            // return DefaultLayout();
           } else {
-            return SplashScreen();
+            return DefaultLayout();
           }
-        });
+        } else {
+          print("gaegegagegagaegaegeg");
+          return LoginPage();
+        }
+      } else {
+        return SplashScreen();
+      }
+    });
   }
 }

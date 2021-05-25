@@ -75,14 +75,20 @@ class _DefaultLayoutState extends State<DefaultLayout>
       itemBuilder: (context, idx) {
         switch (idx) {
           case 0:
-            return HomePage(); 
+            return HomePage();
           case 1:
-            return CategoryPage(); 
-            //return Initialization(); // hobin test
+            try {
+              return CategoryPage();
+            } catch (e) {
+              print("#######################");
+              print(e);
+            }
+            return SizedBox.shrink();
+          //return Initialization(); // hobin test
           case 2:
-            return GalleryPage(); 
+            return GalleryPage();
           case 3:
-            return MyPage(); 
+            return MyPage();
           default:
             return HomePage();
         }

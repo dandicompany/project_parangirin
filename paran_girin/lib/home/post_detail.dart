@@ -166,6 +166,7 @@ class PostDetail extends StatelessWidget {
                                   Reference file =
                                       fp.getFirestorage().ref(post.videoURL);
                                   String url = await file.getDownloadURL();
+                                  // String url = 'https://youtu.be/wgbr7exUnzE';
                                   logger.d(url);
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => VideoStreamWidget(
