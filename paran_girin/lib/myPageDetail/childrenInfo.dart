@@ -74,7 +74,7 @@ class _ChildrenInfoState extends State<ChildrenInfo> {
                                 text2: notchosen,
                                 press: () {
                                   fp.switchChild(children[index - 1]);
-                                  setState(() {});
+                                  // setState(() {});
                                 },
                               );
                             }

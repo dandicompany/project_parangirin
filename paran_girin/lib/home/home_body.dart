@@ -24,14 +24,33 @@ class HomeBody extends StatefulWidget {
 
 class _HomeBody extends State<HomeBody> {
   FirebaseProvider fp;
-  // String getWeek(DateTime d) {
-  //   int day = d.day;
-  //   int weekday = d.weekday;
-  //   int last_sat = day - weekday - 1;
-  //   if (last_sat <= 0){
-  //     return
-  //   }
-  // }
+  String getWeek(DateTime d) {
+    int day = d.day;
+    int weekday = d.weekday;
+    if (weekday == 6) {
+      String ym = "${d.year}년 ${d.month}월";
+      switch (((day + 6) / 7).floor()) {
+        case 1:
+          return ym + " 첫째 주";
+          break;
+        case 2:
+          return ym + " 둘째 주";
+          break;
+        case 3:
+          return ym + " 셋째 주";
+          break;
+        case 4:
+          return ym + " 넷째 주";
+          break;
+        case 5:
+          return ym + " 다섯째 주";
+        default:
+          return "동동주";
+      }
+    }
+    DateTime this_sat = d.add(Duration(days: 6 - (weekday % 7)));
+    return getWeek(this_sat);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +81,7 @@ class _HomeBody extends State<HomeBody> {
                                   fontSize: ScreenUtil().setSp(18)),
                             ),
                             Text(
-                              "${DateFormat("yyyy년 MM월").format(DateTime.now())}",
+                              getWeek(DateTime.now()),
                               style: TextStyle(
                                   color: AppTheme.colors.base2,
                                   fontSize: ScreenUtil().setSp(12)),

@@ -10,6 +10,7 @@ import 'package:paran_girin/TTS/ttsTest.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/layout/splash.dart';
+import 'package:paran_girin/models/schema.dart';
 
 CameraDescription camera;
 CameraDescription firstCamera;
@@ -78,7 +79,7 @@ class TakePictureScreen extends StatefulWidget {
 }
 
 class TakePictureScreenState extends State<TakePictureScreen> {
-  // FirebaseProvider fp;
+  FirebaseProvider fp;
   BuildContext context_temp;
   CameraController _controller;
   Future<void> _initializeControllerFuture;
@@ -174,6 +175,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
     context_temp = context;
     return Scaffold(
       body: FutureBuilder<void>(
@@ -181,6 +183,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             print("connection done");
+            logger.d(question);
             return Stack(
               children: [
                 Container(
@@ -195,7 +198,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 //   //", 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아. 혹시 너도 동물이 되어보고 싶은 적 없어? 하루동안 동물이 된다면, 어떤 동물이 되고싶니?",),
                 // ),
                 Container(
-                    child: girin_state == false ? GirinSpeak() : GirinNod()),
+                    child: girin_state == false
+                        ? GirinSpeak(fp.getUserInfo().currentChild.nickName,
+                            fp.getStaticInfo().questions[question])
+                        : GirinNod()),
                 Positioned(
                   top: ScreenUtil().setHeight(64),
                   right: ScreenUtil().setWidth(10),
@@ -377,12 +383,14 @@ class GirinNod extends StatelessWidget {
 }
 
 class GirinHi extends StatelessWidget {
+  String text = "";
+  GirinHi(this.text);
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
-          child: TextToSpeech(text: "안녕, 호빈 친구?"),
+          child: TextToSpeech(text: "안녕, ${text ?? ""} 친구?"),
         ),
         Align(
             alignment: Alignment.center,
@@ -397,8 +405,12 @@ class GirinHi extends StatelessWidget {
 }
 
 class GirinSpeak extends StatelessWidget {
+  String nick;
+  Question q;
+  GirinSpeak(this.nick, this.q);
   @override
   Widget build(BuildContext context) {
+    logger.d(q);
     return FutureBuilder(
         future: Future.delayed(Duration(milliseconds: 3000)),
         builder: (context, snapshot) {
@@ -406,9 +418,9 @@ class GirinSpeak extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             return Stack(children: [
               Align(
-                child: TextToSpeech(
-                    text: "나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지."),
-              ),
+                  child: TextToSpeech(
+                      // text: "나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지."),
+                      text: q.narration1.replaceAll("안녕 __name__!", ""))),
               Align(
                   alignment: Alignment.center,
                   child: Container(
@@ -419,7 +431,7 @@ class GirinSpeak extends StatelessWidget {
                   ))
             ]);
           } else {
-            return GirinHi();
+            return GirinHi(nick);
           }
         });
   }

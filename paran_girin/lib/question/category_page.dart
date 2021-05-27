@@ -128,41 +128,46 @@ class _CategoryPageState extends State<CategoryPage> {
           color: AppTheme.colors.background,
           padding: EdgeInsets.only(
             top: ScreenUtil().setHeight(55),
-            left: ScreenUtil().setWidth(16),
-            right: ScreenUtil().setWidth(16),
+            // left: ScreenUtil().setWidth(16),
+            // right: ScreenUtil().setWidth(16),
           ),
           child: Column(
             children: [
               Padding(
-                padding:
-                    EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(5.0)),
-                child: TextField(
-                  // onSubmitted: (_) => _searchPosts(),
-                  textInputAction: TextInputAction.search,
-                  onSubmitted: (value) {
-                    setState(() {
-                      query = value;
-                      searched = (query.length > 0);
-                    });
-                  },
-                  controller: textCon,
-                  decoration: InputDecoration(
-                    prefixIcon: GestureDetector(
-                      onTap: () {},
-                      child: Icon(Icons.search, color: AppTheme.colors.base2),
+                  padding: EdgeInsets.symmetric(
+                      vertical: ScreenUtil().setHeight(5.0)),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: ScreenUtil().setWidth(16),
+                        right: ScreenUtil().setWidth(16)),
+                    child: TextField(
+                      // onSubmitted: (_) => _searchPosts(),
+                      textInputAction: TextInputAction.search,
+                      onSubmitted: (value) {
+                        setState(() {
+                          query = value;
+                          searched = (query.length > 0);
+                        });
+                      },
+                      controller: textCon,
+                      decoration: InputDecoration(
+                        prefixIcon: GestureDetector(
+                          onTap: () {},
+                          child:
+                              Icon(Icons.search, color: AppTheme.colors.base2),
+                        ),
+                        hintText: "질문을 검색해보세요 :)",
+                        hintStyle: TextStyle(fontSize: ScreenUtil().setSp(16)),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: BorderSide.none,
+                        ),
+                        fillColor: Color.fromRGBO(235, 235, 235, 1),
+                        filled: true,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
+                      ),
                     ),
-                    hintText: "질문을 검색해보세요 :)",
-                    hintStyle: TextStyle(fontSize: ScreenUtil().setSp(16)),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                      borderSide: BorderSide.none,
-                    ),
-                    fillColor: Color.fromRGBO(235, 235, 235, 1),
-                    filled: true,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
-                  ),
-                ),
-              ),
+                  )),
               SizedBox(height: ScreenUtil().setHeight(5)),
               searched
                   ? SizedBox(height: 800, child: _searchQuestions())

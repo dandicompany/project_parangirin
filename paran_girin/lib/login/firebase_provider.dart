@@ -14,6 +14,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'dart:io';
 import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 Logger logger = Logger();
 
@@ -111,13 +113,34 @@ class FirebaseProvider with ChangeNotifier {
     //   }
     // }
 
-    for (var element in posts) {
+    posts.forEach((element) async {
       Post post = Post.fromJson(element.data());
-      Reference ref = firestorage.ref(post.thumbURL);
-      String path = join((await getTemporaryDirectory()).path, post.thumbURL);
-      File thumb = File(path);
-      _static.post_thumbnails[post.thumbURL] = null;
-      ref.writeToFile(thumb).then((element) async {
+      Child child = Child.fromJson(await getFromFB("children", post.child));
+      _static.post_children[post.child] = child;
+      Reference refProfile = firestorage.ref(child.profileURL);
+      Reference refThumb = firestorage.ref(post.thumbURL);
+      String profilePath =
+          join((await getTemporaryDirectory()).path, child.profileURL);
+      String thumbPath =
+          join((await getTemporaryDirectory()).path, post.thumbURL);
+      File profile = File(profilePath);
+      File thumb = File(thumbPath);
+      if (child.profileURL != null) {
+        _static.post_thumbnails[post.thumbURL] = null;
+        refProfile.writeToFile(profile).then((element) async {
+          if (element.state == TaskState.success) {
+            _static.post_profiles[child.profileURL] = await profile.create();
+            logger.d("${child.profileURL} profile loaded");
+            logger.d(element.bytesTransferred);
+            logger.d(await profile.length());
+            notifyListeners();
+          } else if (element.state == TaskState.error) {
+            logger.d("error while downloading thumbnails");
+          }
+        });
+      }
+      _static.post_profiles[child.profileURL] = null;
+      refThumb.writeToFile(thumb).then((element) async {
         if (element.state == TaskState.success) {
           _static.post_thumbnails[post.thumbURL] = await thumb.create();
           logger.d("${post.thumbURL} thumbail loaded");
@@ -128,7 +151,7 @@ class FirebaseProvider with ChangeNotifier {
           logger.d("error while downloading thumbnails");
         }
       });
-    }
+    });
 
     snapshot = await firestore.collection('questions').get();
     List<QueryDocumentSnapshot> questions = snapshot.docs.toList();
@@ -214,7 +237,20 @@ class FirebaseProvider with ChangeNotifier {
         notifyListeners();
       });
     }
-
+    String profileURL = _info.currentChild.profileURL;
+    _static.profile = null;
+    if (profileURL != null) {
+      Reference ref = firestorage.ref(profileURL);
+      File file =
+          File(join((await getTemporaryDirectory()).path, "profile.png"));
+      ref.writeToFile(file).then((value) {
+        if (value.state == TaskState.success) {
+          _static.profile = file;
+        }
+      }).catchError((error) {
+        logger.d(error);
+      });
+    }
     _user_loaded = true;
     logger.d("finished");
     return true;
@@ -275,8 +311,9 @@ class FirebaseProvider with ChangeNotifier {
     _info.userInDB.currentChild = child;
     DocumentReference userRef = firestore.collection('users').doc(_user.uid);
     await userRef.set(_info.userInDB.toJson());
-    DocumentReference docRef = firestore.collection('children').doc(child);
-    _info.currentChild = Child.fromJson((await docRef.get()).data());
+    reloadUser();
+    // DocumentReference docRef = firestore.collection('children').doc(child);
+    // _info.currentChild = Child.fromJson((await docRef.get()).data());
   }
 
   Future<Map<String, dynamic>> getFromFB(String colName, String docName) async {
