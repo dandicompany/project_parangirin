@@ -1,5 +1,13 @@
+import 'dart:io';
+
 class StaticInfo {
   Map<String, Question> questions = Map<String, Question>();
+  Map<String, String> post_videos = Map<String, String>();
+  Map<String, File> post_thumbnails = Map<String, File>();
+  Map<String, Child> post_children = Map<String, Child>();
+  Map<String, File> post_profiles = Map<String, File>();
+  Map<String, Answer> answers = Map<String, Answer>();
+  File profile;
 }
 
 class UserModel {
@@ -13,16 +21,19 @@ class UserModel {
 class UserInDB {
   String sharedID;
   String currentChild;
+  bool pushAlarm = false;
   List<String> children = List<String>();
   UserInDB.sharedID(String sharedID);
   UserInDB.fromJson(Map<String, dynamic> json)
       : this.sharedID = json['sharedID'],
         this.currentChild = json['currentChild'],
         this.children = json['children'].cast<String>();
+  // this.pushAlarm = json['pushAlarm'].cast<bool>();
   Map<String, dynamic> toJson() => {
         'sharedID': sharedID,
         'currentChild': currentChild,
         'children': children,
+        'pushAlarm': pushAlarm
       };
 }
 
@@ -31,6 +42,7 @@ class Child {
   String nickName;
   String profileURL;
   int birthday;
+  String background;
   String avatar;
   Map<String, String> answers = Map<String, String>();
   Child(this.name, this.profileURL, this.nickName, this.birthday, this.avatar);
@@ -39,13 +51,18 @@ class Child {
         this.nickName = json['nickName'],
         this.profileURL = json['profileURL'],
         this.birthday = json['birthday'],
-        this.avatar = json['avatar'],
-        this.answers = json['answers'].cast<String, String>();
+        this.avatar = json['avatar'] ?? 'home.gif',
+        this.background = json['background'] ?? 'background-7.jpg',
+        this.answers = (json['answers'] == null)
+            ? Map<String, String>()
+            : json['answers'].cast<String, String>();
+
   Map<String, dynamic> toJson() => {
         'name': name,
         'nickName': nickName,
         'profileURL': profileURL,
         'birthday': birthday,
+        'background': background,
         'avatar': avatar,
         'answers': answers
       };
@@ -96,6 +113,12 @@ class Question {
   bool containsKeyWord(String key) {
     Map<String, dynamic> json = this.toJson();
     for (var s in json.values) {
+      if (s == null) {
+        continue;
+      }
+      if (s.runtimeType != String) {
+        continue;
+      }
       if (s.replaceAll(' ', '').contains(key)) {
         return true;
       }
@@ -107,7 +130,7 @@ class Question {
 class Answer {
   int date;
   String videoURL;
-  String thumbnail;
+  File thumbnail;
   bool posted;
   Answer(this.date, this.videoURL, this.posted);
   Answer.fromJson(Map<String, dynamic> json)
@@ -116,6 +139,22 @@ class Answer {
         this.posted = json['posted'];
   Map<String, dynamic> toJson() =>
       {'date': date, 'videoURL': videoURL, 'posted': posted};
+
+  bool containsKeyWord(String key) {
+    Map<String, dynamic> json = this.toJson();
+    for (var s in json.values) {
+      if (s == null) {
+        continue;
+      }
+      if (s.runtimeType != String) {
+        continue;
+      }
+      if (s.replaceAll(' ', '').contains(key)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 class Post {
@@ -127,7 +166,8 @@ class Post {
   String thumbURL;
   String comment = "";
   List<String> likedPPL = List<String>();
-  Post(this.date, this.child, this.videoURL, this.comment);
+  Post(this.date, this.qid, this.child, this.videoURL, this.thumbURL,
+      this.comment);
   Post.fromJson(Map<String, dynamic> json)
       : this.date = json['date'],
         this.qid = json['qid'],
@@ -147,4 +187,49 @@ class Post {
         'comment': comment,
         'likedPPL': likedPPL
       };
+}
+
+class NoticeItem {
+  int date;
+  String id;
+  String title;
+  String content;
+  NoticeItem(this.date, this.id, this.title, this.content);
+  NoticeItem.fromJson(Map<String, dynamic> json)
+      : this.date = json['date'],
+        this.id = json['id'],
+        this.title = json['title'],
+        this.content = json['content'];
+  Map<String, dynamic> toJson() =>
+      {'date': date, 'id': id, 'title': title, 'content': content};
+}
+
+class OpinionQuestion {
+  int date;
+  String id;
+  String writer;
+  String content;
+  OpinionQuestion(this.date, this.id, this.writer, this.content);
+  OpinionQuestion.fromJson(Map<String, dynamic> json)
+      : this.date = json['date'],
+        this.id = json['id'],
+        this.writer = json['writer'],
+        this.content = json['content'];
+  Map<String, dynamic> toJson() =>
+      {'date': date, 'id': id, 'writer': writer, 'content': content};
+}
+
+class OpinionWish {
+  int date;
+  String id;
+  String writer;
+  String content;
+  OpinionWish(this.date, this.id, this.writer, this.content);
+  OpinionWish.fromJson(Map<String, dynamic> json)
+      : this.date = json['date'],
+        this.id = json['id'],
+        this.writer = json['writer'],
+        this.content = json['content'];
+  Map<String, dynamic> toJson() =>
+      {'date': date, 'id': id, 'writer': writer, 'content': content};
 }

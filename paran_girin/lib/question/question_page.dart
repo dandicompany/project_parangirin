@@ -53,13 +53,13 @@ class _QuestionPageState extends State<QuestionPage> {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => QuestionPost(
-                                  categoryTitle: question.category ?? "카테고리없음",
-                                  image: "assets/images/category_nature.png",
-                                  qTitle: question.title ?? "제목없음",
-                                  question: question.question ?? "질문없음",
-                                  storyText: question.story ?? "스토리없음",
-                                  guide: question.guide ?? "가이드없음",
-                                )));
+                                categoryTitle: question.category ?? "카테고리없음",
+                                image: "assets/images/category_nature.png",
+                                qTitle: question.title ?? "제목없음",
+                                question: question.question ?? "질문없음",
+                                storyText: question.story ?? "스토리없음",
+                                guide: question.guide ?? "가이드없음",
+                                qid: question.qid.toString())));
                       },
                     );
                   },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/gallery/video_uploader.dart';
+import 'dart:io';
 
 class MyVideoLayout extends StatelessWidget {
   final VoidCallback onTap;
@@ -10,7 +11,7 @@ class MyVideoLayout extends StatelessWidget {
   final String title;
   final Image profile;
   final Image avatar;
-  final String thumbnail;
+  final File thumbnail;
   final String date;
   // final Post post; // post model
 
@@ -58,12 +59,13 @@ class MyVideoLayout extends StatelessWidget {
                             fit: BoxFit.cover,
                             alignment: Alignment.topCenter,
                           ),
-                          Image.asset(
-                            // "assets/images/thumbnail_baby.png",
-                            thumbnail,
-                            width: ScreenUtil().setHeight(198),
-                            height: ScreenUtil().setHeight(197),
-                          ),
+                          Image.file(
+                              // "assets/images/thumbnail_baby.png",
+                              thumbnail,
+                              width: ScreenUtil().setHeight(198),
+                              height: ScreenUtil().setHeight(197),
+                              fit: BoxFit.cover,
+                              alignment: Alignment.center),
                           // Use 'CachedNetworkImage' later
                         ],
                       ),
@@ -80,7 +82,8 @@ class MyVideoLayout extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "세상에 없던 새로운 대답, 계란", // title
+                                // "세상에 없던 새로운 대답, 계란", // title
+                                title,
                                 style: TextStyle(
                                   fontSize: ScreenUtil().setSp(16),
                                   fontFamily: 'Noto Sans KR',
@@ -91,7 +94,8 @@ class MyVideoLayout extends StatelessWidget {
                                 height: ScreenUtil().setHeight(2),
                               ),
                               Text(
-                                "2020/01/01", //date
+                                // "2020/01/01", //date
+                                date,
                                 style: TextStyle(
                                   fontSize: ScreenUtil().setSp(12),
                                   color: AppTheme.colors.base2,

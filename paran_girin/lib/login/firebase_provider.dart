@@ -10,6 +10,12 @@ import "package:http/http.dart" as http;
 import "package:googleapis_auth/auth_io.dart" as gauth;
 import 'dart:convert';
 import 'package:paran_girin/gallery/video_uploader.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
+import 'dart:io';
+import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 Logger logger = Logger();
 
@@ -24,6 +30,8 @@ class FirebaseProvider with ChangeNotifier {
   User _user; // Firebase에 로그인 된 사용자
   UserModel _info;
   StaticInfo _static;
+  bool _static_loaded = false;
+  bool _user_loaded = false;
   String _lastFirebaseResponse = ""; // Firebase로부터 받은 최신 메시지(에러 처리용)
   String _lastFirebaseExceptionCode = "";
 
@@ -74,6 +82,7 @@ class FirebaseProvider with ChangeNotifier {
         // logger.d("reloaded!");
         // logger.d(user);
         // setUser(user);
+        _user_loaded = false;
         setUser(user);
       } on Exception {
         logger.d("deleted user");
@@ -83,9 +92,70 @@ class FirebaseProvider with ChangeNotifier {
   }
 
   Future<bool> loadStaticInfo() async {
-    QuerySnapshot snapshot = await firestore.collection('questions').get();
+    if (_static_loaded) {
+      return true;
+    }
+    QuerySnapshot snapshot = await firestore.collection('posts').get();
     List<QueryDocumentSnapshot> posts = snapshot.docs.toList();
-    posts.forEach((element) {
+    // for (var element in posts) {
+    //   Post post = Post.fromJson(element.data());
+    //   _static.post_videos[post.videoURL] = null;
+    //   Reference ref = firestorage.ref(post.videoURL);
+    //   File file =
+    //       File(join((await getTemporaryDirectory()).path, post.videoURL));
+    //   try {
+    //     ref.writeToFile(file).whenComplete(() {
+    //       _static.post_videos[post.videoURL] = post.videoURL;
+    //       notifyListeners();
+    //     });
+    //   } on FirebaseException catch (e) {
+    //     logger.d(e);
+    //   }
+    // }
+
+    posts.forEach((element) async {
+      Post post = Post.fromJson(element.data());
+      Child child = Child.fromJson(await getFromFB("children", post.child));
+      _static.post_children[post.child] = child;
+      Reference refProfile = firestorage.ref(child.profileURL);
+      Reference refThumb = firestorage.ref(post.thumbURL);
+      String profilePath =
+          join((await getTemporaryDirectory()).path, child.profileURL);
+      String thumbPath =
+          join((await getTemporaryDirectory()).path, post.thumbURL);
+      File profile = File(profilePath);
+      File thumb = File(thumbPath);
+      if (child.profileURL != null) {
+        _static.post_thumbnails[post.thumbURL] = null;
+        refProfile.writeToFile(profile).then((element) async {
+          if (element.state == TaskState.success) {
+            _static.post_profiles[child.profileURL] = await profile.create();
+            logger.d("${child.profileURL} profile loaded");
+            logger.d(element.bytesTransferred);
+            logger.d(await profile.length());
+            notifyListeners();
+          } else if (element.state == TaskState.error) {
+            logger.d("error while downloading thumbnails");
+          }
+        });
+      }
+      _static.post_profiles[child.profileURL] = null;
+      refThumb.writeToFile(thumb).then((element) async {
+        if (element.state == TaskState.success) {
+          _static.post_thumbnails[post.thumbURL] = await thumb.create();
+          logger.d("${post.thumbURL} thumbail loaded");
+          logger.d(element.bytesTransferred);
+          logger.d(await thumb.length());
+          notifyListeners();
+        } else if (element.state == TaskState.error) {
+          logger.d("error while downloading thumbnails");
+        }
+      });
+    });
+
+    snapshot = await firestore.collection('questions').get();
+    List<QueryDocumentSnapshot> questions = snapshot.docs.toList();
+    questions.forEach((element) {
       // if (element.id.length > 4) {
       //   firestore.collection('questions').doc(element.id).delete();
       // }
@@ -97,9 +167,13 @@ class FirebaseProvider with ChangeNotifier {
       //     .set(element.data());
     });
     logger.d(_static.questions);
+    _static_loaded = true;
   }
 
   Future<bool> loadInfoFromUser() async {
+    if (_user_loaded) {
+      return true;
+    }
     if (_user != null) {
       // _isVerified =
       //     confirmedProvider.contains(_user.providerData[0].providerId) ||
@@ -150,13 +224,59 @@ class FirebaseProvider with ChangeNotifier {
       }
       logger.d(_info.userInDB.children);
     }
+    Map<String, String> answers = _info.currentChild.answers;
+    for (var key in answers.keys) {
+      var value = answers[key];
+      getFromFB("answers", value).then((value) {
+        Answer ans = Answer.fromJson(value);
+        print(ans);
+        if (ans == null) {
+          logger.d("no ans");
+        }
+        _static.answers[key] = ans;
+        notifyListeners();
+      });
+    }
+    String profileURL = _info.currentChild.profileURL;
+    _static.profile = null;
+    if (profileURL != null) {
+      Reference ref = firestorage.ref(profileURL);
+      File file =
+          File(join((await getTemporaryDirectory()).path, "profile.png"));
+      ref.writeToFile(file).then((value) {
+        if (value.state == TaskState.success) {
+          _static.profile = file;
+        }
+      }).catchError((error) {
+        logger.d(error);
+      });
+    }
+    _user_loaded = true;
+    logger.d("finished");
     return true;
   }
 
-  Future<void> addPost(String path, String comment) async {
+  Future<void> addOpinionQuestion(String content) async {
+    logger.d("adding opinion-question");
+    OpinionQuestion oq = OpinionQuestion(
+        DateTime.now().millisecondsSinceEpoch, "-1", _info.id, content);
+    DocumentReference oqRef =
+        await firestore.collection('opinion_questions').add(oq.toJson());
+  }
+
+  Future<void> addOpinionWish(String content) async {
+    logger.d("adding opinion-question");
+    OpinionWish ow = OpinionWish(
+        DateTime.now().millisecondsSinceEpoch, "-1", _info.id, content);
+    DocumentReference owRef =
+        await firestore.collection('opinion_wishes').add(ow.toJson());
+  }
+
+  Future<void> addPost(
+      String qid, String path, String thumbnail, String comment) async {
     logger.d("adding post");
-    Post post = Post(DateTime.now().millisecondsSinceEpoch,
-        _info.userInDB.currentChild, path, comment);
+    Post post = Post(DateTime.now().millisecondsSinceEpoch, qid,
+        _info.userInDB.currentChild, path, thumbnail, comment);
     DocumentReference postRef =
         await firestore.collection('posts').add(post.toJson());
   }
@@ -171,7 +291,6 @@ class FirebaseProvider with ChangeNotifier {
         firestore.collection('children').doc(_info.userInDB.currentChild);
     childRef.set(_info.currentChild.toJson());
     logger.d("answer added");
-    reloadUser();
   }
 
   Future<void> addChild(String name, String nickName, int birthday) async {
@@ -192,8 +311,9 @@ class FirebaseProvider with ChangeNotifier {
     _info.userInDB.currentChild = child;
     DocumentReference userRef = firestore.collection('users').doc(_user.uid);
     await userRef.set(_info.userInDB.toJson());
-    DocumentReference docRef = firestore.collection('children').doc(child);
-    _info.currentChild = Child.fromJson((await docRef.get()).data());
+    reloadUser();
+    // DocumentReference docRef = firestore.collection('children').doc(child);
+    // _info.currentChild = Child.fromJson((await docRef.get()).data());
   }
 
   Future<Map<String, dynamic>> getFromFB(String colName, String docName) async {

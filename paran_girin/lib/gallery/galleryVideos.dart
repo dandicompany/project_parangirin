@@ -15,6 +15,7 @@ import 'package:paran_girin/home/home_avatar_big.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:paran_girin/layout/splash.dart';
+import 'dart:io';
 
 int bodyNum = 0;
 int natureNum = 0;
@@ -218,7 +219,13 @@ class YesVideo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
-    Map<String, String> answers = fp.getUserInfo().currentChild.answers;
+    Map<String, Answer> answers = fp.getStaticInfo().answers;
+    List<MapEntry<String, Answer>> entries = List<MapEntry<String, Answer>>();
+    for (var entry in answers.entries) {
+      entries.add(entry);
+    }
+    entries.sort((a, b) => a.value.date.compareTo(b.value.date));
+    answers = Map.fromEntries(entries);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -230,35 +237,42 @@ class YesVideo extends StatelessWidget {
           FutureBuilder(
             future: () async {
               logger.d("loading answers...");
-              Answer answer =
-                  Answer.fromJson(await fp.getFromFB("answers", answers[key]));
+              Answer answer = answers[key];
+              if (answer == null) {
+                return null;
+              }
               logger.d("answers loaded");
-              // answer.thumbnail = (await getTemporaryDirectory()).path;
+              String thumbURL = (await getTemporaryDirectory()).path;
               // answer.thumbnail = null;
               // (await getApplicationDocumentsDirectory()).path;
               // logger.d("path identified: " + answer.thumbnail);
-              // try {
-              //   logger.d(answer.videoURL);
-              //   final thumb = await VideoThumbnail.thumbnailData(
-              //     video: answer.videoURL,
-              //     // thumbnailPath: answer.thumbnail,
-              //     imageFormat: ImageFormat.PNG,
-              //     maxHeight:
-              //         64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
-              //     quality: 75,
-              //   );
-              // } catch (e) {
-              //   logger.d(e);
-              // }
+              try {
+                logger.d(answer.videoURL);
+                final thumb = await VideoThumbnail.thumbnailFile(
+                  video: answer.videoURL,
+                  thumbnailPath: thumbURL,
+                  imageFormat: ImageFormat.PNG,
+                  maxHeight:
+                      100, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+                  quality: 100,
+                );
+                logger.d(thumb);
+                answer.thumbnail = File(thumb);
+              } catch (e) {
+                logger.d(e);
+              }
 
               // answer.thumbnail = thumb.pat
-              // logger.d("thumbnail extracted");
+              logger.d("thumbnail extracted");
               return answer;
             }(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 logger.d(snapshot.data);
                 Answer answer = snapshot.data;
+                if (answer == null) {
+                  return SizedBox.shrink();
+                }
                 return MyVideoLayout(
                   title: fp.getStaticInfo().questions[key].title,
                   date: DateTime.fromMillisecondsSinceEpoch(answer.date)
@@ -266,14 +280,18 @@ class YesVideo extends StatelessWidget {
                   thumbnail: answer.thumbnail,
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => VideoShowWidget.initURL(
-                            answer.videoURL))); //VideoPlayerScreen()));
+                        builder: (context) => VideoShowWidget(
+                            key, answer))); //VideoPlayerScreen()));
                   },
                   onLongPress: () async {
-                    String path = await fp.getUploadManager().uploadVideo(
-                        "/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4");
+                    String path = await fp
+                        .getUploadManager()
+                        .uploadVideo(answer.videoURL);
                     // String thumbnail = await fp.getUploadManager().upload
-                    fp.addPost(path, null);
+                    String thumbURL = await fp
+                        .getUploadManager()
+                        .uploadImage(answer.thumbnail);
+                    fp.addPost(key, path, thumbURL, null);
                   },
                 );
               } else {

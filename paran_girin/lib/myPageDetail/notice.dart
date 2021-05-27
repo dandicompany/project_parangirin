@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:paran_girin/layout/base_appbar.dart';
 import 'package:paran_girin/theme/app_theme.dart';
+import 'package:paran_girin/login/firebase_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:paran_girin/models/schema.dart';
 
 class Notice extends StatefulWidget {
   @override
@@ -11,22 +15,44 @@ class Notice extends StatefulWidget {
 
 class _NoticeState extends State<Notice> {
   bool _noticeVisible = false;
-
+  FirebaseProvider fp;
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
     return Scaffold(
-      appBar: BaseAppBar(title: '공지사항',),
+      appBar: BaseAppBar(
+        title: '공지사항',
+      ),
       body: Column(
         children: [
+          SizedBox(width: double.infinity, height: ScreenUtil().setHeight(32)),
           SizedBox(
-            width: double.infinity,
-            height: ScreenUtil().setHeight(32)
-          ),
-          NoticeElem(
-            noticeTitle: "게시글 제목",
-            noticeDate: "2021-03-13",
-            noticeText: "파란기린 공지글 안녕하세요 여러분 저희는 단디 테크팀입니다. 중요한 전달 사항이 있어요. 단디 팀 너무 좋다는 거에요. 너무 당연하다고요? 그래도 한 번 말해봤어요. 다들 파이팅 >>!",
-          ),
+              height: 600,
+              child: FutureBuilder(
+                  future: fp.getFirestore().collection("notices").get(),
+                  builder: (context, snap) {
+                    if (snap.connectionState == ConnectionState.done) {
+                      List<QueryDocumentSnapshot> notices = snap.data.docs;
+                      List<NoticeItem> noticeItems = List<NoticeItem>();
+                      notices.forEach((element) {
+                        noticeItems.add(NoticeItem.fromJson(element.data()));
+                      });
+                      noticeItems.sort((a, b) => a.date.compareTo(b.date));
+                      return ListView.builder(
+                          itemBuilder: (context, index) {
+                            NoticeItem notice = noticeItems[index];
+                            return NoticeElem(
+                                noticeTitle: notice.title,
+                                noticeDate: DateTime.fromMillisecondsSinceEpoch(
+                                        notice.date)
+                                    .toString(),
+                                noticeText: notice.content);
+                          },
+                          itemCount: notices.length);
+                    } else {
+                      return SizedBox.shrink();
+                    }
+                  }))
         ],
       ),
     );
@@ -38,7 +64,9 @@ class NoticeElem extends StatefulWidget {
   final String noticeDate;
   final String noticeText;
 
-  const NoticeElem({Key key, this.noticeTitle, this.noticeDate, this.noticeText}) : super(key: key);
+  const NoticeElem(
+      {Key key, this.noticeTitle, this.noticeDate, this.noticeText})
+      : super(key: key);
 
   @override
   _NoticeElemState createState() => _NoticeElemState();
@@ -47,17 +75,14 @@ class NoticeElem extends StatefulWidget {
 class _NoticeElemState extends State<NoticeElem> {
   bool _noticeVisible = false;
 
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: ScreenUtil().setWidth(16)
-      ),
+      padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
       child: Column(
         children: [
           GestureDetector(
-            onTap: (){
+            onTap: () {
               setState(() {
                 _noticeVisible = !_noticeVisible;
               });
@@ -70,7 +95,9 @@ class _NoticeElemState extends State<NoticeElem> {
                   children: <Widget>[
                     Row(
                       children: [
-                        SizedBox(width: ScreenUtil().setWidth(23),),
+                        SizedBox(
+                          width: ScreenUtil().setWidth(23),
+                        ),
                         Text(
                           widget.noticeTitle,
                           style: TextStyle(
@@ -83,40 +110,43 @@ class _NoticeElemState extends State<NoticeElem> {
                       children: [
                         Text(
                           widget.noticeDate,
-                          style: TextStyle(
-                              fontSize: ScreenUtil().setSp(10)
-                          ),
+                          style: TextStyle(fontSize: ScreenUtil().setSp(10)),
                         ),
-                        SizedBox(width: ScreenUtil().setWidth(12),),
+                        SizedBox(
+                          width: ScreenUtil().setWidth(12),
+                        ),
                         SvgPicture.asset(
-                          _noticeVisible ? "assets/icons/arrow-up.svg" : "assets/icons/arrow-down.svg",
+                          _noticeVisible
+                              ? "assets/icons/arrow-up.svg"
+                              : "assets/icons/arrow-down.svg",
                           width: ScreenUtil().setWidth(20),
                           height: ScreenUtil().setHeight(20),
                           color: AppTheme.colors.base3,
                         ),
-                        SizedBox(width: ScreenUtil().setWidth(11),),
+                        SizedBox(
+                          width: ScreenUtil().setWidth(11),
+                        ),
                       ],
                     ),
-                  ]
-              ),
+                  ]),
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(
-              vertical: ScreenUtil().setHeight(10),
-                horizontal: ScreenUtil().setWidth(16)),
-            color: Colors.white,
-            child: Visibility(
-              visible: _noticeVisible,
-              child: Text(
-                widget.noticeText,
-                style: TextStyle(
-                    color: AppTheme.colors.base1,
-                    fontSize: ScreenUtil().setSp(14)
-                ),
-              ),
-            ),
-          ),
+          Visibility(
+            visible: _noticeVisible,
+            child: Container(
+                padding: EdgeInsets.symmetric(
+                    vertical: ScreenUtil().setHeight(10),
+                    horizontal: ScreenUtil().setWidth(23)),
+                color: Colors.white,
+                child: Row(children: [
+                  Text(
+                    widget.noticeText,
+                    style: TextStyle(
+                        color: AppTheme.colors.base1,
+                        fontSize: ScreenUtil().setSp(14)),
+                  )
+                ])),
+          )
         ],
       ),
     );
