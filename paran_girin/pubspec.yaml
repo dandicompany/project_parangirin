@@ -85,6 +85,7 @@ flutter:
   assets:
       - assets/avatars/data.json
       - assets/avatars/home.gif
+      - assets/avatars/hi2.gif
       - assets/avatars/
       - assets/icons/
       - assets/icons/circle.svg
