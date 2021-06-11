@@ -40,7 +40,7 @@ class FirebaseProvider with ChangeNotifier {
     _user = fAuth.currentUser;
     _info = UserModel();
     _static = StaticInfo();
-    loadStaticInfo();
+    // loadStaticInfo();
   }
 
   FirebaseFirestore getFirestore() {
@@ -91,12 +91,38 @@ class FirebaseProvider with ChangeNotifier {
     }
   }
 
+  void resetStaticInfoOnNextLoad() {
+    _static_loaded = false;
+  }
+
+  Future<void> reloadAll() async {
+    User user = fAuth.currentUser;
+    if (user != null) {
+      try {
+        // await user.reload();
+        // user = fAuth.currentUser;
+        // logger.d("reloaded!");
+        // logger.d(user);
+        // setUser(user);
+        _user_loaded = false;
+        _static_loaded = false;
+        setUser(user);
+      } on Exception {
+        logger.d("deleted user");
+        setUser(null);
+      }
+    }
+  }
+
   Future<bool> loadStaticInfo() async {
     if (_static_loaded) {
+      logger.d("static info already loaded");
       return true;
     }
+    logger.d("loadgign Static Infos...");
+    _static.posts.clear();
     QuerySnapshot snapshot = await firestore.collection('posts').get();
-    List<QueryDocumentSnapshot> posts = snapshot.docs.toList();
+    List<QueryDocumentSnapshot> posts = snapshot.docs.toList().sublist(0, 3);
     // for (var element in posts) {
     //   Post post = Post.fromJson(element.data());
     //   _static.post_videos[post.videoURL] = null;
@@ -115,6 +141,8 @@ class FirebaseProvider with ChangeNotifier {
 
     posts.forEach((element) async {
       Post post = Post.fromJson(element.data());
+      _static.posts.add(post);
+      logger.d("post added");
       Child child = Child.fromJson(await getFromFB("children", post.child));
       _static.post_children[post.child] = child;
       Reference refProfile = firestorage.ref(child.profileURL);
@@ -166,7 +194,7 @@ class FirebaseProvider with ChangeNotifier {
       //     .doc(q.qid.toString())
       //     .set(element.data());
     });
-    logger.d(_static.questions);
+    // logger.d(_static.questions);
     _static_loaded = true;
   }
 
