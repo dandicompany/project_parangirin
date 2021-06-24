@@ -176,6 +176,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     super.dispose();
   }
 
+  void saveVideo() async {
+    fp.addAnswer(question, filePath);
+    fp.reloadUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
@@ -257,6 +262,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                         _controller.stopVideoRecording();
                                         isDisabled = false;
                                         isDisabled = !isDisabled;
+
+                                        //automatic video saving
+                                        saveVideo();
                                       }
                                     });
                                     Navigator.of(context).push(
@@ -300,12 +308,17 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                   shape: CircleBorder(),
                                 ),
                           SizedBox(width: ScreenUtil().setWidth(60)),
+
                           !isDisabled
                               ? Container(
                                   width: ScreenUtil().setWidth(38),
                                   height: ScreenUtil().setHeight(38),
                                   color: Colors.transparent)
-                              : SaveVideo(),
+                              :  Container(
+                              width: ScreenUtil().setWidth(38),
+                              height: ScreenUtil().setHeight(38),
+                              color: Colors.transparent)
+                          ,
                         ],
                       ),
                     ],
@@ -447,34 +460,6 @@ class GirinSpeak extends StatelessWidget {
   }
 }
 
-class SaveVideo extends StatelessWidget {
-  FirebaseProvider fp;
-  @override
-  Widget build(BuildContext context) {
-    fp = Provider.of<FirebaseProvider>(context);
-    return Container(
-        child: GestureDetector(
-            onTap: () {
-              saveVideo();
-              Navigator.of(context).pop();
-            },
-                  child: Container(
-                    width: ScreenUtil().setWidth(38),
-                    height: ScreenUtil().setHeight(38),
-                    //padding: EdgeInsets.all(15.0),
-                    child: Image.asset(
-                      "assets/icons/saveVideo.png",
-                    ),
-                  ),
-    ));
-  }
-
-  void saveVideo() async {
-    fp.addAnswer(question, filePath);
-    fp.reloadUser();
-  }
-}
-
 class VideoSavePopup extends StatefulWidget {
   @override
   _VideoSavePopup createState() => new _VideoSavePopup();
@@ -497,12 +482,13 @@ class _VideoSavePopup extends State<VideoSavePopup> {
          CupertinoActionSheetAction(
            child : Text("영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
            onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => VideoShowWidget(
-                question, ))), //VideoPlayerScreen()));
-         ),
+                builder: (context) =>
+                    VideoShowWidget(
+                      question, fp.getStaticInfo().answers[question]))), //VideoPlayerScreen()));
+               ),
          CupertinoActionSheetAction(
            child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
-           onPressed: ()=>print("def"),
+           onPressed: ()=> Navigator.of(context).pop(),
          )
        ],
       )
@@ -537,3 +523,34 @@ class _VideoSavePopup extends State<VideoSavePopup> {
 //         ));
 //   }
 // }
+
+
+/*
+*
+class SaveVideo extends StatelessWidget {
+  FirebaseProvider fp;
+  @override
+  Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
+    return Container(
+        child: GestureDetector(
+          onTap: () {
+            saveVideo();
+            Navigator.of(context).pop();
+          },
+          child: Container(
+            width: ScreenUtil().setWidth(38),
+            height: ScreenUtil().setHeight(38),
+            //padding: EdgeInsets.all(15.0),
+            child: Image.asset(
+              "assets/icons/saveVideo.png",
+            ),
+          ),
+        ));
+  }
+
+  void saveVideo() async {
+    fp.addAnswer(question, filePath);
+    fp.reloadUser();
+  }
+}*/
