@@ -61,7 +61,8 @@ dependencies:
   chewie:
   mailer:
   video_thumbnail: ^0.2.1
-  sliding_up_panel: 
+  sliding_up_panel:
+  
 
 dev_dependencies:
   flutter_test:
