@@ -2,6 +2,7 @@ import 'dart:io';
 
 class StaticInfo {
   Map<String, Question> questions = Map<String, Question>();
+  List<Post> posts = List<Post>();
   Map<String, String> post_videos = Map<String, String>();
   Map<String, File> post_thumbnails = Map<String, File>();
   Map<String, Child> post_children = Map<String, Child>();

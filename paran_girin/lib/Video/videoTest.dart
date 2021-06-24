@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:paran_girin/gallery/videoShowWidget.dart';
+import 'package:paran_girin/theme/app_theme.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +13,7 @@ import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/layout/splash.dart';
 import 'package:paran_girin/models/schema.dart';
+import 'package:flutter/cupertino.dart';
 
 CameraDescription camera;
 CameraDescription firstCamera;
@@ -173,6 +176,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     super.dispose();
   }
 
+  void saveVideo() async {
+    fp.addAnswer(question, filePath);
+    fp.reloadUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
@@ -254,6 +262,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                         _controller.stopVideoRecording();
                                         isDisabled = false;
                                         isDisabled = !isDisabled;
+
+                                        //automatic video saving
+                                        saveVideo();
                                       }
                                     });
                                     Navigator.of(context).push(
@@ -297,12 +308,19 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                   shape: CircleBorder(),
                                 ),
                           SizedBox(width: ScreenUtil().setWidth(60)),
-                          !isDisabled
+
+                          /*
+                          *                           !isDisabled
                               ? Container(
                                   width: ScreenUtil().setWidth(38),
                                   height: ScreenUtil().setHeight(38),
                                   color: Colors.transparent)
-                              : SaveVideo(),
+                              :  Container(
+                              width: ScreenUtil().setWidth(38),
+                              height: ScreenUtil().setHeight(38),
+                              color: Colors.transparent)
+                          ,
+                          * */
                         ],
                       ),
                     ],
@@ -338,31 +356,49 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 class Outtro extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: double.infinity,
-          height: ScreenUtil().setHeight(812),
-          child: Image.asset("assets/avatars/default_background.png",
-              fit: BoxFit.cover, alignment: Alignment.bottomCenter),
-        ),
-        Align(child: TextToSpeech(text: "다음에 또 보자.")),
-        Align(
-            alignment: Alignment.center,
-            child: Container(
-              width: ScreenUtil().setWidth(512),
-              height: ScreenUtil().setHeight(512),
-              child:
-                  Image.asset("assets/avatars/speaking.gif", fit: BoxFit.cover),
-            )),
-      ],
-    );
+    return FutureBuilder(
+      future: Future.delayed(Duration(milliseconds: 3000)),
+      builder: (context, snapshot) {
+        // Checks whether the future is resolved, ie the duration is over
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Stack(
+            children: [
+              Container(
+                  width: double.infinity,
+                  height: ScreenUtil().setHeight(812),
+                  child: Image.asset("assets/avatars/default_background.png",
+                  fit: BoxFit.cover, alignment: Alignment.bottomCenter),
+                 ),
+                Align(
+                    alignment: Alignment.center,
+                    child: VideoSavePopup(),
+              )
+            ],
+          );
+        }
+        else{
+          return Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                height: ScreenUtil().setHeight(812),
+                child: Image.asset("assets/avatars/default_background.png",
+                    fit: BoxFit.cover, alignment: Alignment.bottomCenter),
+              ),
+              Align(child: TextToSpeech(text: "다음에 또 보자.")),
+              Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    width: ScreenUtil().setWidth(512),
+                    height: ScreenUtil().setHeight(512),
+                    child:
+                    Image.asset("assets/avatars/speaking.gif", fit: BoxFit.cover),
+                  )),
+            ],
+          );
+        }
+        });
   }
-}
-
-class Popup extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {}
 }
 
 class GirinNod extends StatelessWidget {
@@ -437,33 +473,58 @@ class GirinSpeak extends StatelessWidget {
   }
 }
 
-class SaveVideo extends StatelessWidget {
-  FirebaseProvider fp;
+class VideoSavePopup extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    fp = Provider.of<FirebaseProvider>(context);
-    return Container(
-        child: GestureDetector(
-      onTap: () {
-        saveVideo();
-        Navigator.of(context).pop();
-      },
-      child: Container(
-        width: ScreenUtil().setWidth(38),
-        height: ScreenUtil().setHeight(38),
-        //padding: EdgeInsets.all(15.0),
-        child: Image.asset(
-          "assets/icons/saveVideo.png",
-        ),
-      ),
-    ));
-  }
+  _VideoSavePopup createState() => new _VideoSavePopup();
+}
 
-  void saveVideo() async {
-    fp.addAnswer(question, filePath);
-    fp.reloadUser();
+class _VideoSavePopup extends State<VideoSavePopup> {
+  FirebaseProvider fp;
+  int n = 2;
+  @override
+  Widget build(BuildContext context){
+    fp = Provider.of<FirebaseProvider>(context);
+    return CupertinoActionSheet(
+      title: new Image.asset("assets/icons/party_popper.png"),
+      message : new Text( "우와,\n 벌써 "+ n.toString()+" 번째 만남이네요!",
+                          style: TextStyle(color: AppTheme.colors.primary1, fontSize: ScreenUtil().setSp(18)), ),
+      actions: [
+        CupertinoActionSheetAction(
+            child : Text( "영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
+            onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => VideoShowWidget(question, fp.getStaticInfo().answers[question]))), //VideoPlayerScreen()));
+            ),
+        CupertinoActionSheetAction(
+          child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
+          onPressed: ()=> Navigator.of(context).pop(),
+        ),
+      ],
+    );
+      
+
+      Align(
+       child: CupertinoAlertDialog(
+         title: new Image.asset("assets/icons/party_popper.png"),
+         content: new Text( "우와,\n 벌써 "+ n.toString()+" 번째 만남이네요!",
+                            style: TextStyle(color: AppTheme.colors.primary1, fontSize: ScreenUtil().setSp(18)), ),
+         actions: [
+           CupertinoActionSheetAction(
+             child : Text("영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
+             onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => VideoShowWidget(question, fp.getStaticInfo().answers[question]))), //VideoPlayerScreen()));
+                 ),
+           CupertinoActionSheetAction(
+             child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
+             onPressed: ()=> Navigator.of(context).pop(),
+           ),
+         ],
+        ),
+    );
   }
 }
+
+
+
 
 /*"/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4"*/
 // class ChangeCameraView extends StatelessWidget {
@@ -489,3 +550,34 @@ class SaveVideo extends StatelessWidget {
 //         ));
 //   }
 // }
+
+
+/*
+*
+class SaveVideo extends StatelessWidget {
+  FirebaseProvider fp;
+  @override
+  Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
+    return Container(
+        child: GestureDetector(
+          onTap: () {
+            saveVideo();
+            Navigator.of(context).pop();
+          },
+          child: Container(
+            width: ScreenUtil().setWidth(38),
+            height: ScreenUtil().setHeight(38),
+            //padding: EdgeInsets.all(15.0),
+            child: Image.asset(
+              "assets/icons/saveVideo.png",
+            ),
+          ),
+        ));
+  }
+
+  void saveVideo() async {
+    fp.addAnswer(question, filePath);
+    fp.reloadUser();
+  }
+}*/

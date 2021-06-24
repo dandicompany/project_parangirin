@@ -98,6 +98,7 @@ class _MyPageState extends State<MyPage> {
               ProfileMenu(
                   text: "로그아웃",
                   press: () {
+                    fp.resetStaticInfoOnNextLoad();
                     fp.signOut();
                     Navigator.of(context).pop();
                   }),
