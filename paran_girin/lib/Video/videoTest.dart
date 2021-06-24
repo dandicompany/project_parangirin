@@ -484,41 +484,57 @@ class _VideoSavePopup extends State<VideoSavePopup> {
   @override
   Widget build(BuildContext context){
     fp = Provider.of<FirebaseProvider>(context);
-    return CupertinoActionSheet(
-      title: new Image.asset("assets/icons/party_popper.png"),
-      message : new Text( "우와,\n 벌써 "+ n.toString()+" 번째 만남이네요!",
-                          style: TextStyle(color: AppTheme.colors.primary1, fontSize: ScreenUtil().setSp(18)), ),
-      actions: [
-        CupertinoActionSheetAction(
-            child : Text( "영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
-            onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => VideoShowWidget(question, fp.getStaticInfo().answers[question]))), //VideoPlayerScreen()));
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        width: ScreenUtil().setWidth(237),
+        height: ScreenUtil().setHeight(300),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        child: Stack(
+          children: [
+            Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: ScreenUtil().setHeight(28)),
+                  Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        width: ScreenUtil().setWidth(74),
+                        height: ScreenUtil().setHeight(74),
+                        child: new Image.asset("assets/icons/party_popper.png", fit:BoxFit.fill),
+                      )
+                  ),
+                  SizedBox(height: ScreenUtil().setHeight(24)),
+                  Positioned(child: new Text( "우와,\n 벌써 "+ n.toString()+" 번째 만남이네요!",textAlign: TextAlign.center,
+                    style: TextStyle(color: AppTheme.colors.primary1, fontSize: ScreenUtil().setSp(18)), ),),
+                  SizedBox(height: ScreenUtil().setHeight(26)),
+                  Container(
+                      width: ScreenUtil().setWidth(173),
+                      height: ScreenUtil().setHeight(40),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                      child : FlatButton(
+                        child : Text( "영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
+                        onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => VideoShowWidget(question, fp.getStaticInfo().answers[question]))), //VideoPlayerScreen()));
+                      )
+                  ),
+                  Container(
+                      child:TextButton(
+                        child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
+                        onPressed: ()=> Navigator.of(context).pop(),
+                      )
+                  )
+                ]
             ),
-        CupertinoActionSheetAction(
-          child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
-          onPressed: ()=> Navigator.of(context).pop(),
-        ),
-      ],
-    );
-      
-
-      Align(
-       child: CupertinoAlertDialog(
-         title: new Image.asset("assets/icons/party_popper.png"),
-         content: new Text( "우와,\n 벌써 "+ n.toString()+" 번째 만남이네요!",
-                            style: TextStyle(color: AppTheme.colors.primary1, fontSize: ScreenUtil().setSp(18)), ),
-         actions: [
-           CupertinoActionSheetAction(
-             child : Text("영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
-             onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => VideoShowWidget(question, fp.getStaticInfo().answers[question]))), //VideoPlayerScreen()));
-                 ),
-           CupertinoActionSheetAction(
-             child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
-             onPressed: ()=> Navigator.of(context).pop(),
-           ),
-         ],
-        ),
+          ],
+        )
+      ),
     );
   }
 }
