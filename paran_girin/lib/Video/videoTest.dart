@@ -369,6 +369,12 @@ class Outtro extends StatelessWidget {
                   child: Image.asset("assets/avatars/default_background.png",
                   fit: BoxFit.cover, alignment: Alignment.bottomCenter),
                  ),
+                Opacity( //seconds child - Opaque layer
+                  opacity: 0.3,
+                  child: Container(
+                    decoration: BoxDecoration(color: Colors.black),
+                  ),
+                ),
                 Align(
                     alignment: Alignment.center,
                     child: VideoSavePopup(),
