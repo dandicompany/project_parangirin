@@ -309,7 +309,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                 ),
                           SizedBox(width: ScreenUtil().setWidth(60)),
 
-                          !isDisabled
+                          /*
+                          *                           !isDisabled
                               ? Container(
                                   width: ScreenUtil().setWidth(38),
                                   height: ScreenUtil().setHeight(38),
@@ -319,6 +320,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                               height: ScreenUtil().setHeight(38),
                               color: Colors.transparent)
                           ,
+                          * */
                         ],
                       ),
                     ],
@@ -362,6 +364,22 @@ class Outtro extends StatelessWidget {
           return Stack(
             children: [
               Container(
+                  width: double.infinity,
+                  height: ScreenUtil().setHeight(812),
+                  child: Image.asset("assets/avatars/default_background.png",
+                  fit: BoxFit.cover, alignment: Alignment.bottomCenter),
+                 ),
+                Align(
+                    alignment: Alignment.center,
+                    child: VideoSavePopup(),
+              )
+            ],
+          );
+        }
+        else{
+          return Stack(
+            children: [
+              Container(
                 width: double.infinity,
                 height: ScreenUtil().setHeight(812),
                 child: Image.asset("assets/avatars/default_background.png",
@@ -374,17 +392,12 @@ class Outtro extends StatelessWidget {
                     width: ScreenUtil().setWidth(512),
                     height: ScreenUtil().setHeight(512),
                     child:
-                        Image.asset("assets/avatars/speaking.gif", fit: BoxFit.cover),
+                    Image.asset("assets/avatars/speaking.gif", fit: BoxFit.cover),
                   )),
-              Align(
-                alignment: Alignment.center,
-                child: VideoSavePopup(),
-              ),
             ],
           );
         }
-      }
-    );
+        });
   }
 }
 
@@ -468,30 +481,44 @@ class VideoSavePopup extends StatefulWidget {
 class _VideoSavePopup extends State<VideoSavePopup> {
   FirebaseProvider fp;
   int n = 2;
-
   @override
   Widget build(BuildContext context){
     fp = Provider.of<FirebaseProvider>(context);
-    var answers = fp.getUserInfo().currentChild.answers;
-    return Align(
-     child: CupertinoAlertDialog(
-       title: new Image.asset("assets/icons/party_popper.png"),
-       content: new Text( "우와,\n 벌써 "+n.toString()+" 번째 만남이네요!",
-          style: TextStyle(color: AppTheme.colors.primary1, fontSize: ScreenUtil().setSp(18)), ),
-       actions: [
-         CupertinoActionSheetAction(
-           child : Text("영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
-           onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) =>
-                    VideoShowWidget(
-                      question, fp.getStaticInfo().answers[question]))), //VideoPlayerScreen()));
-               ),
-         CupertinoActionSheetAction(
-           child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
-           onPressed: ()=> Navigator.of(context).pop(),
-         )
-       ],
-      )
+    return CupertinoActionSheet(
+      title: new Image.asset("assets/icons/party_popper.png"),
+      message : new Text( "우와,\n 벌써 "+ n.toString()+" 번째 만남이네요!",
+                          style: TextStyle(color: AppTheme.colors.primary1, fontSize: ScreenUtil().setSp(18)), ),
+      actions: [
+        CupertinoActionSheetAction(
+            child : Text( "영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
+            onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => VideoShowWidget(question, fp.getStaticInfo().answers[question]))), //VideoPlayerScreen()));
+            ),
+        CupertinoActionSheetAction(
+          child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
+          onPressed: ()=> Navigator.of(context).pop(),
+        ),
+      ],
+    );
+      
+
+      Align(
+       child: CupertinoAlertDialog(
+         title: new Image.asset("assets/icons/party_popper.png"),
+         content: new Text( "우와,\n 벌써 "+ n.toString()+" 번째 만남이네요!",
+                            style: TextStyle(color: AppTheme.colors.primary1, fontSize: ScreenUtil().setSp(18)), ),
+         actions: [
+           CupertinoActionSheetAction(
+             child : Text("영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
+             onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => VideoShowWidget(question, fp.getStaticInfo().answers[question]))), //VideoPlayerScreen()));
+                 ),
+           CupertinoActionSheetAction(
+             child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
+             onPressed: ()=> Navigator.of(context).pop(),
+           ),
+         ],
+        ),
     );
   }
 }
