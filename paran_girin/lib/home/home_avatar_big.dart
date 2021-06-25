@@ -7,6 +7,8 @@ import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:paran_girin/models/schema.dart';
+import 'dart:async';
+import 'package:intl/intl.dart';
 
 class HomeAvatarBig extends StatefulWidget {
   State<StatefulWidget> createState() => _HomeAvatarBigState();
@@ -14,14 +16,33 @@ class HomeAvatarBig extends StatefulWidget {
 
 class _HomeAvatarBigState extends State<HomeAvatarBig> {
   FirebaseProvider fp;
+  bool todayDone;
+
+  void refresh() {
+    if (!todayDone) {
+      return;
+    }
+    setState(() {});
+  }
+
+  void initState() {
+    todayDone = false;
+    Timer.periodic(Duration(seconds: 1), (Timer t) => refresh());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
+    DateTime now = DateTime.now();
     String today_qid =
-        (DateTime.now().day % fp.getStaticInfo().questions.length).toString();
-    bool todayDone =
-        fp.getUserInfo().currentChild.answers.containsKey(today_qid);
+        (now.day % fp.getStaticInfo().questions.length).toString();
+    todayDone = fp.getUserInfo().currentChild.answers.containsKey(today_qid);
     Question question = fp.getStaticInfo().questions[today_qid];
+    DateTime tomorrow = DateTime.parse(
+        DateFormat("yyyyMMdd").format(now.add(Duration(days: 1))));
+    Duration remaining_time = tomorrow.difference(now);
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -126,17 +147,17 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
                             children: <TextSpan>[
                               new TextSpan(text: '새로운 질문이 생성되기까지\n'),
                               new TextSpan(
-                                  text: '10',
+                                  text: remaining_time.inHours.toString(),
                                   style: new TextStyle(
                                       fontSize: ScreenUtil().setSp(20))),
                               new TextSpan(text: '시간 '),
                               new TextSpan(
-                                  text: '55',
+                                  text: remaining_time.inMinutes.toString(),
                                   style: new TextStyle(
                                       fontSize: ScreenUtil().setSp(20))),
                               new TextSpan(text: '분 '),
                               new TextSpan(
-                                  text: '37',
+                                  text: remaining_time.inSeconds.toString(),
                                   style: new TextStyle(
                                       fontSize: ScreenUtil().setSp(20))),
                               new TextSpan(text: '초 남았어요')

@@ -163,7 +163,7 @@ class FirebaseProvider with ChangeNotifier {
             logger.d(await profile.length());
             notifyListeners();
           } else if (element.state == TaskState.error) {
-            logger.d("error while downloading thumbnails");
+            logger.d("error while downloading profiles");
           }
         });
       }
