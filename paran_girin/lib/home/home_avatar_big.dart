@@ -19,10 +19,9 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
   bool todayDone;
 
   void refresh() {
-    if (!todayDone) {
-      return;
+    if (todayDone) {
+      setState(() {});
     }
-    setState(() {});
   }
 
   void initState() {
@@ -152,12 +151,12 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
                                       fontSize: ScreenUtil().setSp(20))),
                               new TextSpan(text: '시간 '),
                               new TextSpan(
-                                  text: remaining_time.inMinutes.toString(),
+                                  text: (remaining_time.inMinutes % 60).toString(),
                                   style: new TextStyle(
                                       fontSize: ScreenUtil().setSp(20))),
                               new TextSpan(text: '분 '),
                               new TextSpan(
-                                  text: remaining_time.inSeconds.toString(),
+                                  text: (remaining_time.inSeconds % 60).toString(),
                                   style: new TextStyle(
                                       fontSize: ScreenUtil().setSp(20))),
                               new TextSpan(text: '초 남았어요')
