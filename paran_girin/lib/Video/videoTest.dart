@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:paran_girin/layout/splash.dart';
 import 'package:paran_girin/models/schema.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:just_audio/just_audio.dart';
 
 CameraDescription camera;
 CameraDescription firstCamera;
@@ -22,6 +23,15 @@ String filePath;
 var cameras;
 bool cameraview = true;
 String question;
+AudioPlayer player;
+
+
+
+
+Future<Widget> soundPlay() async {
+  await player.setAsset('assets/music/musicTest1.mp3');
+  player.play();
+}
 
 String formatTime(int milliseconds) {
   var secs = milliseconds ~/ 1000;
@@ -545,6 +555,29 @@ class _VideoSavePopup extends State<VideoSavePopup> {
   }
 }
 
+class BackSound extends StatefulWidget {
+  @override
+  _BackSound createState() => new _BackSound();
+}
+
+class _BackSound extends State<BackSound> {
+
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer();
+  }
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context){
+    soundPlay();
+  }
+}
 
 
 
