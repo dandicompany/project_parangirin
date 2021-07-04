@@ -67,6 +67,6 @@ class TextToSpeechState extends State<TextToSpeech> {
 
   @override
   Widget build(BuildContext context) {
-    return Text("");
+
   }
 }

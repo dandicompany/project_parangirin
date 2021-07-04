@@ -103,6 +103,7 @@ flutter:
       - assets/onboarding/onboard_1.gif
       - assets/onboarding/onboard_2.gif
       - assets/onboarding/onboard_3.gif
+      - assets/music/musicTest1.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

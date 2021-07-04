@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -14,7 +16,8 @@ import 'package:provider/provider.dart';
 import 'package:paran_girin/layout/splash.dart';
 import 'package:paran_girin/models/schema.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayers/audio_cache.dart';
 
 CameraDescription camera;
 CameraDescription firstCamera;
@@ -23,15 +26,11 @@ String filePath;
 var cameras;
 bool cameraview = true;
 String question;
-AudioPlayer player;
 
 
 
 
-Future<Widget> soundPlay() async {
-  await player.setAsset('assets/music/musicTest1.mp3');
-  player.play();
-}
+
 
 String formatTime(int milliseconds) {
   var secs = milliseconds ~/ 1000;
@@ -108,6 +107,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   var todayDate = new DateTime.now();
   bool girin_state = false;
 
+  AudioCache player = new AudioCache();
+
   void starttimer() {
     Timer(dur, keeprunning);
   }
@@ -169,6 +170,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     );
   }
 
+
   @override
   void initState() {
     super.initState();
@@ -184,6 +186,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   void dispose() {
     _controller.dispose();
     super.dispose();
+
   }
 
   void saveVideo() async {
@@ -204,6 +207,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             logger.d(question);
             return Stack(
               children: [
+
                 Container(
                   width: double.infinity,
                   height: ScreenUtil().setHeight(812),
@@ -233,6 +237,16 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   ),
                 ),
                 // ---- camera buttons
+                Positioned(
+                  top:ScreenUtil().setHeight(300),
+                  right : ScreenUtil().setWidth(100),
+                  child : FlatButton(
+                    onPressed: () async{
+                      await player.play("music/musicTest1.mp3");
+                    },
+                    child : Text("Music Startttttttttt"),
+                  ),
+                ),
                 Positioned(
                   bottom: ScreenUtil().setHeight(49),
                   // left: ScreenUtil().setWidth(152),
@@ -554,31 +568,6 @@ class _VideoSavePopup extends State<VideoSavePopup> {
     );
   }
 }
-
-class BackSound extends StatefulWidget {
-  @override
-  _BackSound createState() => new _BackSound();
-}
-
-class _BackSound extends State<BackSound> {
-
-  @override
-  void initState() {
-    super.initState();
-    player = AudioPlayer();
-  }
-  @override
-  void dispose() {
-    player.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context){
-    soundPlay();
-  }
-}
-
 
 
 /*"/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4"*/
