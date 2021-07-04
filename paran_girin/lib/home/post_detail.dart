@@ -85,57 +85,50 @@ class _PostDetail extends State<PostDetail> {
                 Container(
                   width: double.infinity,
                   height: ScreenUtil().setHeight(331),
-                  child: playingVideo
-                      ? ChewieListItem(
-                          // videoPlayerController: VideoPlayerController.file(file),
-                          videoPlayerController:
-                              VideoPlayerController.network(post.videoURL),
-                          looping: true,
-                        )
-                      : Row(
-                          children: <Widget>[
-                            Expanded(
-                              flex: 1,
-                              // child: Image.asset(
-                              //   // "assets/images/thumbnail_pink.png",
-                              //   background,
-                              //   // width: ScreenUtil().setWidth(187),
-                              //   // height: ScreenUtil().setHeight(331),
-                              //   fit: BoxFit.cover,
-                              //   alignment: Alignment.topCenter,
-                              // ),
-                              child: Stack(
-                                children: [
-                                  Image.asset(
-                                    background,
-                                    width: ScreenUtil().setWidth(187),
-                                    height: ScreenUtil().setHeight(331),
-                                    fit: BoxFit.cover,
-                                    alignment: Alignment.center,
-                                  ),
-                                  Image.asset(
-                                    avatar,
-                                    width: ScreenUtil().setWidth(187),
-                                    height: ScreenUtil().setHeight(331),
-                                    fit: BoxFit.cover,
-                                    alignment: Alignment.center,
-                                  ),
-                                ],
-                              ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        // child: Image.asset(
+                        //   // "assets/images/thumbnail_pink.png",
+                        //   background,
+                        //   // width: ScreenUtil().setWidth(187),
+                        //   // height: ScreenUtil().setHeight(331),
+                        //   fit: BoxFit.cover,
+                        //   alignment: Alignment.topCenter,
+                        // ),
+                        child: Stack(
+                          children: [
+                            Image.asset(
+                              background,
+                              width: ScreenUtil().setWidth(187),
+                              height: ScreenUtil().setHeight(331),
+                              fit: BoxFit.cover,
+                              alignment: Alignment.center,
                             ),
-                            Expanded(
-                                flex: 1,
-                                // child: Image.asset("assets/images/thumbnail_baby.png",
-                                //     width: ScreenUtil().setWidth(187),
-                                //     height: ScreenUtil().setHeight(331),
-                                //     fit: BoxFit.cover),
-                                child: Image.file(File(post.thumbURL),
-                                    width: ScreenUtil().setWidth(187),
-                                    height: ScreenUtil().setHeight(331),
-                                    fit: BoxFit.cover)),
-                            // Use 'CachedNetworkImage' later
+                            Image.asset(
+                              avatar,
+                              width: ScreenUtil().setWidth(187),
+                              height: ScreenUtil().setHeight(331),
+                              fit: BoxFit.cover,
+                              alignment: Alignment.center,
+                            ),
                           ],
                         ),
+                      ),
+                      Expanded(
+                          flex: 1,
+                          // child: Image.asset("assets/images/thumbnail_baby.png",
+                          //     width: ScreenUtil().setWidth(187),
+                          //     height: ScreenUtil().setHeight(331),
+                          //     fit: BoxFit.cover),
+                          child: Image.file(File(post.thumbURL),
+                              width: ScreenUtil().setWidth(187),
+                              height: ScreenUtil().setHeight(331),
+                              fit: BoxFit.cover)),
+                      // Use 'CachedNetworkImage' later
+                    ],
+                  ),
                 ),
                 playingVideo
                     ? SizedBox.shrink()
@@ -147,9 +140,12 @@ class _PostDetail extends State<PostDetail> {
                           post.videoURL = url;
                           // String url = 'https://youtu.be/wgbr7exUnzE';
                           logger.d(url);
-                          setState(() {
-                            playingVideo = true;
-                          });
+                          // setState(() {
+                          //   playingVideo = true;
+                          // });
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => VideoStreamWidget(
+                                  post))); //VideoPlayerScreen()));
                         },
                         child: Container(
                             child: Image.asset(
