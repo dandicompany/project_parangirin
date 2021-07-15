@@ -5,6 +5,7 @@ import 'package:paran_girin/my/profile_pic.dart';
 import 'package:paran_girin/myPageDetail/Notice.dart';
 import 'package:paran_girin/myPageDetail/about_parangirin.dart';
 import 'package:paran_girin/myPageDetail/childrenInfo.dart';
+import 'package:paran_girin/myPageDetail/faq.dart';
 import 'package:paran_girin/myPageDetail/privacy_policy.dart';
 import 'package:paran_girin/myPageDetail/send_comments.dart';
 import 'package:paran_girin/myPageDetail/terms_conditions.dart';
@@ -46,7 +47,7 @@ class _MyPageState extends State<MyPage> {
               ProfilePic(),
               SizedBox(height: ScreenUtil().setHeight(16)),
               Text(
-                "샐리",
+                fp.getUserInfo().currentChild.nickName,
                 style: TextStyle(fontSize: ScreenUtil().setSp(18)),
               ),
               SizedBox(height: ScreenUtil().setHeight(41)),
@@ -94,7 +95,12 @@ class _MyPageState extends State<MyPage> {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => PrivacyPolicy()));
                   }),
-              ProfileMenu(text: "도움말", press: () {}),
+              ProfileMenu(
+                  text: "FAQ",
+                  press: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => FAQ()));
+                  }),
               ProfileMenu(
                   text: "로그아웃",
                   press: () {

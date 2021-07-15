@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/gallery/myVideoLayout.dart';
 import 'package:paran_girin/gallery/videoShowWidget.dart';
-import 'package:paran_girin/layout/default_icon_botton.dart';
+import 'package:paran_girin/layout/default_icon_button.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/layout/flatbuttonShadow.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
@@ -64,10 +64,10 @@ class _CalenderState extends State<GalleryVideo> {
           natureNum += 1;
           break;
         case "의사소통":
-          socialNum += 1;
+          commuNum += 1;
           break;
         case "사회관계":
-          commuNum += 1;
+          socialNum += 1;
           break;
         default:
       }
@@ -164,6 +164,32 @@ class _CalenderState extends State<GalleryVideo> {
                     ),
                     text1: "사회 관계",
                     text2: socialNum.toString() + "개의 영상",
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: ScreenUtil().setHeight(10),
+              ),
+              Row(
+                children: [
+                  CustomElevation(
+                    child: FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          buttonClickedState3 = !buttonClickedState3;
+                        });
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      minWidth: ScreenUtil().setWidth(164),
+                      height: ScreenUtil().setHeight(71),
+                    ),
+                    text1: "의사소통",
+                    text2: commuNum.toString() + "개의 영상",
+                  ),
+                  SizedBox(
+                    width: ScreenUtil().setWidth(179),
                   ),
                 ],
               ),

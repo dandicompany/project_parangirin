@@ -7,24 +7,21 @@ import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/models/schema.dart';
-import 'package:intl/intl.dart';
 
-DateFormat dateFormat = DateFormat("yyyy-MM-dd");
-
-class Notice extends StatefulWidget {
+class FAQ extends StatefulWidget {
   @override
-  _NoticeState createState() => _NoticeState();
+  _FAQState createState() => _FAQState();
 }
 
-class _NoticeState extends State<Notice> {
-  bool _noticeVisible = false;
+class _FAQState extends State<FAQ> {
+  bool _faqVisible = false;
   FirebaseProvider fp;
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
     return Scaffold(
       appBar: BaseAppBar(
-        title: '공지사항',
+        title: 'FAQ',
       ),
       body: Column(
         children: [
@@ -32,27 +29,23 @@ class _NoticeState extends State<Notice> {
           SizedBox(
               height: 600,
               child: FutureBuilder(
-                  future: fp.getFirestore().collection("notices").get(),
+                  future: fp.getFirestore().collection("faqs").get(),
                   builder: (context, snap) {
                     if (snap.connectionState == ConnectionState.done) {
-                      List<QueryDocumentSnapshot> notices = snap.data.docs;
-                      List<NoticeItem> noticeItems = List<NoticeItem>();
-                      notices.forEach((element) {
-                        noticeItems.add(NoticeItem.fromJson(element.data()));
+                      List<QueryDocumentSnapshot> faqs = snap.data.docs;
+                      List<FaqItem> faqItems = List<FaqItem>();
+                      faqs.forEach((element) {
+                        faqItems.add(FaqItem.fromJson(element.data()));
                       });
-                      noticeItems.sort((a, b) => a.date.compareTo(b.date));
+                      faqItems.sort((a, b) => a.order.compareTo(b.order));
                       return ListView.builder(
                           itemBuilder: (context, index) {
-                            NoticeItem notice = noticeItems[index];
-                            return NoticeElem(
-                                noticeTitle: notice.title,
-                                // noticeDate: DateTime.fromMillisecondsSinceEpoch(
-                                //         notice.date)
-                                //     .toString(),
-                                noticeDate: dateFormat.format(DateTime.fromMillisecondsSinceEpoch(notice.date)),
-                                noticeText: notice.content);
+                            FaqItem faq = faqItems[index];
+                            return FAQElem(
+                                faqTitle: faq.title,
+                                faqText: faq.content);
                           },
-                          itemCount: notices.length);
+                          itemCount: faqs.length);
                     } else {
                       return SizedBox.shrink();
                     }
@@ -63,21 +56,20 @@ class _NoticeState extends State<Notice> {
   }
 }
 
-class NoticeElem extends StatefulWidget {
-  final String noticeTitle;
-  final String noticeDate;
-  final String noticeText;
+class FAQElem extends StatefulWidget {
+  final String faqTitle;
+  final String faqText;
 
-  const NoticeElem(
-      {Key key, this.noticeTitle, this.noticeDate, this.noticeText})
+  const FAQElem(
+      {Key key, this.faqTitle, this.faqText})
       : super(key: key);
 
   @override
-  _NoticeElemState createState() => _NoticeElemState();
+  _FAQElemState createState() => _FAQElemState();
 }
 
-class _NoticeElemState extends State<NoticeElem> {
-  bool _noticeVisible = false;
+class _FAQElemState extends State<FAQElem> {
+  bool _faqVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +80,7 @@ class _NoticeElemState extends State<NoticeElem> {
           GestureDetector(
             onTap: () {
               setState(() {
-                _noticeVisible = !_noticeVisible;
+                _faqVisible = !_faqVisible;
               });
             },
             child: Container(
@@ -103,7 +95,7 @@ class _NoticeElemState extends State<NoticeElem> {
                           width: ScreenUtil().setWidth(23),
                         ),
                         Text(
-                          widget.noticeTitle,
+                          widget.faqTitle,
                           style: TextStyle(
                             fontSize: ScreenUtil().setSp(14),
                           ),
@@ -112,15 +104,8 @@ class _NoticeElemState extends State<NoticeElem> {
                     ),
                     Row(
                       children: [
-                        Text(
-                          widget.noticeDate,
-                          style: TextStyle(fontSize: ScreenUtil().setSp(10)),
-                        ),
-                        SizedBox(
-                          width: ScreenUtil().setWidth(12),
-                        ),
                         SvgPicture.asset(
-                          _noticeVisible
+                          _faqVisible
                               ? "assets/icons/arrow-up.svg"
                               : "assets/icons/arrow-down.svg",
                           width: ScreenUtil().setWidth(20),
@@ -136,7 +121,7 @@ class _NoticeElemState extends State<NoticeElem> {
             ),
           ),
           Visibility(
-            visible: _noticeVisible,
+            visible: _faqVisible,
             child: Container(
                 padding: EdgeInsets.symmetric(
                     vertical: ScreenUtil().setHeight(10),
@@ -144,7 +129,7 @@ class _NoticeElemState extends State<NoticeElem> {
                 color: Colors.white,
                 child: Row(children: [
                   Text(
-                    widget.noticeText,
+                    widget.faqText,
                     style: TextStyle(
                         color: AppTheme.colors.base1,
                         fontSize: ScreenUtil().setSp(14)),

@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:paran_girin/home/home_avatar_big.dart';
 import 'package:paran_girin/home/sharing_my_answers.dart';
 import 'package:paran_girin/home/post_card.dart';
-import 'package:paran_girin/layout/default_botton.dart';
+import 'package:paran_girin/layout/default_button.dart';
 import 'package:paran_girin/myPageDetail/send_comments.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/utils/FadePageRoute.dart';
@@ -120,7 +120,7 @@ class _HomeBody extends State<HomeBody> {
                         ),
                         SizedBox(height: ScreenUtil().setHeight(23)),
                         DefaultButton(
-                          text: "바로 가기",
+                          text: "생각을 공유해주세요!",
                           isInvert: true,
                           press: () {
                             Navigator.of(context).push(
@@ -142,7 +142,7 @@ class _HomeBody extends State<HomeBody> {
                       ]))
             ]);
           }
-          Post post = posts[index - 1];
+          Post post = Post.fromJson(posts[index - 1].toJson());
           File file = fp.getStaticInfo().post_thumbnails[post.thumbURL];
           try {
             if (file != null) {
@@ -151,6 +151,8 @@ class _HomeBody extends State<HomeBody> {
               return PostCard(post);
             } else {
               logger.d("post unloaded");
+              logger.d(post);
+              logger.d(index);
               return SizedBox.shrink();
             }
           } catch (e) {

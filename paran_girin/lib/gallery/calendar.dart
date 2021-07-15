@@ -15,7 +15,6 @@ import 'package:paran_girin/layout/splash.dart';
 import 'package:paran_girin/gallery/videoShowWidget.dart';
 import 'package:paran_girin/gallery/videoStreamWidget.dart';
 
-String name = "샐리";
 int num = 0;
 
 class Calendar extends StatefulWidget {
@@ -115,7 +114,7 @@ class _CalendarState extends State<Calendar> {
                   width: ScreenUtil().setWidth(28),
                 ),
                 Text(
-                  "안녕, " + name + "!",
+                  "안녕, " + fp.getUserInfo().currentChild.nickName + "!",
                   style: TextStyle(
                     fontSize: ScreenUtil().setSp(32),
                     fontFamily: 'Noto Sans KR',

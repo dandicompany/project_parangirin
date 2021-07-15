@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/layout/base_appbar.dart';
-import 'package:paran_girin/layout/default_icon_botton.dart';
+import 'package:paran_girin/layout/default_button.dart';
+import 'package:paran_girin/layout/default_icon_button.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
 class QuestionPost extends StatefulWidget {
@@ -34,6 +35,7 @@ class _QuestionPostState extends State<QuestionPost> {
   ScrollController scrollController = ScrollController();
   bool _storyVisible = false;
   bool _guideVisible = false;
+  bool todayDone = true;
 
   @override
   Widget build(BuildContext context) {
@@ -162,13 +164,19 @@ class _QuestionPostState extends State<QuestionPost> {
               Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
-                child: DefaultIconButton(
+                child: todayDone 
+                  ? DefaultIconButton(
                     text: "파란 기린과 대화하기 ",
                     isInvert: false,
                     press: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Initialization(widget.qid)));
-                    }),
+                    })
+                  : DefaultButton(
+                    text: "이미 대답한 질문이에요",
+                    // color: AppTheme.colors.base2,
+                    color: const Color.fromRGBO(163, 163, 163, 1),
+                  )
               )
             ],
           ),
