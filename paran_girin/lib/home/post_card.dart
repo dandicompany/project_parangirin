@@ -25,156 +25,143 @@ class PostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
-    return FutureBuilder(
-      future: () async {
-        // Reference ref = fp.getFirestorage().ref(child.profileURL);
-        // try {
-        //   profile = await ref.getData();
-        // } catch (e) {
-        //   logger.d("profile load failed");
-        //   profile = null;
-        //   return false;
-        // }
-        StaticInfo info = fp.getStaticInfo();
-        child = info.post_children[post.child];
-        profile = info.post_profiles[child.profileURL];
-        thumb = info.post_thumbnails[basename(post.thumbURL)];
-        if ((child != null) && (profile != null) && (thumb != null)) {
-          background = "assets/background/${child.background}";
-          avatar = "assets/avatars/${child.avatar}";
-          return true;
-        } else {
-          return false;
-        }
-      }(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          bool show = snapshot.data;
-          if (!show) {
-            return SizedBox.shrink();
-          }
-          return Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => PostDetail(
-                          this.post,
-                          child.nickName ?? "이름없음",
-                          this.background,
-                          this.avatar)));
-                },
-                // onTap: () async {
-                // Reference file = fp.getFirestorage().ref(post.videoURL);
-                // String url = await file.getDownloadURL();
-                // logger.d(url);
-                // Navigator.of(context).push(MaterialPageRoute(
-                //     builder: (context) =>
-                //         VideoStreamWidget(url))); //VideoPlayerScreen()));
-                // },
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Container(
-                    height: ScreenUtil().setHeight(261),
-                    color: Colors.white,
-                    child: Column(
+    StaticInfo info = fp.getStaticInfo();
+    child = info.post_children[post.child];
+    profile = info.post_profiles[child.profileURL];
+    thumb = info.post_thumbnails[basename(post.thumbURL)];
+    if ((child != null) && (thumb != null)) {
+      background = "assets/background/${child.background}";
+      avatar = "assets/avatars/${child.avatar}";
+    } else {
+      if (child == null){
+        logger.d("child null");
+      }
+      if (profile == null) {
+        logger.d("profile null");
+      }
+      if (thumb == null){
+        logger.d("thumnail null");
+      }
+      return SizedBox.shrink();
+    }
+    return Padding(
+      padding:
+          EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => PostDetail(
+                    this.post,
+                    child.nickName ?? "이름없음",
+                    this.background,
+                    this.avatar)));
+          },
+          // onTap: () async {
+          // Reference file = fp.getFirestorage().ref(post.videoURL);
+          // String url = await file.getDownloadURL();
+          // logger.d(url);
+          // Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (context) =>
+          //         VideoStreamWidget(url))); //VideoPlayerScreen()));
+          // },
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Container(
+              height: ScreenUtil().setHeight(261),
+              color: Colors.white,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    height: ScreenUtil().setHeight(197),
+                    child: Row(
                       children: <Widget>[
-                        Container(
-                          height: ScreenUtil().setHeight(197),
-                          child: Row(
-                            children: <Widget>[
-                              Stack(
-                                children: [
-                                  Image.asset(
-                                    background,
-                                    width: ScreenUtil().setWidth(145),
-                                    height: ScreenUtil().setHeight(197),
-                                    fit: BoxFit.cover,
-                                    alignment: Alignment.center,
-                                  ),
-                                  Image.asset(
-                                    avatar,
-                                    width: ScreenUtil().setWidth(145),
-                                    height: ScreenUtil().setHeight(197),
-                                    fit: BoxFit.cover,
-                                    alignment: Alignment.center,
-                                  ),
-                                ],
-                              ),
-
-                              // Image.asset(
-                              //   "assets/images/thumbnail_pink.png",
-                              //   width: ScreenUtil().setWidth(145),
-                              //   height: ScreenUtil().setHeight(197),
-                              //   fit: BoxFit.cover,
-                              //   alignment: Alignment.topCenter,
-                              // ),
-                              Image.file(
-                                // "assets/images/thumbnail_baby.png",
-                                File(post.thumbURL),
-                                width: ScreenUtil().setWidth(198),
-                                height: ScreenUtil().setHeight(197),
-                                fit: BoxFit.cover,
-                                alignment: Alignment.center,
-                              ),
-                              // Use 'CachedNetworkImage' later
-                            ],
-                          ),
+                        Stack(
+                          children: [
+                            Image.asset(
+                              background,
+                              width: ScreenUtil().setWidth(145),
+                              height: ScreenUtil().setHeight(197),
+                              fit: BoxFit.cover,
+                              alignment: Alignment.center,
+                            ),
+                            Image.asset(
+                              avatar,
+                              width: ScreenUtil().setWidth(145),
+                              height: ScreenUtil().setHeight(197),
+                              fit: BoxFit.cover,
+                              alignment: Alignment.center,
+                            ),
+                          ],
                         ),
-                        Container(
-                          height: ScreenUtil().setHeight(64),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: ScreenUtil().setWidth(12),
-                              vertical: ScreenUtil().setHeight(10)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "세상에 없던 새로운 대답, 계란", // title
-                                    style: TextStyle(
-                                        fontSize: ScreenUtil().setSp(16)),
-                                  ),
-                                  Text(
-                                    // "타임캡슐에 담고 싶은 나의 물건은?", // description
-                                    fp
-                                        .getStaticInfo()
-                                        .questions[post.qid]
-                                        .question,
-                                    style: TextStyle(
-                                      fontSize: ScreenUtil().setSp(12),
-                                      color: AppTheme.colors.base2,
-                                    ),
-                                  ),
-                                ],
+
+                        // Image.asset(
+                        //   "assets/images/thumbnail_pink.png",
+                        //   width: ScreenUtil().setWidth(145),
+                        //   height: ScreenUtil().setHeight(197),
+                        //   fit: BoxFit.cover,
+                        //   alignment: Alignment.topCenter,
+                        // ),
+                        Image.file(
+                          // "assets/images/thumbnail_baby.png",
+                          File(post.thumbURL),
+                          width: ScreenUtil().setWidth(198),
+                          height: ScreenUtil().setHeight(197),
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                        ),
+                        // Use 'CachedNetworkImage' later
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: ScreenUtil().setHeight(64),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: ScreenUtil().setWidth(12),
+                        vertical: ScreenUtil().setHeight(10)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "세상에 없던 새로운 대답, 계란", // title
+                              style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(16)),
+                            ),
+                            Text(
+                              // "타임캡슐에 담고 싶은 나의 물건은?", // description
+                              fp
+                                  .getStaticInfo()
+                                  .questions[post.qid]
+                                  .question,
+                              style: TextStyle(
+                                fontSize: ScreenUtil().setSp(12),
+                                color: AppTheme.colors.base2,
                               ),
-                              CircleAvatar(
-                                backgroundImage: FileImage(
-                                    // "assets/images/thumbnail_baby.png"
-                                    profile),
-                                // : AssetImage(
-                                //     "assets/images/thumbnail_baby.png"),
-                                radius: ScreenUtil().setWidth(32),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
+                        CircleAvatar(
+                          backgroundImage: 
+                            (profile != null) ? 
+                            FileImage(
+                              profile)
+                            : AssetImage(
+                              "assets/images/thumbnail_baby.png"),
+                          radius: ScreenUtil().setWidth(32),
                         ),
                       ],
                     ),
                   ),
-                ),
+                ],
               ),
             ),
-          );
-        } else {
-          return SizedBox.shrink();
-        }
-      },
+          ),
+        ),
+      ),
     );
   }
 }

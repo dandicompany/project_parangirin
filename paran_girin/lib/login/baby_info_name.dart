@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paran_girin/layout/default_botton.dart';
+import 'package:paran_girin/layout/default_button.dart';
 import 'package:paran_girin/login/baby_info_nickname.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

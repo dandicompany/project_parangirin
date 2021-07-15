@@ -36,7 +36,8 @@ class TextToSpeech extends StatefulWidget {
 class TextToSpeechState extends State<TextToSpeech> {
   void _createPost() async {
     final response = await http.post(
-      url,
+      Uri.encodeFull(url),
+      // url,
       body: {
         "speaker": speaker,
         "volume": volume,

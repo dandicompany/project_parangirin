@@ -16,6 +16,8 @@ import 'package:provider/provider.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/login/auth_page.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter/services.dart';
+
 
 int initScreen;
 
@@ -27,6 +29,9 @@ Future<void> main() async {
   await preferences.setInt('initScreen', 1);
   await Firebase.initializeApp();
   await FlutterDownloader.initialize(debug: true);
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.black
+  ));
   runApp(_MyApp());
 }
 

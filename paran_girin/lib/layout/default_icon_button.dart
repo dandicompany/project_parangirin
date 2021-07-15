@@ -20,9 +20,12 @@ class DefaultIconButton extends StatelessWidget {
     return SizedBox(
       width: ScreenUtil().setWidth(343),
       height: ScreenUtil().setHeight(54),
-      child: FlatButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        color: isInvert? Colors.white: AppTheme.colors.primary2,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          shape: StadiumBorder(),
+          primary: isInvert? Colors.white: AppTheme.colors.primary2,
+          shadowColor: Color.fromRGBO(0, 0, 0, 0.15)
+        ),
         onPressed: press,
         child: Padding(
           padding: EdgeInsets.symmetric(

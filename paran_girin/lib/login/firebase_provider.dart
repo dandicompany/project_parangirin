@@ -115,6 +115,7 @@ class FirebaseProvider with ChangeNotifier {
   }
 
   Future<bool> loadStaticInfo() async {
+    // _static_loaded = false;
     if (_static_loaded) {
       logger.d("static info already loaded");
       return true;
@@ -122,9 +123,12 @@ class FirebaseProvider with ChangeNotifier {
     logger.d("loadgign Static Infos...");
     _static.posts.clear();
     QuerySnapshot snapshot = await firestore.collection('posts').get();
-    List<QueryDocumentSnapshot> posts = snapshot.docs.toList().sublist(0, 3);
+    List<QueryDocumentSnapshot> posts = snapshot.docs.toList();
+    logger.d("total posts: ${posts.length}");
+    posts.sort((a, b) => b.data()['date'].compareTo(a.data()['date']));
+    posts = posts.sublist(0, 3);
     // for (var element in posts) {
-    //   Post post = Post.fromJson(element.data());
+    //   Post poSst = Post.fromJson(element.data());
     //   _static.post_videos[post.videoURL] = null;
     //   Reference ref = firestorage.ref(post.videoURL);
     //   File file =
@@ -153,8 +157,10 @@ class FirebaseProvider with ChangeNotifier {
           join((await getTemporaryDirectory()).path, post.thumbURL);
       File profile = File(profilePath);
       File thumb = File(thumbPath);
+      assert (profile != null);
+      assert (thumb != null);
       if (child.profileURL != null) {
-        _static.post_thumbnails[post.thumbURL] = null;
+        _static.post_profiles[child.profileURL] = null;
         refProfile.writeToFile(profile).then((element) async {
           if (element.state == TaskState.success) {
             _static.post_profiles[child.profileURL] = await profile.create();
@@ -166,8 +172,11 @@ class FirebaseProvider with ChangeNotifier {
             logger.d("error while downloading profiles");
           }
         });
+      } else {
+        logger.d("not profile url");
       }
-      _static.post_profiles[child.profileURL] = null;
+
+      _static.post_thumbnails[post.thumbURL] = null;
       refThumb.writeToFile(thumb).then((element) async {
         if (element.state == TaskState.success) {
           _static.post_thumbnails[post.thumbURL] = await thumb.create();
