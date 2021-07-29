@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:paran_girin/layout/default_botton.dart';
+import 'package:paran_girin/layout/default_button.dart';
 import 'package:paran_girin/login/login_body.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';

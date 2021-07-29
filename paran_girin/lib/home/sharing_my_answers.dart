@@ -4,6 +4,7 @@ import 'package:paran_girin/home/video_for_sharing.dart';
 import 'package:paran_girin/layout/base_appbar.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/models/schema.dart';
 import 'package:path_provider/path_provider.dart';
@@ -188,6 +189,7 @@ class YesVideo extends StatelessWidget {
     }
     entries.sort((a, b) => a.value.date.compareTo(b.value.date));
     answers = Map.fromEntries(entries);
+    logger.d("num of ansewrs: ${answers.keys.length}");
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -199,33 +201,38 @@ class YesVideo extends StatelessWidget {
           FutureBuilder(
             future: () async {
               logger.d("loading answers...");
-              Answer answer = answers[key];
+              Answer answer = Answer.fromJson(answers[key].toJson());
               if (answer == null) {
                 return null;
               }
               logger.d("answers loaded");
+              logger.d("answer url: ${answer.videoURL}");
               String thumbURL = (await getTemporaryDirectory()).path;
+
               // answer.thumbnail = null;
               // (await getApplicationDocumentsDirectory()).path;
               // logger.d("path identified: " + answer.thumbnail);
+              logger.d("thumb url: ${thumbURL}");
               try {
                 logger.d(answer.videoURL);
+                // File(answer.videoURL);
                 final thumb = await VideoThumbnail.thumbnailFile(
                   video: answer.videoURL,
                   thumbnailPath: thumbURL,
                   imageFormat: ImageFormat.PNG,
                   maxHeight:
                       100, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
-                  quality: 100,
+                  quality: 25,
                 );
+                logger.d("thumbnail extracted");
                 logger.d(thumb);
                 answer.thumbnail = File(thumb);
               } catch (e) {
                 logger.d(e);
+                return null;
               }
 
               // answer.thumbnail = thumb.pat
-              logger.d("thumbnail extracted");
               return answer;
             }(),
             builder: (context, snapshot) {

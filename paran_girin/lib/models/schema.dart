@@ -205,6 +205,21 @@ class NoticeItem {
       {'date': date, 'id': id, 'title': title, 'content': content};
 }
 
+class FaqItem {
+  int order;
+  String id;
+  String title;
+  String content;
+  FaqItem(this.order, this.id, this.title, this.content);
+  FaqItem.fromJson(Map<String, dynamic> json)
+      : this.order = json['order'],
+        this.id = json['id'],
+        this.title = json['title'],
+        this.content = json['content'];
+  Map<String, dynamic> toJson() =>
+      {'date': order, 'id': id, 'title': title, 'content': content};
+}
+
 class OpinionQuestion {
   int date;
   String id;

@@ -7,6 +7,9 @@ import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/models/schema.dart';
+import 'package:intl/intl.dart';
+
+DateFormat dateFormat = DateFormat("yyyy-MM-dd");
 
 class Notice extends StatefulWidget {
   @override
@@ -43,9 +46,10 @@ class _NoticeState extends State<Notice> {
                             NoticeItem notice = noticeItems[index];
                             return NoticeElem(
                                 noticeTitle: notice.title,
-                                noticeDate: DateTime.fromMillisecondsSinceEpoch(
-                                        notice.date)
-                                    .toString(),
+                                // noticeDate: DateTime.fromMillisecondsSinceEpoch(
+                                //         notice.date)
+                                //     .toString(),
+                                noticeDate: dateFormat.format(DateTime.fromMillisecondsSinceEpoch(notice.date)),
                                 noticeText: notice.content);
                           },
                           itemCount: notices.length);

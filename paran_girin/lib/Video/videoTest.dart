@@ -332,6 +332,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                   shape: CircleBorder(),
                                 ),
                           SizedBox(width: ScreenUtil().setWidth(60)),
+                          Container(
+                              width: ScreenUtil().setWidth(38),
+                              height: ScreenUtil().setHeight(38),
+                              color: Colors.transparent)
 
                           /*
                           *                           !isDisabled

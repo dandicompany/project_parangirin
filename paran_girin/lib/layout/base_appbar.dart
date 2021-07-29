@@ -41,7 +41,7 @@ class _BaseAppBar extends State<BaseAppBar> {
             )
           : null,
       backgroundColor: Colors.white,
-      elevation: 0.0,
+      elevation: 1.0,
       title: Text(
         widget.title,
         style: TextStyle(
