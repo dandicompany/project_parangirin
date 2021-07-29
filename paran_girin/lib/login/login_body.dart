@@ -25,7 +25,7 @@ class LoginBody extends StatelessWidget {
     return Container(
       child: Padding(
         padding: EdgeInsets.only(
-            top: ScreenUtil().setWidth(70),
+            top: ScreenUtil().setWidth(90),
             left: ScreenUtil().setWidth(16),
             right: ScreenUtil().setWidth(16)),
         child: Column(

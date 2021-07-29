@@ -281,7 +281,7 @@ class NoAnswers extends StatelessWidget {
           Container(
             width: ScreenUtil().setWidth(132),
             height: ScreenUtil().setHeight(132),
-            child: Image.asset("assets/images/embarassed_sweat 1.png",
+            child: Image.asset("assets/images/noVideoGirin.png",
                 fit: BoxFit.cover),
           ),
           SizedBox(width: double.infinity, height: ScreenUtil().setHeight(34)),
