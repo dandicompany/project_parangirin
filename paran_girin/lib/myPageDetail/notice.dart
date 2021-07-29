@@ -142,14 +142,13 @@ class _NoticeElemState extends State<NoticeElem> {
                     vertical: ScreenUtil().setHeight(10),
                     horizontal: ScreenUtil().setWidth(23)),
                 color: Colors.white,
-                child: Row(children: [
-                  Text(
+                child: Text(
                     widget.noticeText,
                     style: TextStyle(
                         color: AppTheme.colors.base1,
                         fontSize: ScreenUtil().setSp(14)),
                   )
-                ])),
+              ),
           )
         ],
       ),
