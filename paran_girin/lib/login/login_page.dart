@@ -10,6 +10,7 @@ import 'package:paran_girin/layout/default_layout.dart';
 import 'package:provider/provider.dart';
 
 enum enum_state { CHECKACC, SIGNUP, SIGNIN, PWCHECK, VERI }
+bool refresh = false;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key, this.title}) : super(key: key);
@@ -24,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _textCon = TextEditingController();
   FirebaseProvider fp;
   bool doRemember = true;
+ // "다른 이메일로 가입하기"
   String _email = "", _pw = "", _pw_check = "";
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   enum_state _state = enum_state.CHECKACC;
@@ -31,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     //  printScreenInformation();
+    print(_state);
     fp = Provider.of<FirebaseProvider>(context);
     _checkState();
     _textCon.clear();
@@ -97,9 +100,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _checkState() {
+    // if (fp.getUser() != null && !refresh) {
     if (fp.getUser() != null) {
       _state = enum_state.VERI;
     }
+    // refresh = false;
     logger.d(_state);
   }
 
@@ -109,6 +114,7 @@ class _LoginPageState extends State<LoginPage> {
       case enum_state.CHECKACC:
         return () {
           _email = _textCon.text;
+          print(_email);
           _checkAccount(_email);
         };
       case enum_state.SIGNIN:
@@ -124,6 +130,7 @@ class _LoginPageState extends State<LoginPage> {
       case enum_state.PWCHECK:
         return () {
           _pw_check = _textCon.text;
+          logger.d(_pw_check, _pw);
           if (_pw_check == _pw) {
             _signUp(_email, _pw);
           } else {
@@ -149,20 +156,26 @@ class _LoginPageState extends State<LoginPage> {
             loginInfo: "로그인 혹은 회원가입을 위해\n이메일을 입력해 주세요",
             isEmail: true,
             textPress: () {},
-            textCon: _textCon);
+            textCon: _textCon,
+            next: onClick()
+            );
       case enum_state.SIGNIN:
         return LoginBody(
             title: "샐리,\n참 오랜만이에요!",
             description: "혹시 비밀번호를 잊으셨나요? ",
-            actionText: "비밀번호 찾기",
+            actionText: "비밀번호 재설정하기",
             loginInfo: "이어서 비밀번호를 입력하고\n로그인을 완료하세요",
             isEmail: false,
             textPress: () {
-              // find password page
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => DefaultLayout()));
+              // // find password page
+              // Navigator.of(context).push(
+              //     MaterialPageRoute(builder: (context) => DefaultLayout()));
+              fp.sendPasswordResetEmailByKorean();
+              // 팝업 띄우기
             },
-            textCon: _textCon);
+            textCon: _textCon,
+            next: onClick()
+            );
       case enum_state.SIGNUP:
         return LoginBody(
             title: "환영합니다!",
@@ -175,7 +188,9 @@ class _LoginPageState extends State<LoginPage> {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => DefaultLayout()));
             },
-            textCon: _textCon);
+            textCon: _textCon,
+            next: onClick()
+            );
       case enum_state.PWCHECK:
         return LoginBody(
             title: "환영합니다!",
@@ -184,10 +199,15 @@ class _LoginPageState extends State<LoginPage> {
             loginInfo: "확인을 위해\n한 번 더 비밀번호를 입력해주세요",
             isEmail: false,
             textPress: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => LoginPage()));
+              setState(() {
+                refresh = true;
+              });
+              // Navigator.of(context)
+              //     .push(MaterialPageRoute(builder: (context) => LoginPage()));
             },
-            textCon: _textCon);
+            textCon: _textCon,
+            next: onClick()
+            );
       case enum_state.VERI:
         return LoginBody(
           title: "이메일을\n확인해주세요",
@@ -196,8 +216,11 @@ class _LoginPageState extends State<LoginPage> {
           loginInfo: "인증메일을 보냈습니다\n메일 속 링크로 인증해주세요",
           isEmail: false,
           textPress: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => LoginPage()));
+            // refresh = true;
+            // _state = enum_state.CHECKACC;
+            // Navigator.of(context)
+            //     .push(MaterialPageRoute(builder: (context) => LoginPage()));
+            fp.signOut();
           },
           textCon: _textCon,
           getInput: false,
@@ -208,6 +231,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     logger.d("login page initiated");
     super.initState();
+    // bool refresh = false; // "다른 이메일로 가입하기"
     getRememberInfo();
   }
 

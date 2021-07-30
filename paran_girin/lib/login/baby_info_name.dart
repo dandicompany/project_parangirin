@@ -26,7 +26,10 @@ class _BabyInfoNameState extends State<BabyInfoName> {
             children: <Widget>[
               _babyInfoTitle(),
               SizedBox(height: ScreenUtil().setHeight(38)),
-              _babyInfoInput("김기린", _textCon),
+              _babyInfoInput("김기린", _textCon, () {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => BabyInfoNickname(_textCon.text)));
+                },),
             ],
           ),
           Positioned(
@@ -88,16 +91,21 @@ Widget _babyInfoTitle() {
   );
 }
 
-Widget _babyInfoInput(text, TextEditingController _con) {
+Widget _babyInfoInput(text, TextEditingController _con, next) {
   return Container(
     margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
-    child: TextField(
+    child: TextFormField(
       controller: _con,
+      textInputAction: TextInputAction.next,
+      onFieldSubmitted: (term){
+                  next();
+                },
       decoration: InputDecoration(
           // hintText: "김기린",
           hintText: text,
           hintStyle: TextStyle(fontSize: ScreenUtil().setSp(18))),
       keyboardType: TextInputType.name,
+      style: TextStyle(fontSize: ScreenUtil().setSp(18))
       // obscureText: true, // for password
     ),
   );

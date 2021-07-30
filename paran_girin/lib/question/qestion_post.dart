@@ -5,7 +5,9 @@ import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/layout/base_appbar.dart';
 import 'package:paran_girin/layout/default_button.dart';
 import 'package:paran_girin/layout/default_icon_button.dart';
+import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/theme/app_theme.dart';
+import 'package:provider/provider.dart';
 
 class QuestionPost extends StatefulWidget {
   final String categoryTitle;
@@ -33,12 +35,18 @@ class QuestionPost extends StatefulWidget {
 
 class _QuestionPostState extends State<QuestionPost> {
   ScrollController scrollController = ScrollController();
+  FirebaseProvider fp;
   bool _storyVisible = false;
   bool _guideVisible = false;
-  bool todayDone = true;
 
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
+    DateTime now = DateTime.now();
+    String today_qid =
+        (now.day % fp.getStaticInfo().questions.length).toString();
+    bool todayDone = fp.getUserInfo().currentChild.answers.containsKey(today_qid);
+
     return Scaffold(
         appBar: BaseAppBar(title: widget.categoryTitle),
         body: SingleChildScrollView(
@@ -174,8 +182,10 @@ class _QuestionPostState extends State<QuestionPost> {
                     })
                   : DefaultButton(
                     text: "이미 대답한 질문이에요",
-                    // color: AppTheme.colors.base2,
-                    color: const Color.fromRGBO(163, 163, 163, 1),
+                    color: AppTheme.colors.base3,
+                    press: (){
+                    }
+                    // color: const Color.fromRGBO(163, 163, 163, 1),
                   )
               )
             ],

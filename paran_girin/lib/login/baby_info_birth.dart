@@ -40,7 +40,7 @@ class _BabyInfoBirthState extends State<BabyInfoBirth> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "아이의 이름은 김기린이에요\n파란기린은 아이를 꿈돌이라고 부를게요",
+                  "아이의 이름은 ${this.name}(이)에요\n파란기린은 아이를 ${this.nickName}(이)라고 부를게요",
                   style: TextStyle(
                       fontSize: ScreenUtil().setSp(16.0),
                       fontWeight: FontWeight.w300,
@@ -71,12 +71,19 @@ class _BabyInfoBirthState extends State<BabyInfoBirth> {
                       width: ScreenUtil().setWidth(86),
                       child: TextField(
                         controller: _yCon,
+                        enableInteractiveSelection: false,
+                        textInputAction: TextInputAction.none,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: ScreenUtil().setWidth(15),
                             vertical: ScreenUtil().setHeight(5)
+                            ),
+                            border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppTheme.colors.base2
                             )
+                          )
                         ),
                       ),
                     ),
@@ -90,6 +97,7 @@ class _BabyInfoBirthState extends State<BabyInfoBirth> {
                       width: ScreenUtil().setWidth(52),
                       child: TextField(
                         controller: _mCon,
+                        textInputAction: TextInputAction.none,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -109,6 +117,7 @@ class _BabyInfoBirthState extends State<BabyInfoBirth> {
                       width: ScreenUtil().setWidth(52),
                       child: TextField(
                         controller: _dCon,
+                        textInputAction: TextInputAction.none,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -119,35 +128,41 @@ class _BabyInfoBirthState extends State<BabyInfoBirth> {
                       ),
                     ),
                     Text(
-                      " 일",
+                      " 일   ",
                       style: TextStyle(
                           color: AppTheme.colors.base2,
                           fontSize: ScreenUtil().setSp(18)),
                     ),
+                    InkWell(
+                      onTap: () {
+                        DatePicker.showDatePicker(context,
+                            showTitleActions: true,
+                            minTime: DateTime(2012, 1, 1),
+                            maxTime: DateTime.now(), onChanged: (date) {
+                          print('change $date');
+                        }, onConfirm: (date) {
+                          print('confirm $date');
+                          setState(() {
+                            this.birthday = date.millisecondsSinceEpoch;
+                            this.selected = true;
+                          });
+                        }, currentTime: DateTime.now(), locale: LocaleType.ko);
+                      },
+                      // child: Text(
+                      //   "생년 월일 선택하기",
+                      //   style: TextStyle(
+                      //       color: AppTheme.colors.primary1,
+                      //       fontSize: ScreenUtil().setSp(18)),
+                      // )
+                      child: Icon(
+                        Icons.date_range,
+                        color: AppTheme.colors.base2,
+                      ),
+                    ),
                   ],
                 ),
 
-                FlatButton(
-                    onPressed: () {
-                      DatePicker.showDatePicker(context,
-                          showTitleActions: true,
-                          minTime: DateTime(2012, 1, 1),
-                          maxTime: DateTime(2021, 2, 28), onChanged: (date) {
-                        print('change $date');
-                      }, onConfirm: (date) {
-                        print('confirm $date');
-                        setState(() {
-                          this.birthday = date.microsecondsSinceEpoch;
-                          this.selected = true;
-                        });
-                      }, currentTime: DateTime.now(), locale: LocaleType.ko);
-                    },
-                    child: Text(
-                      "생년 월일 선택하기",
-                      style: TextStyle(
-                          color: AppTheme.colors.primary1,
-                          fontSize: ScreenUtil().setSp(18)),
-                    )),
+                
 
                 // DropdownButton(
                 //   value: valueChoose,
