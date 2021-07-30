@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:paran_girin/login/firebase_provider.dart';
 
 class LoginBody extends StatelessWidget {
   const LoginBody(
@@ -11,6 +12,7 @@ class LoginBody extends StatelessWidget {
       this.isEmail,
       this.textPress,
       this.textCon,
+      this.next,
       this.getInput = true})
       : super(key: key);
 
@@ -19,6 +21,7 @@ class LoginBody extends StatelessWidget {
   final bool getInput;
   final GestureTapCallback textPress;
   final TextEditingController textCon;
+  final Function next;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +83,7 @@ class LoginBody extends StatelessWidget {
               height: ScreenUtil().setHeight(28),
             ),
             getInput
-                ? (isEmail ? EmailForm(textCon) : PasswordForm(textCon))
+                ? (isEmail ? EmailForm(textCon, next) : PasswordForm(textCon, next))
                 : SizedBox.shrink(),
             SizedBox(
               width: double.infinity,
@@ -95,20 +98,27 @@ class LoginBody extends StatelessWidget {
 
 class EmailForm extends StatefulWidget {
   final TextEditingController textCon;
-  EmailForm(this.textCon);
+  var next;
+  EmailForm(this.textCon, this.next);
   @override
-  _EmailFormState createState() => _EmailFormState(textCon);
+  _EmailFormState createState() => _EmailFormState(textCon, next);
 }
 
 class _EmailFormState extends State<EmailForm> {
   TextEditingController textCon;
-  _EmailFormState(this.textCon);
+  var next;
+  _EmailFormState(this.textCon, this.next);
   @override
   Widget build(BuildContext context) {
+
     return Form(
       child: Column(children: [
-        TextField(
+        TextFormField(
           controller: textCon,
+          textInputAction: TextInputAction.next,
+          onFieldSubmitted: (term){
+            next();},
+          // onFieldSubmitted: next,
           decoration: InputDecoration(
               hintText: "paran@girin.com",
               hintStyle: TextStyle(fontSize: ScreenUtil().setSp(16))),
@@ -126,19 +136,21 @@ class _EmailFormState extends State<EmailForm> {
 
 class PasswordForm extends StatefulWidget {
   final TextEditingController textCon;
-  PasswordForm(this.textCon);
+  var next;
+  PasswordForm(this.textCon, this.next);
   @override
-  _PasswordFormState createState() => _PasswordFormState(textCon);
+  _PasswordFormState createState() => _PasswordFormState(textCon, next);
 }
 
 class _PasswordFormState extends State<PasswordForm> {
   TextEditingController textCon;
-  _PasswordFormState(this.textCon);
+  var next;
+  _PasswordFormState(this.textCon, this.next);
   @override
   Widget build(BuildContext context) {
     return Form(
       child: Column(children: [
-        TextField(
+        TextFormField(
           // decoration: InputDecoration(
           //   errorText: "비밀번호가 일치하지 않아요 :(",
           //   errorStyle: TextStyle(
@@ -146,6 +158,9 @@ class _PasswordFormState extends State<PasswordForm> {
           //   )
           // ),
           controller: textCon,
+          textInputAction: TextInputAction.next,
+          onFieldSubmitted: (term){
+            next();},
           keyboardType: TextInputType.visiblePassword,
           obscureText: true, // for password
         ),

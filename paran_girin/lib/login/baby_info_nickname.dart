@@ -29,7 +29,7 @@ class _BabyInfoNicknameState extends State<BabyInfoNickname> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "아이의 이름은 김기린이에요",
+                  "아이의 이름은 ${this.name}(이)에요",
                   style: TextStyle(
                       fontSize: ScreenUtil().setSp(16.0),
                       fontWeight: FontWeight.w300,
@@ -53,12 +53,18 @@ class _BabyInfoNicknameState extends State<BabyInfoNickname> {
                       color: AppTheme.colors.base2),
                 ),
                 SizedBox(height: ScreenUtil().setHeight(32)),
-                TextField(
+                TextFormField(
                   controller: _nickCon,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term){ 
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => BabyInfoBirth(name, _nickCon.text)));
+                    },
                   decoration: InputDecoration(
                       hintText: "꿈돌이",
                       hintStyle: TextStyle(fontSize: ScreenUtil().setSp(18))),
                   keyboardType: TextInputType.name,
+                  style: TextStyle(fontSize: ScreenUtil().setSp(18))
                   // obscureText: true, // for password
                 ),
               ],

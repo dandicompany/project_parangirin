@@ -34,8 +34,9 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
     DateTime now = DateTime.now();
-    String today_qid =
-        (now.day % fp.getStaticInfo().questions.length).toString();
+    String today_qid = (now.day % fp.getStaticInfo().questions.length).toString();
+    logger.d("-----------------------&&&&&&&---------------------------");
+    logger.d(today_qid);
     todayDone = fp.getUserInfo().currentChild.answers.containsKey(today_qid);
     Question question = fp.getStaticInfo().questions[today_qid];
     DateTime tomorrow = DateTime.parse(
