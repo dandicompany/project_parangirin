@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:paran_girin/layout/default_button.dart';
 import 'package:paran_girin/login/baby_info_confirm.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:provider/provider.dart';
+
+DateFormat yearFormat = DateFormat("yyyy");
+DateFormat monthFormat = DateFormat("MM");
+DateFormat dayFormat = DateFormat("dd");
 
 class BabyInfoBirth extends StatefulWidget {
   final String name, nickName;
@@ -18,10 +23,8 @@ class _BabyInfoBirthState extends State<BabyInfoBirth> {
   // List listMonth = new List.generate(12, (int index) => index + 1);
   // String valueChoose = "년도";
   String name, nickName;
-  int birthday;
-  TextEditingController _yCon = TextEditingController();
-  TextEditingController _mCon = TextEditingController();
-  TextEditingController _dCon = TextEditingController();
+  int birthdate;
+  String birthYear, birthMonth, birthDay;
   bool selected = false;
   FirebaseProvider fp;
   _BabyInfoBirthState(this.name, this.nickName);
@@ -67,68 +70,74 @@ class _BabyInfoBirthState extends State<BabyInfoBirth> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [ 
-                    Container(
-                      width: ScreenUtil().setWidth(86),
-                      child: TextField(
-                        controller: _yCon,
-                        enableInteractiveSelection: false,
-                        textInputAction: TextInputAction.none,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: ScreenUtil().setWidth(15),
-                            vertical: ScreenUtil().setHeight(5)
-                            ),
-                            border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppTheme.colors.base2
-                            )
-                          )
+                    Column(
+                      children: [
+                        Text(
+                          (birthYear != null)
+                          ?"$birthYear" : "",
+                          style: TextStyle(
+                            color: AppTheme.colors.base2,
+                            fontSize: ScreenUtil().setSp(18)
+                          ),
                         ),
-                      ),
+                        SizedBox(height:ScreenUtil().setHeight(2)),
+                        Container(
+                          height: ScreenUtil().setHeight(1),
+                          width: ScreenUtil().setWidth(70),
+                          color: AppTheme.colors.base2,
+                        )
+                      ],  
                     ),
                     Text(
-                      " 년  ",
+                      " 년   ",
                       style: TextStyle(
                           color: AppTheme.colors.base2,
                           fontSize: ScreenUtil().setSp(18)),
                     ),
-                    Container(
-                      width: ScreenUtil().setWidth(52),
-                      child: TextField(
-                        controller: _mCon,
-                        textInputAction: TextInputAction.none,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: ScreenUtil().setWidth(15),
-                            vertical: ScreenUtil().setHeight(5)
-                            )
+                    Column(
+                      children: [
+                        Text(
+                          (birthMonth != null)
+                          ?"$birthMonth" : "",
+                          style: TextStyle(
+                            color: AppTheme.colors.base2,
+                            fontSize: ScreenUtil().setSp(18)
+                          ),
                         ),
-                      ),
+                        SizedBox(height:ScreenUtil().setHeight(2)),
+                        Container(
+                          height: ScreenUtil().setHeight(1),
+                          width: ScreenUtil().setWidth(40),
+                          color: AppTheme.colors.base2,
+                        )
+                      ],  
                     ),
                     Text(
-                      " 월  ",
+                      " 월   ",
                       style: TextStyle(
                           color: AppTheme.colors.base2,
                           fontSize: ScreenUtil().setSp(18)),
                     ),
-                    Container(
-                      width: ScreenUtil().setWidth(52),
-                      child: TextField(
-                        controller: _dCon,
-                        textInputAction: TextInputAction.none,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: ScreenUtil().setWidth(15),
-                            vertical: ScreenUtil().setHeight(5)
-                            )
+                    Column(
+                      children: [
+                        Text(
+                          (birthDay != null)
+                          ?"$birthDay" : "",
+                          style: TextStyle(
+                            color: AppTheme.colors.base2,
+                            fontSize: ScreenUtil().setSp(18)
+                          ),
                         ),
-                      ),
+                        SizedBox(height:ScreenUtil().setHeight(2)),
+                        Container(
+                          height: ScreenUtil().setHeight(1),
+                          width: ScreenUtil().setWidth(40),
+                          color: AppTheme.colors.base2,
+                        )
+                      ],  
                     ),
                     Text(
-                      " 일   ",
+                      " 일    ",
                       style: TextStyle(
                           color: AppTheme.colors.base2,
                           fontSize: ScreenUtil().setSp(18)),
@@ -143,53 +152,22 @@ class _BabyInfoBirthState extends State<BabyInfoBirth> {
                         }, onConfirm: (date) {
                           print('confirm $date');
                           setState(() {
-                            this.birthday = date.millisecondsSinceEpoch;
+                            this.birthdate = date.millisecondsSinceEpoch;
                             this.selected = true;
+                            this.birthYear = yearFormat.format(DateTime.fromMillisecondsSinceEpoch(birthdate));
+                            this.birthMonth = monthFormat.format(DateTime.fromMillisecondsSinceEpoch(birthdate));
+                            this.birthDay = dayFormat.format(DateTime.fromMillisecondsSinceEpoch(birthdate));
                           });
                         }, currentTime: DateTime.now(), locale: LocaleType.ko);
                       },
-                      // child: Text(
-                      //   "생년 월일 선택하기",
-                      //   style: TextStyle(
-                      //       color: AppTheme.colors.primary1,
-                      //       fontSize: ScreenUtil().setSp(18)),
-                      // )
                       child: Icon(
                         Icons.date_range,
                         color: AppTheme.colors.base2,
+                        size: ScreenUtil().setSp(32.0),
                       ),
                     ),
                   ],
                 ),
-
-                
-
-                // DropdownButton(
-                //   value: valueChoose,
-                //   onChanged: (newValue){
-                //     setState(() {
-                //       valueChoose = newValue;
-                //     });
-                //   },
-                //   items: listMonth.map((valueItem) {
-                //     return DropdownMenuItem(
-                //       value: valueItem,
-                //       child: Text(valueItem),
-                //     );
-                //   }).toList(),
-                // ),
-
-                // DefaultButton(
-                //     text: "다음",
-                //     press: () async {
-                //       if (this.selected) {
-                //         await fp.addChild(this.name, this.nickName, this.birthday);
-                //         logger.d("before pushing");
-                //         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                //             builder: (context) => BabyInfoConfirm()));
-                //       }
-                //     },
-                //     isInvert: !this.selected)
               ],
             ),
           ),
@@ -204,7 +182,7 @@ class _BabyInfoBirthState extends State<BabyInfoBirth> {
               child: FlatButton(
                 onPressed: () async {
                   if (this.selected) {
-                    await fp.addChild(this.name, this.nickName, this.birthday);
+                    await fp.addChild(this.name, this.nickName, this.birthdate);
                     logger.d("before pushing");
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => BabyInfoConfirm()));
