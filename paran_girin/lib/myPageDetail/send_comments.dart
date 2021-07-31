@@ -76,13 +76,21 @@ class _SendCommentsState extends State<SendComments> {
           controller: textCon,
           maxLines: 5,
           keyboardType: TextInputType.text,
-          style: TextStyle(fontSize: ScreenUtil().setSp(14)),
+          style: TextStyle(fontSize: ScreenUtil().setSp(12)),
           decoration: InputDecoration(
             hintText: isCreative
                 ? "다른 아이들과 함께 공유하고 싶은 흥미로운 질문을 보내주세요!"
                 : "어플을 사용하면서 불편했던 점, 마음에 들지 않는 질문과 스토리 등 다양한 의견을 보내주세요!",
-            hintStyle: TextStyle(fontSize: ScreenUtil().setSp(14)),
-            border: OutlineInputBorder(),
+            hintStyle: TextStyle(fontSize: ScreenUtil().setSp(12)),
+            // border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.all(ScreenUtil().setHeight(10)),
+            filled: true,
+            fillColor: Colors.white,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            border: InputBorder.none
           ),
         ),
         SizedBox(height: ScreenUtil().setHeight(8)),

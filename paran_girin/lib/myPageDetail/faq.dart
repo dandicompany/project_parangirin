@@ -127,14 +127,14 @@ class _FAQElemState extends State<FAQElem> {
                     vertical: ScreenUtil().setHeight(10),
                     horizontal: ScreenUtil().setWidth(23)),
                 color: Colors.white,
-                child: Row(children: [
-                  Text(
-                    widget.faqText,
-                    style: TextStyle(
-                        color: AppTheme.colors.base1,
-                        fontSize: ScreenUtil().setSp(14)),
-                  )
-                ])),
+                child: Text(
+                  widget.faqText,
+                  style: TextStyle(
+                      color: AppTheme.colors.base1,
+                      fontSize: ScreenUtil().setSp(14)),
+                )
+            )
+                
           )
         ],
       ),

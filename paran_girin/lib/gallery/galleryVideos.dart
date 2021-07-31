@@ -209,7 +209,7 @@ class NoVideo extends StatelessWidget {
       child: Column(
         children: <Widget>[
           SizedBox(
-            height: ScreenUtil().setHeight(66),
+            height: ScreenUtil().setHeight(50),
           ),
           Image.asset(
             "assets/images/noVideoGirin.png",
@@ -226,7 +226,7 @@ class NoVideo extends StatelessWidget {
                 color: AppTheme.colors.base2,
                 fontFamily: 'Noto Sans KR'),
           ),
-          SizedBox(height: ScreenUtil().setHeight(80)),
+          SizedBox(height: ScreenUtil().setHeight(50)),
           DefaultIconButton(
               text: "파란 기린과 대화하기 ",
               isInvert: false,
