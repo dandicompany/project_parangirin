@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:paran_girin/gallery/videoShowWidget.dart';
+import 'package:paran_girin/layout/default_layout.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -537,7 +538,10 @@ class _VideoSavePopup extends State<VideoSavePopup> {
                   Container(
                       child:TextButton(
                         child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
-                        onPressed: ()=> Navigator.of(context).pop(),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => DefaultLayout()));
+                          },
                       )
                   )
                 ]

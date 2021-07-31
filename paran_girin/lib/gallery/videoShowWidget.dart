@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:paran_girin/gallery/chewie_list_item.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/theme/app_theme.dart';
+import 'package:share/share.dart';
 import 'package:video_player/video_player.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:paran_girin/models/schema.dart';
@@ -24,12 +25,14 @@ class VideoShowWidget extends StatelessWidget {
   String qid;
   Answer answer;
   Question question;
+  List<String> filePath = [];
   VideoShowWidget(this.qid, this.answer);
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
     file = File(answer.videoURL);
     logger.d(file.path);
+    filePath.add(file.path);
     question = fp.getStaticInfo().questions[qid];
     return Card(
       child: Column(
@@ -78,10 +81,10 @@ class VideoShowWidget extends StatelessWidget {
                             color: AppTheme.colors.base1),
                       ),
                       InkWell(
-                          onTap: () {
-                          },
+                          onTap: () => _onShare(context),
+                          // onTap: () => {},
                           child: SvgPicture.asset(
-                            "assets/icons/more-horizontal.svg",
+                            "assets/icons/external-link.svg",
                             width: ScreenUtil().setWidth(24),
                             height: ScreenUtil().setHeight(24),
                           )
@@ -123,5 +126,28 @@ class VideoShowWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _onShare(BuildContext context) async {
+    // A builder is used to retrieve the context immediately
+    // surrounding the RaisedButton.
+    //
+    // The context's `findRenderObject` returns the first
+    // RenderObject in its descendent tree when it's not
+    // a RenderObjectWidget. The RaisedButton's RenderObject
+    // has its position and size after it's built.
+    final RenderBox box = context.findRenderObject();
+
+    if (filePath.isNotEmpty) {
+      await Share.shareFiles(filePath,
+          // text: text,
+          // subject: subject,
+          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+    } else {
+      // await Share.share(
+      //     text,
+      //     subject: subject,
+      //     sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+    }
   }
 }

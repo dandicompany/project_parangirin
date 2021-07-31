@@ -38,6 +38,7 @@ class _QuestionPostState extends State<QuestionPost> {
   FirebaseProvider fp;
   bool _storyVisible = false;
   bool _guideVisible = false;
+  List<String> tags = [];
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +47,8 @@ class _QuestionPostState extends State<QuestionPost> {
     String today_qid =
         (now.day % fp.getStaticInfo().questions.length).toString();
     bool todayDone = fp.getUserInfo().currentChild.answers.containsKey(today_qid);
+    tags = "#말하기#의사소통#단어".split("#");
+    logger.d(tags.length, tags);
 
     return Scaffold(
         appBar: BaseAppBar(title: widget.categoryTitle),

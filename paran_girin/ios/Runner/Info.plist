@@ -71,6 +71,7 @@
 	<string>Used to set the user profile image</string>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>bluetooth-central</string>
 		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
