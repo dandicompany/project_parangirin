@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:paran_girin/gallery/videoShowFromCamera.dart';
 import 'package:paran_girin/gallery/videoShowWidget.dart';
+import 'package:paran_girin/home/home_avatar_big.dart';
+import 'package:paran_girin/layout/default_layout.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -121,10 +124,18 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           _controller.stopVideoRecording();
           isDisabled = false;
           isDisabled = !isDisabled;
+
+          saveVideo();
         }
-        Navigator.of(context_temp)
-            .push(MaterialPageRoute(builder: (context) => Outtro()));
+
+        logger.d("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ");
+
+        Navigator.of(context_temp).push(
+            MaterialPageRoute(
+                builder: (context) => Outtro()));
+
       }
+
     });
   }
 
@@ -530,14 +541,17 @@ class _VideoSavePopup extends State<VideoSavePopup> {
                       ),
                       child : FlatButton(
                         child : Text( "영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
-                        onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => VideoShowWidget(question, fp.getStaticInfo().answers[question]))), //VideoPlayerScreen()));
+                        onPressed: () {
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => HomeAvatarBig()));
+                        }, //VideoPlayerScreen()));
                       )
                   ),
                   Container(
                       child:TextButton(
                         child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
-                        onPressed: ()=> Navigator.of(context).pop(),
+                        onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => DefaultLayout())),
                       )
                   )
                 ]
