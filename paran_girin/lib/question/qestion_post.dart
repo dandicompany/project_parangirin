@@ -57,6 +57,12 @@ class _QuestionPostState extends State<QuestionPost> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(children: [
+                // if (tags.length != 0){
+                // tags.forEach( (x) => print(x));
+
+                // }
+              ],),
               Image.asset(
                   // widget.image,
                   _setImage(),
