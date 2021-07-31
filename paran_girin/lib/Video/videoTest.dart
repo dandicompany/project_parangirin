@@ -107,7 +107,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   var todayDate = new DateTime.now();
   bool girin_state = false;
 
-  AudioCache player = new AudioCache();
+  AudioPlayer player = new AudioPlayer();
 
   void starttimer() {
     Timer(dur, keeprunning);
@@ -237,16 +237,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   ),
                 ),
                 // ---- camera buttons
-                Positioned(
-                  top:ScreenUtil().setHeight(300),
-                  right : ScreenUtil().setWidth(100),
-                  child : FlatButton(
-                    onPressed: () async{
-                      await player.play("music/musicTest1.mp3");
-                    },
-                    child : Text("Music Startttttttttt"),
-                  ),
-                ),
                 Positioned(
                   bottom: ScreenUtil().setHeight(49),
                   // left: ScreenUtil().setWidth(152),
@@ -555,13 +545,14 @@ class _VideoSavePopup extends State<VideoSavePopup> {
                       child : FlatButton(
                         child : Text( "영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
                         onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => VideoShowWidget(question, fp.getStaticInfo().answers[question]))), //VideoPlayerScreen()));
+                                builder: (context) => VideoShowWidget(question, fp.getStaticInfo().answers[question]))), //VideoPlayerScreen()));
                       )
                   ),
                   Container(
                       child:TextButton(
                         child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
-                        onPressed: ()=> Navigator.of(context).pop(),
+                        onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ),
                       )
                   )
                 ]
