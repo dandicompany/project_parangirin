@@ -63,14 +63,16 @@ class _ChildrenInfoState extends State<ChildrenInfo> {
                                 fp.getUserInfo().userInDB.currentChild) {
                               return ChildrenInfoLayout(
                                 image: "assets/images/onboard_1.png",
-                                text: child.nickName ?? "",
+                                //text: child.nickName ?? "",
+                                text: "",
                                 text2: chosen,
                                 press: () {},
                               );
                             } else {
                               return ChildrenInfoLayout(
                                 image: "assets/images/onboard_1.png",
-                                text: child.nickName ?? "",
+                                //text: child.nickName ?? "",
+                                text: "",
                                 text2: notchosen,
                                 press: () {
                                   fp.switchChild(children[index - 1]);

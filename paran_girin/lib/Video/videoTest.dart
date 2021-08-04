@@ -543,7 +543,7 @@ class _VideoSavePopup extends State<VideoSavePopup> {
                         child : Text( "영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
                         onPressed: () {
                           Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => HomeAvatarBig()));
+                              MaterialPageRoute(builder: (context) => VideoShowFromCamera(question, fp.getStaticInfo().answers[question])));
                         }, //VideoPlayerScreen()));
                       )
                   ),
