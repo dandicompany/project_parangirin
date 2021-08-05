@@ -113,10 +113,8 @@ class _SendCommentsState extends State<SendComments> {
                     fp.addOpinionWish(content);
                   }
                   textCon.text = "";
-                  Align(
-                    alignment: Alignment.center,
-                    child: popupAfterSending(),
-                  );
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => popupAfterSending()));
                 },
                 child: Text(
                   "보내기",

@@ -77,11 +77,11 @@ class TextToSpeechState extends State<TextToSpeech> {
     // tts player
     AudioPlayer player = AudioPlayer();
     Uint8List byteData = response.bodyBytes; // Load audio as a byte array here.
-    print(byteData.length);
+    // print(byteData.length);
     String path = join((await getTemporaryDirectory()).path, 'tts.mp3');
     File file = File(path);
     file.writeAsBytesSync(byteData);
-    print(file.lengthSync());
+    // print(file.lengthSync());
     // await player.load(path);
     player.play(path, isLocal: true);
 

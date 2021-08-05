@@ -47,7 +47,7 @@ class _QuestionPostState extends State<QuestionPost> {
     String today_qid =
         (now.day % fp.getStaticInfo().questions.length).toString();
     bool todayDone = fp.getUserInfo().currentChild.answers.containsKey(today_qid);
-    tags = "#말하기#의사소통#단어".split("#");
+    tags = "#말하기#의사소통#단어".substring(1).split("#");
     logger.d(tags.length, tags);
 
     return Scaffold(
@@ -58,11 +58,10 @@ class _QuestionPostState extends State<QuestionPost> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(children: [
-                // if (tags.length != 0){
-                // tags.forEach( (x) => print(x));
-
-                // }
-              ],),
+                _buildTag(tags, context)
+                ],
+              ),
+              // _buildTag(tags, context),
               Image.asset(
                   // widget.image,
                   _setImage(),
@@ -218,4 +217,32 @@ class _QuestionPostState extends State<QuestionPost> {
         return 'assets/images/category_society.png';
     }
   }
+
+  Widget _buildTag(List<String> _tags, BuildContext context) {
+    for (var _tag in _tags) {    
+      print(_tag);
+      return Container(
+        height: ScreenUtil().setHeight(106),
+        color: AppTheme.colors.base3,
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
+          child: Text(
+            _tag
+          )
+        )
+      );
+    }
+  }
+
+  // List<Widget> _buildRowList(List<String> _tags) {
+  //   List<Widget> lines = []; // this will hold Rows according to available lines
+  //   for (var _tag in _tags) {    
+  //     List<Widget> placesForLine = [] // this will hold the places for each line
+  //     for (var placeLine in line.places) {
+  //       placesForLine.add(_buildPlace(placeLine));
+  //     }
+  //     lines.add(Row(children: placesForLine));
+  //   }
+  //   return lines;
+  // }
 }
