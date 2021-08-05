@@ -46,11 +46,11 @@ class _MyPageState extends State<MyPage> {
               SizedBox(height: ScreenUtil().setHeight(30)),
               ProfilePic(),
               SizedBox(height: ScreenUtil().setHeight(16)),
-              //hobin 수정함
-              //Text(
-              //  fp.getUserInfo().currentChild.nickName,
-              //  style: TextStyle(fontSize: ScreenUtil().setSp(18)),
-              //),
+
+              Text(
+               fp.getUserInfo().currentChild.nickName,
+               style: TextStyle(fontSize: ScreenUtil().setSp(18)),
+              ),
               SizedBox(height: ScreenUtil().setHeight(41)),
               ProfileMenu(
                   text: "자녀 관리",

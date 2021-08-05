@@ -84,7 +84,6 @@ class _DefaultLayoutState extends State<DefaultLayout>
               print(e);
             }
             return SizedBox.shrink();
-          //return Initialization(); // hobin test
           case 2:
             return GalleryPage();
           case 3:
