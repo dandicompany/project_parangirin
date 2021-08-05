@@ -128,11 +128,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           saveVideo();
         }
 
-        logger.d("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ");
+        Navigator.pushReplacement<void, void>(
+          context_temp,MaterialPageRoute<void>(
+            builder: (BuildContext context) => Outtro()));
 
-        Navigator.of(context_temp).push(
-            MaterialPageRoute(
-                builder: (context) => Outtro()));
 
       }
 
@@ -278,9 +277,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                         saveVideo();
                                       }
                                     });
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) => Outtro()));
+                                      Navigator.pushReplacement<void, void>(
+                                        context_temp,MaterialPageRoute<void>(
+                                          builder: (BuildContext context) => Outtro()));
                                   },
                                   child: ImageIcon(
                                     AssetImage("assets/icons/video_Off.png"),
@@ -542,16 +541,21 @@ class _VideoSavePopup extends State<VideoSavePopup> {
                       child : FlatButton(
                         child : Text( "영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
                         onPressed: () {
-                          Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => HomeAvatarBig()));
+                          Navigator.pushReplacement<void, void>(
+                            context,MaterialPageRoute<void>(
+                              builder: (BuildContext context) => VideoShowFromCamera(question, fp.getStaticInfo().answers[question])));
+                        //   Navigator.of(context).push(
+                        //       MaterialPageRoute(builder: (context) => VideoShowFromCamera(question, fp.getStaticInfo().answers[question])));
                         }, //VideoPlayerScreen()));
                       )
                   ),
                   Container(
                       child:TextButton(
                         child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
-                        onPressed: ()=> Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => DefaultLayout())),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => DefaultLayout()));
+                          },
                       )
                   )
                 ]

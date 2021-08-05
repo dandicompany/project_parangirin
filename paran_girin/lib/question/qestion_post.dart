@@ -38,6 +38,7 @@ class _QuestionPostState extends State<QuestionPost> {
   FirebaseProvider fp;
   bool _storyVisible = false;
   bool _guideVisible = false;
+  List<String> tags = [];
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +47,8 @@ class _QuestionPostState extends State<QuestionPost> {
     String today_qid =
         (now.day % fp.getStaticInfo().questions.length).toString();
     bool todayDone = fp.getUserInfo().currentChild.answers.containsKey(today_qid);
+    tags = "#말하기#의사소통#단어".substring(1).split("#");
+    logger.d(tags.length, tags);
 
     return Scaffold(
         appBar: BaseAppBar(title: widget.categoryTitle),
@@ -54,6 +57,11 @@ class _QuestionPostState extends State<QuestionPost> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(children: [
+                _buildTag(tags, context)
+                ],
+              ),
+              // _buildTag(tags, context),
               Image.asset(
                   // widget.image,
                   _setImage(),
@@ -177,8 +185,11 @@ class _QuestionPostState extends State<QuestionPost> {
                     text: "파란 기린과 대화하기 ",
                     isInvert: false,
                     press: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Initialization(widget.qid)));
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => Initialization(widget.qid)));
+                      Navigator.pushReplacement<void, void>(
+                        context,MaterialPageRoute<void>(
+                        builder: (BuildContext context) => Initialization(widget.qid)));
                     })
                   : DefaultButton(
                     text: "이미 대답한 질문이에요",
@@ -209,4 +220,32 @@ class _QuestionPostState extends State<QuestionPost> {
         return 'assets/images/category_society.png';
     }
   }
+
+  Widget _buildTag(List<String> _tags, BuildContext context) {
+    for (var _tag in _tags) {    
+      print(_tag);
+      return Container(
+        height: ScreenUtil().setHeight(106),
+        color: AppTheme.colors.base3,
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
+          child: Text(
+            _tag
+          )
+        )
+      );
+    }
+  }
+
+  // List<Widget> _buildRowList(List<String> _tags) {
+  //   List<Widget> lines = []; // this will hold Rows according to available lines
+  //   for (var _tag in _tags) {    
+  //     List<Widget> placesForLine = [] // this will hold the places for each line
+  //     for (var placeLine in line.places) {
+  //       placesForLine.add(_buildPlace(placeLine));
+  //     }
+  //     lines.add(Row(children: placesForLine));
+  //   }
+  //   return lines;
+  // }
 }

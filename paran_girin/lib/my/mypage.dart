@@ -46,9 +46,10 @@ class _MyPageState extends State<MyPage> {
               SizedBox(height: ScreenUtil().setHeight(30)),
               ProfilePic(),
               SizedBox(height: ScreenUtil().setHeight(16)),
+
               Text(
-                fp.getUserInfo().currentChild.nickName,
-                style: TextStyle(fontSize: ScreenUtil().setSp(18)),
+               fp.getUserInfo().currentChild.nickName,
+               style: TextStyle(fontSize: ScreenUtil().setSp(18)),
               ),
               SizedBox(height: ScreenUtil().setHeight(41)),
               ProfileMenu(

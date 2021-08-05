@@ -64,6 +64,7 @@ class _ChildrenInfoState extends State<ChildrenInfo> {
                               return ChildrenInfoLayout(
                                 image: "assets/images/onboard_1.png",
                                 text: child.nickName ?? "",
+                                // text: "",
                                 text2: chosen,
                                 press: () {},
                               );
@@ -71,6 +72,7 @@ class _ChildrenInfoState extends State<ChildrenInfo> {
                               return ChildrenInfoLayout(
                                 image: "assets/images/onboard_1.png",
                                 text: child.nickName ?? "",
+                                // text: "",
                                 text2: notchosen,
                                 press: () {
                                   fp.switchChild(children[index - 1]);
