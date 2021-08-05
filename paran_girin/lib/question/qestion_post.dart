@@ -10,6 +10,7 @@ import 'package:paran_girin/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
 class QuestionPost extends StatefulWidget {
+  final String tag;
   final String categoryTitle;
   final String image;
   final String qTitle;
@@ -20,6 +21,7 @@ class QuestionPost extends StatefulWidget {
 
   const QuestionPost(
       {Key key,
+        this.tag,
       this.categoryTitle,
       this.image,
       this.qTitle,
@@ -47,7 +49,7 @@ class _QuestionPostState extends State<QuestionPost> {
     String today_qid =
         (now.day % fp.getStaticInfo().questions.length).toString();
     bool todayDone = fp.getUserInfo().currentChild.answers.containsKey(today_qid);
-    tags = "#말하기#의사소통#단어".substring(1).split("#");
+    tags = widget.tag.substring(1).split("#");
     logger.d(tags.length, tags);
 
     return Scaffold(
@@ -57,9 +59,10 @@ class _QuestionPostState extends State<QuestionPost> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(children: [
-                _buildTag(tags, context)
-                ],
+              SizedBox(height: ScreenUtil().setHeight(19)),
+              Row(
+                children: _buildTag(tags, context)
+                ,
               ),
               // _buildTag(tags, context),
               Image.asset(
@@ -221,20 +224,55 @@ class _QuestionPostState extends State<QuestionPost> {
     }
   }
 
-  Widget _buildTag(List<String> _tags, BuildContext context) {
-    for (var _tag in _tags) {    
-      print(_tag);
-      return Container(
-        height: ScreenUtil().setHeight(106),
-        color: AppTheme.colors.base3,
-        padding: const EdgeInsets.all(16.0),
-        child: Container(
-          child: Text(
-            _tag
+  // Widget _buildTag(List<String> _tags, BuildContext context) {
+  //   List<Widget> list = List<Widget>();
+  //   for (var _tag in _tags) {
+  //     print(_tag);
+  //     Container(
+  //       height: ScreenUtil().setHeight(106),
+  //       color: AppTheme.colors.base3,
+  //       padding: const EdgeInsets.all(16.0),
+  //       child: Container(
+  //         child: Text(
+  //           _tag
+  //         )
+  //       )
+  //     );
+  //   };
+  // }
+
+  List<Widget> _buildTag(List<String> _tags, BuildContext context) {
+    List<Widget> tags = [];
+    tags.add(SizedBox(width: ScreenUtil().setWidth(16)));
+    for (var _tag in _tags) {
+      tags.add(
+          Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(25),
+                child: Container(
+                    height: ScreenUtil().setHeight(27),
+                    color: Color.fromRGBO(233, 233, 233, 1),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: ScreenUtil().setWidth(13),
+                        vertical: ScreenUtil().setHeight(4)
+                    ),
+                    child: Text(
+                        _tag,
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(10),
+                        color: AppTheme.colors.base2,
+                      ),
+                    )
+                ),
+              ),
+              SizedBox(width: ScreenUtil().setWidth(6)),
+
+            ],
           )
-        )
       );
     }
+    return tags;
   }
 
   // List<Widget> _buildRowList(List<String> _tags) {
