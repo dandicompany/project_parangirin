@@ -12,6 +12,7 @@ import 'package:paran_girin/models/schema.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:paran_girin/home/home_avatar_big.dart';
 
 var file = File("assets/videoEx/sample1.mp4");
 // "/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4");
@@ -50,10 +51,17 @@ class VideoShowFromCamera extends StatelessWidget {
                         Icons.arrow_back_ios,
                         color: AppTheme.colors.base1,
                       ),
-                      // 여기 이상
-                      onPressed:  () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => HomeAvatarBig()));
+                      onPressed: () {
+                        // Navigator.pushReplacement<void, void>(
+                        //     context,MaterialPageRoute<void>(
+                        //       builder: (BuildContext context) => HomeAvatar()VideoShowFromCamera(question, fp.getStaticInfo().answers[question])));
+                      
+
+
+                        // Navigator.of(context).push(
+                        //     MaterialPageRoute(builder: (context) => HomeAvatarBig()));
+                        // Navigator.popUntil(context, ModalRoute.withName('/'));
+                        Navigator.of(context).pop(); 
                       },
                       iconSize: ScreenUtil().radius(20),
                     )

@@ -113,8 +113,8 @@ class _SendCommentsState extends State<SendComments> {
                     fp.addOpinionWish(content);
                   }
                   textCon.text = "";
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => popupAfterSending()));
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(builder: (context) => popupAfterSending()));
                 },
                 child: Text(
                   "보내기",
@@ -130,17 +130,4 @@ class _SendCommentsState extends State<SendComments> {
       ],
     );
   }
-}
-
-
-class popupAfterSending extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: ScreenUtil().setWidth(247),
-      height : ScreenUtil().setHeight(247),
-      child: Image.asset("popup/popupAfterSending.png",fit: BoxFit.fill),
-    );
-  }
-
 }

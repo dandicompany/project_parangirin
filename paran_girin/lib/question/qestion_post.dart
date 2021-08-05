@@ -185,8 +185,11 @@ class _QuestionPostState extends State<QuestionPost> {
                     text: "파란 기린과 대화하기 ",
                     isInvert: false,
                     press: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Initialization(widget.qid)));
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => Initialization(widget.qid)));
+                      Navigator.pushReplacement<void, void>(
+                        context,MaterialPageRoute<void>(
+                        builder: (BuildContext context) => Initialization(widget.qid)));
                     })
                   : DefaultButton(
                     text: "이미 대답한 질문이에요",

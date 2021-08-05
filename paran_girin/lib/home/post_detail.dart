@@ -282,9 +282,12 @@ class _PostDetail extends State<PostDetail> {
                           icon: "assets/icons/camera.svg",
                           isInvert: false,
                           press: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    Initialization(post.qid)));
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //     builder: (context) =>
+                            //         Initialization(post.qid)));
+                            Navigator.pushReplacement<void, void>(
+                            context,MaterialPageRoute<void>(
+                              builder: (BuildContext context) => Initialization(post.qid)));
                           }),
                 ),
               ],

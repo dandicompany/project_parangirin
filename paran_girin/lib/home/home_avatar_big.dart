@@ -173,8 +173,12 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
                         icon: "assets/icons/camera.svg",
                         isInvert: true,
                         press: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Initialization(today_qid)));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => Initialization(today_qid)));
+                          Navigator.pushReplacement<void, void>(
+                            context,MaterialPageRoute<void>(
+                              builder: (BuildContext context) => Initialization(today_qid)));
+
                         }),
                   ),
           ],
