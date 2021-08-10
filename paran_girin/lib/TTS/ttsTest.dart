@@ -65,7 +65,7 @@ class TextToSpeechState extends State<TextToSpeech> {
     );
 
     // bgm player
-    bgmplayer.play("bgm.mp3", volume: 1);
+    bgmplayer.play("bgm.mp3", volume: 0.1);
 
     // 아래 다 안됨
     // bgmplayer.pause();

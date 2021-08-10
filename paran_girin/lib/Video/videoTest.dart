@@ -477,6 +477,9 @@ class GirinSpeak extends StatelessWidget {
                   child: TextToSpeech(
                       // text: "나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지."),
                       text: q.narration1.replaceAll("안녕 __name__!", ""))),
+              // Align(
+              //   child: TextToSpeech(text: "준비가 되었다면 빨간 버튼을 누르고 대답해줘!"),
+              // ),
               Align(
                   alignment: Alignment.center,
                   child: Container(

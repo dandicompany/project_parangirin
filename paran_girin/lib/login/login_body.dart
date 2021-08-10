@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 
 class LoginBody extends StatelessWidget {
@@ -121,7 +122,11 @@ class _EmailFormState extends State<EmailForm> {
           // onFieldSubmitted: next,
           decoration: InputDecoration(
               hintText: "paran@girin.com",
-              hintStyle: TextStyle(fontSize: ScreenUtil().setSp(16))),
+              hintStyle: TextStyle(fontSize: ScreenUtil().setSp(16),),
+              suffixIcon: IconButton(
+                onPressed: textCon.clear,
+                icon: SvgPicture.asset("assets/icons/close.svg"),
+              )),
           keyboardType: TextInputType.emailAddress,
           // obscureText: true, // for password
         ),
