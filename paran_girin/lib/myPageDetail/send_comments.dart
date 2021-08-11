@@ -184,7 +184,7 @@ class _PopupAfterSending extends State<PopupAfterSending> {
                 child: Image.asset("assets/popup/check.png",fit: BoxFit.cover),
               ),
               SizedBox(height: 29),
-              Text(widget.text1,style: TextStyle(fontSize: ScreenUtil().setSp(18), color:AppTheme.colors.base1 ), ),
+              Text(widget.text1,style: TextStyle(fontSize: ScreenUtil().setSp(18), color:AppTheme.colors.primary2 ), ),
               SizedBox(height: 22,),
               Text("소중한 의견들로", style: TextStyle(fontSize: ScreenUtil().setSp(16), color:AppTheme.colors.base3,)),
               Text("파란기린이 더 성장할게요", style: TextStyle(fontSize: ScreenUtil().setSp(16), color:AppTheme.colors.base3,)),
