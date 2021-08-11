@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
+import 'package:paran_girin/theme/app_theme.dart';
 
 class LoginBody extends StatelessWidget {
   const LoginBody(
@@ -126,7 +127,11 @@ class _EmailFormState extends State<EmailForm> {
               suffixIcon: IconButton(
                 onPressed: textCon.clear,
                 icon: SvgPicture.asset("assets/icons/close.svg"),
-              )),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppTheme.colors.primary2, width: 2.0),
+              ),
+              ),
           keyboardType: TextInputType.emailAddress,
           // obscureText: true, // for password
         ),
@@ -156,16 +161,24 @@ class _PasswordFormState extends State<PasswordForm> {
     return Form(
       child: Column(children: [
         TextFormField(
-          // decoration: InputDecoration(
+          controller: textCon,
+          textInputAction: TextInputAction.next,
+          onFieldSubmitted: (term){
+            next();},
+          decoration: InputDecoration(
+            suffixIcon: IconButton(
+              onPressed: textCon.clear,
+              icon: SvgPicture.asset("assets/icons/close.svg"),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: AppTheme.colors.primary2, width: 2.0),
+            ),
+          ),
           //   errorText: "비밀번호가 일치하지 않아요 :(",
           //   errorStyle: TextStyle(
           //     fontSize: ScreenUtil().setSp(12)
           //   )
           // ),
-          controller: textCon,
-          textInputAction: TextInputAction.next,
-          onFieldSubmitted: (term){
-            next();},
           keyboardType: TextInputType.visiblePassword,
           obscureText: true, // for password
         ),

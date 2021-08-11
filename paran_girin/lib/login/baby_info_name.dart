@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:paran_girin/layout/default_button.dart';
 import 'package:paran_girin/login/baby_info_nickname.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -101,9 +102,17 @@ Widget _babyInfoInput(text, TextEditingController _con, next) {
                   next();
                 },
       decoration: InputDecoration(
-          // hintText: "김기린",
-          hintText: text,
-          hintStyle: TextStyle(fontSize: ScreenUtil().setSp(18))),
+        // hintText: "김기린",
+        hintText: text,
+        hintStyle: TextStyle(fontSize: ScreenUtil().setSp(18)),
+        suffixIcon: IconButton(
+          onPressed: _con.clear,
+          icon: SvgPicture.asset("assets/icons/close.svg"),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppTheme.colors.primary2, width: 2.0),
+        ),
+      ),
       keyboardType: TextInputType.name,
       style: TextStyle(fontSize: ScreenUtil().setSp(18))
       // obscureText: true, // for password
