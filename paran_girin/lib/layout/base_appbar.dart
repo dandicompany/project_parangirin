@@ -56,7 +56,16 @@ class _BaseAppBar extends State<BaseAppBar> {
                 child: Padding(
                     padding: EdgeInsets.only(right: ScreenUtil().setWidth(17)),
                     child: InkWell(
-                      onTap: widget.onSend ?? () {},
+                      onTap: widget.onSend ?? () {
+                        showDialog(context: context,
+                            builder: (BuildContext context)
+                            {
+                              return PopupAfterBbom(
+                                  img: AssetImage("assets/popup/check.png"),
+                                  text1: "성공적으로 영상을 파란기린에 보냈어요!",
+                                  text2: "기발하고 재미있는 답변은 파란기린 어플과 SNS의 생각뽐내기에 게시될 수 있어요! 생각뽐내기에 선정되면 파란기린이 알려드릴게요");
+                            });
+                      },
                       child: Text(
                         "보내기",
                         style: TextStyle(
@@ -70,6 +79,65 @@ class _BaseAppBar extends State<BaseAppBar> {
               )
             ]
           : [],
+    );
+  }
+}
+
+class PopupAfterBbom extends StatefulWidget {
+  final String text1, text2;
+  final AssetImage img;
+
+  const PopupAfterBbom({Key key, this.text1, this.text2, this.img}) : super(key: key);
+  @override
+  _PopupAfterBbom createState() => _PopupAfterBbom();
+}
+
+class _PopupAfterBbom extends State<PopupAfterBbom> {
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: contentBox(context),
+    );
+  }
+  contentBox(context){
+    return Stack(
+      children: <Widget>[
+        Container(
+            width: ScreenUtil().setWidth(303),
+            height: ScreenUtil().setHeight(247),
+            //padding: EdgeInsets.only(left: 20, top:65, right:20, bottom: 20),
+            // margin: EdgeInsets.only(top:45),
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              //mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(height: 29,),
+                Container(
+                  width: ScreenUtil().setWidth(38),
+                  height: ScreenUtil().setHeight(38),
+                  child: Image.asset("assets/popup/check.png",fit: BoxFit.cover),
+                ),
+                SizedBox(height: 29),
+                Text("성공적으로 영상을", style: TextStyle(fontSize: ScreenUtil().setSp(20), color:Colors.black), ),
+                Text("파란기린에 보냈어요!", style: TextStyle(fontSize: ScreenUtil().setSp(20), color:Colors.black), ),
+                SizedBox(height: 22,),
+                Text("기발하고 재미있는 답변은 파란기린 어플과 SNS의 생각 ", style: TextStyle(fontSize: ScreenUtil().setSp(12), color:AppTheme.colors.base3,)),
+                Text("뽐내기에 게시될 수 있이요! 생각뽐내기에 선정되면 파란 ", style: TextStyle(fontSize: ScreenUtil().setSp(12), color:AppTheme.colors.base3,)),
+                Text("기린이 알려드릴게요", style: TextStyle(fontSize: ScreenUtil().setSp(12), color:AppTheme.colors.base3,)),
+              ],
+            )
+        )
+
+      ],
     );
   }
 }
