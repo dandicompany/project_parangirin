@@ -415,7 +415,7 @@ class FirebaseProvider with ChangeNotifier {
     } on Exception catch (e) {
       logger.e(e.toString());
       List<String> result = e.toString().split(", ");
-      setLastFBMessage(result[1]);
+      setLastFBMessage(interpreFBMessage(e.code));
       return false;
     }
   }
@@ -436,13 +436,13 @@ class FirebaseProvider with ChangeNotifier {
       return false;
     } on FirebaseAuthException catch (e) {
       logger.e(e.toString());
-      setLastFBMessage(e.toString());
+      setLastFBMessage(interpretFBMessage(e.code));
       setLastFBExceptionCode(e.code);
       return false;
     } on FirebaseException catch (e) {
       logger.e(e.toString());
       List<String> result = e.toString().split(", ");
-      setLastFBMessage(e.toString());
+      setLastFBMessage(interpretFBMessage(e.code));
       logger.e(e.code);
       return false;
     }
@@ -463,7 +463,7 @@ class FirebaseProvider with ChangeNotifier {
     } on Exception catch (e) {
       logger.e(e.toString());
       List<String> result = e.toString().split(", ");
-      setLastFBMessage(result[1]);
+      setLastFBMessage(interpretFBMessage(e.code));
       return false;
     }
   }
@@ -482,7 +482,7 @@ class FirebaseProvider with ChangeNotifier {
     } on Exception catch (e) {
       logger.e(e.toString());
       List<String> result = e.toString().split(", ");
-      setLastFBMessage(result[1]);
+      setLastFBMessage(interpretFBMessage(e.code));
       return false;
     }
   }
@@ -530,6 +530,15 @@ class FirebaseProvider with ChangeNotifier {
     String returnValue = _lastFirebaseResponse;
     _lastFirebaseResponse = "";
     return returnValue;
+  }
+
+  interpretFBMessage(String code) {
+    switch (code) {
+      case "":
+        return "기본 에러"
+      default:
+        return "알 수 없는 에러"
+    }
   }
 
   getLastFBExceptionCode() {

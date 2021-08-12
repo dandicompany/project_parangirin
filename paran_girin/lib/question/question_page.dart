@@ -24,6 +24,15 @@ class _QuestionPageState extends State<QuestionPage> {
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
+    available = True;
+    today = DateTimeFormat(DateTime.now().
+    for (var ans in fp.getStaticInfo().answers){
+      if(ans.date == today){
+        available = False;
+      }
+    }
+
+    for fp.getStaticInfo().answers.
     return Scaffold(
         appBar: BaseAppBar(title: widget.categoryTitle),
         body: StreamBuilder(
@@ -59,7 +68,8 @@ class _QuestionPageState extends State<QuestionPage> {
                                 question: question.question ?? "질문없음",
                                 storyText: question.story ?? "스토리없음",
                                 guide: question.guide ?? "가이드없음",
-                                qid: question.qid.toString())));
+                                qid: question.qid.toString(),
+                                available: available)));
                       },
                     );
                   },

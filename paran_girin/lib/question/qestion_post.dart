@@ -15,6 +15,7 @@ class QuestionPost extends StatefulWidget {
   final String storyText;
   final String guide;
   final String qid;
+  final bool available;
 
   const QuestionPost(
       {Key key,
@@ -24,7 +25,8 @@ class QuestionPost extends StatefulWidget {
       this.question,
       this.storyText,
       this.guide,
-      this.qid})
+      this.qid,
+      this.available})
       : super(key: key);
 
   @override
@@ -35,7 +37,7 @@ class _QuestionPostState extends State<QuestionPost> {
   ScrollController scrollController = ScrollController();
   bool _storyVisible = false;
   bool _guideVisible = false;
-  bool todayDone = true;
+  bool todayDone = widget.available;
 
   @override
   Widget build(BuildContext context) {
