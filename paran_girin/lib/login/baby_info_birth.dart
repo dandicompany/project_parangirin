@@ -67,106 +67,101 @@ class _BabyInfoBirthState extends State<BabyInfoBirth> {
                 ),
                 SizedBox(height: ScreenUtil().setHeight(39)),
                 // Birth Date Input
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [ 
-                    Column(
-                      children: [
-                        Text(
-                          (birthYear != null)
-                          ?"$birthYear" : "",
-                          style: TextStyle(
-                            color: AppTheme.colors.base2,
-                            fontSize: ScreenUtil().setSp(18)
+                InkWell(
+                  onTap: () {
+                    DatePicker.showDatePicker(context,
+                        showTitleActions: true,
+                        minTime: DateTime(2012, 1, 1),
+                        maxTime: DateTime.now(), onChanged: (date) {
+                      print('change $date');
+                    }, onConfirm: (date) {
+                      print('confirm $date');
+                      setState(() {
+                        this.birthdate = date.millisecondsSinceEpoch;
+                        this.selected = true;
+                        this.birthYear = yearFormat.format(DateTime.fromMillisecondsSinceEpoch(birthdate));
+                        this.birthMonth = monthFormat.format(DateTime.fromMillisecondsSinceEpoch(birthdate));
+                        this.birthDay = dayFormat.format(DateTime.fromMillisecondsSinceEpoch(birthdate));
+                      });
+                    }, currentTime: DateTime.now(), locale: LocaleType.ko);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [ 
+                      Column(
+                        children: [
+                          Text(
+                            (birthYear != null)
+                            ?"$birthYear" : "",
+                            style: TextStyle(
+                              color: AppTheme.colors.base2,
+                              fontSize: ScreenUtil().setSp(18)
+                            ),
                           ),
-                        ),
-                        SizedBox(height:ScreenUtil().setHeight(2)),
-                        Container(
-                          height: ScreenUtil().setHeight(1),
-                          width: ScreenUtil().setWidth(70),
-                          color: AppTheme.colors.base2,
-                        )
-                      ],  
-                    ),
-                    Text(
-                      " 년   ",
-                      style: TextStyle(
-                          color: AppTheme.colors.base2,
-                          fontSize: ScreenUtil().setSp(18)),
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          (birthMonth != null)
-                          ?"$birthMonth" : "",
-                          style: TextStyle(
+                          SizedBox(height:ScreenUtil().setHeight(2)),
+                          Container(
+                            height: ScreenUtil().setHeight(1),
+                            width: ScreenUtil().setWidth(70),
                             color: AppTheme.colors.base2,
-                            fontSize: ScreenUtil().setSp(18)
-                          ),
-                        ),
-                        SizedBox(height:ScreenUtil().setHeight(2)),
-                        Container(
-                          height: ScreenUtil().setHeight(1),
-                          width: ScreenUtil().setWidth(40),
-                          color: AppTheme.colors.base2,
-                        )
-                      ],  
-                    ),
-                    Text(
-                      " 월   ",
-                      style: TextStyle(
-                          color: AppTheme.colors.base2,
-                          fontSize: ScreenUtil().setSp(18)),
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          (birthDay != null)
-                          ?"$birthDay" : "",
-                          style: TextStyle(
-                            color: AppTheme.colors.base2,
-                            fontSize: ScreenUtil().setSp(18)
-                          ),
-                        ),
-                        SizedBox(height:ScreenUtil().setHeight(2)),
-                        Container(
-                          height: ScreenUtil().setHeight(1),
-                          width: ScreenUtil().setWidth(40),
-                          color: AppTheme.colors.base2,
-                        )
-                      ],  
-                    ),
-                    Text(
-                      " 일    ",
-                      style: TextStyle(
-                          color: AppTheme.colors.base2,
-                          fontSize: ScreenUtil().setSp(18)),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        DatePicker.showDatePicker(context,
-                            showTitleActions: true,
-                            minTime: DateTime(2012, 1, 1),
-                            maxTime: DateTime.now(), onChanged: (date) {
-                          print('change $date');
-                        }, onConfirm: (date) {
-                          print('confirm $date');
-                          setState(() {
-                            this.birthdate = date.millisecondsSinceEpoch;
-                            this.selected = true;
-                            this.birthYear = yearFormat.format(DateTime.fromMillisecondsSinceEpoch(birthdate));
-                            this.birthMonth = monthFormat.format(DateTime.fromMillisecondsSinceEpoch(birthdate));
-                            this.birthDay = dayFormat.format(DateTime.fromMillisecondsSinceEpoch(birthdate));
-                          });
-                        }, currentTime: DateTime.now(), locale: LocaleType.ko);
-                      },
-                      child: Icon(
-                        Icons.date_range,
-                        color: AppTheme.colors.base2,
-                        size: ScreenUtil().setSp(32.0),
+                          )
+                        ],  
                       ),
-                    ),
-                  ],
+                      Text(
+                        " 년   ",
+                        style: TextStyle(
+                            color: AppTheme.colors.base2,
+                            fontSize: ScreenUtil().setSp(18)),
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            (birthMonth != null)
+                            ?"$birthMonth" : "",
+                            style: TextStyle(
+                              color: AppTheme.colors.base2,
+                              fontSize: ScreenUtil().setSp(18)
+                            ),
+                          ),
+                          SizedBox(height:ScreenUtil().setHeight(2)),
+                          Container(
+                            height: ScreenUtil().setHeight(1),
+                            width: ScreenUtil().setWidth(40),
+                            color: AppTheme.colors.base2,
+                          )
+                        ],  
+                      ),
+                      Text(
+                        " 월   ",
+                        style: TextStyle(
+                            color: AppTheme.colors.base2,
+                            fontSize: ScreenUtil().setSp(18)),
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            (birthDay != null)
+                            ?"$birthDay" : "",
+                            style: TextStyle(
+                              color: AppTheme.colors.base2,
+                              fontSize: ScreenUtil().setSp(18)
+                            ),
+                          ),
+                          SizedBox(height:ScreenUtil().setHeight(2)),
+                          Container(
+                            height: ScreenUtil().setHeight(1),
+                            width: ScreenUtil().setWidth(40),
+                            color: AppTheme.colors.base2,
+                          )
+                        ],  
+                      ),
+                      Text(
+                        " 일    ",
+                        style: TextStyle(
+                            color: AppTheme.colors.base2,
+                            fontSize: ScreenUtil().setSp(18)),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

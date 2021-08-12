@@ -100,7 +100,7 @@ class VideoShowWidget extends StatelessWidget {
                     )
                   ),
                   SizedBox(height: ScreenUtil().setHeight(20)),
-                  Text(question.tag,
+                  Text(question.tag.split("#").join(" #").substring(1),
                       style: new TextStyle(
                           fontSize: ScreenUtil().setSp(14),
                           color: AppTheme.colors.primary2
