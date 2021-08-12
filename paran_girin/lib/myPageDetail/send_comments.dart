@@ -113,8 +113,16 @@ class _SendCommentsState extends State<SendComments> {
                     fp.addOpinionWish(content);
                   }
                   textCon.text = "";
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(builder: (context) => popupAfterSending()));
+                  showDialog(context: context,
+                    builder: (BuildContext context)
+                  {
+                    return PopupAfterSending(
+                        img: AssetImage("assets/popup/check.png"),
+                        text1: "의견이 전달되었어요",
+                        text2: "소중한 의견들로 파란기린이 더 성장할게요");
+                  });
+                  //Navigator.of(context).push(
+                  //  MaterialPageRoute(builder: (context) => PopupAfterSending(img : AssetImage("assets/popup/check.png"), text1 : "의견이 전달되었어요", text2 : "소중한 의견들로 파란기린이 더 성장할게요")));
                 },
                 child: Text(
                   "보내기",
@@ -127,6 +135,63 @@ class _SendCommentsState extends State<SendComments> {
             ),
           ],
         )
+      ],
+    );
+  }
+}
+
+class PopupAfterSending extends StatefulWidget {
+  final String text1, text2;
+  final AssetImage img;
+
+  const PopupAfterSending({Key key, this.text1, this.text2, this.img}) : super(key: key);
+  @override
+  _PopupAfterSending createState() => _PopupAfterSending();
+}
+
+class _PopupAfterSending extends State<PopupAfterSending> {
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+        shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: contentBox(context),
+    );
+  }
+  contentBox(context){
+    return Stack(
+      children: <Widget>[
+        Container(
+          width: ScreenUtil().setWidth(247),
+          height: ScreenUtil().setHeight(247),
+          //padding: EdgeInsets.only(left: 20, top:65, right:20, bottom: 20),
+         // margin: EdgeInsets.only(top:45),
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            //mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(height: 29,),
+              Container(
+                width: ScreenUtil().setWidth(38),
+                height: ScreenUtil().setHeight(38),
+                child: Image.asset("assets/popup/check.png",fit: BoxFit.cover),
+              ),
+              SizedBox(height: 29),
+              Text(widget.text1,style: TextStyle(fontSize: ScreenUtil().setSp(18), color:AppTheme.colors.primary2 ), ),
+              SizedBox(height: 22,),
+              Text("소중한 의견들로", style: TextStyle(fontSize: ScreenUtil().setSp(16), color:AppTheme.colors.base3,)),
+              Text("파란기린이 더 성장할게요", style: TextStyle(fontSize: ScreenUtil().setSp(16), color:AppTheme.colors.base3,)),
+            ],
+          )
+        )
+
       ],
     );
   }
