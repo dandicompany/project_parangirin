@@ -8,6 +8,7 @@ bool button2 = false;
 bool button3 = false;
 bool allbutton = false;
 
+double buttonscale = 0.7;
 class PrivacyPolicy2 extends StatefulWidget {
   @override
   _PrivacyPolicy createState() => _PrivacyPolicy();
@@ -26,21 +27,48 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
             SizedBox(height: ScreenUtil().setHeight(22)),
             Text("사용약관", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0, fontFamily: 'Noto Sans KR'),),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                CircularCheckBox(
-                  value: button1,
-                  onChanged: (bool value) {
-                    setState(() {
-                      button1 = !button1;
-                    });
-                  },
+                Transform.scale(
+                  scale: buttonscale,
+                  child: CircularCheckBox(
+                    value: button1,
+                    onChanged: (bool value) {
+                      setState(() {
+                        button1 = !button1;
+                      });
+                    },
+                  ),
                 ),
-                Text("abc"),
+                SizedBox(width: ScreenUtil().setWidth(4),),
+                Text("아래 이용 약관 및 개인 정보 처리 방침에 동의합니다.",
+                   style: TextStyle(color: Colors.black,
+                   fontWeight: FontWeight.bold,
+                   fontSize: 12.0)),
               ],
-
+            ),
+            SizedBox(height: ScreenUtil().setHeight(30)),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Transform.scale(
+                  scale: buttonscale,
+                  child: CircularCheckBox(
+                    value: button2,
+                    onChanged: (bool value) {
+                      setState(() {
+                        button2 = !button2;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(width: ScreenUtil().setWidth(4),),
+                Text("아래 이용 약관 및 개인 정보 처리 방침에 동의합니다.",
+                    style: TextStyle(color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.0)),
+              ],
             )
-
           ],
         ),
       ),
