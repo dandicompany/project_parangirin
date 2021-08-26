@@ -27,6 +27,7 @@ class VideoShowWidget extends StatelessWidget {
   Question question;
   List<String> filePath = [];
   VideoShowWidget(this.qid, this.answer);
+
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
@@ -40,13 +41,14 @@ class VideoShowWidget extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: ScreenUtil().setHeight(40),
-              left: ScreenUtil().setWidth(16),
-            ),
-            child: Positioned(
               top: ScreenUtil().setHeight(44),
               left: ScreenUtil().setWidth(16),
-              child: Navigator.of(context).canPop()
+              right: ScreenUtil().setWidth(28),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Navigator.of(context).canPop()
                   ? IconButton(
                       icon: Icon(
                         Icons.arrow_back_ios,
@@ -58,6 +60,15 @@ class VideoShowWidget extends StatelessWidget {
                       iconSize: ScreenUtil().radius(20),
                     )
                   : null,
+                InkWell(
+                  onTap: () => _onShare(context),
+                  child: SvgPicture.asset(
+                    "assets/icons/more-horizontal.svg",
+                    width: ScreenUtil().setWidth(24),
+                    height: ScreenUtil().setHeight(24),
+                  )
+                ),
+              ]
             )
           ),
           Padding(
@@ -70,29 +81,13 @@ class VideoShowWidget extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start, 
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        // '계란을 우주로 보낸다면?',
-                        question.title,
-                        style: TextStyle(
-                            fontSize: ScreenUtil().setSp(24),
-                            color: AppTheme.colors.base1),
-                      ),
-                      InkWell(
-                          onTap: () => _onShare(context),
-                          // onTap: () => {},
-                          child: SvgPicture.asset(
-                            "assets/icons/external-link.svg",
-                            width: ScreenUtil().setWidth(24),
-                            height: ScreenUtil().setHeight(24),
-                          )
-                        ),
-                    ],
+                  Text(
+                    question.title,
+                    style: TextStyle(
+                        fontSize: ScreenUtil().setSp(24),
+                        color: AppTheme.colors.base1),
                   ),
                   Text(
-                    // DateTime.fromMillisecondsSinceEpoch(answer.date).toString(),
                     dateFormat.format(DateTime.fromMillisecondsSinceEpoch(answer.date)),
                     style: new TextStyle(
                         fontSize: ScreenUtil().setSp(12),

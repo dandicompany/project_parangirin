@@ -30,7 +30,7 @@ class _NoticeState extends State<Notice> {
         children: [
           SizedBox(width: double.infinity, height: ScreenUtil().setHeight(32)),
           SizedBox(
-              height: 600,
+              height: ScreenUtil().setHeight(630),
               child: FutureBuilder(
                   future: fp.getFirestore().collection("notices").get(),
                   builder: (context, snap) {
@@ -46,9 +46,6 @@ class _NoticeState extends State<Notice> {
                             NoticeItem notice = noticeItems[index];
                             return NoticeElem(
                                 noticeTitle: notice.title,
-                                // noticeDate: DateTime.fromMillisecondsSinceEpoch(
-                                //         notice.date)
-                                //     .toString(),
                                 noticeDate: dateFormat.format(DateTime.fromMillisecondsSinceEpoch(notice.date)),
                                 noticeText: notice.content);
                           },
@@ -105,7 +102,11 @@ class _NoticeElemState extends State<NoticeElem> {
                         Text(
                           widget.noticeTitle,
                           style: TextStyle(
+                            color: AppTheme.colors.base1,
                             fontSize: ScreenUtil().setSp(14),
+                            fontWeight: _noticeVisible 
+                                        ? FontWeight.w500 
+                                        : FontWeight.w400
                           ),
                         ),
                       ],
@@ -114,7 +115,11 @@ class _NoticeElemState extends State<NoticeElem> {
                       children: [
                         Text(
                           widget.noticeDate,
-                          style: TextStyle(fontSize: ScreenUtil().setSp(10)),
+                          style: TextStyle(
+                            color: AppTheme.colors.base2,
+                            fontSize: ScreenUtil().setSp(10),
+                            // fontWeight: FontWeight.w300
+                          ),
                         ),
                         SizedBox(
                           width: ScreenUtil().setWidth(12),
@@ -145,11 +150,17 @@ class _NoticeElemState extends State<NoticeElem> {
                 child: Text(
                     widget.noticeText,
                     style: TextStyle(
-                        color: AppTheme.colors.base1,
-                        fontSize: ScreenUtil().setSp(14)),
+                      color: AppTheme.colors.base1,
+                      fontSize: ScreenUtil().setSp(12),
+                      fontWeight: FontWeight.w300
+                    ),
                   )
               ),
-          )
+          ),
+          Divider(
+            color: AppTheme.colors.background,
+            height: 2,
+          ),
         ],
       ),
     );

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/gallery/videoShowWidget.dart';
-import 'package:paran_girin/layout/default_button.dart';
 import 'package:paran_girin/layout/default_icon_button.dart';
+import 'package:paran_girin/layout/disabled_button.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/models/schema.dart';
 import 'package:paran_girin/theme/app_theme.dart';
@@ -270,11 +270,9 @@ class _PostDetail extends State<PostDetail> {
                                       decoration: TextDecoration.underline),
                                 )),
                             SizedBox(height: ScreenUtil().setHeight(8)),
-                            DefaultButton(
-                                text: "이미 대답한 질문이에요",
-                                color: AppTheme.colors.base2,
-                                isInvert: false,
-                                press: () {}),
+                            DisabledButton(
+                              text: "이미 대답한 질문이에요"
+                            ),
                           ],
                         )
                       : DefaultIconButton(

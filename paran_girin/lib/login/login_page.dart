@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:paran_girin/layout/default_button.dart';
@@ -10,8 +11,9 @@ import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/layout/default_layout.dart';
 import 'package:provider/provider.dart';
 
-enum enum_state { CHECKACC, SIGNUP, SIGNIN, PWCHECK, VERI }
+enum enum_state { CHECKACC, SIGNUP, SIGNIN, VERI }
 bool refresh = false;
+GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key, this.title}) : super(key: key);
@@ -23,12 +25,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _textCon = TextEditingController();
   FirebaseProvider fp;
+  TextEditingController _textCon = TextEditingController();
+  TextEditingController _textCon2 = TextEditingController();
   bool doRemember = true;
  // "다른 이메일로 가입하기"
   String _email = "", _pw = "", _pw_check = "";
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   enum_state _state = enum_state.CHECKACC;
 
   @override
@@ -51,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                 Column(
                   children: [
                     Text(
-                      '혹은 SNS 계정으로 함께 해요',
+                      '또는 SNS 계정으로 함께 해요',
                       style: TextStyle(
                           fontFamily: 'Noto Sans KR',
                           fontWeight: FontWeight.w500,
@@ -126,16 +130,11 @@ class _LoginPageState extends State<LoginPage> {
       case enum_state.SIGNUP:
         return () {
           _pw = _textCon.text;
-          change2PWCheck();
-        };
-      case enum_state.PWCHECK:
-        return () {
-          _pw_check = _textCon.text;
+          _pw_check = _textCon2.text;
+
           logger.d(_pw_check, _pw);
-          if (_pw_check == _pw) {
+          if (_formKey.currentState.validate()) {
             _signUp(_email, _pw);
-          } else {
-            change2PWCheck();
           }
         };
       case enum_state.VERI:
@@ -179,37 +178,32 @@ class _LoginPageState extends State<LoginPage> {
             next: onClick()
             );
       case enum_state.SIGNUP:
-        return LoginBody(
-            title: "환영합니다!",
-            description: "",
-            actionText: "",
-            loginInfo: "가입을 위해\n새로운 비밀번호를 입력해 주세요",
-            isEmail: false,
-            textPress: () {
-              // find password page
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => DefaultLayout()));
-            },
-            textCon: _textCon,
-            next: onClick()
-            );
-      case enum_state.PWCHECK:
-        return LoginBody(
-            title: "환영합니다!",
-            description: "",
-            actionText: "",
-            loginInfo: "확인을 위해\n한 번 더 비밀번호를 입력해주세요",
-            isEmail: false,
-            textPress: () {
-              setState(() {
-                refresh = true;
-              });
-              // Navigator.of(context)
-              //     .push(MaterialPageRoute(builder: (context) => LoginPage()));
-            },
-            textCon: _textCon,
-            next: onClick()
-            );
+      //   return LoginBody(
+      //       title: "환영합니다!",
+      //       description: "",
+      //       actionText: "",
+      //       loginInfo: "가입을 위해\n새로운 비밀번호를 입력해 주세요",
+      //       isEmail: false,
+      //       textPress: () {
+      //         // find password page
+      //         Navigator.of(context).push(
+      //             MaterialPageRoute(builder: (context) => DefaultLayout()));
+      //       },
+      //       textCon: _textCon,
+      //       next: onClick()
+      //       );
+        return LoginBody2(
+              title: "환영합니다!",
+              loginInfo: "가입을 위해\n새로운 비밀번호를 입력해 주세요",
+              loginInfo2: "확인을 위해\n한 번 더 비밀번호를 입력해주세요",
+              textCon: _textCon,
+              textCon2: _textCon2, // 수정 필@
+              next: onClick(),
+              formKey: _formKey,
+              pwChecker: (){
+                pwChecker(_textCon, _textCon2);
+              }
+              );
       case enum_state.VERI:
         return LoginBody(
           title: "이메일을\n확인해주세요",
@@ -244,6 +238,14 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  String pwChecker(textCon1, textCon2){
+    var pw1 = textCon1.text;
+    var pw2 = textCon2.text;
+    if (pw1 != pw2){
+      return "비밀번호가 일치하지 않습니다";
+    }
+    return null;
+  }
   void change2CheckAcc() {
     setState(() {
       _state = enum_state.CHECKACC;
@@ -257,13 +259,6 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _state = enum_state.SIGNUP;
       _pw = "";
-      _pw_check = "";
-    });
-  }
-
-  void change2PWCheck() {
-    setState(() {
-      _state = enum_state.PWCHECK;
       _pw_check = "";
     });
   }
