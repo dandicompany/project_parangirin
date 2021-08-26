@@ -47,7 +47,7 @@ class _CategoryPageState extends State<CategoryPage> {
         return QuestionCard(
           qTitle: question.title ?? "제목없음",
           qDescription: question.question ?? "질문없음",
-          isDone:
+          questionDone:
               fp.getUserInfo().currentChild.answers.containsKey(question.qid),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(

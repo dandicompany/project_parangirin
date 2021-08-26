@@ -408,14 +408,14 @@ class FirebaseProvider with ChangeNotifier {
         return true;
       }
     } on FirebaseAuthException catch (e) {
-      logger.e(e.toString());
+      logger.e(e.code);
       setLastFBMessage(e.toString());
-      setLastFBExceptionCode(e.code);
+      setLastFBExceptionCode(interpretFBMessage(e.code));
       return false;
     } on Exception catch (e) {
       logger.e(e.toString());
       List<String> result = e.toString().split(", ");
-      setLastFBMessage(result[1]);
+      // setLastFBMessage(interpretFBMessage(e.code));
       return false;
     }
   }
@@ -435,14 +435,14 @@ class FirebaseProvider with ChangeNotifier {
       }
       return false;
     } on FirebaseAuthException catch (e) {
-      logger.e(e.toString());
-      setLastFBMessage(e.toString());
+      logger.e(e.code);
+      setLastFBMessage(interpretFBMessage(e.code));
       setLastFBExceptionCode(e.code);
       return false;
     } on FirebaseException catch (e) {
-      logger.e(e.toString());
+      logger.e(e.code);
       List<String> result = e.toString().split(", ");
-      setLastFBMessage(e.toString());
+      setLastFBMessage(interpretFBMessage(e.code));
       logger.e(e.code);
       return false;
     }
@@ -463,7 +463,7 @@ class FirebaseProvider with ChangeNotifier {
     } on Exception catch (e) {
       logger.e(e.toString());
       List<String> result = e.toString().split(", ");
-      setLastFBMessage(result[1]);
+      // setLastFBMessage(interpretFBMessage(e.code));
       return false;
     }
   }
@@ -482,7 +482,7 @@ class FirebaseProvider with ChangeNotifier {
     } on Exception catch (e) {
       logger.e(e.toString());
       List<String> result = e.toString().split(", ");
-      setLastFBMessage(result[1]);
+      // setLastFBMessage(interpretFBMessage(e.code));
       return false;
     }
   }
@@ -530,6 +530,22 @@ class FirebaseProvider with ChangeNotifier {
     String returnValue = _lastFirebaseResponse;
     _lastFirebaseResponse = "";
     return returnValue;
+  }
+
+  interpretFBMessage(String code) {
+    switch (code) {
+      case "too-many-requests":
+        return "로그인 시되 횟수가 많습니다. 잠시 후 다시 시도해 주세요.";
+      case "invalid-email":
+        return "잘못된 이메일 형식입니다.";
+      case "wrong-password":
+        return "잘못된 비밀번호 입니다.";
+      case "weak-password":
+        return "6자리 이상의 비밀번호를 입력해 주세요.";
+      default:
+        return "알 수 없는 에러";
+        break;
+    }
   }
 
   getLastFBExceptionCode() {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:paran_girin/layout/default_button.dart';
@@ -73,8 +74,22 @@ class _BabyInfoNicknameState extends State<BabyInfoNickname> {
                       ),
                     ),
                   keyboardType: TextInputType.name,
-                  style: TextStyle(fontSize: ScreenUtil().setSp(18))
+                  style: TextStyle(fontSize: ScreenUtil().setSp(18)),
                   // obscureText: true, // for password
+                  onChanged: (nextText){
+                    setState(() {
+                      // if(_nickCon.text.trim() != ""){
+                      //   isSelected = true;
+                      // }else{
+                      //   isSelected = false;
+                      // }
+                      _nickCon.text = nextText.substring(0,6);
+                      _nickCon.selection = TextSelection.fromPosition(TextPosition(offset: 6));
+                    });
+                    },
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(6)
+                  ],
                 ),
               ],
             ),

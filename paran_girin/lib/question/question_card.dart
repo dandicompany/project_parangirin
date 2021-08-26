@@ -7,9 +7,9 @@ class QuestionCard extends StatelessWidget {
   final VoidCallback onTap;
   final String qTitle;
   final String qDescription;
-  final bool isDone;
+  final bool questionDone;
 
-  const QuestionCard({Key key, this.onTap, this.qTitle, this.qDescription, this.isDone}) : super(key: key);
+  const QuestionCard({Key key, this.onTap, this.qTitle, this.qDescription, this.questionDone}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +27,17 @@ class QuestionCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            // SvgPicture.asset(
-            //   isDone ? "assets/icons/check-circle.svg" : "assets/icons/circle.svg",
-            //   width: ScreenUtil().setWidth(24),
-            //   height: ScreenUtil().setHeight(24),
-            // ),
-            Image.asset(
-                isDone ? "assets/icons/check-circle.png" : "assets/icons/circle.png",
-                width: ScreenUtil().setWidth(24),
-                height: ScreenUtil().setHeight(24),
-                fit: BoxFit.cover
-              ),
+            SvgPicture.asset(
+              questionDone ? "assets/icons/check-circle.svg" : "assets/icons/circle.svg",
+              width: ScreenUtil().setWidth(24),
+              height: ScreenUtil().setHeight(24),
+            ),
+            // Image.asset(
+            //     questionDone ? "assets/icons/check-circle.png" : "assets/icons/circle.png",
+            //     width: ScreenUtil().setWidth(24),
+            //     height: ScreenUtil().setHeight(24),
+            //     fit: BoxFit.cover
+            //   ),
             Container(
               width: ScreenUtil().setWidth(280),
               child: Column(

@@ -85,7 +85,7 @@ class LoginBody extends StatelessWidget {
               height: ScreenUtil().setHeight(28),
             ),
             getInput
-                ? (isEmail ? EmailForm(textCon, next) : PasswordForm(textCon, next))
+                ? (isEmail ? EmailForm(textCon, next) : PasswordForm(textCon, next, null))
                 : SizedBox.shrink(),
             SizedBox(
               width: double.infinity,
@@ -93,6 +93,80 @@ class LoginBody extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class LoginBody2 extends StatelessWidget {
+  const LoginBody2(
+      {Key key,
+      this.title,
+      this.loginInfo,
+      this.loginInfo2,
+      this.textCon,
+      this.textCon2,
+      this.next,
+      this.pwChecker, 
+      this.formKey,
+      this.getInput = true})
+      : super(key: key);
+
+  final String title, loginInfo, loginInfo2;
+  final bool getInput;
+  final TextEditingController textCon;
+  final TextEditingController textCon2;
+  final Function next, pwChecker;
+  final formKey;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.only(
+            top: ScreenUtil().setWidth(90),
+            left: ScreenUtil().setWidth(16),
+            right: ScreenUtil().setWidth(16)),
+        child: Form(
+          key: this.formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                    // fontFamily: 'Noto Sans KR',
+                    fontWeight: FontWeight.w300,
+                    fontSize: ScreenUtil().setSp(24)),
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: ScreenUtil().setHeight(60),
+              ),
+              Text(
+                loginInfo,
+                style: TextStyle(
+                    // fontFamily: 'Noto Sans KR',
+                    // fontWeight: FontWeight.w300,
+                    fontSize: ScreenUtil().setSp(16)),
+              ),
+              SizedBox( height: ScreenUtil().setHeight(8)),
+              PasswordForm(textCon, null, null),
+              SizedBox(
+                width: double.infinity,
+                height: ScreenUtil().setHeight(36),
+              ),
+              Text(
+                loginInfo2,
+                style: TextStyle(
+                    // fontFamily: 'Noto Sans KR',
+                    // fontWeight: FontWeight.w300,
+                    fontSize: ScreenUtil().setSp(16)),
+              ),
+              SizedBox( height: ScreenUtil().setHeight(8)),
+              PasswordForm(textCon2, next, this.pwChecker),
+            ],
+          ),
+        )
       ),
     );
   }
@@ -147,15 +221,17 @@ class _EmailFormState extends State<EmailForm> {
 class PasswordForm extends StatefulWidget {
   final TextEditingController textCon;
   var next;
-  PasswordForm(this.textCon, this.next);
+  var pwChecker;
+  PasswordForm(this.textCon, this.next, this.pwChecker);
   @override
-  _PasswordFormState createState() => _PasswordFormState(textCon, next);
+  _PasswordFormState createState() => _PasswordFormState(textCon, next, pwChecker);
 }
 
 class _PasswordFormState extends State<PasswordForm> {
   TextEditingController textCon;
+  var pwChecker;
   var next;
-  _PasswordFormState(this.textCon, this.next);
+  _PasswordFormState(this.textCon, this.next, this.pwChecker);
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -165,6 +241,14 @@ class _PasswordFormState extends State<PasswordForm> {
           textInputAction: TextInputAction.next,
           onFieldSubmitted: (term){
             next();},
+          validator: (text){
+            print("validating password");
+            if (this.pwChecker != null){
+              return this.pwChecker();
+            } else {
+              return "";
+            }
+          },
           decoration: InputDecoration(
             suffixIcon: IconButton(
               onPressed: textCon.clear,

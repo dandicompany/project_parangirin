@@ -56,7 +56,8 @@ class _BaseAppBar extends State<BaseAppBar> {
                 child: Padding(
                     padding: EdgeInsets.only(right: ScreenUtil().setWidth(17)),
                     child: InkWell(
-                      onTap: widget.onSend ?? () {
+                      onTap: (){
+                        widget.onSend;
                         showDialog(context: context,
                             builder: (BuildContext context)
                             {
@@ -65,6 +66,8 @@ class _BaseAppBar extends State<BaseAppBar> {
                                   text1: "성공적으로 영상을 파란기린에 보냈어요!",
                                   text2: "기발하고 재미있는 답변은 파란기린 어플과 SNS의 생각뽐내기에 게시될 수 있어요! 생각뽐내기에 선정되면 파란기린이 알려드릴게요");
                             });
+                      } ?? () {
+
                       },
                       child: Text(
                         "보내기",
@@ -120,19 +123,34 @@ class _PopupAfterBbom extends State<PopupAfterBbom> {
             child: Column(
               //mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                SizedBox(height: 29,),
+                SizedBox(height: ScreenUtil().setHeight(31)),
                 Container(
                   width: ScreenUtil().setWidth(38),
                   height: ScreenUtil().setHeight(38),
                   child: Image.asset("assets/popup/check.png",fit: BoxFit.cover),
                 ),
-                SizedBox(height: 29),
-                Text("성공적으로 영상을", style: TextStyle(fontSize: ScreenUtil().setSp(20), color:Colors.black), ),
-                Text("파란기린에 보냈어요!", style: TextStyle(fontSize: ScreenUtil().setSp(20), color:Colors.black), ),
-                SizedBox(height: 22,),
-                Text("기발하고 재미있는 답변은 파란기린 어플과 SNS의 생각 ", style: TextStyle(fontSize: ScreenUtil().setSp(12), color:AppTheme.colors.base3,)),
-                Text("뽐내기에 게시될 수 있이요! 생각뽐내기에 선정되면 파란 ", style: TextStyle(fontSize: ScreenUtil().setSp(12), color:AppTheme.colors.base3,)),
-                Text("기린이 알려드릴게요", style: TextStyle(fontSize: ScreenUtil().setSp(12), color:AppTheme.colors.base3,)),
+                SizedBox(height: ScreenUtil().setHeight(31)),
+                Text(
+                  "성공적으로 영상을\n파란기린에 보냈어요!", 
+                  style: TextStyle(
+                    fontSize: ScreenUtil().setSp(20), 
+                    color:AppTheme.colors.base1,
+                    fontWeight: FontWeight.w600
+                  ),
+                  textAlign: TextAlign.center
+                ),
+                SizedBox(height: ScreenUtil().setHeight(33)),
+                Container(
+                  width: ScreenUtil().setWidth(255),
+                  child: Text(
+                    "기발하고 재미있는 답변은 파란기린 어플과 SNS의 생각뽐내기에 게시될 수 있어요! 생각뽐내기에 선정되면 파란기린이 알려드릴게요", 
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(12), 
+                      color:AppTheme.colors.base2,
+                      fontWeight: FontWeight.w400
+                    ),
+                  ),
+                ),
               ],
             )
         )
