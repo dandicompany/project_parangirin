@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/layout/default_icon_button.dart';
+import 'package:paran_girin/myPageDetail/privacy_policy.dart';
+import 'package:paran_girin/onboarding/privacyPolicy.dart';
+import 'package:paran_girin/question/qestion_post.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
@@ -37,8 +40,10 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
     String today_qid = (now.day % fp.getStaticInfo().questions.length).toString();
     logger.d("-----------------------&&&SOS 이곳은 HomeAvatarBig &&&---------------------------");
     logger.d(today_qid);
+
     todayDone = fp.getUserInfo().currentChild.answers.containsKey(today_qid);
     Question question = fp.getStaticInfo().questions[today_qid];
+    logger.d(question.category);
     DateTime tomorrow = DateTime.parse(
         DateFormat("yyyyMMdd").format(now.add(Duration(days: 1))));
     Duration remaining_time = tomorrow.difference(now);
@@ -177,8 +182,17 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
                           //     builder: (context) => Initialization(today_qid)));
                           Navigator.pushReplacement<void, void>(
                             context,MaterialPageRoute<void>(
-                              builder: (BuildContext context) => Initialization(today_qid)));
-
+                              //builder: (BuildContext context) => Initialization(today_qid)));
+                              builder: (BuildContext context) => QuestionPost(
+                                  tag: question.tag ?? "태그 없음",
+                                  categoryTitle: question.category ?? "카테고리 없음",
+                                  image: "assets/images/category_nature.png",
+                                  qTitle: question.title ?? "제목 없음",
+                                  question: question.question ?? "질문 없음",
+                                  storyText: question.story ?? "스토리 없음",
+                                  guide: question.guide ?? "가이드 없음",
+                                  qid: question.qid.toString())));
+                              //builder: (BuildContext context) => PrivacyPolicy2()));
                         }),
                   ),
           ],

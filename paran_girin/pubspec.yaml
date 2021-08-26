@@ -64,6 +64,7 @@ dependencies:
   sliding_up_panel:
   share: ^0.6.5+4
   rflutter_alert:
+  circular_check_box:
   
 
 dev_dependencies:
