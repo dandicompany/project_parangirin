@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:paran_girin/layout/base_appbar.dart';
 import 'package:paran_girin/question/qestion_post.dart';
 import 'package:paran_girin/question/question_card.dart';
@@ -20,10 +21,24 @@ class _QuestionPageState extends State<QuestionPage> {
   ScrollController scrollController = ScrollController();
   FirebaseProvider fp;
   String category;
+  bool available = true;
+
   _QuestionPageState(this.category);
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
+    available = true;
+
+    int today =  DateTime.parse(
+        DateFormat("yyyyMMdd").format(DateTime.now())).millisecondsSinceEpoch;
+    
+    for (var ans in fp.getStaticInfo().answers.values){
+      if(DateTime.parse(
+        DateFormat("yyyyMMdd").format(DateTime.fromMillisecondsSinceEpoch(ans.date))).millisecondsSinceEpoch == today){
+        available = false;
+      }
+    }
+    
     return Scaffold(
         appBar: BaseAppBar(title: widget.categoryTitle),
         body: StreamBuilder(
@@ -45,22 +60,23 @@ class _QuestionPageState extends State<QuestionPage> {
                     return QuestionCard(
                       qTitle: question.title ?? "제목없음",
                       qDescription: question.question ?? "질문없음",
-                      isDone: fp
+                      questionDone: fp
                           .getUserInfo()
                           .currentChild
                           .answers
                           .containsKey(question.qid),
+
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => QuestionPost(
-                                tag: question.tag ?? "태그 없음",
-                                categoryTitle: question.category ?? "카테고리 없음",
+                                categoryTitle: question.category ?? "카테고리없음",
                                 image: "assets/images/category_nature.png",
-                                qTitle: question.title ?? "제목 없음",
-                                question: question.question ?? "질문 없음",
-                                storyText: question.story ?? "스토리 없음",
-                                guide: question.guide ?? "가이드 없음",
-                                qid: question.qid.toString())));
+                                qTitle: question.title ?? "제목없음",
+                                question: question.question ?? "질문없음",
+                                storyText: question.story ?? "스토리없음",
+                                guide: question.guide ?? "가이드없음",
+                                qid: question.qid.toString(),
+                                available: available)));
                       },
                     );
                   },

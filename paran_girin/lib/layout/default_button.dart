@@ -27,19 +27,6 @@ class DefaultButton extends StatelessWidget {
     return SizedBox(
       width: ScreenUtil().setWidth(343),
       height: ScreenUtil().setHeight(54),
-      // child: FlatButton(
-      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-      //   color: isInvert? Colors.white: main,
-      //   onPressed: press,
-      //   child: Text(
-      //     text,
-      //     style: TextStyle(
-      //       fontSize: ScreenUtil().setSp(18),
-      //       fontWeight: FontWeight.w500,
-      //       color: isInvert? main : Colors.white
-      //     ),
-      //   ),
-      // ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: StadiumBorder(),

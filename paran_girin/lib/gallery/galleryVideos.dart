@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/gallery/myVideoLayout.dart';
 import 'package:paran_girin/gallery/videoShowWidget.dart';
@@ -23,6 +24,9 @@ int artNum = 0;
 int socialNum = 0;
 int commuNum = 0;
 int sum = bodyNum + natureNum + artNum + socialNum;
+
+DateFormat dateFormat = DateFormat("yyyy/MM/dd");
+
 
 class GalleryVideo extends StatefulWidget {
   @override
@@ -256,7 +260,7 @@ class YesVideo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(
-          height: ScreenUtil().setHeight(45),
+          height: ScreenUtil().setHeight(30),
         ),
         // for (var i = 0; i < sum; i++)
         for (var key in answers.keys)
@@ -301,8 +305,7 @@ class YesVideo extends StatelessWidget {
                 }
                 return MyVideoLayout(
                   title: fp.getStaticInfo().questions[key].title,
-                  date: DateTime.fromMillisecondsSinceEpoch(answer.date)
-                      .toString(),
+                  date: dateFormat.format(DateTime.fromMillisecondsSinceEpoch(answer.date)),
                   thumbnail: answer.thumbnail,
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(

@@ -27,7 +27,7 @@ class _FAQState extends State<FAQ> {
         children: [
           SizedBox(width: double.infinity, height: ScreenUtil().setHeight(32)),
           SizedBox(
-              height: 600,
+              height: ScreenUtil().setHeight(630),
               child: FutureBuilder(
                   future: fp.getFirestore().collection("faqs").get(),
                   builder: (context, snap) {
@@ -97,7 +97,11 @@ class _FAQElemState extends State<FAQElem> {
                         Text(
                           widget.faqTitle,
                           style: TextStyle(
+                            color: AppTheme.colors.base1,
                             fontSize: ScreenUtil().setSp(14),
+                            fontWeight: _faqVisible 
+                                        ? FontWeight.w500 
+                                        : FontWeight.w400
                           ),
                         ),
                       ],
@@ -130,12 +134,17 @@ class _FAQElemState extends State<FAQElem> {
                 child: Text(
                   widget.faqText,
                   style: TextStyle(
-                      color: AppTheme.colors.base1,
-                      fontSize: ScreenUtil().setSp(14)),
+                    color: AppTheme.colors.base1,
+                    fontSize: ScreenUtil().setSp(12),
+                    fontWeight: FontWeight.w300
+                  ),
                 )
             )
-                
-          )
+          ),
+          Divider(
+            color: AppTheme.colors.background,
+            height: 2,
+          ),
         ],
       ),
     );

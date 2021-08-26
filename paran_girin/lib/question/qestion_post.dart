@@ -5,12 +5,10 @@ import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/layout/base_appbar.dart';
 import 'package:paran_girin/layout/default_button.dart';
 import 'package:paran_girin/layout/default_icon_button.dart';
-import 'package:paran_girin/login/firebase_provider.dart';
+import 'package:paran_girin/layout/disabled_button.dart';
 import 'package:paran_girin/theme/app_theme.dart';
-import 'package:provider/provider.dart';
 
 class QuestionPost extends StatefulWidget {
-  final String tag;
   final String categoryTitle;
   final String image;
   final String qTitle;
@@ -18,17 +16,18 @@ class QuestionPost extends StatefulWidget {
   final String storyText;
   final String guide;
   final String qid;
+  final bool available;
 
   const QuestionPost(
       {Key key,
-        this.tag,
       this.categoryTitle,
       this.image,
       this.qTitle,
       this.question,
       this.storyText,
       this.guide,
-      this.qid})
+      this.qid,
+      this.available})
       : super(key: key);
 
   @override
@@ -37,21 +36,13 @@ class QuestionPost extends StatefulWidget {
 
 class _QuestionPostState extends State<QuestionPost> {
   ScrollController scrollController = ScrollController();
-  FirebaseProvider fp;
   bool _storyVisible = false;
   bool _guideVisible = false;
-  List<String> tags = [];
+  bool todayDone;
 
   @override
   Widget build(BuildContext context) {
-    fp = Provider.of<FirebaseProvider>(context);
-    DateTime now = DateTime.now();
-    String today_qid =
-        (now.day % fp.getStaticInfo().questions.length).toString();
-    bool todayDone = fp.getUserInfo().currentChild.answers.containsKey(today_qid);
-    tags = widget.tag.substring(1).split("#");
-    logger.d(tags.length, tags);
-
+    todayDone = widget.available;
     return Scaffold(
         appBar: BaseAppBar(title: widget.categoryTitle),
         body: SingleChildScrollView(
@@ -59,12 +50,6 @@ class _QuestionPostState extends State<QuestionPost> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: ScreenUtil().setHeight(19)),
-              Row(
-                children: _buildTag(tags, context)
-                ,
-              ),
-              // _buildTag(tags, context),
               Image.asset(
                   // widget.image,
                   _setImage(),
@@ -188,18 +173,11 @@ class _QuestionPostState extends State<QuestionPost> {
                     text: "파란 기린과 대화하기 ",
                     isInvert: false,
                     press: () {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) => Initialization(widget.qid)));
-                      Navigator.pushReplacement<void, void>(
-                        context,MaterialPageRoute<void>(
-                        builder: (BuildContext context) => Initialization(widget.qid)));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => Initialization(widget.qid)));
                     })
-                  : DefaultButton(
-                    text: "이미 대답한 질문이에요",
-                    color: AppTheme.colors.base3,
-                    press: (){
-                    }
-                    // color: const Color.fromRGBO(163, 163, 163, 1),
+                  : DisabledButton(
+                    text: "내일 대답할 수 있어요",
                   )
               )
             ],
@@ -224,66 +202,7 @@ class _QuestionPostState extends State<QuestionPost> {
     }
   }
 
-  // Widget _buildTag(List<String> _tags, BuildContext context) {
-  //   List<Widget> list = List<Widget>();
-  //   for (var _tag in _tags) {
-  //     print(_tag);
-  //     Container(
-  //       height: ScreenUtil().setHeight(106),
-  //       color: AppTheme.colors.base3,
-  //       padding: const EdgeInsets.all(16.0),
-  //       child: Container(
-  //         child: Text(
-  //           _tag
-  //         )
-  //       )
-  //     );
-  //   };
-  // }
-
-  List<Widget> _buildTag(List<String> _tags, BuildContext context) {
-    List<Widget> tags = [];
-    tags.add(SizedBox(width: ScreenUtil().setWidth(16)));
-    for (var _tag in _tags) {
-      tags.add(
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(25),
-                child: Container(
-                    height: ScreenUtil().setHeight(27),
-                    color: Color.fromRGBO(233, 233, 233, 1),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: ScreenUtil().setWidth(13),
-                        vertical: ScreenUtil().setHeight(4)
-                    ),
-                    child: Text(
-                        _tag,
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(10),
-                        color: AppTheme.colors.base2,
-                      ),
-                    )
-                ),
-              ),
-              SizedBox(width: ScreenUtil().setWidth(6)),
-
-            ],
-          )
-      );
-    }
-    return tags;
+  void dispose() {
+    super.dispose();
   }
-
-  // List<Widget> _buildRowList(List<String> _tags) {
-  //   List<Widget> lines = []; // this will hold Rows according to available lines
-  //   for (var _tag in _tags) {    
-  //     List<Widget> placesForLine = [] // this will hold the places for each line
-  //     for (var placeLine in line.places) {
-  //       placesForLine.add(_buildPlace(placeLine));
-  //     }
-  //     lines.add(Row(children: placesForLine));
-  //   }
-  //   return lines;
-  // }
 }
