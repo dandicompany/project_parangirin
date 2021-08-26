@@ -64,6 +64,7 @@ dependencies:
   sliding_up_panel:
   share: ^0.6.5+4
   rflutter_alert:
+  circular_check_box:
   
 
 dev_dependencies:
@@ -106,6 +107,7 @@ flutter:
       - assets/onboarding/onboard_3.gif
       - assets/music/bgm.mp3
       - assets/popup/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

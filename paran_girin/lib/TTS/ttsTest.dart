@@ -84,7 +84,6 @@ class TextToSpeechState extends State<TextToSpeech> {
     // print(file.lengthSync());
     // await player.load(path);
     player.play(path, isLocal: true);
-
   }
 
   @override

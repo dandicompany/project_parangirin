@@ -67,7 +67,6 @@ class _BaseAppBar extends State<BaseAppBar> {
                                   text2: "기발하고 재미있는 답변은 파란기린 어플과 SNS의 생각뽐내기에 게시될 수 있어요! 생각뽐내기에 선정되면 파란기린이 알려드릴게요");
                             });
                       } ?? () {
-
                       },
                       child: Text(
                         "보내기",
