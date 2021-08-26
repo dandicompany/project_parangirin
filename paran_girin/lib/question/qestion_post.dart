@@ -9,6 +9,7 @@ import 'package:paran_girin/layout/disabled_button.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
 class QuestionPost extends StatefulWidget {
+  final String tag;
   final String categoryTitle;
   final String image;
   final String qTitle;
@@ -20,6 +21,7 @@ class QuestionPost extends StatefulWidget {
 
   const QuestionPost(
       {Key key,
+      this.tag,
       this.categoryTitle,
       this.image,
       this.qTitle,
@@ -43,6 +45,8 @@ class _QuestionPostState extends State<QuestionPost> {
   @override
   Widget build(BuildContext context) {
     todayDone = widget.available;
+    List<String> tags = widget.tag.substring(1).split("#");
+
     return Scaffold(
         appBar: BaseAppBar(title: widget.categoryTitle),
         body: SingleChildScrollView(
@@ -50,6 +54,10 @@ class _QuestionPostState extends State<QuestionPost> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: ScreenUtil().setHeight(19)),
+              Row(
+                children: _buildTag(tags, context)
+              ),
               Image.asset(
                   // widget.image,
                   _setImage(),
@@ -200,6 +208,40 @@ class _QuestionPostState extends State<QuestionPost> {
       default:
         return 'assets/images/category_society.png';
     }
+  }
+
+List<Widget> _buildTag(List<String> _tags, BuildContext context) {
+  List<Widget> tags = [];
+  tags.add(SizedBox(width: ScreenUtil().setWidth(16)));
+  for (var _tag in _tags) {
+    tags.add(
+        Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(25),
+              child: Container(
+                  height: ScreenUtil().setHeight(27),
+                  color: Color.fromRGBO(233, 233, 233, 1),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: ScreenUtil().setWidth(13),
+                      vertical: ScreenUtil().setHeight(4)
+                  ),
+                  child: Text(
+                      _tag,
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(10),
+                      color: AppTheme.colors.base2,
+                    ),
+                  )
+              ),
+            ),
+            SizedBox(width: ScreenUtil().setWidth(6)),
+
+          ],
+        )
+    );
+  }
+  return tags;
   }
 
   void dispose() {
