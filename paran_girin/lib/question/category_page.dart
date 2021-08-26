@@ -52,6 +52,7 @@ class _CategoryPageState extends State<CategoryPage> {
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => QuestionPost(
+                      tag: question.tag ?? "태그 없음",
                       categoryTitle: question.category ?? "카테고리없음",
                       image: "assets/images/category_nature.png",
                       qTitle: question.title ?? "제목없음",

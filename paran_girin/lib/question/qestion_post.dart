@@ -222,9 +222,11 @@ List<Widget> _buildTag(List<String> _tags, BuildContext context) {
               child: Container(
                   height: ScreenUtil().setHeight(27),
                   color: Color.fromRGBO(233, 233, 233, 1),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: ScreenUtil().setWidth(13),
-                      vertical: ScreenUtil().setHeight(4)
+                  padding: EdgeInsets.only(
+                    right: ScreenUtil().setWidth(13),
+                    left: ScreenUtil().setWidth(13),
+                    top: ScreenUtil().setHeight(5),
+                    bottom: ScreenUtil().setHeight(4),
                   ),
                   child: Text(
                       _tag,
