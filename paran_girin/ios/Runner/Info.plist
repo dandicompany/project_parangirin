@@ -36,6 +36,8 @@
 	<string>138273764808653</string>
 	<key>FacebookDisplayName</key>
 	<string>paran_girin</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -63,12 +65,26 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>We don't need apple music just using permission_handler</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>We don't use calendar info just using permission_handler</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Used to record the child's conversation video</string>
+	<key>NSContactsUsageDescription</key>
+	<string>We don't use contact info just using permission_handler</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We don't need location info just using permission_handler</string>
+	<key>NSLocationWhenInUseUsageDescription </key>
+	<string>We don't need location info just using permission_handler</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Used to record the child's conversation</string>
+	<key>NSMotionUsageDescription</key>
+	<string>We don't use motion info just using permission_handler</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Used to set the user profile image</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Used to recognize voice instead of typing</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>
