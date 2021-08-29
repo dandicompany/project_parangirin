@@ -48,8 +48,7 @@ class _SharingMyAnswersState extends State<SharingMyAnswers> {
     return Scaffold(
         appBar: baseAppBar,
         body: Stack(
-          children: [
-            state? null:
+          children: <Widget>[
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.symmetric(
@@ -63,7 +62,15 @@ class _SharingMyAnswersState extends State<SharingMyAnswers> {
                     })
                     : NoAnswers(),
               ),
-            )
+            ),
+            state? Text(""):Opacity(
+              opacity: 0.25,
+              child: Container(
+                decoration: BoxDecoration(color: Colors.black),
+              ),),
+            state? Text(""):PopupSendingNotice(),
+
+
           ],
         ));
   }
@@ -302,5 +309,93 @@ class NoAnswers extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ]);
+  }
+}
+
+
+
+class PopupSendingNotice extends StatefulWidget {
+  final String text1, text2;
+  final AssetImage img;
+
+  const PopupSendingNotice({Key key, this.text1, this.text2, this.img}) : super(key: key);
+  @override
+  _PopupSendingNotice createState() => _PopupSendingNotice();
+}
+
+class _PopupSendingNotice extends State<PopupSendingNotice> {
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: contentBox(context),
+    );
+  }
+  contentBox(context){
+    return Stack(
+      children: <Widget>[
+        Container(
+            width: ScreenUtil().setWidth(303),
+            height: ScreenUtil().setHeight(205),
+            //padding: EdgeInsets.only(left: 20, top:65, right:20, bottom: 20),
+            // margin: EdgeInsets.only(top:45),
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              //mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(height: ScreenUtil().setHeight(5)),
+                Row(
+                  children: [
+                    SizedBox(width: ScreenUtil().setWidth(240),),
+                    Transform.scale(scale: 0.7,
+                        child: IconButton(
+                          alignment: Alignment.topRight,
+                          icon: Image.asset("assets/icons/close-popup.png"),
+                          iconSize: 10.0,
+                          onPressed: (){ state = true;
+                          Navigator.pushReplacement<void, void>(
+                              context,MaterialPageRoute<void>(
+                              builder: (BuildContext context) => SharingMyAnswers()));
+                          },//hobin
+                        ),),
+                  ],
+                ),
+                SizedBox(height: ScreenUtil().setHeight(5)),
+                Text(
+                    "아이의 영상을 파란기린에게 보내주세요!",
+                    style: TextStyle(
+                        fontSize: ScreenUtil().setSp(14),
+                        color:AppTheme.colors.primary2,
+                        fontWeight: FontWeight.w600
+                    ),
+                    textAlign: TextAlign.center
+                ),
+                SizedBox(height: ScreenUtil().setHeight(16)),
+                Container(
+                  width: ScreenUtil().setWidth(255),
+                  child: Text(
+                    "기발하고 재미있는 답변은\n파란기린 어플과 SNS에 게시될 수 있어요!\n생각뽐내기에 선정되면 파란기린이 알려드릴게요!",
+                    style: TextStyle(
+                        fontSize: ScreenUtil().setSp(12),
+                        color:AppTheme.colors.base2,
+                        fontWeight: FontWeight.w400
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            )
+        )
+
+      ],
+    );
   }
 }
