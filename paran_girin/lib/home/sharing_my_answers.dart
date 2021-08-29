@@ -14,6 +14,8 @@ import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:paran_girin/gallery/myVideoLayout.dart';
 import 'package:intl/intl.dart';
 
+bool state = false;
+
 class SharingMyAnswers extends StatefulWidget {
   int sum;
   @override
@@ -45,19 +47,24 @@ class _SharingMyAnswersState extends State<SharingMyAnswers> {
     );
     return Scaffold(
         appBar: baseAppBar,
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: ScreenUtil().setWidth(16),
-            ),
-            child: haveAnswers
-                ? ShowAnswers(
+        body: Stack(
+          children: [
+            state? null:
+            SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: ScreenUtil().setWidth(16),
+                ),
+                child: haveAnswers
+                    ? ShowAnswers(
                     selectedAnswers: selectedAnswers,
                     refresh: () {
                       setState(() {});
                     })
-                : NoAnswers(),
-          ),
+                    : NoAnswers(),
+              ),
+            )
+          ],
         ));
   }
 
