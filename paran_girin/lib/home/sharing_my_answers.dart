@@ -68,7 +68,8 @@ class _SharingMyAnswersState extends State<SharingMyAnswers> {
               child: Container(
                 decoration: BoxDecoration(color: Colors.black),
               ),),
-            state? Text(""):PopupSendingNotice(),
+            state? Text(""):PopupSendingNotice(),// hobin
+            //state? Text(""):PopupAfterBbom(),
 
 
           ],
@@ -188,6 +189,7 @@ class YesVideo extends StatelessWidget {
   YesVideo.query(this.query, this.selectedAnswers, this.refresh);
   @override
   Widget build(BuildContext context) {
+    state = false;
     fp = Provider.of<FirebaseProvider>(context);
     Map<String, Answer> answers = fp.getStaticInfo().answers;
     List<MapEntry<String, Answer>> entries = List<MapEntry<String, Answer>>();

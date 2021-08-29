@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:paran_girin/home/sharing_my_answers.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
 class BaseAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -63,8 +64,8 @@ class _BaseAppBar extends State<BaseAppBar> {
                             {
                               return PopupAfterBbom(
                                   img: AssetImage("assets/popup/check.png"),
-                                  text1: "성공적으로 영상을 파란기린에 보냈어요!",
-                                  text2: "기발하고 재미있는 답변은 파란기린 어플과 SNS의 생각뽐내기에 게시될 수 있어요! 생각뽐내기에 선정되면 파란기린이 알려드릴게요");
+                                  text1: "성공적으로 영상을 파란기린에 보냈어요!",);
+                                  //text2: "기발하고 재미있는 답변은 파란기린 어플과 SNS의 생각뽐내기에 게시될 수 있어요! 생각뽐내기에 선정되면 파란기린이 알려드릴게요");
                             });
                       } ?? () {
                       },
@@ -86,10 +87,10 @@ class _BaseAppBar extends State<BaseAppBar> {
 }
 
 class PopupAfterBbom extends StatefulWidget {
-  final String text1, text2;
+  final String text1;
   final AssetImage img;
 
-  const PopupAfterBbom({Key key, this.text1, this.text2, this.img}) : super(key: key);
+  const PopupAfterBbom({Key key, this.text1, this.img}) : super(key: key);
   @override
   _PopupAfterBbom createState() => _PopupAfterBbom();
 }
@@ -111,7 +112,7 @@ class _PopupAfterBbom extends State<PopupAfterBbom> {
       children: <Widget>[
         Container(
             width: ScreenUtil().setWidth(303),
-            height: ScreenUtil().setHeight(247),
+            height: ScreenUtil().setHeight(205),
             //padding: EdgeInsets.only(left: 20, top:65, right:20, bottom: 20),
             // margin: EdgeInsets.only(top:45),
             decoration: BoxDecoration(
@@ -122,13 +123,30 @@ class _PopupAfterBbom extends State<PopupAfterBbom> {
             child: Column(
               //mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                SizedBox(height: ScreenUtil().setHeight(31)),
+                SizedBox(height: ScreenUtil().setHeight(5)),
+                Row(
+                  children: [
+                    SizedBox(width: ScreenUtil().setWidth(240),),
+                    Transform.scale(scale: 0.7,
+                      child: IconButton(
+                        alignment: Alignment.topRight,
+                        icon: Image.asset("assets/icons/close-popup.png"),
+                        iconSize: 10.0,
+                        onPressed: (){
+                          Navigator.pushReplacement<void, void>(
+                              context,MaterialPageRoute<void>(
+                              builder: (BuildContext context) => SharingMyAnswers()));
+                        },//hobin
+                      ),),
+                  ],
+                ),
+                SizedBox(height: ScreenUtil().setHeight(5)),
                 Container(
                   width: ScreenUtil().setWidth(38),
                   height: ScreenUtil().setHeight(38),
-                  child: Image.asset("assets/popup/check.png",fit: BoxFit.cover),
+                  child: Image.asset("assets/popup/check.png"),
                 ),
-                SizedBox(height: ScreenUtil().setHeight(31)),
+                SizedBox(height: ScreenUtil().setHeight(20)),
                 Text(
                   "성공적으로 영상을\n파란기린에 보냈어요!", 
                   style: TextStyle(
@@ -137,18 +155,6 @@ class _PopupAfterBbom extends State<PopupAfterBbom> {
                     fontWeight: FontWeight.w600
                   ),
                   textAlign: TextAlign.center
-                ),
-                SizedBox(height: ScreenUtil().setHeight(33)),
-                Container(
-                  width: ScreenUtil().setWidth(255),
-                  child: Text(
-                    "기발하고 재미있는 답변은 파란기린 어플과 SNS의 생각뽐내기에 게시될 수 있어요! 생각뽐내기에 선정되면 파란기린이 알려드릴게요", 
-                    style: TextStyle(
-                      fontSize: ScreenUtil().setSp(12), 
-                      color:AppTheme.colors.base2,
-                      fontWeight: FontWeight.w400
-                    ),
-                  ),
                 ),
               ],
             )
