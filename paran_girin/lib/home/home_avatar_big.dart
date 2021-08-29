@@ -184,16 +184,16 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
                             context,MaterialPageRoute<void>(
                               //builder: (BuildContext context) => Initialization(today_qid)));
 
-                              //builder: (BuildContext context) => QuestionPost(
-                                 // tag: question.tag ?? "태그 없음",
-                                //  categoryTitle: question.category ?? "카테고리 없음",
-                                //  image: "assets/images/category_nature.png",
-                                //  qTitle: question.title ?? "제목 없음",
-                                //  question: question.question ?? "질문 없음",
-                                //  storyText: question.story ?? "스토리 없음",
-                                //  guide: question.guide ?? "가이드 없음",
-                                //  qid: question.qid.toString())));
-                              builder: (BuildContext context) => PrivacyPolicy2()));
+                              builder: (BuildContext context) => QuestionPost(
+                                 tag: question.tag ?? "태그 없음",
+                                 categoryTitle: question.category ?? "카테고리 없음",
+                                 image: "assets/images/category_nature.png",
+                                 qTitle: question.title ?? "제목 없음",
+                                 question: question.question ?? "질문 없음",
+                                 storyText: question.story ?? "스토리 없음",
+                                 guide: question.guide ?? "가이드 없음",
+                                 qid: question.qid.toString())));
+                              // builder: (BuildContext context) => PrivacyPolicy2()));
                         }),
                   ),
           ],

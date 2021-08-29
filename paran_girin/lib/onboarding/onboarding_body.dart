@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/layout/default_button.dart';
 import 'package:paran_girin/onboarding/onboard_content.dart';
+import 'package:paran_girin/onboarding/privacyPolicy.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
 import '../login/auth_page.dart';
@@ -85,7 +86,8 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                     Navigator.of(context).push(MaterialPageRoute(
                         // builder: (context) => Initialization()));
                         // builder: (context) => textToSpeech()));
-                        builder: (context) => AuthPage()));
+                        builder: (context) => PrivacyPolicy2()));
+                        //builder: (context) => AuthPage())); --> hobin
                   },
                   //LoginPage()
                 ),
