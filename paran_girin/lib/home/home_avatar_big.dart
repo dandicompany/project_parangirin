@@ -194,7 +194,7 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
                             context,MaterialPageRoute<void>(
                               //builder: (BuildContext context) => Initialization(today_qid)));
                               builder: (BuildContext context) => QuestionPost(
-                                 tag: question.tag ?? "태그 없음",
+                                 //tag: question.tag ?? "태그 없음", --> hobin
                                  categoryTitle: question.category ?? "카테고리 없음",
                                  image: "assets/images/category_nature.png",
                                  qTitle: question.title ?? "제목 없음",
