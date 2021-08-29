@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:paran_girin/home/home_avatar_big.dart';
+import 'package:share/share.dart';
 
 var file = File("assets/videoEx/sample1.mp4");
 // "/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4");
@@ -26,12 +27,15 @@ class VideoShowFromCamera extends StatelessWidget {
   String qid;
   Answer answer;
   Question question;
+  List<String> filePath = [];
   VideoShowFromCamera(this.qid, this.answer);
+
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
     file = File(answer.videoURL);
     logger.d(file.path);
+    filePath.add(file.path);
     question = fp.getStaticInfo().questions[qid];
     return Card(
       child: Column(
@@ -39,33 +43,43 @@ class VideoShowFromCamera extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: ScreenUtil().setHeight(40),
-              left: ScreenUtil().setWidth(16),
-            ),
-            child: Positioned(
               top: ScreenUtil().setHeight(44),
               left: ScreenUtil().setWidth(16),
-              child: Navigator.of(context).canPop()
+              right: ScreenUtil().setWidth(28),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Navigator.of(context).canPop()
                   ? IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: AppTheme.colors.base1,
-                      ),
-                      onPressed: () {
-                        // Navigator.pushReplacement<void, void>(
-                        //     context,MaterialPageRoute<void>(
-                        //       builder: (BuildContext context) => HomeAvatar()VideoShowFromCamera(question, fp.getStaticInfo().answers[question])));
-                      
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: AppTheme.colors.base1,
+                    ),
+                    onPressed: () {
+                      // Navigator.pushReplacement<void, void>(
+                      //     context,MaterialPageRoute<void>(
+                      //       builder: (BuildContext context) => HomeAvatar()VideoShowFromCamera(question, fp.getStaticInfo().answers[question])));
+                    
 
 
-                        // Navigator.of(context).push(
-                        //     MaterialPageRoute(builder: (context) => HomeAvatarBig()));
-                        // Navigator.popUntil(context, ModalRoute.withName('/'));
-                        Navigator.of(context).pop(); 
-                      },
-                      iconSize: ScreenUtil().radius(20),
-                    )
-                  : null,
+                      // Navigator.of(context).push(
+                      //     MaterialPageRoute(builder: (context) => HomeAvatarBig()));
+                      // Navigator.popUntil(context, ModalRoute.withName('/'));
+                      Navigator.of(context).pop(); 
+                    },
+                    iconSize: ScreenUtil().radius(20),
+                  )
+                : null,
+                InkWell(
+                  onTap: () => _onShare(context),
+                  child: SvgPicture.asset(
+                    "assets/icons/more-horizontal.svg",
+                    width: ScreenUtil().setWidth(24),
+                    height: ScreenUtil().setHeight(24),
+                  )
+                ),
+              ],
             )
           ),
           Padding(
@@ -78,29 +92,13 @@ class VideoShowFromCamera extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start, 
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        // '계란을 우주로 보낸다면?',
-                        question.title,
-                        style: TextStyle(
-                            fontSize: ScreenUtil().setSp(24),
-                            color: AppTheme.colors.base1),
-                      ),
-                      InkWell(
-                          onTap: () {
-                          },
-                          child: SvgPicture.asset(
-                            "assets/icons/more-horizontal.svg",
-                            width: ScreenUtil().setWidth(24),
-                            height: ScreenUtil().setHeight(24),
-                          )
-                        ),
-                    ],
+                  Text(
+                    question.title,
+                    style: TextStyle(
+                        fontSize: ScreenUtil().setSp(24),
+                        color: AppTheme.colors.base1),
                   ),
                   Text(
-                    // DateTime.fromMillisecondsSinceEpoch(answer.date).toString(),
                     dateFormat.format(DateTime.fromMillisecondsSinceEpoch(answer.date)),
                     style: new TextStyle(
                         fontSize: ScreenUtil().setSp(12),
@@ -108,7 +106,7 @@ class VideoShowFromCamera extends StatelessWidget {
                     )
                   ),
                   SizedBox(height: ScreenUtil().setHeight(20)),
-                  Text(question.tag,
+                  Text(question.tag.split("#").join(" #").substring(1),
                       style: new TextStyle(
                           fontSize: ScreenUtil().setSp(14),
                           color: AppTheme.colors.primary2
@@ -135,4 +133,27 @@ class VideoShowFromCamera extends StatelessWidget {
       ),
     );
   }
+  _onShare(BuildContext context) async {
+    // A builder is used to retrieve the context immediately
+    // surrounding the RaisedButton.
+    //
+    // The context's `findRenderObject` returns the first
+    // RenderObject in its descendent tree when it's not
+    // a RenderObjectWidget. The RaisedButton's RenderObject
+    // has its position and size after it's built.
+    final RenderBox box = context.findRenderObject();
+
+    if (filePath.isNotEmpty) {
+      await Share.shareFiles(filePath,
+          text: question.title,
+          subject: dateFormat.format(DateTime.fromMillisecondsSinceEpoch(answer.date)),
+          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+    } else {
+      // await Share.share(
+      //     text,
+      //     subject: subject,
+      //     sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+    }
+  }
+
 }

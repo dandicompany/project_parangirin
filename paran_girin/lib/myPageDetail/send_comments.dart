@@ -159,6 +159,7 @@ class _PopupAfterSending extends State<PopupAfterSending> {
       elevation: 0,
       backgroundColor: Colors.transparent,
       child: contentBox(context),
+      insetPadding: EdgeInsets.symmetric(horizontal: 64.0),
     );
   }
   contentBox(context){
@@ -177,17 +178,31 @@ class _PopupAfterSending extends State<PopupAfterSending> {
           child: Column(
             //mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SizedBox(height: 29,),
+              SizedBox(height: ScreenUtil().setHeight(36)),
               Container(
                 width: ScreenUtil().setWidth(38),
                 height: ScreenUtil().setHeight(38),
                 child: Image.asset("assets/popup/check.png",fit: BoxFit.cover),
               ),
-              SizedBox(height: 29),
-              Text(widget.text1,style: TextStyle(fontSize: ScreenUtil().setSp(18), color:AppTheme.colors.primary2 ), ),
-              SizedBox(height: 22,),
-              Text("소중한 의견들로", style: TextStyle(fontSize: ScreenUtil().setSp(16), color:AppTheme.colors.base3,)),
-              Text("파란기린이 더 성장할게요", style: TextStyle(fontSize: ScreenUtil().setSp(16), color:AppTheme.colors.base3,)),
+              SizedBox(height: ScreenUtil().setHeight(23)),
+              Text(
+                widget.text1,
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(18), 
+                  color:AppTheme.colors.primary2,
+                  fontWeight: FontWeight.w500
+                ),
+              ),
+              SizedBox(height: ScreenUtil().setHeight(32)),
+              Text(
+                "소중한 의견들로\n파란기린이 더 성장할게요", 
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(16), 
+                  color:AppTheme.colors.base3,
+                  fontWeight: FontWeight.w500
+                ),
+                textAlign: TextAlign.center
+              ),
             ],
           )
         )

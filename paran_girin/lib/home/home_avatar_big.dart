@@ -37,16 +37,17 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
     DateTime now = DateTime.now();
-    String today_qid = (now.day % fp.getStaticInfo().questions.length).toString();
+    String todayQid = (now.day % fp.getStaticInfo().questions.length).toString();
     logger.d("-----------------------&&&SOS 이곳은 HomeAvatarBig &&&---------------------------");
-    logger.d(today_qid);
-
-    todayDone = fp.getUserInfo().currentChild.answers.containsKey(today_qid);
-    Question question = fp.getStaticInfo().questions[today_qid];
+    logger.d(todayQid);
+    todayDone = fp.getUserInfo().currentChild.answers.containsKey(todayQid);
+    Question question = fp.getStaticInfo().questions[todayQid];
     logger.d(question.category);
     DateTime tomorrow = DateTime.parse(
         DateFormat("yyyyMMdd").format(now.add(Duration(days: 1))));
-    Duration remaining_time = tomorrow.difference(now);
+    Duration remainingTime = tomorrow.difference(now);
+
+    int textMaxNum = 20;
 
     return Scaffold(
       body: Container(
@@ -99,17 +100,26 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
                             fontWeight: FontWeight.w300),
                       ),
                       SizedBox(height: ScreenUtil().setHeight(15)),
-                      Text(
-                        todayDone
+                      // Expanded(
+                      //  child: Text(
+                        Text(
+                          todayDone
                             ? "내일은 어떤 질문이\n기다리고 있을까요?"
-                            // : "타임 캡슐에 담고 싶은\n나의 물건은?",
-                            : question.question,
-                        style: TextStyle(
+                            : (question.question.length > textMaxNum 
+                              ? '${question.question.substring(0, textMaxNum)}...' 
+                              : question.question
+                            ),
+                          style: TextStyle(
                             fontSize: ScreenUtil().setSp(24),
                             // color: todayDone ? AppTheme.colors.base2:AppTheme.colors.base1,
                             color: AppTheme.colors.base1,
-                            fontWeight: FontWeight.w300),
-                      ),
+                            fontWeight: FontWeight.w300
+                          ),
+                          // maxLines: 2,
+                          // softWrap: true,
+                          // overflow: TextOverflow.ellipsis,
+                        ),
+                      // ),
                     ],
                   ),
                 ),
@@ -152,17 +162,17 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
                             children: <TextSpan>[
                               new TextSpan(text: '새로운 질문이 생성되기까지\n'),
                               new TextSpan(
-                                  text: remaining_time.inHours.toString(),
+                                  text: remainingTime.inHours.toString(),
                                   style: new TextStyle(
                                       fontSize: ScreenUtil().setSp(20))),
                               new TextSpan(text: '시간 '),
                               new TextSpan(
-                                  text: (remaining_time.inMinutes % 60).toString(),
+                                  text: (remainingTime.inMinutes % 60).toString(),
                                   style: new TextStyle(
                                       fontSize: ScreenUtil().setSp(20))),
                               new TextSpan(text: '분 '),
                               new TextSpan(
-                                  text: (remaining_time.inSeconds % 60).toString(),
+                                  text: (remainingTime.inSeconds % 60).toString(),
                                   style: new TextStyle(
                                       fontSize: ScreenUtil().setSp(20))),
                               new TextSpan(text: '초 남았어요')
@@ -179,11 +189,10 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
                         isInvert: true,
                         press: () {
                           // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => Initialization(today_qid)));
+                          //     builder: (context) => Initialization(todayQid)));
                           Navigator.pushReplacement<void, void>(
                             context,MaterialPageRoute<void>(
                               //builder: (BuildContext context) => Initialization(today_qid)));
-
                               builder: (BuildContext context) => QuestionPost(
                                  tag: question.tag ?? "태그 없음",
                                  categoryTitle: question.category ?? "카테고리 없음",
