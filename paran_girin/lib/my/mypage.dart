@@ -48,7 +48,7 @@ class _MyPageState extends State<MyPage> {
               SizedBox(height: ScreenUtil().setHeight(16)),
 
               Text(
-               fp.getUserInfo().currentChild.nickName,
+               fp.getUserInfo().currentChild.nickName, //hobin
                style: TextStyle(fontSize: ScreenUtil().setSp(18)),
               ),
               SizedBox(height: ScreenUtil().setHeight(41)),

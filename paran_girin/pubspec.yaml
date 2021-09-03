@@ -103,7 +103,7 @@ flutter:
       - assets/onboarding/onboard_2.gif
       - assets/onboarding/onboard_3.gif
       - assets/music/bgm.mp3
-      - assets/popup/
+      - assets/popup/check.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
