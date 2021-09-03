@@ -52,7 +52,7 @@ class Child {
         this.nickName = json['nickName'],
         this.profileURL = json['profileURL'],
         this.birthday = json['birthday'],
-        this.avatar = json['avatar'] ?? 'home.gif',
+        this.avatar = json['avatar'] ?? 'nod.gif',
         this.background = json['background'] ?? 'background-7.jpg',
         this.answers = (json['answers'] == null)
             ? Map<String, String>()

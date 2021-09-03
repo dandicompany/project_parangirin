@@ -208,7 +208,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   width: double.infinity,
                   height: ScreenUtil().setHeight(812),
                   //alignment: Alignment.center,
-                  child: Image.asset("assets/avatars/default_background.png",
+                  child: Image.asset("assets/avatars/lv0.jpg",
+                  // child: Image.asset("assets/avatars/default_background.png",
                       fit: BoxFit.cover, alignment: Alignment.bottomCenter),
                 ),
                 // Container(
@@ -380,7 +381,8 @@ class Outtro extends StatelessWidget {
               Container(
                   width: double.infinity,
                   height: ScreenUtil().setHeight(812),
-                  child: Image.asset("assets/avatars/default_background.png",
+                  child: Image.asset("assets/avatars/lv0.jpg",
+                  // child: Image.asset("assets/avatars/default_background.png",
                   fit: BoxFit.cover, alignment: Alignment.bottomCenter),
                  ),
                 Opacity( //seconds child - Opaque layer
@@ -402,7 +404,8 @@ class Outtro extends StatelessWidget {
               Container(
                 width: double.infinity,
                 height: ScreenUtil().setHeight(812),
-                child: Image.asset("assets/avatars/default_background.png",
+                child: Image.asset("assets/avatars/lv0.jpg",
+                // child: Image.asset("assets/avatars/default_background.png",
                     fit: BoxFit.cover, alignment: Alignment.bottomCenter),
               ),
               Align(child: TextToSpeech(text: "다음에 또 보자.")),

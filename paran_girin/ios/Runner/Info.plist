@@ -73,8 +73,6 @@
 	<string>Used to record the child's conversation video</string>
 	<key>NSContactsUsageDescription</key>
 	<string>We don't use contact info just using permission_handler</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We don't need location info just using permission_handler</string>
 	<key>NSLocationWhenInUseUsageDescription </key>
 	<string>We don't need location info just using permission_handler</string>
 	<key>NSMicrophoneUsageDescription</key>

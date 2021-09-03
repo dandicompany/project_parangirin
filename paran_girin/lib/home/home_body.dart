@@ -273,7 +273,7 @@ class HomeAvatar extends StatelessWidget {
                 width: ScreenUtil().setWidth(426),
                 height: ScreenUtil().setHeight(426),
                 child: Image.asset(
-                  'assets/avatars/home.gif',
+                  'assets/avatars/nod.gif',
                   fit: BoxFit.cover,
                   alignment: Alignment.bottomCenter,
                 ),

@@ -33,66 +33,68 @@ class LoginBody extends StatelessWidget {
             top: ScreenUtil().setWidth(90),
             left: ScreenUtil().setWidth(16),
             right: ScreenUtil().setWidth(16)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                  // fontFamily: 'Noto Sans KR',
-                  fontWeight: FontWeight.w300,
-                  fontSize: ScreenUtil().setSp(24)),
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: ScreenUtil().setHeight(3),
-            ),
-            Row(
-              children: [
-                Text(
-                  description,
-                  style: TextStyle(
-                      // fontFamily: 'Noto Sans KR',
-                      // fontWeight: FontWeight.w300,
-                      fontSize: ScreenUtil().setSp(12)),
-                ),
-                GestureDetector(
-                    onTap: textPress,
-                    child: Text(
-                      actionText,
-                      style: TextStyle(
-                          // fontFamily: 'Noto Sans KR',
-                          fontWeight: FontWeight.w700,
-                          fontSize: ScreenUtil().setSp(12)),
-                    ))
-              ],
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: isEmail
-                  ? ScreenUtil().setHeight(91)
-                  : ScreenUtil().setHeight(126),
-            ),
-            Text(
-              loginInfo,
-              style: TextStyle(
-                  // fontFamily: 'Noto Sans KR',
-                  // fontWeight: FontWeight.w300,
-                  fontSize: ScreenUtil().setSp(16)),
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: ScreenUtil().setHeight(28),
-            ),
-            getInput
-                ? (isEmail ? EmailForm(textCon, next) : PasswordForm(textCon, next, null))
-                : SizedBox.shrink(),
-            SizedBox(
-              width: double.infinity,
-              height: ScreenUtil().setHeight(100),
-            ),
-          ],
-        ),
+        child: Form(
+            child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                    // fontFamily: 'Noto Sans KR',
+                    fontWeight: FontWeight.w300,
+                    fontSize: ScreenUtil().setSp(24)),
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: ScreenUtil().setHeight(3),
+              ),
+              Row(
+                children: [
+                  Text(
+                    description,
+                    style: TextStyle(
+                        // fontFamily: 'Noto Sans KR',
+                        // fontWeight: FontWeight.w300,
+                        fontSize: ScreenUtil().setSp(12)),
+                  ),
+                  GestureDetector(
+                      onTap: textPress,
+                      child: Text(
+                        actionText,
+                        style: TextStyle(
+                            // fontFamily: 'Noto Sans KR',
+                            fontWeight: FontWeight.w700,
+                            fontSize: ScreenUtil().setSp(12)),
+                      ))
+                ],
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: isEmail
+                    ? ScreenUtil().setHeight(91)
+                    : ScreenUtil().setHeight(126),
+              ),
+              Text(
+                loginInfo,
+                style: TextStyle(
+                    // fontFamily: 'Noto Sans KR',
+                    // fontWeight: FontWeight.w300,
+                    fontSize: ScreenUtil().setSp(16)),
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: ScreenUtil().setHeight(28),
+              ),
+              getInput
+                  ? (isEmail ? EmailForm(textCon, next) : PasswordForm(textCon, next, null, null))
+                  : SizedBox.shrink(),
+              SizedBox(
+                width: double.infinity,
+                height: ScreenUtil().setHeight(100),
+              ),
+            ],
+          ),
+        )
       ),
     );
   }
@@ -109,11 +111,14 @@ class LoginBody2 extends StatelessWidget {
       this.next,
       this.pwChecker, 
       this.formKey,
+      this.actionText,
+      this.textPress,
       this.getInput = true})
       : super(key: key);
 
-  final String title, loginInfo, loginInfo2;
+  final String title, loginInfo, loginInfo2, actionText;
   final bool getInput;
+  final GestureTapCallback textPress;
   final TextEditingController textCon;
   final TextEditingController textCon2;
   final Function next, pwChecker;
@@ -138,6 +143,26 @@ class LoginBody2 extends StatelessWidget {
                     fontWeight: FontWeight.w300,
                     fontSize: ScreenUtil().setSp(24)),
               ),
+              Row(
+                children: [
+                  Text(
+                    "문제가 있으신가요?",
+                    style: TextStyle(
+                        // fontFamily: 'Noto Sans KR',
+                        // fontWeight: FontWeight.w300,
+                        fontSize: ScreenUtil().setSp(12)),
+                  ),
+                  GestureDetector(
+                      onTap: textPress,
+                      child: Text(
+                        actionText,
+                        style: TextStyle(
+                            // fontFamily: 'Noto Sans KR',
+                            fontWeight: FontWeight.w700,
+                            fontSize: ScreenUtil().setSp(12)),
+                      ))
+                ],
+              ),
               SizedBox(
                 width: double.infinity,
                 height: ScreenUtil().setHeight(60),
@@ -150,7 +175,7 @@ class LoginBody2 extends StatelessWidget {
                     fontSize: ScreenUtil().setSp(16)),
               ),
               SizedBox( height: ScreenUtil().setHeight(8)),
-              PasswordForm(textCon, null, null),
+              PasswordForm(textCon, null, null, null),
               SizedBox(
                 width: double.infinity,
                 height: ScreenUtil().setHeight(36),
@@ -163,7 +188,7 @@ class LoginBody2 extends StatelessWidget {
                     fontSize: ScreenUtil().setSp(16)),
               ),
               SizedBox( height: ScreenUtil().setHeight(8)),
-              PasswordForm(textCon2, next, this.pwChecker),
+              PasswordForm(textCon2, next, this.pwChecker, this.formKey)
             ],
           ),
         )
@@ -187,8 +212,7 @@ class _EmailFormState extends State<EmailForm> {
   @override
   Widget build(BuildContext context) {
 
-    return Form(
-      child: Column(children: [
+    return Column(children: [
         TextFormField(
           controller: textCon,
           textInputAction: TextInputAction.next,
@@ -213,29 +237,29 @@ class _EmailFormState extends State<EmailForm> {
           width: double.infinity,
           height: ScreenUtil().setHeight(40),
         ),
-      ]),
-    );
+      ]);
   }
 }
 
 class PasswordForm extends StatefulWidget {
   final TextEditingController textCon;
+  final formKey;
   var next;
   var pwChecker;
-  PasswordForm(this.textCon, this.next, this.pwChecker);
+  PasswordForm(this.textCon, this.next, this.pwChecker, this.formKey);
   @override
-  _PasswordFormState createState() => _PasswordFormState(textCon, next, pwChecker);
+  _PasswordFormState createState() => _PasswordFormState(textCon, next, pwChecker, formKey);
 }
 
 class _PasswordFormState extends State<PasswordForm> {
   TextEditingController textCon;
+  final formKey;
   var pwChecker;
   var next;
-  _PasswordFormState(this.textCon, this.next, this.pwChecker);
+  _PasswordFormState(this.textCon, this.next, this.pwChecker, this.formKey);
   @override
   Widget build(BuildContext context) {
-    return Form(
-      child: Column(children: [
+    return Column(children: [
         TextFormField(
           controller: textCon,
           textInputAction: TextInputAction.next,
@@ -244,9 +268,11 @@ class _PasswordFormState extends State<PasswordForm> {
           validator: (text){
             print("validating password");
             if (this.pwChecker != null){
-              return this.pwChecker();
+              var text = this.pwChecker();
+              logger.d(text);
+              return text;
             } else {
-              return "";
+              return null;
             }
           },
           decoration: InputDecoration(
@@ -266,7 +292,6 @@ class _PasswordFormState extends State<PasswordForm> {
           keyboardType: TextInputType.visiblePassword,
           obscureText: true, // for password
         ),
-      ]),
-    );
+      ]);
   }
 }
