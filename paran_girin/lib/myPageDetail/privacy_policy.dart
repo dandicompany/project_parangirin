@@ -121,7 +121,7 @@ class PrivacyPolicy extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
-        title: '개인 정보 처리 방침'
+        title: '개인정보 처리방침'
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
@@ -135,7 +135,7 @@ class PrivacyPolicy extends StatelessWidget {
                 fontSize: ScreenUtil().setSp(12)),
             children: <TextSpan>[
               new TextSpan(
-                text: '파란기린 개인 정보 처리 방침\n',
+                text: '파란기린 개인정보 처리방침\n',
                 style: TextStyle(
                   fontSize: ScreenUtil().setSp(16),
                   color: AppTheme.colors.base1,

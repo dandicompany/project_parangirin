@@ -254,7 +254,11 @@ class _LoginPageState extends State<LoginPage> {
     logger.d(pw2);
     if (pw1 != pw2){
       logger.d("password unmatched");
-      return "비밀번호가 일치하지 않습니다";
+      // return "비밀번호가 일치하지 않습니다";
+      return "비밀번호가 일치하지 않아요 :(";
+    }
+    if (pw1.length < 6) {
+      return "6자리 이상의 비밀번호를 입력해 주세요";
     }
     logger.d("pw check passed");
     return null;

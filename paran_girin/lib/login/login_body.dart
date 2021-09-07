@@ -257,9 +257,16 @@ class _PasswordFormState extends State<PasswordForm> {
   final formKey;
   var pwChecker;
   var next;
+  Color iconColor = AppTheme.colors.primary2;
+  bool errorOccurred = false;
+  // Widget clearIcon;
   _PasswordFormState(this.textCon, this.next, this.pwChecker, this.formKey);
   @override
   Widget build(BuildContext context) {
+    // clearIcon = IconButton(
+    //           onPressed: textCon.clear,
+    //           icon: SvgPicture.asset("assets/icons/close.svg"),
+    //         );
     return Column(children: [
         TextFormField(
           controller: textCon,
@@ -271,8 +278,11 @@ class _PasswordFormState extends State<PasswordForm> {
             if (this.pwChecker != null){
               var text = this.pwChecker();
               logger.d(text);
+              // iconColor = Colors.red;
+              errorOccurred = true;
               return text;
             } else {
+              errorOccurred = false;
               return null;
             }
           },
@@ -280,6 +290,8 @@ class _PasswordFormState extends State<PasswordForm> {
             suffixIcon: IconButton(
               onPressed: textCon.clear,
               icon: SvgPicture.asset("assets/icons/close.svg"),
+              // color: iconColor
+              color: errorOccurred ? Colors.red : AppTheme.colors.primary2
             ),
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: AppTheme.colors.primary2, width: 2.0),

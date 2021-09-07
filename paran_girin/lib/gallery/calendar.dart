@@ -118,7 +118,7 @@ class _CalendarState extends State<Calendar> {
                   height: ScreenUtil().setHeight(11),
                 ),
                 Text(
-                  "이번 달에 파란 기린과 " + meetings.toString() + "번 만났어요",
+                  "이번 달에 파란기린과 " + meetings.toString() + "번 만났어요",
                   style: TextStyle(
                     fontSize: ScreenUtil().setSp(16),
                     fontFamily: 'Noto Sans KR',
