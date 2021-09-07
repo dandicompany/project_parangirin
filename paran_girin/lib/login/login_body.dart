@@ -58,14 +58,15 @@ class LoginBody extends StatelessWidget {
                         fontSize: ScreenUtil().setSp(12)),
                   ),
                   GestureDetector(
-                      onTap: textPress,
-                      child: Text(
-                        actionText,
-                        style: TextStyle(
-                            // fontFamily: 'Noto Sans KR',
-                            fontWeight: FontWeight.w700,
-                            fontSize: ScreenUtil().setSp(12)),
-                      ))
+                    onTap: textPress,
+                    child: Text(
+                      actionText,
+                      style: TextStyle(
+                          // fontFamily: 'Noto Sans KR',
+                          fontWeight: FontWeight.w700,
+                          fontSize: ScreenUtil().setSp(12)),
+                    )
+                  )
                 ],
               ),
               SizedBox(
@@ -146,7 +147,7 @@ class LoginBody2 extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "문제가 있으신가요?",
+                    "문제가 있으신가요? ",
                     style: TextStyle(
                         // fontFamily: 'Noto Sans KR',
                         // fontWeight: FontWeight.w300,
@@ -165,7 +166,7 @@ class LoginBody2 extends StatelessWidget {
               ),
               SizedBox(
                 width: double.infinity,
-                height: ScreenUtil().setHeight(60),
+                height: ScreenUtil().setHeight(50),
               ),
               Text(
                 loginInfo,
@@ -174,11 +175,11 @@ class LoginBody2 extends StatelessWidget {
                     // fontWeight: FontWeight.w300,
                     fontSize: ScreenUtil().setSp(16)),
               ),
-              SizedBox( height: ScreenUtil().setHeight(8)),
+              // SizedBox( height: ScreenUtil().setHeight(8)),
               PasswordForm(textCon, null, null, null),
               SizedBox(
                 width: double.infinity,
-                height: ScreenUtil().setHeight(36),
+                height: ScreenUtil().setHeight(24),
               ),
               Text(
                 loginInfo2,
@@ -187,7 +188,7 @@ class LoginBody2 extends StatelessWidget {
                     // fontWeight: FontWeight.w300,
                     fontSize: ScreenUtil().setSp(16)),
               ),
-              SizedBox( height: ScreenUtil().setHeight(8)),
+              // SizedBox( height: ScreenUtil().setHeight(8)),
               PasswordForm(textCon2, next, this.pwChecker, this.formKey)
             ],
           ),

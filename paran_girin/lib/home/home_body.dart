@@ -260,7 +260,7 @@ class HomeAvatar extends StatelessWidget {
               width: double.infinity,
               height: ScreenUtil().setHeight(488),
               child: Image.asset(
-                "assets/background/background-7.jpg",
+                "assets/background/home_background.jpg",
                 fit: BoxFit.cover,
               ),
             ),

@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -73,6 +73,8 @@
 	<string>Used to record the child's conversation video</string>
 	<key>NSContactsUsageDescription</key>
 	<string>We don't use contact info just using permission_handler</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We don't need location info just using permission_handler</string>
 	<key>NSLocationWhenInUseUsageDescription </key>
 	<string>We don't need location info just using permission_handler</string>
 	<key>NSMicrophoneUsageDescription</key>

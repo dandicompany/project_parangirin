@@ -44,10 +44,10 @@ class _SendCommentsState extends State<SendComments> {
                 children: <TextSpan>[
                   new TextSpan(
                       text:
-                          '더욱 발전하는 파란기린이 되기 위해 오늘도 여러분의 목소리에 귀를 기울입니다! 소중한 의견에 보답하기 위해 '),
-                  new TextSpan(
-                      text: '매일 한 분을 선발해 파란기린 굿즈를 보내드려요',
-                      style: new TextStyle(color: AppTheme.colors.primary2)),
+                          '더욱 발전하는 파란기린이 되기 위해 오늘도 여러분의 목소리에 귀를 기울입니다! 소중한 의견을 보내주신다면 빠르게 반영하도록 노력하겠습니다. '),
+                  // new TextSpan(
+                  //     text: '매일 한 분을 선발해 파란기린 굿즈를 보내드려요',
+                  //     style: new TextStyle(color: AppTheme.colors.primary2)),
                 ],
               )),
               SizedBox(

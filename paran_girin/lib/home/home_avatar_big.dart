@@ -63,7 +63,7 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
                 width: double.infinity,
                 // height: ScreenUtil().setHeight(728),
                 height: ScreenUtil().setHeight(812),
-                child: Image.asset("assets/avatars/lv0.jpg",
+                child: Image.asset("assets/background/lv5.jpg",
                 // child: Image.asset("assets/avatars/default_background.png",
                     fit: BoxFit.cover),
                 // child: Lottie.asset("assets/avatars/default_background.png"),
