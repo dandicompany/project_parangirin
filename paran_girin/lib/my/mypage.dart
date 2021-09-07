@@ -54,7 +54,9 @@ class _MyPageState extends State<MyPage> {
               SizedBox(height: ScreenUtil().setHeight(41)),
               ProfileMenu(
                   text: "자녀 관리",
-                  press: () {
+                  press: () async {
+                    // sample firebase logging
+                    await fp.getFAnalytics().logEvent(name: 'Click', parameters: <String, String>{'button': '자녀관리'});  
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => ChildrenInfo()));
                   }),
@@ -68,6 +70,7 @@ class _MyPageState extends State<MyPage> {
               ProfileMenu(
                   text: "공지 사항",
                   press: () {
+
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => Notice()));
                   }),

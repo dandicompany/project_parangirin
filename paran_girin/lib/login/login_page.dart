@@ -131,8 +131,8 @@ class _LoginPageState extends State<LoginPage> {
         return () {
           _pw = _textCon.text;
           _pw_check = _textCon2.text;
-
-          logger.d(_pw_check, _pw);
+          logger.d("checking double password");
+          logger.d(_pw_check);
           if (_formKey.currentState.validate()) {
             _signUp(_email, _pw);
           }
@@ -201,9 +201,17 @@ class _LoginPageState extends State<LoginPage> {
               next: onClick(),
               formKey: _formKey,
               pwChecker: (){
-                pwChecker(_textCon, _textCon2);
-              }
-              );
+                return pwChecker(_textCon, _textCon2);
+              },
+              actionText: "다른 이메일로 가입하기",
+              textPress: () {
+                // refresh = true;
+                // _state = enum_state.CHECKACC;
+                // Navigator.of(context)
+                //     .push(MaterialPageRoute(builder: (context) => LoginPage()));
+                fp.signOut();
+              },
+            );
       case enum_state.VERI:
         return LoginBody(
           title: "이메일을\n확인해주세요",
@@ -241,9 +249,14 @@ class _LoginPageState extends State<LoginPage> {
   String pwChecker(textCon1, textCon2){
     var pw1 = textCon1.text;
     var pw2 = textCon2.text;
+    logger.d("checking password");
+    logger.d(pw1);
+    logger.d(pw2);
     if (pw1 != pw2){
+      logger.d("password unmatched");
       return "비밀번호가 일치하지 않습니다";
     }
+    logger.d("pw check passed");
     return null;
   }
   void change2CheckAcc() {
@@ -359,7 +372,6 @@ class _LoginPageState extends State<LoginPage> {
     _scaffoldKey.currentState.hideCurrentSnackBar();
     if (result == false) {
       showLastFBMessage();
-      _textCon.clear();
     } else {}
   }
 

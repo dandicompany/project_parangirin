@@ -300,14 +300,16 @@ class YesVideo extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.done) {
                 logger.d(snapshot.data);
                 Answer answer = snapshot.data;
+                Question question = fp.getStaticInfo().questions[key];
                 if (answer == null) {
                   return SizedBox.shrink();
                 }
                 return MyVideoLayout(
-                  title: fp.getStaticInfo().questions[key].title,
+                  title: question.title,
                   date: dateFormat.format(DateTime.fromMillisecondsSinceEpoch(answer.date)),
                   thumbnail: answer.thumbnail,
                   onTap: () {
+                    fp.getFAnalytics().logEvent(name: "gallery_play", parameters: <String, int>{"question_num": question.qid});
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => VideoShowWidget(
                             key, answer))); //VideoPlayerScreen()));

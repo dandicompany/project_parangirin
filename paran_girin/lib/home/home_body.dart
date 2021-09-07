@@ -260,7 +260,7 @@ class HomeAvatar extends StatelessWidget {
               width: double.infinity,
               height: ScreenUtil().setHeight(488),
               child: Image.asset(
-                "assets/background/background-7.jpg",
+                "assets/background/home_background.jpg",
                 fit: BoxFit.cover,
               ),
             ),
@@ -273,7 +273,7 @@ class HomeAvatar extends StatelessWidget {
                 width: ScreenUtil().setWidth(426),
                 height: ScreenUtil().setHeight(426),
                 child: Image.asset(
-                  'assets/avatars/home.gif',
+                  'assets/avatars/nod.gif',
                   fit: BoxFit.cover,
                   alignment: Alignment.bottomCenter,
                 ),
