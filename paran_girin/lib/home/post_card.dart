@@ -28,7 +28,11 @@ class PostCard extends StatelessWidget {
     StaticInfo info = fp.getStaticInfo();
     child = info.post_children[post.child];
     profile = info.post_profiles[child.profileURL];
-    thumb = info.post_thumbnails[basename(post.thumbURL)];
+    if (post.thumbURL == null){
+      thumb = null;
+    } else {
+      thumb = info.post_thumbnails[basename(post.thumbURL)];
+    }
     if ((child != null) && (thumb != null)) {
       background = "assets/background/${child.background}";
       avatar = "assets/avatars/${child.avatar}";
@@ -104,8 +108,7 @@ class PostCard extends StatelessWidget {
                         //   alignment: Alignment.topCenter,
                         // ),
                         Image.file(
-                          // "assets/images/thumbnail_baby.png",
-                          File(post.thumbURL),
+                          (post.thumbURL == null) ? File("assets/images/thumbnail_baby.png") : File(post.thumbURL),
                           width: ScreenUtil().setWidth(198),
                           height: ScreenUtil().setHeight(197),
                           fit: BoxFit.cover,

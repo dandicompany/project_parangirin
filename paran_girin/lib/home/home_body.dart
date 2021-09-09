@@ -150,9 +150,12 @@ class _HomeBody extends State<HomeBody> {
               logger.d("post loaded");
               return PostCard(post);
             } else {
-              logger.d("post unloaded");
+              post.thumbURL = null;
+              logger.d("thumnail not exists");
               logger.d(post);
               logger.d(index);
+              return PostCard(post);
+
               return SizedBox.shrink();
             }
           } catch (e) {
