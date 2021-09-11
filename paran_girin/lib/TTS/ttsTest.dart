@@ -25,11 +25,10 @@ String url = 'https://naveropenapi.apigw.ntruss.com/tts-premium/v1/tts';
 
 // AudioPlayer player = AudioPlayer();
 
-AudioPlayer advancedPlayer = AudioPlayer();
-AudioCache bgmplayer = AudioCache(prefix: 'assets/music/', fixedPlayer: advancedPlayer);
+
 // AudioPlayer bgmplayer = AudioPlayer();
 //text에 원하는 문구 담아서 보내면 됨.
-AudioPlayer player = AudioPlayer();
+
 
 class TextToSpeech extends StatefulWidget {
   const TextToSpeech({
@@ -44,6 +43,8 @@ class TextToSpeech extends StatefulWidget {
 }
 
 class TextToSpeechState extends State<TextToSpeech> {
+  AudioPlayer advancedPlayer = AudioPlayer();
+  AudioPlayer player = AudioPlayer();
   void _createPost() async {
     final response = await http.post(
       Uri.encodeFull(url),
@@ -65,6 +66,7 @@ class TextToSpeechState extends State<TextToSpeech> {
     );
 
     // bgm player
+    AudioCache bgmplayer = AudioCache(prefix: 'assets/music/', fixedPlayer: advancedPlayer);
     bgmplayer.play("bgm.mp3", volume: 1);
 
     // 아래 다 안됨
