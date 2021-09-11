@@ -29,7 +29,7 @@ AudioPlayer advancedPlayer = AudioPlayer();
 AudioCache bgmplayer = AudioCache(prefix: 'assets/music/', fixedPlayer: advancedPlayer);
 // AudioPlayer bgmplayer = AudioPlayer();
 //text에 원하는 문구 담아서 보내면 됨.
-
+AudioPlayer player = AudioPlayer();
 
 class TextToSpeech extends StatefulWidget {
   const TextToSpeech({
@@ -75,7 +75,6 @@ class TextToSpeechState extends State<TextToSpeech> {
 
 
     // tts player
-    AudioPlayer player = AudioPlayer();
     Uint8List byteData = response.bodyBytes; // Load audio as a byte array here.
     // print(byteData.length);
     String path = join((await getTemporaryDirectory()).path, 'tts.mp3');
@@ -96,6 +95,7 @@ class TextToSpeechState extends State<TextToSpeech> {
   @override
   void dispose() {
     advancedPlayer.dispose();
+    player.dispose();
     // bgmplayer.dispose();
     super.dispose();
   }

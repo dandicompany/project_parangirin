@@ -63,10 +63,8 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                           onChanged: (bool value) {
                             setState(() {
                               button1 = !button1;
-                              if (button1 == true && button2 == true && button3==true){
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                    builder: (context) => AuthPage()));
-                              };
+                              button2 = !button2;
+                              button3 = !button3;
                             });
                           },
                         ),
@@ -89,10 +87,6 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                           onChanged: (bool value) {
                             setState(() {
                               button2 = !button2;
-                              if (button1 == true && button2 == true && button3==true){
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                    builder: (context) => AuthPage()));
-                              };
                             });
                           },
                         ),
@@ -238,10 +232,7 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                           onChanged: (bool value) {
                             setState(() {
                               button3 = !button3;
-                              if (button1 == true && button2 == true && button3==true){
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                    builder: (context) => AuthPage()));
-                              };
+
                             });
                           },
                         ),
