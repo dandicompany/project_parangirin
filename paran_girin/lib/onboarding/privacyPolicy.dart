@@ -269,9 +269,9 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                           child: Text('동의합니다', style: TextStyle(fontSize: ScreenUtil().setSp(16))),
                           onPressed: () => {
                             setState(() {
-                              button1 = true;
-                              button2 = true;
-                              button3 = true;
+                              button1 = !button1;
+                              button2 = !button2;
+                              button3 = !button3;
                               if (button1 == true && button2 == true && button3==true){
                                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                                     builder: (context) => AuthPage()));

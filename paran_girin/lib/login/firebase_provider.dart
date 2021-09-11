@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,6 +25,7 @@ class FirebaseProvider with ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage firestorage = FirebaseStorage.instance;
   final FirebaseAuth fAuth = FirebaseAuth.instance; // Firebase 인증 플러그인의 인스턴스
+  final FirebaseAnalytics fanalytics = FirebaseAnalytics();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FacebookAuth _facebookAuth = FacebookAuth.instance;
   final UploadManager _uploadManager = UploadManager();
@@ -65,6 +67,10 @@ class FirebaseProvider with ChangeNotifier {
 
   UploadManager getUploadManager() {
     return _uploadManager;
+  }
+
+  FirebaseAnalytics getFAnalytics(){
+    return fanalytics;
   }
 
   void setUser(User value) {
@@ -395,6 +401,8 @@ class FirebaseProvider with ChangeNotifier {
 
   // 이메일/비밀번호로 Firebase에 회원가입
   Future<bool> signUpWithEmail(String email, String password) async {
+    await fAuth.setLanguageCode("ko");
+
     try {
       UserCredential result = await fAuth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -410,7 +418,7 @@ class FirebaseProvider with ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       logger.e(e.code);
       setLastFBMessage(e.toString());
-      setLastFBExceptionCode(interpretFBMessage(e.code));
+      setLastFBExceptionCode(e.code);
       return false;
     } on Exception catch (e) {
       logger.e(e.toString());
@@ -443,6 +451,8 @@ class FirebaseProvider with ChangeNotifier {
       logger.e(e.code);
       List<String> result = e.toString().split(", ");
       setLastFBMessage(interpretFBMessage(e.code));
+      setLastFBExceptionCode(e.code);
+
       logger.e(e.code);
       return false;
     }
@@ -527,6 +537,8 @@ class FirebaseProvider with ChangeNotifier {
 
   // Firebase로부터 수신한 메시지를 반환하고 삭제
   getLastFBMessage() {
+    var code = _lastFirebaseExceptionCode;
+    return interpretFBMessage(code);
     String returnValue = _lastFirebaseResponse;
     _lastFirebaseResponse = "";
     return returnValue;
@@ -553,4 +565,54 @@ class FirebaseProvider with ChangeNotifier {
     _lastFirebaseExceptionCode = "";
     return returnValue;
   }
+
+  logScreenView(int pid_prev, int pid) async {
+    await fanalytics.logEvent(name: "screen_view", parameters: <String, int>{"firebase_previous_screen": pid_prev, "firebase_screen": pid});
+  }
+
+  logOnboardingStart() async {
+    await fanalytics.logEvent(name: "onboarding_start");
+  }
+
+  logHomeToday() async {
+    await fanalytics.logEvent(name: "home_today");
+  }
+
+  logHomeRecommendationStart() async {
+    await fanalytics.logEvent(name: "home_recommendation_start");
+  }
+
+  logHomeBbom() async {
+    await fanalytics.logEvent(name: "home_bbom");
+  }
+
+  logGalleryPlay(int question_num, int video_duration, int play_duration) async {
+    await fanalytics.logEvent(name: "gallery_play", parameters: <String, int>{"question_num": question_num, "video_duration": video_duration, "play_duration": play_duration});
+  }
+
+  logGalleryShare(String gallery_share) async {
+    await fanalytics.logEvent(name: "gallery_share", parameters: <String, String>{"gallery_share": gallery_share});
+  }
+
+  logGalleryDelete() async {
+    await fanalytics.logEvent(name: "gallery_delete");
+  }
+  
+  logTab2Cetegory(String tab2_category) async {
+    await fanalytics.logEvent(name: "tab2_category", parameters: <String, String>{"tab2_category": tab2_category});
+  } 
+
+  logTab2CetegoryQuestion(int qid) async {
+    await fanalytics.logEvent(name: "tab2_category_question", parameters: <String, int>{"tab2_category_question": qid});
+  } 
+
+  logTab2SearchQuestion(int qid) async {
+    await fanalytics.logEvent(name: "tab2_search_question", parameters: <String, int>{"tab2_search_question": qid});
+  } 
+
+  logTab2StartQuestion(int qid) async {
+    await fanalytics.logEvent(name: "tab2_start_question", parameters: <String, int>{"tab2_start_question": qid});
+  } 
+
+
 }

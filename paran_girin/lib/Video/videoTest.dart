@@ -130,7 +130,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
         Navigator.pushReplacement<void, void>(
           context_temp,MaterialPageRoute<void>(
-            builder: (BuildContext context) => Outtro()));
+            builder: (BuildContext context) => Outtro(fp.getUserInfo().currentChild.nickName, fp.getStaticInfo().questions[question])));
 
 
       }
@@ -194,6 +194,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
+    String nick = fp.getUserInfo().currentChild.nickName;
     context_temp = context;
     return Scaffold(
       body: FutureBuilder<void>(
@@ -208,7 +209,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   width: double.infinity,
                   height: ScreenUtil().setHeight(812),
                   //alignment: Alignment.center,
-                  child: Image.asset("assets/avatars/default_background.png",
+                  child: Image.asset("assets/background/lv0.jpg",
+                  // child: Image.asset("assets/avatars/default_background.png",
                       fit: BoxFit.cover, alignment: Alignment.bottomCenter),
                 ),
                 // Container(
@@ -217,7 +219,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 // ),
                 Container(
                     child: girin_state == false
-                        ? GirinSpeak(fp.getUserInfo().currentChild.nickName,
+                        ? GirinSpeak(nick,
+                        // ? GirinSpeak(fp.getUserInfo().currentChild.nickName,
                             fp.getStaticInfo().questions[question])
                         : GirinNod()),
                 Positioned(
@@ -279,7 +282,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                     });
                                       Navigator.pushReplacement<void, void>(
                                         context_temp,MaterialPageRoute<void>(
-                                          builder: (BuildContext context) => Outtro()));
+                                          builder: (BuildContext context) => Outtro(nick, fp.getStaticInfo().questions[question])));
                                   },
                                   child: ImageIcon(
                                     AssetImage("assets/icons/video_Off.png"),
@@ -368,10 +371,14 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 }
 
 class Outtro extends StatelessWidget {
+  String name = "";
+  Question q;
+
+  Outtro(this.name, this.q);
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Future.delayed(Duration(milliseconds: 3000)),
+      future: Future.delayed(Duration(milliseconds: 10000)),
       builder: (context, snapshot) {
         // Checks whether the future is resolved, ie the duration is over
         if (snapshot.connectionState == ConnectionState.done) {
@@ -380,7 +387,8 @@ class Outtro extends StatelessWidget {
               Container(
                   width: double.infinity,
                   height: ScreenUtil().setHeight(812),
-                  child: Image.asset("assets/avatars/default_background.png",
+                  child: Image.asset("assets/background/lv0.jpg",
+                  // child: Image.asset("assets/avatars/default_background.png",
                   fit: BoxFit.cover, alignment: Alignment.bottomCenter),
                  ),
                 Opacity( //seconds child - Opaque layer
@@ -402,10 +410,15 @@ class Outtro extends StatelessWidget {
               Container(
                 width: double.infinity,
                 height: ScreenUtil().setHeight(812),
-                child: Image.asset("assets/avatars/default_background.png",
+                child: Image.asset("assets/background/lv0.jpg",
+                // child: Image.asset("assets/avatars/default_background.png",
                     fit: BoxFit.cover, alignment: Alignment.bottomCenter),
               ),
-              Align(child: TextToSpeech(text: "다음에 또 보자.")),
+              Align(child: 
+                TextToSpeech(
+                  text: q.narration2.replaceAll("__name__", "${name ?? ""}"),
+                  )
+                ),
               Align(
                   alignment: Alignment.center,
                   child: Container(
@@ -439,14 +452,14 @@ class GirinNod extends StatelessWidget {
 }
 
 class GirinHi extends StatelessWidget {
-  String text = "";
-  GirinHi(this.text);
+  String name = "";
+  GirinHi(this.name);
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
-          child: TextToSpeech(text: "안녕, ${text ?? ""} 친구?"),
+          child: TextToSpeech(text: "안녕, ${name ?? ""} 친구?"),
         ),
         Align(
             alignment: Alignment.center,
@@ -500,10 +513,15 @@ class VideoSavePopup extends StatefulWidget {
 
 class _VideoSavePopup extends State<VideoSavePopup> {
   FirebaseProvider fp;
-  int n = 2;
+  // int meetings = 0;
+  
   @override
   Widget build(BuildContext context){
     fp = Provider.of<FirebaseProvider>(context);
+    // var answers = fp.getUserInfo().currentChild.answers;
+    // for (var key in answers.keys) {
+    //   meetings += 1;
+    // }
     return Align(
       alignment: Alignment.center,
       child: Container(
@@ -513,53 +531,57 @@ class _VideoSavePopup extends State<VideoSavePopup> {
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
-        child: Stack(
-          children: [
-            Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: ScreenUtil().setHeight(28)),
-                  Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        width: ScreenUtil().setWidth(74),
-                        height: ScreenUtil().setHeight(74),
-                        child: new Image.asset("assets/icons/party_popper.png", fit:BoxFit.fill),
-                      )
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(24)),
-                  Positioned(child: new Text( "우와,\n 벌써 "+ n.toString()+" 번째 만남이네요!",textAlign: TextAlign.center,
-                    style: TextStyle(color: AppTheme.colors.primary1, fontSize: ScreenUtil().setSp(18)), ),),
-                  SizedBox(height: ScreenUtil().setHeight(26)),
-                  Container(
-                      width: ScreenUtil().setWidth(173),
-                      height: ScreenUtil().setHeight(40),
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                      child : FlatButton(
-                        child : Text( "영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
-                        onPressed: () {
-                          Navigator.pushReplacement<void, void>(
-                            context,MaterialPageRoute<void>(
-                              builder: (BuildContext context) => VideoShowFromCamera(question, fp.getStaticInfo().answers[question])));
-                        //   Navigator.of(context).push(
-                        //       MaterialPageRoute(builder: (context) => VideoShowFromCamera(question, fp.getStaticInfo().answers[question])));
-                        }, //VideoPlayerScreen()));
-                      )
-                  ),
-                  Container(
-                      child:TextButton(
-                        child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => DefaultLayout()));
-                          },
-                      )
-                  )
-                ]
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: ScreenUtil().setHeight(28)),
+            Container(
+              width: ScreenUtil().setWidth(74),
+              height: ScreenUtil().setHeight(74),
+              child: new Image.asset("assets/icons/party_popper.png", fit:BoxFit.fill)
             ),
+            SizedBox(height: ScreenUtil().setHeight(24)),
+            Material(
+              type: MaterialType.transparency,
+              child: Text( 
+                // "우와,\n 벌써 "+ meetings.toString()+" 번째 만남이네요!",
+                "우와, 정말 최고에요!",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppTheme.colors.primary1, 
+                  fontSize: ScreenUtil().setSp(18),
+                  fontWeight: FontWeight.w700
+                ), 
+              ),
+            ),
+            SizedBox(height: ScreenUtil().setHeight(26)),
+            Container(
+                width: ScreenUtil().setWidth(173),
+                height: ScreenUtil().setHeight(40),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child : FlatButton(
+                  child : Text( "영상 확인하기", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(16))),
+                  onPressed: () {
+                    Navigator.pushReplacement<void, void>(
+                      context,MaterialPageRoute<void>(
+                        builder: (BuildContext context) => VideoShowFromCamera(question, fp.getStaticInfo().answers[question])));
+                  //   Navigator.of(context).push(
+                  //       MaterialPageRoute(builder: (context) => VideoShowFromCamera(question, fp.getStaticInfo().answers[question])));
+                  }, //VideoPlayerScreen()));
+                )
+            ),
+            Container(
+                child:TextButton(
+                  child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => DefaultLayout()));
+                    },
+                )
+            )
           ],
         )
       ),

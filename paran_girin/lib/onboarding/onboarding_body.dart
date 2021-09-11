@@ -80,17 +80,33 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                 Spacer(
                   flex: 1,
                 ),
-                DefaultButton(
-                  text: "바로 시작하기",
-                  press: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        // builder: (context) => Initialization()));
-                        // builder: (context) => textToSpeech()));
-                        builder: (context) => PrivacyPolicy2()));
-                        //builder: (context) => AuthPage())); --> hobin
-                  },
-                  //LoginPage()
-                ),
+                (currentPage == 3)
+                  ? DefaultButton(
+                    text: "바로 시작하기",
+                    press: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          // builder: (context) => Initialization()));
+                          // builder: (context) => textToSpeech()));
+                          builder: (context) => PrivacyPolicy2()));
+                          //builder: (context) => AuthPage())); --> hobin
+                    }
+                  )
+                  : GestureDetector(
+                      onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PrivacyPolicy2()));
+                    },
+                      child: Text(
+                        "건너뛰기",
+                        style: TextStyle(
+                          fontFamily: 'Noto Sans KR',
+                          fontWeight: FontWeight.w400,
+                          fontSize: ScreenUtil().setSp(14),
+                          decoration: TextDecoration.underline,
+                          color: AppTheme.colors.base2,
+                        ),
+                      )
+                  ),
                 Spacer(
                   flex: 1,
                 ),

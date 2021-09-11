@@ -63,7 +63,8 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
                 width: double.infinity,
                 // height: ScreenUtil().setHeight(728),
                 height: ScreenUtil().setHeight(812),
-                child: Image.asset("assets/avatars/default_background.png",
+                child: Image.asset("assets/background/lv5.jpg",
+                // child: Image.asset("assets/avatars/default_background.png",
                     fit: BoxFit.cover),
                 // child: Lottie.asset("assets/avatars/default_background.png"),
               ),
@@ -127,7 +128,7 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
                   width: double.infinity,
                   height: ScreenUtil().setHeight(595),
                   child: Image.asset(
-                    'assets/avatars/home.gif',
+                    'assets/avatars/nod.gif',
                     fit: BoxFit.cover,
                     alignment: Alignment.bottomCenter,
                   ),
@@ -194,15 +195,25 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
                             context,MaterialPageRoute<void>(
                               //builder: (BuildContext context) => Initialization(today_qid)));
                               builder: (BuildContext context) => QuestionPost(
-                                 tag: question.tag ?? "태그 없음",
-                                 categoryTitle: question.category ?? "카테고리 없음",
-                                 image: "assets/images/category_nature.png",
-                                 qTitle: question.title ?? "제목 없음",
-                                 question: question.question ?? "질문 없음",
-                                 storyText: question.story ?? "스토리 없음",
-                                 guide: question.guide ?? "가이드 없음",
-                                 qid: question.qid.toString())));
-                              // builder: (BuildContext context) => PrivacyPolicy2()));
+                                  tag: question.tag ?? "태그 없음",
+                                  categoryTitle: question.category ?? "카테고리 없음",
+                                  image: "assets/images/category_nature.png",
+                                  qTitle: question.title ?? "제목 없음",
+                                  question: question.question ?? "질문 없음",
+                                  storyText: question.story ?? "스토리 없음",
+                                  guide: question.guide ?? "가이드 없음",
+                                  qid: question.qid.toString(),
+                                  available: true,)));
+                              //builder: (BuildContext context) => PrivacyPolicy2()));
+                              // tag: question.tag ?? "태그 없음", --> hobin
+                              //    categoryTitle: question.category ?? "카테고리 없음",
+                              //    image: "assets/images/category_nature.png",
+                              //    qTitle: question.title ?? "제목 없음",
+                              //    question: question.question ?? "질문 없음",
+                              //    storyText: question.story ?? "스토리 없음",
+                              //    guide: question.guide ?? "가이드 없음",
+                              //    qid: question.qid.toString())));
+                              // // builder: (BuildContext context) => PrivacyPolicy2()));
                         }),
                   ),
           ],
