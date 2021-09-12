@@ -69,3 +69,9 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
 }
+
+configurations.all {
+    resolutionStrategy {
+        force 'androidx.core:core-ktx:1.6.0'
+    }
+}
