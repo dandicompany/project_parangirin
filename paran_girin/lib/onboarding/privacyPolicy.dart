@@ -62,9 +62,19 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                           value: button1,
                           onChanged: (bool value) {
                             setState(() {
-                              button1 = !button1;
-                              button2 = !button2;
-                              button3 = !button3;
+                              if (button1 == false){
+                                button1 = true;
+                                button2 = true;
+                                button3 = true;
+                                allbutton = true;
+                              }
+                              else if (button1 == true) {
+                                button1 = false;
+                                button2 = false;
+                                button3 = false;
+                                allbutton = false;
+                              }
+
                             });
                           },
                         ),
@@ -87,12 +97,20 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                           onChanged: (bool value) {
                             setState(() {
                               button2 = !button2;
+                              if (button2 == true && button3 == true){
+                                button1 = true;
+                                allbutton = true;
+                              }
+                              else if (button2 == false){
+                                button1 = false;
+                                allbutton = false;
+                              }
                             });
                           },
                         ),
                       ),
                       //SizedBox(width: ScreenUtil().setWidth(2),),
-                      Text("파란기린 이용 약관",style: TextStyle(color: Colors.black,
+                      Text("파란기린 이용약관",style: TextStyle(color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 12.0)),
                     ],
@@ -232,13 +250,20 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                           onChanged: (bool value) {
                             setState(() {
                               button3 = !button3;
-
+                              if (button2 == true && button3 == true){
+                                button1 = true;
+                                allbutton = true;
+                              }
+                              else if (button3 == false){
+                                button1 = false;
+                                allbutton = false;
+                              }
                             });
                           },
                         ),
                       ),
                       //SizedBox(width: ScreenUtil().setWidth(),),
-                      Text("파란기린 이용 약관",style: TextStyle(color: Colors.black,
+                      Text("개인정보 처리방침",style: TextStyle(color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 12.0)),
                     ],
@@ -252,6 +277,7 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                         child: SingleChildScrollView(
                             child:Text("파란기린은 단디 팀이 운영하는 서비스로, 팀은 파란기린 서비스 제공과 관련하여 귀하의 개인정보를 보호하기 위해 최선을 다하고 있습니다. 팀은 팀이 서비스(이용약관에서 정의됨)를 통하여 이용자로부터 수집하는 개인정보(아래에서 정의됨)의 처리에 대해 설명하기 위해 본 개인정보처리방침을 작성하였습니다.", style: TextStyle(color: Colors.black,
                                 fontSize: 12.0))),
+                        // 여기 내용 수정해야됨 !!!
                       ),
                     ],
                   ),
@@ -260,7 +286,7 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                     children: [
                       SizedBox(width: double.infinity,
                         height: ScreenUtil().setHeight(30),
-                        child: ColoredBox(color: Colors.grey,)),
+                        child: allbutton? ColoredBox(color: Colors.blue,) : ColoredBox(color: Colors.grey,)),
                       SizedBox(
                         width: double.infinity,
                         height: ScreenUtil().setHeight(53),
@@ -275,7 +301,7 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                               };
                             }),
                           },
-                          color: Colors.grey,
+                          color: allbutton ? Colors.blue : Colors.grey,
                           textColor: Colors.white,
                         ),
                       ),
