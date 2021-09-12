@@ -18,6 +18,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'dart:io';
 
+bool firstTime = false;
+
 class HomeBody extends StatefulWidget {
   _HomeBody createState() => _HomeBody();
 }
@@ -101,6 +103,17 @@ class _HomeBody extends State<HomeBody> {
                   press: () {
                     Navigator.of(context).push(
                         FadePageRoute(widget: SharingMyAnswers()));
+                    if (firstTime == false){
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context)
+                          {
+                            return PopupSendingNotice();
+                          }
+                      );
+                      firstTime = true;
+                    };
+
                   },
                 ),
               ),
