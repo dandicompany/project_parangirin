@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:paran_girin/gallery/videoShowFromCamera.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -205,9 +206,9 @@ class _CalendarState extends State<Calendar> {
                             print(_calendarController.selectedDay.toString());
                             Answer answer = _answers[events[0]];
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => VideoShowWidget(
-                                    events[0],
-                                    answer))); //VideoPlayerScreen()));
+                                builder: (context) => VideoShowFromCamera(
+                                    qid: events[0],
+                                    answer: answer))); //VideoPlayerScreen()));
                           }
                           // });
                         }, // onDaySelected: ,

@@ -270,16 +270,37 @@ class HomeAvatar extends StatelessWidget {
             Column(children: [
               SizedBox(
                 width: ScreenUtil().setWidth(426),
-                height: ScreenUtil().setHeight(44),
+                height: ScreenUtil().setHeight(32),
               ),
-              Container(
-                width: ScreenUtil().setWidth(426),
-                height: ScreenUtil().setHeight(426),
-                child: Image.asset(
-                  'assets/avatars/nod.gif',
-                  fit: BoxFit.cover,
-                  alignment: Alignment.bottomCenter,
-                ),
+              Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(3),
+                    child: Container(
+                      width: ScreenUtil().setWidth(276),
+                      height: ScreenUtil().setHeight(26),
+                      color: Color.fromRGBO(109, 144, 185, 0.2),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "파란기린을 탭해서 오늘의 질문을 들어보세요",
+                        style: TextStyle(
+                          color: Color.fromRGBO(51, 51, 51, 1),
+                          fontSize: ScreenUtil().setSp(14),
+                          fontWeight: FontWeight.w500
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: ScreenUtil().setWidth(426),
+                    height: ScreenUtil().setHeight(426),
+                    child: Image.asset(
+                      'assets/avatars/nod.gif',
+                      fit: BoxFit.cover,
+                      alignment: Alignment.bottomCenter,
+                    ),
+                  ),
+                ],
               ),
             ]),
           ],
