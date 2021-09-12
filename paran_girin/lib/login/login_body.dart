@@ -298,11 +298,11 @@ class _EmailFormState extends State<EmailForm> {
         // ),
         InputDecoration(
           hintText: "paran@girin.com",
-          hintStyle: TextStyle(fontSize: ScreenUtil().setSp(16),),
+          hintStyle: TextStyle(fontSize: ScreenUtil().setSp(16)),
           suffixIcon: GestureDetector(
             onTap: textCon.clear,
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(5),),
+              padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(5)),
               child: SvgPicture.asset(
                 "assets/icons/close.svg",
                 color: iconColor,
@@ -320,12 +320,17 @@ class _EmailFormState extends State<EmailForm> {
             borderSide: BorderSide(color: Colors.red, width: 2.0),
           ),
         ),
-        // SizedBox(
-        //   width: double.infinity,
-        //   height: ScreenUtil().setHeight(40),
-        // ),
-        )
-      ]);
+        
+        keyboardType: TextInputType.emailAddress,
+        
+        ),
+        SizedBox(
+          width: double.infinity,
+          height: ScreenUtil().setHeight(40),
+        ),
+      ],
+      
+        );
   }
 }
 
