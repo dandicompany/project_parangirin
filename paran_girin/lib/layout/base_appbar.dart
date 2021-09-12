@@ -134,9 +134,7 @@ class _PopupAfterBbom extends State<PopupAfterBbom> {
                         icon: Image.asset("assets/icons/close-popup.png"),
                         iconSize: 10.0,
                         onPressed: (){
-                          Navigator.pushReplacement<void, void>(
-                              context,MaterialPageRoute<void>(
-                              builder: (BuildContext context) => SharingMyAnswers()));
+                          Navigator.of(context).pop();
                           },
                         //hobin
                       ),),
