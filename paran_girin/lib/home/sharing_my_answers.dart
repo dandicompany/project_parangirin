@@ -14,7 +14,6 @@ import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:paran_girin/gallery/myVideoLayout.dart';
 import 'package:intl/intl.dart';
 
-bool state = false;
 
 class SharingMyAnswers extends StatefulWidget {
   int sum;
@@ -45,10 +44,11 @@ class _SharingMyAnswersState extends State<SharingMyAnswers> {
       isSend: selectedAnswers.isNotEmpty ? true : false,
       onSend: uploadPosts,
     );
+
     return Scaffold(
         appBar: baseAppBar,
         body: Stack(
-          children: <Widget>[
+          children: [
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.symmetric(
@@ -58,24 +58,15 @@ class _SharingMyAnswersState extends State<SharingMyAnswers> {
                     ? ShowAnswers(
                     selectedAnswers: selectedAnswers,
                     refresh: () {
-                      setState(() {});
+                      setState(() {
+                      });
                     })
                     : NoAnswers(),
               ),
             ),
-            state? Text(""):Opacity(
-              opacity: 0.25,
-              child: Container(
-                decoration: BoxDecoration(color: Colors.black),
-              ),),
-            state? Text(""):PopupSendingNotice(),// hobin
-            //state? Text(""):PopupAfterBbom(),
-
-
-          ],
+            ],
         ));
   }
-
   void uploadPosts() {
     selectedAnswers.entries.forEach((element) async {
       String key = element.key;
@@ -109,36 +100,10 @@ class _ShowAnswersState extends State<ShowAnswers> {
     // fp = Provider.of<FirebaseProvider>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      children: [
+      children: <Widget>[
         SizedBox(
           height: ScreenUtil().setHeight(18),
         ),
-        // TextField(
-        //   // onSubmitted: (_) => _searchPosts(),
-        //   textInputAction: TextInputAction.search,
-        //   onSubmitted: (value) {
-        //     setState(() {
-        //       query = value;
-        //       // searched = (query.length > 0);
-        //     });
-        //   },
-        //   controller: textCon,
-        //   decoration: InputDecoration(
-        //     prefixIcon: GestureDetector(
-        //       onTap: () {},
-        //       child: Icon(Icons.search, color: AppTheme.colors.base2),
-        //     ),
-        //     hintText: "질문을 검색해보세요 :)",
-        //     hintStyle: TextStyle(fontSize: ScreenUtil().setSp(16)),
-        //     border: OutlineInputBorder(
-        //       borderRadius: BorderRadius.circular(25),
-        //       borderSide: BorderSide.none,
-        //     ),
-        //     fillColor: Color.fromRGBO(235, 235, 235, 1),
-        //     filled: true,
-        //     contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
-        //   ),
-        // ),
         TextField(
           // onSubmitted: (_) => _searchPosts()
           textInputAction: TextInputAction.search,
@@ -189,7 +154,6 @@ class YesVideo extends StatelessWidget {
   YesVideo.query(this.query, this.selectedAnswers, this.refresh);
   @override
   Widget build(BuildContext context) {
-    state = false;
     fp = Provider.of<FirebaseProvider>(context);
     Map<String, Answer> answers = fp.getStaticInfo().answers;
     List<MapEntry<String, Answer>> entries = List<MapEntry<String, Answer>>();
@@ -314,13 +278,7 @@ class NoAnswers extends StatelessWidget {
   }
 }
 
-
-
 class PopupSendingNotice extends StatefulWidget {
-  final String text1, text2;
-  final AssetImage img;
-
-  const PopupSendingNotice({Key key, this.text1, this.text2, this.img}) : super(key: key);
   @override
   _PopupSendingNotice createState() => _PopupSendingNotice();
 }
@@ -362,11 +320,13 @@ class _PopupSendingNotice extends State<PopupSendingNotice> {
                           alignment: Alignment.topRight,
                           icon: Image.asset("assets/icons/close-popup.png"),
                           iconSize: 10.0,
-                          onPressed: (){ state = true;
-                          Navigator.pushReplacement<void, void>(
-                              context,MaterialPageRoute<void>(
-                              builder: (BuildContext context) => SharingMyAnswers()));
-                          },//hobin
+                          onPressed: (){
+                            Navigator.pop(context);
+                          }
+                          // Navigator.pushReplacement<void, void>(
+                          //     context,MaterialPageRoute<void>(
+                          //     builder: (BuildContext context) => SharingMyAnswers()));
+                          // },//hobin
                         ),),
                   ],
                 ),
