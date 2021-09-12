@@ -97,7 +97,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   String stoptimetodisplay = '01:30';
   var swatch = Stopwatch();
   final dur = const Duration(seconds: 1);
-
+  Question q;
   var todayDate = new DateTime.now();
   bool girin_state = false;
 
@@ -217,12 +217,17 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 //   child: TextToSpeech(text: "안녕"),
                 //   //", 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아. 혹시 너도 동물이 되어보고 싶은 적 없어? 하루동안 동물이 된다면, 어떤 동물이 되고싶니?",),
                 // ),
-                Container(
-                    child: girin_state == false
-                        ? GirinSpeak(nick,
-                        // ? GirinSpeak(fp.getUserInfo().currentChild.nickName,
-                            fp.getStaticInfo().questions[question])
-                        : GirinNod()),
+                if (girin_state == false)
+                  GirinSpeak(nick,fp.getStaticInfo().questions[question]),
+                  TextToSpeech(text: "안녕, "+ nick + "친구?" +fp.getStaticInfo().questions[question].narration1.replaceAll("안녕 __name__!", "") + "   준비가 되었다면 빨간 버튼을 누르고 대답해줘!"),
+                if (girin_state == true)
+                  GirinNod(),
+                //Container(
+                //    child: girin_state == false
+                //        ? GirinSpeak(nick,
+                //        // ? GirinSpeak(fp.getUserInfo().currentChild.nickName,
+                //           fp.getStaticInfo().questions[question])
+                //        : GirinNod()),
                 Positioned(
                   top: ScreenUtil().setHeight(64),
                   right: ScreenUtil().setWidth(10),
@@ -458,9 +463,9 @@ class GirinHi extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          child: TextToSpeech(text: "안녕, ${name ?? ""} 친구?"),
-        ),
+        //Container(
+        //  child: TextToSpeech(text: "안녕, ${name ?? ""} 친구?"),
+        //),
         Align(
             alignment: Alignment.center,
             child: Container(
@@ -486,10 +491,10 @@ class GirinSpeak extends StatelessWidget {
           // Checks whether the future is resolved, ie the duration is over
           if (snapshot.connectionState == ConnectionState.done) {
             return Stack(children: [
-              Align(
-                  child: TextToSpeech(
-                      // text: "나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지."),
-                      text: q.narration1.replaceAll("안녕 __name__!", "") + "   준비가 되었다면 빨간 버튼을 누르고 대답해줘!")),
+              //Align(
+              //    child: TextToSpeech(
+              //        // text: "나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지."),
+              //        text: q.narration1.replaceAll("안녕 __name__!", "") + "   준비가 되었다면 빨간 버튼을 누르고 대답해줘!")),
               Align(
                   alignment: Alignment.center,
                   child: Container(
@@ -581,7 +586,7 @@ class _VideoSavePopup extends State<VideoSavePopup> {
                 child:TextButton(
                   child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => DefaultLayout()));
                     },
                 )

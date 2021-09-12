@@ -13,7 +13,7 @@ import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/myPageDetail/pushAlarm.dart';
-
+import 'package:paran_girin/login/login_page.dart';
 class MyPage extends StatefulWidget {
   @override
   _MyPageState createState() => _MyPageState();
@@ -110,7 +110,8 @@ class _MyPageState extends State<MyPage> {
                   press: () {
                     fp.resetStaticInfoOnNextLoad();
                     fp.signOut();
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => LoginPage()));
                   }),
               SizedBox(height: ScreenUtil().setHeight(16)),
               // version information
