@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/theme/app_theme.dart';
+import 'dart:core';
+import 'package:email_validator/email_validator.dart';
 
 class LoginBody extends StatelessWidget {
   const LoginBody(
@@ -102,7 +104,8 @@ class LoginBody extends StatelessWidget {
 }
 
 class LoginBody2 extends StatelessWidget {
-  const LoginBody2(
+  // const LoginBody2(
+  LoginBody2(
       {Key key,
       this.title,
       this.loginInfo,
@@ -114,7 +117,7 @@ class LoginBody2 extends StatelessWidget {
       this.formKey,
       this.actionText,
       this.textPress,
-      this.getInput = true})
+      this.getInput = true,})
       : super(key: key);
 
   final String title, loginInfo, loginInfo2, actionText;
@@ -124,6 +127,7 @@ class LoginBody2 extends StatelessWidget {
   final TextEditingController textCon2;
   final Function next, pwChecker;
   final formKey;
+  final textFieldFocusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -176,7 +180,42 @@ class LoginBody2 extends StatelessWidget {
                     fontSize: ScreenUtil().setSp(16)),
               ),
               // SizedBox( height: ScreenUtil().setHeight(8)),
-              PasswordForm(textCon, null, null, null),
+              // PasswordForm(textCon, null, null, null),
+              TextField(
+                controller: textCon,
+                textInputAction: TextInputAction.next, 
+                focusNode: textFieldFocusNode,
+                decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      textFieldFocusNode.unfocus(); // Unfocus all focus nodes
+                      textFieldFocusNode.canRequestFocus = false; // Disable text field's focus node request
+                      textCon.clear();  // Do your stuff
+
+                      //Enable the text field's focus node request after some delay
+                      Future.delayed(Duration(milliseconds: 100), () {
+                        textFieldFocusNode.canRequestFocus = true;
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(5),),
+                      child: SvgPicture.asset(
+                        "assets/icons/close.svg",
+                        color: AppTheme.colors.primary2,
+                      ),
+                    ),
+                  ),
+                  suffixIconConstraints: BoxConstraints(
+                    minHeight: ScreenUtil().setHeight(20),
+                    minWidth: ScreenUtil().setWidth(20),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: AppTheme.colors.primary2, width: 2.0),
+                  ),
+                ),
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: true,
+              ),
               SizedBox(
                 width: double.infinity,
                 height: ScreenUtil().setHeight(24),
@@ -190,6 +229,10 @@ class LoginBody2 extends StatelessWidget {
               ),
               // SizedBox( height: ScreenUtil().setHeight(8)),
               PasswordForm(textCon2, next, this.pwChecker, this.formKey)
+              // TextField(
+              //   decoration: InputDecoration(hintText: 'TextField A'),
+              //   textInputAction: TextInputAction.done, // Moves focus to next.
+              // ),
             ],
           ),
         )
@@ -210,34 +253,78 @@ class _EmailFormState extends State<EmailForm> {
   TextEditingController textCon;
   var next;
   _EmailFormState(this.textCon, this.next);
+  Color iconColor;
+
   @override
   Widget build(BuildContext context) {
-
     return Column(children: [
         TextFormField(
           controller: textCon,
           textInputAction: TextInputAction.next,
           onFieldSubmitted: (term){
-            next();},
+            next();
+          },
+          validator: (text){
+            print("validating email");
+            if (!EmailValidator.validate(text)){
+              var text = "잘못된 이메일 형식입니다.";
+              logger.d(text);
+              setState(() { 
+                this.iconColor = Colors.red; 
+              });
+              return text;
+            } else {
+              setState(() { 
+                this.iconColor = AppTheme.colors.primary2; 
+              });
+              return null;
+            }
+          },
           // onFieldSubmitted: next,
-          decoration: InputDecoration(
-              hintText: "paran@girin.com",
-              hintStyle: TextStyle(fontSize: ScreenUtil().setSp(16),),
-              suffixIcon: IconButton(
-                onPressed: textCon.clear,
-                icon: SvgPicture.asset("assets/icons/close.svg"),
+          decoration: 
+        //   InputDecoration(
+        //       hintText: "paran@girin.com",
+        //       hintStyle: TextStyle(fontSize: ScreenUtil().setSp(16),),
+        //       suffixIcon: IconButton(
+        //         onPressed: textCon.clear,
+        //         icon: SvgPicture.asset("assets/icons/close.svg"),
+        //       ),
+        //       enabledBorder: UnderlineInputBorder(
+        //         borderSide: BorderSide(color: AppTheme.colors.primary2, width: 2.0),
+        //       ),
+        //       ),
+        //   keyboardType: TextInputType.emailAddress,
+        //   // obscureText: true, // for password
+        // ),
+        InputDecoration(
+          hintText: "paran@girin.com",
+          hintStyle: TextStyle(fontSize: ScreenUtil().setSp(16),),
+          suffixIcon: GestureDetector(
+            onTap: textCon.clear,
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(5),),
+              child: SvgPicture.asset(
+                "assets/icons/close.svg",
+                color: iconColor,
               ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: AppTheme.colors.primary2, width: 2.0),
-              ),
-              ),
-          keyboardType: TextInputType.emailAddress,
-          // obscureText: true, // for password
+            ),
+          ),
+          suffixIconConstraints: BoxConstraints(
+            minHeight: ScreenUtil().setSp(20),
+            minWidth: ScreenUtil().setSp(20),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: AppTheme.colors.primary2, width: 2.0),
+          ),
+          errorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.red, width: 2.0),
+          ),
         ),
-        SizedBox(
-          width: double.infinity,
-          height: ScreenUtil().setHeight(40),
-        ),
+        // SizedBox(
+        //   width: double.infinity,
+        //   height: ScreenUtil().setHeight(40),
+        // ),
+        )
       ]);
   }
 }
@@ -257,16 +344,12 @@ class _PasswordFormState extends State<PasswordForm> {
   final formKey;
   var pwChecker;
   var next;
-  Color iconColor = AppTheme.colors.primary2;
-  bool errorOccurred = false;
-  // Widget clearIcon;
+  // Color iconColor = AppTheme.colors.primary2;
+  Color iconColor;
+
   _PasswordFormState(this.textCon, this.next, this.pwChecker, this.formKey);
   @override
   Widget build(BuildContext context) {
-    // clearIcon = IconButton(
-    //           onPressed: textCon.clear,
-    //           icon: SvgPicture.asset("assets/icons/close.svg"),
-    //         );
     return Column(children: [
         TextFormField(
           controller: textCon,
@@ -278,30 +361,39 @@ class _PasswordFormState extends State<PasswordForm> {
             if (this.pwChecker != null){
               var text = this.pwChecker();
               logger.d(text);
-              // iconColor = Colors.red;
-              errorOccurred = true;
+              setState(() { 
+                this.iconColor = Colors.red; 
+              });
               return text;
             } else {
-              errorOccurred = false;
+              setState(() { 
+                this.iconColor = AppTheme.colors.primary2; 
+              });
               return null;
             }
           },
           decoration: InputDecoration(
-            suffixIcon: IconButton(
-              onPressed: textCon.clear,
-              icon: SvgPicture.asset("assets/icons/close.svg"),
-              // color: iconColor
-              color: errorOccurred ? Colors.red : AppTheme.colors.primary2
+            suffixIcon: GestureDetector(
+              onTap: textCon.clear,
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(5),),
+                child: SvgPicture.asset(
+                  "assets/icons/close.svg",
+                  color: iconColor,
+                ),
+              ),
+            ),
+            suffixIconConstraints: BoxConstraints(
+              minHeight: ScreenUtil().setSp(20),
+              minWidth: ScreenUtil().setSp(20),
             ),
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: AppTheme.colors.primary2, width: 2.0),
             ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.red, width: 2.0),
+            ),
           ),
-          //   errorText: "비밀번호가 일치하지 않아요 :(",
-          //   errorStyle: TextStyle(
-          //     fontSize: ScreenUtil().setSp(12)
-          //   )
-          // ),
           keyboardType: TextInputType.visiblePassword,
           obscureText: true, // for password
         ),

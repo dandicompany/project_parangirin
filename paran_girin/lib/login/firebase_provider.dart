@@ -552,13 +552,13 @@ class FirebaseProvider with ChangeNotifier {
   interpretFBMessage(String code) {
     switch (code) {
       case "too-many-requests":
-        return "로그인 시되 횟수가 많습니다. 잠시 후 다시 시도해 주세요.";
+        return "로그인 시도 횟수가 많습니다. 잠시 후 다시 시도해주세요.";
       case "invalid-email":
         return "잘못된 이메일 형식입니다.";
       case "wrong-password":
-        return "잘못된 비밀번호 입니다.";
+        return "잘못된 비밀번호입니다.";
       case "weak-password":
-        return "6자리 이상의 비밀번호를 입력해 주세요.";
+        return "6자리 이상의 비밀번호를 입력해주세요.";
       default:
         return "알 수 없는 에러";
         break;
