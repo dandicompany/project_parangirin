@@ -9,7 +9,7 @@ class AboutParanGirin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
-        title: '파란 기린 소개'
+        title: '파란기린 소개'
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(

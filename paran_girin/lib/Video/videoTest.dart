@@ -567,7 +567,11 @@ class _VideoSavePopup extends State<VideoSavePopup> {
                   onPressed: () {
                     Navigator.pushReplacement<void, void>(
                       context,MaterialPageRoute<void>(
-                        builder: (BuildContext context) => VideoShowFromCamera(question, fp.getStaticInfo().answers[question])));
+                        builder: (BuildContext context) => VideoShowFromCamera(
+                          qid: question, 
+                          answer: fp.getStaticInfo().answers[question])
+                          )
+                        );
                   //   Navigator.of(context).push(
                   //       MaterialPageRoute(builder: (context) => VideoShowFromCamera(question, fp.getStaticInfo().answers[question])));
                   }, //VideoPlayerScreen()));

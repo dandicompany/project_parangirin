@@ -183,6 +183,8 @@ class FirebaseProvider with ChangeNotifier {
       }
 
       _static.post_thumbnails[post.thumbURL] = null;
+      logger.d("trying to load thumbnail");
+      logger.d("post thumb url: ${post.thumbURL}");
       refThumb.writeToFile(thumb).then((element) async {
         if (element.state == TaskState.success) {
           _static.post_thumbnails[post.thumbURL] = await thumb.create();
@@ -192,6 +194,9 @@ class FirebaseProvider with ChangeNotifier {
           notifyListeners();
         } else if (element.state == TaskState.error) {
           logger.d("error while downloading thumbnails");
+        } else {
+          logger.d("unexpected result in loading thumbnails");
+          logger.d(element.state);
         }
       });
     });

@@ -27,22 +27,29 @@ class PostCard extends StatelessWidget {
     fp = Provider.of<FirebaseProvider>(context);
     StaticInfo info = fp.getStaticInfo();
     child = info.post_children[post.child];
+    logger.d(child);
+    logger.d(child.profileURL);
     profile = info.post_profiles[child.profileURL];
-    thumb = info.post_thumbnails[basename(post.thumbURL)];
-    if ((child != null) && (thumb != null)) {
-      background = "assets/background/${child.background}";
-      avatar = "assets/avatars/${child.avatar}";
+    if (post.thumbURL == null){
+      logger.d("post.thumbURL is null");
+      thumb = null;
     } else {
-      if (child == null){
-        logger.d("child null");
-      }
+      thumb = info.post_thumbnails[basename(post.thumbURL)];
+    }
+    if ((child != null)) {
+      background = "assets/background/lv7.jpg";
+      avatar = "assets/avatars/hi.gif";
+      // background = "assets/background/${child.background}";
+      // avatar = "assets/avatars/${child.avatar}";
+    } else {
+      logger.d("child null");
       if (profile == null) {
         logger.d("profile null");
       }
       if (thumb == null){
         logger.d("thumnail null");
       }
-      return SizedBox.shrink();
+      // return SizedBox.shrink();
     }
     return Padding(
       padding:
@@ -103,9 +110,16 @@ class PostCard extends StatelessWidget {
                         //   fit: BoxFit.cover,
                         //   alignment: Alignment.topCenter,
                         // ),
+                        (post.thumbURL == null) ?                         
+                        Image.asset(
+                          "assets/images/thumbnail_baby.png",
+                          width: ScreenUtil().setWidth(198),
+                          height: ScreenUtil().setHeight(197),
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                        ) : 
                         Image.file(
-                          // "assets/images/thumbnail_baby.png",
-                          File(post.thumbURL),
+                          File("assets/images/thumbnail_baby.png"),
                           width: ScreenUtil().setWidth(198),
                           height: ScreenUtil().setHeight(197),
                           fit: BoxFit.cover,

@@ -178,7 +178,7 @@ class _QuestionPostState extends State<QuestionPost> {
                     EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
                 child: todayDone 
                   ? DefaultIconButton(
-                    text: "파란 기린과 대화하기 ",
+                    text: " 파란기린과 대화하기 ",
                     isInvert: false,
                     press: () {
                       Navigator.of(context).push(MaterialPageRoute(

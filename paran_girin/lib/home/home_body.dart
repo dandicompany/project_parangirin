@@ -150,9 +150,12 @@ class _HomeBody extends State<HomeBody> {
               logger.d("post loaded");
               return PostCard(post);
             } else {
-              logger.d("post unloaded");
+              post.thumbURL = null;
+              logger.d("thumnail not exists");
               logger.d(post);
               logger.d(index);
+              return PostCard(post);
+
               return SizedBox.shrink();
             }
           } catch (e) {
@@ -260,23 +263,44 @@ class HomeAvatar extends StatelessWidget {
               width: double.infinity,
               height: ScreenUtil().setHeight(488),
               child: Image.asset(
-                "assets/background/home_background.jpg",
+                "assets/background/home_background.png",
                 fit: BoxFit.cover,
               ),
             ),
             Column(children: [
               SizedBox(
                 width: ScreenUtil().setWidth(426),
-                height: ScreenUtil().setHeight(44),
+                height: ScreenUtil().setHeight(32),
               ),
-              Container(
-                width: ScreenUtil().setWidth(426),
-                height: ScreenUtil().setHeight(426),
-                child: Image.asset(
-                  'assets/avatars/nod.gif',
-                  fit: BoxFit.cover,
-                  alignment: Alignment.bottomCenter,
-                ),
+              Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(3),
+                    child: Container(
+                      width: ScreenUtil().setWidth(276),
+                      height: ScreenUtil().setHeight(26),
+                      color: Color.fromRGBO(109, 144, 185, 0.2),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "파란기린을 탭해서 오늘의 질문을 들어보세요",
+                        style: TextStyle(
+                          color: Color.fromRGBO(51, 51, 51, 1),
+                          fontSize: ScreenUtil().setSp(14),
+                          fontWeight: FontWeight.w500
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: ScreenUtil().setWidth(426),
+                    height: ScreenUtil().setHeight(426),
+                    child: Image.asset(
+                      'assets/avatars/nod.gif',
+                      fit: BoxFit.cover,
+                      alignment: Alignment.bottomCenter,
+                    ),
+                  ),
+                ],
               ),
             ]),
           ],

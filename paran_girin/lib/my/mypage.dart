@@ -68,7 +68,7 @@ class _MyPageState extends State<MyPage> {
                   }),
               SizedBox(height: ScreenUtil().setHeight(16)),
               ProfileMenu(
-                  text: "공지 사항",
+                  text: "공지사항",
                   press: () {
 
                     Navigator.of(context).push(
@@ -81,7 +81,7 @@ class _MyPageState extends State<MyPage> {
                         builder: (context) => SendComments()));
                   }),
               ProfileMenu(
-                text: "파란 기린 소개", 
+                text: "파란기린 소개", 
                 press: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => AboutParanGirin()));
@@ -94,7 +94,7 @@ class _MyPageState extends State<MyPage> {
                         builder: (context) => TermsConditions()));
                   }),
               ProfileMenu(
-                  text: "개인 정보 처리 방침", 
+                  text: "개인정보 처리방침", 
                   press: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => PrivacyPolicy()));

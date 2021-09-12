@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:paran_girin/Video/videoTest.dart';
+import 'package:paran_girin/gallery/videoShowFromCamera.dart';
 import 'package:paran_girin/gallery/videoShowWidget.dart';
 import 'package:paran_girin/layout/default_icon_button.dart';
 import 'package:paran_girin/layout/disabled_button.dart';
@@ -122,7 +123,12 @@ class _PostDetail extends State<PostDetail> {
                           //     width: ScreenUtil().setWidth(187),
                           //     height: ScreenUtil().setHeight(331),
                           //     fit: BoxFit.cover),
-                          child: Image.file(File(post.thumbURL),
+                          child: (post.thumbURL == null) ?
+                          Image.asset("assets/images/thumbnail_baby.png",
+                              width: ScreenUtil().setWidth(187),
+                              height: ScreenUtil().setHeight(331),
+                              fit: BoxFit.cover) :
+                          Image.file(File(post.thumbURL),
                               width: ScreenUtil().setWidth(187),
                               height: ScreenUtil().setHeight(331),
                               fit: BoxFit.cover)),
@@ -255,9 +261,9 @@ class _PostDetail extends State<PostDetail> {
                                   Answer answer =
                                       fp.getStaticInfo().answers[post.qid];
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => VideoShowWidget(
-                                          post.qid,
-                                          answer))); //VideoPlayerScreen()));
+                                      builder: (context) => VideoShowFromCamera(
+                                          qid: post.qid,
+                                          answer: answer))); //VideoPlayerScreen()));
                                   // Navigator.of(context).push(MaterialPageRoute(
                                   //     builder: (context) => VideoShowWidget()));
                                 },

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/gallery/myVideoLayout.dart';
+import 'package:paran_girin/gallery/videoShowFromCamera.dart';
 import 'package:paran_girin/gallery/videoShowWidget.dart';
 import 'package:paran_girin/layout/default_icon_button.dart';
 import 'package:paran_girin/theme/app_theme.dart';
@@ -124,7 +125,7 @@ class _CalenderState extends State<GalleryVideo> {
                       minWidth: ScreenUtil().setWidth(164),
                       height: ScreenUtil().setHeight(71),
                     ),
-                    text1: "자연 탐구",
+                    text1: "자연탐구",
                     text2: natureNum.toString() + "개의 영상",
                   )
                 ],
@@ -166,7 +167,7 @@ class _CalenderState extends State<GalleryVideo> {
                       minWidth: ScreenUtil().setWidth(164),
                       height: ScreenUtil().setHeight(71),
                     ),
-                    text1: "사회 관계",
+                    text1: "사회관계",
                     text2: socialNum.toString() + "개의 영상",
                   ),
                 ],
@@ -232,7 +233,7 @@ class NoVideo extends StatelessWidget {
           ),
           SizedBox(height: ScreenUtil().setHeight(50)),
           DefaultIconButton(
-              text: "파란 기린과 대화하기 ",
+              text: " 파란기린과 대화하기 ",
               isInvert: false,
               press: () {
                 Navigator.of(context).push(
@@ -311,8 +312,9 @@ class YesVideo extends StatelessWidget {
                   onTap: () {
                     fp.getFAnalytics().logEvent(name: "gallery_play", parameters: <String, int>{"question_num": question.qid});
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => VideoShowWidget(
-                            key, answer))); //VideoPlayerScreen()));
+                        builder: (context) => VideoShowFromCamera(
+                            qid: key, 
+                            answer: answer))); //VideoPlayerScreen()));
                   },
                   onLongPress: () async {
                     String path = await fp
