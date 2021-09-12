@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/home/sharing_my_answers.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
+
 class BaseAppBar extends StatefulWidget implements PreferredSizeWidget {
   BaseAppBar(
       {Key key,
@@ -136,7 +137,8 @@ class _PopupAfterBbom extends State<PopupAfterBbom> {
                           Navigator.pushReplacement<void, void>(
                               context,MaterialPageRoute<void>(
                               builder: (BuildContext context) => SharingMyAnswers()));
-                        },//hobin
+                          },
+                        //hobin
                       ),),
                   ],
                 ),
