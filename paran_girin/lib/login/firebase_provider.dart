@@ -401,8 +401,15 @@ class FirebaseProvider with ChangeNotifier {
 
   bool checkVerifiedUser() {
     if (_user == null) {
+      logger.d("null user");
       return false;
     } else {
+      if (! _user.emailVerified){
+        logger.d("user email not verified");
+      }
+      if (! confirmedProvider.contains(_user.providerData[0].providerId)){
+        logger.d("provider mail verified");
+      }
       return confirmedProvider.contains(_user.providerData[0].providerId) ||
           _user.emailVerified;
     }
