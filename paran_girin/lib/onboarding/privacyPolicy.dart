@@ -5,6 +5,8 @@ import 'package:paran_girin/login/auth_page.dart';
 import 'package:paran_girin/login/login_body.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
+import '../login/login_page.dart';
+
 bool button1 = false;
 bool button2 = false;
 bool button3 = false;
@@ -297,7 +299,7 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                             setState(() {
                               if (button1 == true && button2 == true && button3==true){
                                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                    builder: (context) => AuthPage()));
+                                    builder: (context) => LoginPage()));
                               };
                             }),
                           },

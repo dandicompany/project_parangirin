@@ -42,7 +42,7 @@ class AuthPageState extends State<AuthPage> {
           }
         } else {
           print("gaegegagegagaegaegeg");
-          return LoginPage();
+          return OnboardingScreen();
         }
       } else {
         return SplashScreen();
