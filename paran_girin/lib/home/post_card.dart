@@ -110,7 +110,7 @@ class PostCard extends StatelessWidget {
                         //   fit: BoxFit.cover,
                         //   alignment: Alignment.topCenter,
                         // ),
-                        (post.thumbURL == null) ?                         
+                        (thumb == null) ?                         
                         Image.asset(
                           "assets/images/thumbnail_baby.png",
                           width: ScreenUtil().setWidth(198),
@@ -119,7 +119,7 @@ class PostCard extends StatelessWidget {
                           alignment: Alignment.center,
                         ) : 
                         Image.file(
-                          File("assets/images/thumbnail_baby.png"),
+                          thumb,
                           width: ScreenUtil().setWidth(198),
                           height: ScreenUtil().setHeight(197),
                           fit: BoxFit.cover,
