@@ -151,6 +151,12 @@ class _PostDetail extends State<PostDetail> {
                           // setState(() {
                           //   playingVideo = true;
                           // });
+                          logger.d("post videoURL: ${post.videoURL}");
+                          Reference file =
+                              fp.getFirestorage().ref(post.videoURL);
+                          String url = await file.getDownloadURL();
+                          logger.d("post video download URL: $url");
+                          post.videoURL = url;
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => VideoStreamWidget(
                                   post))); //VideoPlayerScreen()));

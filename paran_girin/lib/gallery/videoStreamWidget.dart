@@ -25,12 +25,8 @@ class VideoStreamWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
     qid = post.qid;
-    logger.d("post videoURL: ${post.videoURL}");
-    Reference file =
-        fp.getFirestorage().ref(post.videoURL);
-    url = await file.getDownloadURL();
-    logger.d("post video download URL: $url");
     question = fp.getStaticInfo().questions[qid];
+    url = post.videoURL;
     return Card(
       child: Column(
         children: [
