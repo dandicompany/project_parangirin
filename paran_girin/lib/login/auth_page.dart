@@ -39,6 +39,7 @@ class AuthPageState extends State<AuthPage> {
             return BabyInfoName();
             // return DefaultLayout();
           } else {
+            logger.d("Auge Page: User verified");
             return DefaultLayout();
           }
         } else {
