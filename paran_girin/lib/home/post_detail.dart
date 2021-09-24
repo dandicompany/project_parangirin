@@ -9,6 +9,7 @@ import 'package:paran_girin/layout/disabled_button.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/models/schema.dart';
 import 'package:paran_girin/theme/app_theme.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/gallery/videoStreamWidget.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -150,7 +151,12 @@ class _PostDetail extends State<PostDetail> {
                           // setState(() {
                           //   playingVideo = true;
                           // });
-
+                          logger.d("post videoURL: ${post.videoURL}");
+                          Reference file =
+                              fp.getFirestorage().ref(post.videoURL);
+                          String url = await file.getDownloadURL();
+                          logger.d("post video download URL: $url");
+                          post.videoURL = url;
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => VideoStreamWidget(
                                   post))); //VideoPlayerScreen()));
