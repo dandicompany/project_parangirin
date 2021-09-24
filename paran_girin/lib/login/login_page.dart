@@ -396,6 +396,7 @@ class _LoginPageState extends State<LoginPage> {
     if (result == false) {
       showLastFBMessage();
       _textCon.clear();
+      _textCon2.clear();
     }
   }
 
