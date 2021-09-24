@@ -36,10 +36,18 @@ class AuthPageState extends State<AuthPage> {
         if (fp.checkVerifiedUser()) {
           // Todo: check user info
           if (fp.getUserInfo().userInDB.children.length == 0) {
+            // Navigator.of(context).pop(); // 에러남
+            // () {Navigator.pushReplacement<void, void>(
+            //   context,MaterialPageRoute<void>(
+            //     builder: (BuildContext context) => BabyInfoName()));
+            // }
             return BabyInfoName();
-            // return DefaultLayout();
           } else {
+            // Navigator.of(context).pop();
             logger.d("Auge Page: User verified");
+            // Navigator.pushReplacement<void, void>(
+            //   context,MaterialPageRoute<void>(
+            //     builder: (BuildContext context) => DefaultLayout()));
             return DefaultLayout();
           }
         } else {

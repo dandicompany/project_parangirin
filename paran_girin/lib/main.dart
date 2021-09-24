@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/home': (context) => DefaultLayout(), // , // QuestionPage(),
           '/onboard': (context) => AuthPage(), // ,
-          '/login': (context) => LoginPage(),
+          // '/login': (context) => LoginPage(),
         },
       ),
     );
