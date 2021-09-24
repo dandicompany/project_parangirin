@@ -66,7 +66,7 @@ class _BabyInfoState extends State<BabyInfo> {
             height: ScreenUtil().setHeight(10),
           ),
           Text(
-            "아이의 이름과 나이를 입력해 주세요.",
+            "아이의 이름과 나이를 입력해주세요.",
             style: TextStyle(
                 // fontFamily: 'Noto Sans KR',
                 // fontWeight: FontWeight.w300,

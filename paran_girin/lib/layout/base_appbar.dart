@@ -114,41 +114,36 @@ class _PopupAfterBbom extends State<PopupAfterBbom> {
         Container(
             width: ScreenUtil().setWidth(303),
             height: ScreenUtil().setHeight(205),
-            //padding: EdgeInsets.only(left: 20, top:65, right:20, bottom: 20),
-            // margin: EdgeInsets.only(top:45),
+            padding: EdgeInsets.all(ScreenUtil().setWidth(18),),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
-              //mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                SizedBox(height: ScreenUtil().setHeight(5)),
-                Row(
-                  children: [
-                    SizedBox(width: ScreenUtil().setWidth(240),),
-                    Transform.scale(scale: 0.7,
-                      child: IconButton(
-                        alignment: Alignment.topRight,
-                        icon: Image.asset("assets/icons/close-popup.png"),
-                        iconSize: 10.0,
-                        onPressed: (){
-                          Navigator.pushReplacement<void, void>(
-                              context,MaterialPageRoute<void>(
-                              builder: (BuildContext context) => SharingMyAnswers()));
-                          },
-                        //hobin
-                      ),),
-                  ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        height: ScreenUtil().setSp(24.0),
+                        width: ScreenUtil().setSp(24.0),
+                        child: InkWell(
+                          child: Image.asset("assets/icons/close-popup.png"),
+                          onTap: (){
+                            Navigator.of(context).pop();
+                            },
+                        ),
+                      ),
+                    ],
                 ),
-                SizedBox(height: ScreenUtil().setHeight(5)),
+                SizedBox(height: ScreenUtil().setHeight(7)),
                 Container(
                   width: ScreenUtil().setWidth(38),
                   height: ScreenUtil().setHeight(38),
                   child: Image.asset("assets/popup/check.png"),
                 ),
-                SizedBox(height: ScreenUtil().setHeight(20)),
+                SizedBox(height: ScreenUtil().setHeight(15)),
                 Text(
                   "성공적으로 영상을\n파란기린에 보냈어요!", 
                   style: TextStyle(

@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:paran_girin/layout/default_layout.dart';
@@ -21,6 +23,7 @@ import 'package:flutter/services.dart';
 
 
 int initScreen;
+FirebaseAnalytics analytics = FirebaseAnalytics();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,6 +71,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Noto Sans KR',
         ),
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: analytics),
+        ],
         initialRoute:
             initScreen == 0 || initScreen == null ? '/onboard' : '/home',
         routes: {

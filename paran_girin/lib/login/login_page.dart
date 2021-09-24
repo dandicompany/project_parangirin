@@ -42,65 +42,81 @@ class _LoginPageState extends State<LoginPage> {
     fp = Provider.of<FirebaseProvider>(context);
     _checkState();
     _textCon.clear();
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      key: _scaffoldKey,
-      body: Stack(
-        children: [ 
-          Column(
-            children: [
-              _buildLoginBody(),
-              // SNS login button
-              if (_state == enum_state.CHECKACC)
-                Column(
-                  children: [
-                    Text(
-                      '또는 SNS 계정으로 함께 해요',
-                      style: TextStyle(
-                          fontFamily: 'Noto Sans KR',
-                          fontWeight: FontWeight.w500,
-                          fontSize: ScreenUtil().setSp(14),
-                          color: AppTheme.colors.base2
-                      )
-                    ),
-                    SizedBox(height: ScreenUtil().setHeight(15)),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(105)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          _googleButton(),
-                          _facebookButton(),
-                        ]
+    // bool _isButtonDisabled = false;
+
+    // if (_textCon.text != null && _textCon.text.length > 0 && !_isButtonDisabled) {
+    //   setState(() => _isButtonDisabled = true);
+    // }
+    // else if((_textCon.text == null || _textCon.text.length == 0) && _isButtonDisabled){
+    //     setState(() => _isButtonDisabled = false);
+    // }
+
+    return 
+    // GestureDetector(
+      // onTap: () => FocusScope.of(context).unfocus(),
+      // child: 
+      Scaffold(
+        resizeToAvoidBottomInset: false,
+        key: _scaffoldKey,
+        body: Stack(
+          children: [ 
+            Column(
+              children: [
+                _buildLoginBody(),
+                // SNS login button
+                if (_state == enum_state.CHECKACC)
+                  Column(
+                    children: [
+                      Text(
+                        '또는 SNS 계정으로 함께 해요',
+                        style: TextStyle(
+                            fontFamily: 'Noto Sans KR',
+                            fontWeight: FontWeight.w500,
+                            fontSize: ScreenUtil().setSp(14),
+                            color: AppTheme.colors.base2
+                        )
                       ),
+                      SizedBox(height: ScreenUtil().setHeight(15)),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(105)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            _googleButton(),
+                            _facebookButton(),
+                          ]
+                        ),
+                      ),
+                    ],
+                  )
+                ]
+              ),
+            Positioned(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+              left: 0,
+              right: 0,
+              child: Container(
+                // color: _isButtonDisabled ? AppTheme.colors.base3 : AppTheme.colors.primary2,
+                color: AppTheme.colors.primary2,
+                width: double.infinity,
+                child: FlatButton(
+                  // onPressed: _isButtonDisabled ? null : onClick(), 
+                  onPressed: onClick(), 
+                  height: ScreenUtil().setHeight(65),
+                  child: Text(
+                    "다음",
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(18),
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white
                     ),
-                  ],
-                )
-              ]
-            ),
-          Positioned(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            left: 0,
-            right: 0,
-            child: Container(
-              color: AppTheme.colors.primary2,
-              width: double.infinity,
-              child: FlatButton(
-                onPressed: onClick(), 
-                height: ScreenUtil().setHeight(65),
-                child: Text(
-                  "다음",
-                  style: TextStyle(
-                    fontSize: ScreenUtil().setSp(18),
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white
-                  ),
+                  )
                 )
               )
             )
-          )
-        ],
-      ),
+          ],
+        ),
+      // ),
     );
   }
 
@@ -154,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
             title: "파란기린은\n당신을 환영해요!",
             description: "",
             actionText: "",
-            loginInfo: "로그인 혹은 회원가입을 위해\n이메일을 입력해 주세요",
+            loginInfo: "로그인 혹은 회원가입을 위해\n이메일을 입력해주세요",
             isEmail: true,
             textPress: () {},
             textCon: _textCon,
@@ -194,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
       //       );
         return LoginBody2(
               title: "환영합니다!",
-              loginInfo: "가입을 위해\n새로운 비밀번호를 입력해 주세요",
+              loginInfo: "가입을 위해\n새로운 비밀번호를 입력해주세요",
               loginInfo2: "확인을 위해\n한 번 더 비밀번호를 입력해주세요",
               textCon: _textCon,
               textCon2: _textCon2, // 수정 필@
@@ -252,17 +268,18 @@ class _LoginPageState extends State<LoginPage> {
     logger.d("checking password");
     logger.d(pw1);
     logger.d(pw2);
+    if (pw1.length < 6) {
+      return "6자리 이상의 비밀번호를 입력해주세요";
+    }
     if (pw1 != pw2){
       logger.d("password unmatched");
       // return "비밀번호가 일치하지 않습니다";
       return "비밀번호가 일치하지 않아요 :(";
     }
-    if (pw1.length < 6) {
-      return "6자리 이상의 비밀번호를 입력해 주세요";
-    }
     logger.d("pw check passed");
     return null;
   }
+
   void change2CheckAcc() {
     setState(() {
       _state = enum_state.CHECKACC;

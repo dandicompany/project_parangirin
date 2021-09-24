@@ -155,6 +155,8 @@ class FirebaseProvider with ChangeNotifier {
       logger.d("post added");
       Child child = Child.fromJson(await getFromFB("children", post.child));
       _static.post_children[post.child] = child;
+      logger.d("profileURL in child: ${child.profileURL}");
+      logger.d("thumbURL in post: ${post.thumbURL}");
       Reference refProfile = firestorage.ref(child.profileURL);
       Reference refThumb = firestorage.ref(post.thumbURL);
       String profilePath =
@@ -220,10 +222,11 @@ class FirebaseProvider with ChangeNotifier {
 
   Future<bool> loadInfoFromUser() async {
     if (_user_loaded) {
+
       return true;
     }
     if (_user != null) {
-      loggerd.("loading user info...");
+      logger.d("loading user info...");
       // _isVerified =
       //     confirmedProvider.contains(_user.providerData[0].providerId) ||
       //         _user.emailVerified;
@@ -273,9 +276,10 @@ class FirebaseProvider with ChangeNotifier {
       }
       logger.d(_info.userInDB.children);
     } else {
-      logger.("null user, so pass loading user info");
+      logger.d("null user, so pass loading user info");
     }
     Map<String, String> answers = _info.currentChild.answers;
+    _static.answers.clear();
     for (var key in answers.keys) {
       var value = answers[key];
       getFromFB("answers", value).then((value) {
@@ -326,7 +330,7 @@ class FirebaseProvider with ChangeNotifier {
   Future<void> addPost(
       String qid, String path, String thumbnail, String comment) async {
     logger.d("adding post");
-    Post post = Post(DateTime.now().millisecondsSinceEpoch, qid,
+    Post post = Post(DateTime.now().millisecondsSinceEpoch, qid, title,
         _info.userInDB.currentChild, path, thumbnail, comment);
     DocumentReference postRef =
         await firestore.collection('posts').add(post.toJson());
@@ -562,13 +566,13 @@ class FirebaseProvider with ChangeNotifier {
   interpretFBMessage(String code) {
     switch (code) {
       case "too-many-requests":
-        return "로그인 시되 횟수가 많습니다. 잠시 후 다시 시도해 주세요.";
+        return "로그인 시도 횟수가 많습니다. 잠시 후 다시 시도해주세요.";
       case "invalid-email":
         return "잘못된 이메일 형식입니다.";
       case "wrong-password":
-        return "잘못된 비밀번호 입니다.";
+        return "잘못된 비밀번호입니다.";
       case "weak-password":
-        return "6자리 이상의 비밀번호를 입력해 주세요.";
+        return "6자리 이상의 비밀번호를 입력해주세요.";
       default:
         return "알 수 없는 에러";
         break;

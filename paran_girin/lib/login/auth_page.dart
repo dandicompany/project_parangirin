@@ -3,6 +3,7 @@ import 'package:paran_girin/layout/default_layout.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/login/baby_info.dart';
 import 'package:paran_girin/main.dart';
+import 'package:paran_girin/onboarding/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/login/login_page.dart';
 import 'package:paran_girin/layout/splash.dart';

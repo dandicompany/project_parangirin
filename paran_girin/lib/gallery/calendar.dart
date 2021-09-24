@@ -137,8 +137,8 @@ class _CalendarState extends State<Calendar> {
                 width: ScreenUtil().setWidth(16),
               ),
               Container(
-                width: 343,
-                height: 329,
+                width: ScreenUtil().setWidth(343),
+                height: ScreenUtil().setHeight(329),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -189,6 +189,7 @@ class _CalendarState extends State<Calendar> {
                               color: AppTheme.colors.base3,
                               fontSize: ScreenUtil().setSp(20)),
                           markersColor: AppTheme.colors.primary3,
+                          markersPositionBottom: ScreenUtil().setHeight(3.0),
                           markersMaxAmount: 1,
                         ),
 
@@ -208,7 +209,8 @@ class _CalendarState extends State<Calendar> {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => VideoShowFromCamera(
                                     qid: events[0],
-                                    answer: answer))); //VideoPlayerScreen()));
+                                    answer: answer))); 
+                                    //VideoPlayerScreen()));
                           }
                           // });
                         }, // onDaySelected: ,

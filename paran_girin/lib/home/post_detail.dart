@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
+import 'package:intl/intl.dart';
 import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/gallery/videoShowFromCamera.dart';
 import 'package:paran_girin/gallery/videoShowWidget.dart';
@@ -8,6 +9,7 @@ import 'package:paran_girin/layout/disabled_button.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/models/schema.dart';
 import 'package:paran_girin/theme/app_theme.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/gallery/videoStreamWidget.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -37,9 +39,7 @@ class _PostDetail extends State<PostDetail> {
   FirebaseProvider fp;
   bool playingVideo = false;
   final contents =
-      '''관련된 텍스트 예를 들어 이 질문의 목적이 어떻고이 질문에 대답하면 뭐가 좋아지고 아이에게는 뭐가 어떻고 선정된 이 아이는 이 질문에 대해서 어떻게 신박하게 대답했는지 그리고
-
-  거기에 대한 짧은 의견 또는 칭찬 등등 우리의 의견 사실 텍스트 채우는 게 예쁠 것 같아서 주절주절 쓰는 중인더 짧거나 생략되는 방안도 있을 것 같아오 주절주절 분량 채우는 더미 텍스트''';
+      '''다른 친구들은 어떻게 대답했는지 확인해볼까요? 이 질문으로 대화하고 싶다면 아래 버튼을 눌러 파란기린과 대화해보세요!''';
 
   _PostDetail(this.post, this.name, this.background, this.avatar);
   String getWeek(DateTime d) {
@@ -160,6 +160,9 @@ class _PostDetail extends State<PostDetail> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => VideoStreamWidget(
                                   post))); //VideoPlayerScreen()));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => VideoStreamWidget(
+                          //         post.qid, url))); 
                         },
                         child: Container(
                             child: Image.asset(
@@ -229,8 +232,9 @@ class _PostDetail extends State<PostDetail> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("세상에 없던 새로운 대답, 계란",
-                          // title,
+                      Text(
+                        // "세상에 없던 새로운 대답, 계란",
+                          post.title ?? "세상에 없던 새로운 대답, 계란",
                           style: TextStyle(
                             fontSize: ScreenUtil().setSp(24),
                           )),
@@ -271,7 +275,8 @@ class _PostDetail extends State<PostDetail> {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => VideoShowFromCamera(
                                           qid: post.qid,
-                                          answer: answer))); //VideoPlayerScreen()));
+                                          answer: answer))); 
+                                          //VideoPlayerScreen()));
                                   // Navigator.of(context).push(MaterialPageRoute(
                                   //     builder: (context) => VideoShowWidget()));
                                 },
