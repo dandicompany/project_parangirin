@@ -223,6 +223,7 @@ class FirebaseProvider with ChangeNotifier {
       return true;
     }
     if (_user != null) {
+      loggerd.("loading user info...");
       // _isVerified =
       //     confirmedProvider.contains(_user.providerData[0].providerId) ||
       //         _user.emailVerified;
@@ -271,6 +272,8 @@ class FirebaseProvider with ChangeNotifier {
         _info.userInDB = temp;
       }
       logger.d(_info.userInDB.children);
+    } else {
+      logger.("null user, so pass loading user info");
     }
     Map<String, String> answers = _info.currentChild.answers;
     for (var key in answers.keys) {
