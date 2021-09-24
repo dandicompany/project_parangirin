@@ -141,12 +141,12 @@ class PostCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "세상에 없던 새로운 대답, 계란", // title
+                              // "세상에 없던 새로운 대답, 계란", // title
+                              post.title ?? "세상에 없던 새로운 대답, 계란", 
                               style: TextStyle(
                                   fontSize: ScreenUtil().setSp(16)),
                             ),
                             Text(
-                              // "타임캡슐에 담고 싶은 나의 물건은?", // description
                               fp
                                   .getStaticInfo()
                                   .questions[post.qid]

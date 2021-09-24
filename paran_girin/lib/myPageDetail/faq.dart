@@ -43,7 +43,7 @@ class _FAQState extends State<FAQ> {
                             FaqItem faq = faqItems[index];
                             return FAQElem(
                                 faqTitle: faq.title,
-                                faqText: faq.content);
+                                faqText: faq.content.replaceAll("\\n", "\n"));
                           },
                           itemCount: faqs.length);
                     } else {

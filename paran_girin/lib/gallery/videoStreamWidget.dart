@@ -17,15 +17,16 @@ var path = 'assets/videoEx/sample1.mp4';
 class VideoStreamWidget extends StatelessWidget {
   FirebaseProvider fp;
   String url = "/assets/videoEx/sample1.mp4";
-  Post post;
+  // Post post;
   String qid;
   Question question;
-  VideoStreamWidget(this.post);
+  // VideoStreamWidget(this.post);
+  VideoStreamWidget(this.qid, this.url);
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
-    qid = post.qid;
-    url = post.videoURL;
+    // qid = post.qid;
+    // url = post.videoURL;
     question = fp.getStaticInfo().questions[qid];
     return Card(
       child: Column(
@@ -48,10 +49,10 @@ class VideoStreamWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              Text(DateTime.fromMillisecondsSinceEpoch(post.date).toString(),
-                  style: new TextStyle(
-                      fontSize: ScreenUtil().setSp(12),
-                      color: AppTheme.colors.base3)),
+              // Text(DateTime.fromMillisecondsSinceEpoch(post.date).toString(),
+              //     style: new TextStyle(
+              //         fontSize: ScreenUtil().setSp(12),
+              //         color: AppTheme.colors.base3)),
               SizedBox(height: ScreenUtil().setHeight(20)),
               Text(question.tag,
                   style: new TextStyle(

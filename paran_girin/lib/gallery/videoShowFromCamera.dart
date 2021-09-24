@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/screen_util.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:paran_girin/gallery/chewie_list_item.dart';
 import 'package:paran_girin/gallery/pop_button.dart';
+import 'package:paran_girin/gallery/video_share_or_delete.dart';
 import 'package:paran_girin/home/home_avatar_big.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/theme/app_theme.dart';
@@ -22,6 +23,7 @@ DateFormat dateFormat = DateFormat("yyyy년 MM월 dd일");
 class VideoShowFromCamera extends StatefulWidget {
   String qid;
   Answer answer;
+
 
   VideoShowFromCamera({Key key, this.qid, this.answer}) : super(key: key);
 
@@ -44,7 +46,7 @@ class _VideoShowFromCameraState extends State<VideoShowFromCamera> {
     logger.d(file.path);
     filePath.add(file.path);
     question = fp.getStaticInfo().questions[widget.qid];
-    bool _popVisible = false;
+    // bool _popVisible = false;
 
     return Material(
       type: MaterialType.transparency,
@@ -70,13 +72,6 @@ class _VideoShowFromCameraState extends State<VideoShowFromCamera> {
                             color: AppTheme.colors.base1,
                           ),
                           onPressed: () {
-                            // Navigator.pushReplacement<void, void>(
-                            //     context,MaterialPageRoute<void>(
-                            //       builder: (BuildContext context) => HomeAvatar()VideoShowFromCamera(question, fp.getStaticInfo().answers[question])));
-                          
-                            // Navigator.of(context).push(
-                            //     MaterialPageRoute(builder: (context) => HomeAvatarBig()));
-                            // Navigator.popUntil(context, ModalRoute.withName('/'));
                             Navigator.of(context).pop(); 
                           },
                           iconSize: ScreenUtil().radius(20),
@@ -84,9 +79,18 @@ class _VideoShowFromCameraState extends State<VideoShowFromCamera> {
                       : null,
                       InkWell(
                         onTap: () {
-                          setState(() {
-                            _popVisible = !_popVisible;
-                          });
+                          // setState(() {
+                          //   _popVisible = !_popVisible;
+                          // });
+                          showDialog(context: context,
+                            builder: (BuildContext context)
+                            {
+                              return VideoShareOrDelete(
+                                share: () {
+                                  _onShare(context);
+                                }
+                              );
+                            });
                         },
                         child: SvgPicture.asset(
                           "assets/icons/more-horizontal.svg",
@@ -147,63 +151,63 @@ class _VideoShowFromCameraState extends State<VideoShowFromCamera> {
               ],
             ),
           ),
-          _popVisible ? InkWell(
-            onTap: () {
-              setState(() {
-                _popVisible = !_popVisible;
-              });
-            },
-            child: Container( //seconds child - Opaque layer
-              width: double.infinity,
-              height: double.infinity,
-              color: Color.fromRGBO(0, 0, 0, 0.3),
-            ),
-          ) : SizedBox(height:1),
-          _popVisible ? Positioned(
-            bottom: ScreenUtil().setHeight(38),
-            left: (MediaQuery.of(context).size.width- ScreenUtil().setWidth(360))/2,
-            child: Column(
-              children: [
-                PopButton(
-                  title: "공유하기",
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15)
-                  ),
-                  onTap: () => _onShare(context),
-                  opacity: 0.85
-                ),
-                Divider(
-                  height: 1.0,
-                  indent: ScreenUtil().setWidth(8),
-                  endIndent: ScreenUtil().setWidth(8),
-                ),
-                PopButton(
-                  title: "삭제",
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15)
-                  ),
-                  onTap: () => {}, // add delete
-                  textColor: Colors.red,
-                  opacity: 0.85
-                ),
-                SizedBox(height: ScreenUtil().setHeight(8)),
-                PopButton(
-                  title: "닫기",
-                  borderRadius: BorderRadius.circular(14),
-                  onTap: () {
-                    setState(() {
-                      _popVisible = !_popVisible;
-                    });
-                  },
-                  opacity: 1
-                )
+          // _popVisible ? InkWell(
+          //   onTap: () {
+          //     setState(() {
+          //       _popVisible = !_popVisible;
+          //     });
+          //   },
+          //   child: Container( //seconds child - Opaque layer
+          //     width: double.infinity,
+          //     height: double.infinity,
+          //     color: Color.fromRGBO(0, 0, 0, 0.3),
+          //   ),
+          // ) : SizedBox(height:1),
+          // _popVisible ? Positioned(
+          //   bottom: ScreenUtil().setHeight(38),
+          //   left: (MediaQuery.of(context).size.width- ScreenUtil().setWidth(360))/2,
+          //   child: Column(
+          //     children: [
+          //       PopButton(
+          //         title: "공유하기",
+          //         borderRadius: BorderRadius.only(
+          //           topLeft: Radius.circular(15),
+          //           topRight: Radius.circular(15)
+          //         ),
+          //         onTap: () => _onShare(context),
+          //         opacity: 0.85
+          //       ),
+          //       Divider(
+          //         height: 1.0,
+          //         indent: ScreenUtil().setWidth(8),
+          //         endIndent: ScreenUtil().setWidth(8),
+          //       ),
+          //       PopButton(
+          //         title: "삭제",
+          //         borderRadius: BorderRadius.only(
+          //           bottomLeft: Radius.circular(15),
+          //           bottomRight: Radius.circular(15)
+          //         ),
+          //         onTap: () => {}, // add delete
+          //         textColor: Colors.red,
+          //         opacity: 0.85
+          //       ),
+          //       SizedBox(height: ScreenUtil().setHeight(8)),
+          //       PopButton(
+          //         title: "닫기",
+          //         borderRadius: BorderRadius.circular(14),
+          //         onTap: () {
+          //           setState(() {
+          //             _popVisible = !_popVisible;
+          //           });
+          //         },
+          //         opacity: 1
+          //       )
 
               ],
-            )
-          ): SizedBox(height:1),
-        ]
+            // )
+          // ): SizedBox(height:1),
+        // ]
       ),
     );
   }

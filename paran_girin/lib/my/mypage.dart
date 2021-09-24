@@ -60,13 +60,13 @@ class _MyPageState extends State<MyPage> {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => ChildrenInfo()));
                   }),
-              ProfileMenu(
-                  text: "알림 설정",
-                  press: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => PushAlarm()));
-                  }),
-              SizedBox(height: ScreenUtil().setHeight(16)),
+              // ProfileMenu(
+              //     text: "알림 설정",
+              //     press: () {
+              //       Navigator.of(context).push(
+              //           MaterialPageRoute(builder: (context) => PushAlarm()));
+              //     }),
+              // SizedBox(height: ScreenUtil().setHeight(16)),
               ProfileMenu(
                   text: "공지사항",
                   press: () {

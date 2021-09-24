@@ -155,6 +155,8 @@ class FirebaseProvider with ChangeNotifier {
       logger.d("post added");
       Child child = Child.fromJson(await getFromFB("children", post.child));
       _static.post_children[post.child] = child;
+      logger.d("profileURL in child: ${child.profileURL}");
+      logger.d("thumbURL in post: ${post.thumbURL}");
       Reference refProfile = firestorage.ref(child.profileURL);
       Reference refThumb = firestorage.ref(post.thumbURL);
       String profilePath =
@@ -220,6 +222,7 @@ class FirebaseProvider with ChangeNotifier {
 
   Future<bool> loadInfoFromUser() async {
     if (_user_loaded) {
+
       return true;
     }
     if (_user != null) {
@@ -273,6 +276,7 @@ class FirebaseProvider with ChangeNotifier {
       logger.d(_info.userInDB.children);
     }
     Map<String, String> answers = _info.currentChild.answers;
+    _static.answers.clear();
     for (var key in answers.keys) {
       var value = answers[key];
       getFromFB("answers", value).then((value) {
@@ -323,7 +327,7 @@ class FirebaseProvider with ChangeNotifier {
   Future<void> addPost(
       String qid, String path, String thumbnail, String comment) async {
     logger.d("adding post");
-    Post post = Post(DateTime.now().millisecondsSinceEpoch, qid,
+    Post post = Post(DateTime.now().millisecondsSinceEpoch, qid, title,
         _info.userInDB.currentChild, path, thumbnail, comment);
     DocumentReference postRef =
         await firestore.collection('posts').add(post.toJson());
