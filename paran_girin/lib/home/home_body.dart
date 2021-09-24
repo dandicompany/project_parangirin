@@ -156,24 +156,25 @@ class _HomeBody extends State<HomeBody> {
             ]);
           }
           Post post = Post.fromJson(posts[index - 1].toJson());
-          File file = fp.getStaticInfo().post_thumbnails[post.thumbURL];
-          try {
-            if (file != null) {
-              post.thumbURL = file.path;
-              logger.d("post loaded");
-              return PostCard(post);
-            } else {
-              post.thumbURL = null;
-              logger.d("thumnail not exists");
-              logger.d(post);
-              logger.d(index);
-              return PostCard(post);
+          return PostCard(post);
+          // File file = fp.getStaticInfo().post_thumbnails[post.thumbURL];
+          // try {
+          //   if (file != null) {
+          //     post.thumbURL = file.path;
+          //     logger.d("post loaded");
+          //     return PostCard(post);
+          //   } else {
+          //     post.thumbURL = null;
+          //     logger.d("thumnail not exists");
+          //     logger.d(post);
+          //     logger.d(index);
+          //     return PostCard(post);
 
-              return SizedBox.shrink();
-            }
-          } catch (e) {
-            print(e);
-          }
+          //     return SizedBox.shrink();
+          //   }
+          // } catch (e) {
+          //   print(e);
+          // }
         },
         separatorBuilder: (context, index) {
           return (index == 0)

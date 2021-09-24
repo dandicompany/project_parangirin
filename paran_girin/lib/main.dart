@@ -8,6 +8,7 @@ import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'login/auth_page.dart';
 import 'onboarding/onboarding_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -77,7 +78,7 @@ class MyApp extends StatelessWidget {
             initScreen == 0 || initScreen == null ? '/onboard' : '/home',
         routes: {
           '/home': (context) => DefaultLayout(), // , // QuestionPage(),
-          '/onboard': (context) => OnboardingScreen(), // ,
+          '/onboard': (context) => AuthPage(), // ,
           '/login': (context) => LoginPage(),
         },
       ),

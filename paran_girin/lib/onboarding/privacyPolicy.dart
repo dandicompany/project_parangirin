@@ -5,6 +5,8 @@ import 'package:paran_girin/login/auth_page.dart';
 import 'package:paran_girin/login/login_body.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
+import '../login/login_page.dart';
+
 bool button1 = false;
 bool button2 = false;
 bool button3 = false;
@@ -197,12 +199,7 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                 height: ScreenUtil().setHeight(464),
                 width: ScreenUtil().setWidth(343),
                 decoration: BoxDecoration(
-                    // borderRadius: BorderRadius.circular(15),
-                    // border: Border.all(
-                    //   //color: Colors.black,
-                    //   width: 0.3,
-                    // ),
-                    color: Colors.white,
+                  color: Colors.white,
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.1),
@@ -216,7 +213,8 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(ScreenUtil().setSp(20)),
+                      padding: EdgeInsets.all(ScreenUtil().setWidth(20)),
+                      // padding: EdgeInsets.all(ScreenUtil().setSp(20)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
@@ -367,38 +365,54 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                         ],
                       ),
                     ),
-                    // Positioned(
-                    //   bottom: 0,
-                    //   left: 0,
-                    //   right: 0,
-                      // child: ClipRRect(
-                      //   borderRadius: BorderRadius.only(
-                      //     bottomLeft: Radius.circular(16),
-                      //     bottomRight: Radius.circular(16)
-                      //   ),
-                        // child: 
-                        Container(
-                          width: double.infinity,
-                          height: ScreenUtil().setHeight(60),
-                          child: FlatButton(
-                            // shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15.0),),
-                            child: Text('동의합니다', style: TextStyle(fontSize: ScreenUtil().setSp(16))),
-                            onPressed: () => {
-                              setState(() {
-                                if (button1 == true && button2 == true && button3==true){
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                      builder: (context) => AuthPage()));
-                                };
-                              }),
-                            },
-                            color: allbutton ? Colors.blue : Colors.grey,
-                            textColor: Colors.white,
-                          ),
-                        // ),
+                      Container(
+                        width: double.infinity,
+                        height: ScreenUtil().setHeight(60),
+                        child: FlatButton(
+                          // shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15.0),),
+                          child: Text('동의합니다', style: TextStyle(fontSize: ScreenUtil().setSp(16))),
+                          onPressed: () => {
+                            setState(() {
+                              if (button1 == true && button2 == true && button3==true){
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                    builder: (context) => LoginPage()));
+                                    // builder: (context) => AuthPage()));
+                              }
+                            }),
+                          },
+                          color: allbutton ? Colors.blue : Colors.grey,
+                          textColor: Colors.white,
+                        ),
                       ),
-                    // )
-                  ],
-                ),
+                    ],
+                  ),
+                //   SizedBox(height: ScreenUtil().setHeight(30)),
+                //   Stack(
+                //     children: [
+                //       SizedBox(width: double.infinity,
+                //         height: ScreenUtil().setHeight(30),
+                //         child: allbutton? ColoredBox(color: Colors.blue,) : ColoredBox(color: Colors.grey,)),
+                //       SizedBox(
+                //         width: double.infinity,
+                //         height: ScreenUtil().setHeight(53),
+                //         child: FlatButton(
+                //           shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15.0),),
+                //           child: Text('동의합니다', style: TextStyle(fontSize: ScreenUtil().setSp(16))),
+                //           onPressed: () => {
+                //             setState(() {
+                //               if (button1 == true && button2 == true && button3==true){
+                //                 Navigator.of(context).pushReplacement(MaterialPageRoute(
+                //                     builder: (context) => LoginPage()));
+                //               };
+                //             }),
+                //           },
+                //           color: allbutton ? Colors.blue : Colors.grey,
+                //           textColor: Colors.white,
+                //         ),
+                //       ),
+                //     // )
+                //   ],
+                // ),
           ),
             ),
           ),

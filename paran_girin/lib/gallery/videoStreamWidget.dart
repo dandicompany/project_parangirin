@@ -17,16 +17,20 @@ var path = 'assets/videoEx/sample1.mp4';
 class VideoStreamWidget extends StatelessWidget {
   FirebaseProvider fp;
   String url = "/assets/videoEx/sample1.mp4";
-  // Post post;
+  Post post;
   String qid;
   Question question;
-  // VideoStreamWidget(this.post);
-  VideoStreamWidget(this.qid, this.url);
+  VideoStreamWidget(this.post);
+  // VideoStreamWidget(this.qid, this.url);
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
-    // qid = post.qid;
-    // url = post.videoURL;
+    qid = post.qid;
+    logger.d("post videoURL: ${post.videoURL}");
+    Reference file =
+        fp.getFirestorage().ref(post.videoURL);
+    url = await file.getDownloadURL();
+    logger.d("post video download URL: $url");
     question = fp.getStaticInfo().questions[qid];
     return Card(
       child: Column(

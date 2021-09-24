@@ -75,7 +75,13 @@ class _PostDetail extends State<PostDetail> {
     // Post model에 Question 정보 없어도 되나?
     // Child.answers를 이용해서 이 질문에 대답했는지 안했는지 판단하기
     bool questionDone = fp.getStaticInfo().answers.containsKey(post.qid);
-
+    File thumb;
+    if (post.thumbURL == null){
+      logger.d("post.thumbURL is null");
+      thumb = null;
+    } else {
+      thumb = fp.getStaticInfo().post_thumbnails[basename(post.thumbURL)];
+    }
     return Scaffold(
       body: Column(
         children: [
@@ -123,12 +129,12 @@ class _PostDetail extends State<PostDetail> {
                           //     width: ScreenUtil().setWidth(187),
                           //     height: ScreenUtil().setHeight(331),
                           //     fit: BoxFit.cover),
-                          child: (post.thumbURL == null) ?
+                          child: (thumb == null) ?
                           Image.asset("assets/images/thumbnail_baby.png",
                               width: ScreenUtil().setWidth(187),
                               height: ScreenUtil().setHeight(331),
                               fit: BoxFit.cover) :
-                          Image.file(File(post.thumbURL),
+                          Image.file(thumb,
                               width: ScreenUtil().setWidth(187),
                               height: ScreenUtil().setHeight(331),
                               fit: BoxFit.cover)),
@@ -140,22 +146,17 @@ class _PostDetail extends State<PostDetail> {
                     ? SizedBox.shrink()
                     : InkWell(
                         onTap: () async {
-                          Reference file =
-                              fp.getFirestorage().ref(post.videoURL);
-                          String url = await file.getDownloadURL();
-                          post.videoURL = url;
                           // String url = 'https://youtu.be/wgbr7exUnzE';
-                          logger.d(url);
                           // setState(() {
                           //   playingVideo = true;
                           // });
 
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => VideoStreamWidget(
-                          //         post))); //VideoPlayerScreen()));
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => VideoStreamWidget(
-                                  post.qid, url))); //VideoPlayerScreen()));
+                                  post))); //VideoPlayerScreen()));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => VideoStreamWidget(
+                          //         post.qid, url))); 
                         },
                         child: Container(
                             child: Image.asset(
