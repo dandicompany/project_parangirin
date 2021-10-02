@@ -7,12 +7,6 @@ import 'package:paran_girin/theme/app_theme.dart';
 
 import '../login/login_page.dart';
 
-bool button1 = false;
-bool button2 = false;
-bool button3 = false;
-bool allbutton = false;
-bool total = false;
-
 double buttonscale = 1;
 class PrivacyPolicy2 extends StatefulWidget {
   @override
@@ -20,6 +14,11 @@ class PrivacyPolicy2 extends StatefulWidget {
 }
 
 class _PrivacyPolicy extends State<PrivacyPolicy2> {
+  bool button1 = false;
+  bool button2 = false;
+  bool button3 = false;
+  bool allbutton = false;
+  bool total = false;
   final termsText = '''**제1조(목적)**
 
 이 약관은 단디 팀이 운영하는 파란기린 모바일 어플리케이션(이하 “앱”)의 서비스를 이용함에 있어 팀과 이용자의 권리의무 및 책임사항을 규정함을 목적으로 합니다.

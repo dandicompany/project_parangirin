@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:paran_girin/layout/default_layout.dart';
 import 'package:paran_girin/login/login_page.dart';
+import 'package:paran_girin/my/mypage.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -23,7 +24,6 @@ import 'package:flutter/services.dart';
 
 
 int initScreen;
-FirebaseAnalytics analytics = FirebaseAnalytics();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +40,7 @@ Future<void> main() async {
 }
 
 class _MyApp extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -57,6 +58,8 @@ class _MyApp extends StatelessWidget {
 }
 
 class MyApp extends StatelessWidget {
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -77,9 +80,10 @@ class MyApp extends StatelessWidget {
         initialRoute:
             initScreen == 0 || initScreen == null ? '/onboard' : '/home',
         routes: {
-          '/home': (context) => DefaultLayout(), // , // QuestionPage(),
+          // '/home': (context) => DefaultLayout(), // , // QuestionPage(),
           '/onboard': (context) => AuthPage(), // ,
-          '/login': (context) => LoginPage(),
+          // '/login': (context) => LoginPage(),
+          '/my': (context) => MyPage(),
         },
       ),
     );
