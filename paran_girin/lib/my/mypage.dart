@@ -110,8 +110,12 @@ class _MyPageState extends State<MyPage> {
                   press: () {
                     fp.resetStaticInfoOnNextLoad();
                     fp.signOut();
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => LoginPage()));
+                    // Navigator.of(context).pushNamedAndRemoveUntil('/OnboardingScreen', (Route<dynamic> route) => false);
+
+                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                        LoginPage()), (Route<dynamic> route) => false);
+                                      // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    //     builder: (context) => LoginPage()));
                   }),
               SizedBox(height: ScreenUtil().setHeight(16)),
               // version information
