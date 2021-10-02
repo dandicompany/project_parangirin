@@ -41,6 +41,19 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
     logger.d("-----------------------&&&SOS 이곳은 HomeAvatarBig &&&---------------------------");
     logger.d(todayQid);
     todayDone = fp.getUserInfo().currentChild.answers.containsKey(todayQid);
+
+    int today =  DateTime.parse(
+        DateFormat("yyyyMMdd").format(DateTime.now())).millisecondsSinceEpoch;
+    
+    if (!todayDone){
+      for (var ans in fp.getStaticInfo().answers.values){
+        if(DateTime.parse(
+          DateFormat("yyyyMMdd").format(DateTime.fromMillisecondsSinceEpoch(ans.date))).millisecondsSinceEpoch == today){
+          todayDone = true;
+        }
+      }
+    }
+
     Question question = fp.getStaticInfo().questions[todayQid];
     logger.d(question.category);
     DateTime tomorrow = DateTime.parse(

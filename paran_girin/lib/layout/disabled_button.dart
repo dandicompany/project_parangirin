@@ -11,7 +11,7 @@ class DisabledButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color = AppTheme.colors.base2;
+    Color color = AppTheme.colors.base3;
       
     return SizedBox(
       width: ScreenUtil().setWidth(343),

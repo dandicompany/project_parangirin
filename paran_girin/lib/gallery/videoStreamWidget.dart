@@ -21,12 +21,13 @@ class VideoStreamWidget extends StatelessWidget {
   String qid;
   Question question;
   VideoStreamWidget(this.post);
+  // VideoStreamWidget(this.qid, this.url);
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
     qid = post.qid;
-    url = post.videoURL;
     question = fp.getStaticInfo().questions[qid];
+    url = post.videoURL;
     return Card(
       child: Column(
         children: [
@@ -48,10 +49,10 @@ class VideoStreamWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              Text(DateTime.fromMillisecondsSinceEpoch(post.date).toString(),
-                  style: new TextStyle(
-                      fontSize: ScreenUtil().setSp(12),
-                      color: AppTheme.colors.base3)),
+              // Text(DateTime.fromMillisecondsSinceEpoch(post.date).toString(),
+              //     style: new TextStyle(
+              //         fontSize: ScreenUtil().setSp(12),
+              //         color: AppTheme.colors.base3)),
               SizedBox(height: ScreenUtil().setHeight(20)),
               Text(question.tag,
                   style: new TextStyle(

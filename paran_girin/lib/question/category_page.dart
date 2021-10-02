@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:paran_girin/question/category_card.dart';
 import 'package:paran_girin/question/question_page.dart';
 import 'package:paran_girin/theme/app_theme.dart';
@@ -24,6 +25,7 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   bool searched = false;
+  bool available = true;
   String query;
   TextEditingController textCon = TextEditingController();
   FirebaseProvider fp;
@@ -39,6 +41,15 @@ class _CategoryPageState extends State<CategoryPage> {
         results.add(element);
       }
     });
+    int today =  DateTime.parse(
+        DateFormat("yyyyMMdd").format(DateTime.now())).millisecondsSinceEpoch;
+    
+    for (var ans in fp.getStaticInfo().answers.values){
+      if(DateTime.parse(
+        DateFormat("yyyyMMdd").format(DateTime.fromMillisecondsSinceEpoch(ans.date))).millisecondsSinceEpoch == today){
+        available = false;
+      }
+    }
     return ListView.separated(
       controller: scrollController,
       itemCount: results.length,
@@ -59,6 +70,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       question: question.question ?? "질문없음",
                       storyText: question.story ?? "스토리없음",
                       guide: question.guide ?? "가이드없음",
+                      available: available,
                     )));
           },
         );
@@ -68,6 +80,7 @@ class _CategoryPageState extends State<CategoryPage> {
       },
     );
   }
+
 
   // Widget _searchQuestions() {
   //   // logger.d(textCon.text.split(" ").join().split("#"));

@@ -155,6 +155,8 @@ class FirebaseProvider with ChangeNotifier {
       logger.d("post added");
       Child child = Child.fromJson(await getFromFB("children", post.child));
       _static.post_children[post.child] = child;
+      logger.d("profileURL in child: ${child.profileURL}");
+      logger.d("thumbURL in post: ${post.thumbURL}");
       Reference refProfile = firestorage.ref(child.profileURL);
       Reference refThumb = firestorage.ref(post.thumbURL);
       String profilePath =
@@ -220,9 +222,11 @@ class FirebaseProvider with ChangeNotifier {
 
   Future<bool> loadInfoFromUser() async {
     if (_user_loaded) {
+
       return true;
     }
     if (_user != null) {
+      logger.d("loading user info...");
       // _isVerified =
       //     confirmedProvider.contains(_user.providerData[0].providerId) ||
       //         _user.emailVerified;
@@ -271,8 +275,11 @@ class FirebaseProvider with ChangeNotifier {
         _info.userInDB = temp;
       }
       logger.d(_info.userInDB.children);
+    } else {
+      logger.d("null user, so pass loading user info");
     }
     Map<String, String> answers = _info.currentChild.answers;
+    _static.answers.clear();
     for (var key in answers.keys) {
       var value = answers[key];
       getFromFB("answers", value).then((value) {
@@ -323,7 +330,7 @@ class FirebaseProvider with ChangeNotifier {
   Future<void> addPost(
       String qid, String path, String thumbnail, String comment) async {
     logger.d("adding post");
-    Post post = Post(DateTime.now().millisecondsSinceEpoch, qid,
+    Post post = Post(DateTime.now().millisecondsSinceEpoch, qid, title,
         _info.userInDB.currentChild, path, thumbnail, comment);
     DocumentReference postRef =
         await firestore.collection('posts').add(post.toJson());
@@ -339,6 +346,20 @@ class FirebaseProvider with ChangeNotifier {
         firestore.collection('children').doc(_info.userInDB.currentChild);
     childRef.set(_info.currentChild.toJson());
     logger.d("answer added");
+  }
+
+  Future<void> deleteAnswer(String question, String path) async {
+    logger.d("deleting answer");
+    Answer answer = Answer(DateTime.now().millisecondsSinceEpoch, path, false);
+    DocumentReference ansRef =
+        await firestore.collection('answers').add(answer.toJson());
+    _info.currentChild.answers[question] = ansRef.id;
+    DocumentReference childRef =
+        firestore.collection('children').doc(_info.userInDB.currentChild);
+    childRef.set(_info.currentChild.toJson());
+    // firestore.collection('answers').document(docID).delete();
+    // firestore.collection('children').document(docID).delete();
+    logger.d("answer deleted");
   }
 
   Future<void> addChild(String name, String nickName, int birthday) async {
@@ -397,8 +418,15 @@ class FirebaseProvider with ChangeNotifier {
 
   bool checkVerifiedUser() {
     if (_user == null) {
+      logger.d("null user");
       return false;
     } else {
+      if (! _user.emailVerified){
+        logger.d("user email not verified");
+      }
+      if (! confirmedProvider.contains(_user.providerData[0].providerId)){
+        logger.d("provider mail not verified");
+      }
       return confirmedProvider.contains(_user.providerData[0].providerId) ||
           _user.emailVerified;
     }
@@ -552,13 +580,13 @@ class FirebaseProvider with ChangeNotifier {
   interpretFBMessage(String code) {
     switch (code) {
       case "too-many-requests":
-        return "로그인 시되 횟수가 많습니다. 잠시 후 다시 시도해 주세요.";
+        return "로그인 시도 횟수가 많습니다. 잠시 후 다시 시도해주세요.";
       case "invalid-email":
         return "잘못된 이메일 형식입니다.";
       case "wrong-password":
-        return "잘못된 비밀번호 입니다.";
+        return "잘못된 비밀번호입니다.";
       case "weak-password":
-        return "6자리 이상의 비밀번호를 입력해 주세요.";
+        return "6자리 이상의 비밀번호를 입력해주세요.";
       default:
         return "알 수 없는 에러";
         break;
@@ -573,6 +601,10 @@ class FirebaseProvider with ChangeNotifier {
 
   logScreenView(int pid_prev, int pid) async {
     await fanalytics.logEvent(name: "screen_view", parameters: <String, int>{"firebase_previous_screen": pid_prev, "firebase_screen": pid});
+  }
+
+  logScreenViewString(String  screenClass, String screenName) async {
+    await fanalytics.logEvent(name: "screen_view", parameters: <String, String>{"screen_class": screenClass, "screen_name": screenName});
   }
 
   logOnboardingStart() async {

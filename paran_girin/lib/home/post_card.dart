@@ -110,7 +110,7 @@ class PostCard extends StatelessWidget {
                         //   fit: BoxFit.cover,
                         //   alignment: Alignment.topCenter,
                         // ),
-                        (post.thumbURL == null) ?                         
+                        (thumb == null) ?                         
                         Image.asset(
                           "assets/images/thumbnail_baby.png",
                           width: ScreenUtil().setWidth(198),
@@ -119,7 +119,7 @@ class PostCard extends StatelessWidget {
                           alignment: Alignment.center,
                         ) : 
                         Image.file(
-                          File("assets/images/thumbnail_baby.png"),
+                          thumb,
                           width: ScreenUtil().setWidth(198),
                           height: ScreenUtil().setHeight(197),
                           fit: BoxFit.cover,
@@ -141,12 +141,12 @@ class PostCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "세상에 없던 새로운 대답, 계란", // title
+                              // "세상에 없던 새로운 대답, 계란", // title
+                              post.title ?? "세상에 없던 새로운 대답, 계란", 
                               style: TextStyle(
                                   fontSize: ScreenUtil().setSp(16)),
                             ),
                             Text(
-                              // "타임캡슐에 담고 싶은 나의 물건은?", // description
                               fp
                                   .getStaticInfo()
                                   .questions[post.qid]

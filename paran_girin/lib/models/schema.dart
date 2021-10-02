@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter/widgets.dart';
+
 class StaticInfo {
   Map<String, Question> questions = Map<String, Question>();
   List<Post> posts = List<Post>();
@@ -162,17 +164,19 @@ class Post {
   int date;
   int likes = 0;
   String qid;
+  String title;
   String child;
   String videoURL;
   String thumbURL;
   String comment = "";
   List<String> likedPPL = List<String>();
-  Post(this.date, this.qid, this.child, this.videoURL, this.thumbURL,
+  Post(this.date, this.qid, this.title, this.child, this.videoURL, this.thumbURL,
       this.comment);
   Post.fromJson(Map<String, dynamic> json)
       : this.date = json['date'],
         this.qid = json['qid'],
         this.likes = json['likes'],
+        this.title = json['title'],
         this.child = json['child'],
         this.videoURL = json['videoURL'],
         this.thumbURL = json['thumbURL'],
@@ -182,6 +186,7 @@ class Post {
         'date': date,
         'qid': qid,
         'likes': likes,
+        'title': title,
         'child': child,
         'videoURL': videoURL,
         'thumbURL': thumbURL,

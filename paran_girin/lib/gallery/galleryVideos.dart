@@ -314,7 +314,8 @@ class YesVideo extends StatelessWidget {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => VideoShowFromCamera(
                             qid: key, 
-                            answer: answer))); //VideoPlayerScreen()));
+                            answer: answer))); 
+                            //VideoPlayerScreen()));
                   },
                   onLongPress: () async {
                     String path = await fp

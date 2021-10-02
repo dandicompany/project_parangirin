@@ -47,7 +47,7 @@ class _NoticeState extends State<Notice> {
                             return NoticeElem(
                                 noticeTitle: notice.title,
                                 noticeDate: dateFormat.format(DateTime.fromMillisecondsSinceEpoch(notice.date)),
-                                noticeText: notice.content);
+                                noticeText: notice.content.replaceAll("\\n", "\n"));
                           },
                           itemCount: notices.length);
                     } else {

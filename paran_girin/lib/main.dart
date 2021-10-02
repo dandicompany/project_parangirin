@@ -1,11 +1,15 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:paran_girin/layout/default_layout.dart';
 import 'package:paran_girin/login/login_page.dart';
+import 'package:paran_girin/my/mypage.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'login/auth_page.dart';
 import 'onboarding/onboarding_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -36,6 +40,7 @@ Future<void> main() async {
 }
 
 class _MyApp extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -53,6 +58,8 @@ class _MyApp extends StatelessWidget {
 }
 
 class MyApp extends StatelessWidget {
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -67,12 +74,16 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Noto Sans KR',
         ),
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: analytics),
+        ],
         initialRoute:
             initScreen == 0 || initScreen == null ? '/onboard' : '/home',
         routes: {
-          '/home': (context) => DefaultLayout(), // , // QuestionPage(),
-          '/onboard': (context) => OnboardingScreen(), // ,
-          '/login': (context) => LoginPage(),
+          // '/home': (context) => DefaultLayout(), // , // QuestionPage(),
+          '/onboard': (context) => AuthPage(), // ,
+          // '/login': (context) => LoginPage(),
+          '/my': (context) => MyPage(),
         },
       ),
     );

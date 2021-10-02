@@ -3,6 +3,7 @@ import 'package:paran_girin/layout/default_layout.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/login/baby_info.dart';
 import 'package:paran_girin/main.dart';
+import 'package:paran_girin/onboarding/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/login/login_page.dart';
 import 'package:paran_girin/layout/splash.dart';
@@ -35,14 +36,23 @@ class AuthPageState extends State<AuthPage> {
         if (fp.checkVerifiedUser()) {
           // Todo: check user info
           if (fp.getUserInfo().userInDB.children.length == 0) {
-            return BabyInfoName();
-            // return DefaultLayout();
+            // Navigator.of(context).pop(); // 에러남
+            // () {Navigator.pushReplacement<void, void>(
+            //   context,MaterialPageRoute<void>(
+            //     builder: (BuildContext context) => BabyInfoName()));
+            // }
+            return BabyInfoName(); 
           } else {
+            // Navigator.of(context).pop();
+            logger.d("Auge Page: User verified");
+            // Navigator.pushReplacement<void, void>(
+            //   context,MaterialPageRoute<void>(
+            //     builder: (BuildContext context) => DefaultLayout()));
             return DefaultLayout();
           }
         } else {
           print("gaegegagegagaegaegeg");
-          return LoginPage();
+          return OnboardingScreen();
         }
       } else {
         return SplashScreen();
