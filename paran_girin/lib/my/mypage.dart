@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/my/profile_menu.dart';
@@ -56,9 +57,13 @@ class _MyPageState extends State<MyPage> {
                   text: "자녀 관리",
                   press: () async {
                     // sample firebase logging
+                    // fp.logScreenViewString('마이페이지', '자녀관리');
+                    // FirebaseAnalyticsObserver()._sendScreenView();
                     await fp.getFAnalytics().logEvent(name: 'Click', parameters: <String, String>{'button': '자녀관리'});  
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ChildrenInfo()));
+                        builder: (context) => ChildrenInfo(),
+                        settings: RouteSettings(name: 'my/자녀관리'),
+                      ));
                   }),
               // ProfileMenu(
               //     text: "알림 설정",
@@ -72,45 +77,58 @@ class _MyPageState extends State<MyPage> {
                   press: () {
 
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Notice()));
+                        MaterialPageRoute(builder: (context) => Notice(),
+                        settings: RouteSettings(name: 'my/notice'),
+                      ));
                   }),
               ProfileMenu(
                   text: "의견 보내기",
                   press: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SendComments()));
+                        builder: (context) => SendComments(),
+                        settings: RouteSettings(name: 'my/sendComments'),
+                      ));
                   }),
               ProfileMenu(
                 text: "파란기린 소개", 
                 press: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AboutParanGirin()));
+                        builder: (context) => AboutParanGirin(),
+                        settings: RouteSettings(name: 'my/aboutParanGirin'),
+                      ));
                   }),
               SizedBox(height: ScreenUtil().setHeight(16)),
               ProfileMenu(
                   text: "이용약관",
                   press: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => TermsConditions()));
+                        builder: (context) => TermsConditions(),
+                        settings: RouteSettings(name: 'my/termsConditions'),
+                      ));
                   }),
               ProfileMenu(
                   text: "개인정보 처리방침", 
                   press: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => PrivacyPolicy()));
+                        builder: (context) => PrivacyPolicy(),
+                        settings: RouteSettings(name: 'my/privacyPolicy'),
+                      ));
                   }),
               ProfileMenu(
                   text: "FAQ",
                   press: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => FAQ()));
+                        MaterialPageRoute(builder: (context) => FAQ(),
+                        settings: RouteSettings(name: 'my/faq'),
+                      ));
                   }),
               ProfileMenu(
                   text: "로그아웃",
-                  press: () {
+                  press: () async {
+                    await fp.getFAnalytics().logEvent(name: 'buttonClick', parameters: <String, String>{'button': 'logout'});
                     fp.resetStaticInfoOnNextLoad();
                     fp.signOut();
-                    Navigator.of(context).pop();
+                    // Navigator.of(context).pop();
                   }),
               SizedBox(height: ScreenUtil().setHeight(16)),
               // version information

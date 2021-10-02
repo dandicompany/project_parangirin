@@ -81,6 +81,7 @@ class _CategoryPageState extends State<CategoryPage> {
     );
   }
 
+
   // Widget _searchQuestions() {
   //   // logger.d(textCon.text.split(" ").join().split("#"));
   //   logger.d(textCon.text.replaceAll(" ", ""));

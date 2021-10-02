@@ -58,6 +58,7 @@ class InitializationState extends State<Initialization> {
   @override
   Widget build(BuildContext context) {
     question = _question;
+    logger.d("여긴가");
     return FutureBuilder(
         future: videoFunc(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -196,6 +197,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     fp = Provider.of<FirebaseProvider>(context);
     String nick = fp.getUserInfo().currentChild.nickName;
     context_temp = context;
+    logger.d("여긴가?");
     return Scaffold(
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
@@ -377,8 +379,9 @@ class Outtro extends StatelessWidget {
   Outtro(this.name, this.q);
   @override
   Widget build(BuildContext context) {
+    logger.d("여긴가!!!");
     return FutureBuilder(
-      future: Future.delayed(Duration(milliseconds: 10000)),
+      future: Future.delayed(Duration(milliseconds: 17000)),
       builder: (context, snapshot) {
         // Checks whether the future is resolved, ie the duration is over
         if (snapshot.connectionState == ConnectionState.done) {
@@ -480,6 +483,7 @@ class GirinSpeak extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     logger.d(q);
+    logger.d("여긴가???????");
     return FutureBuilder(
         future: Future.delayed(Duration(milliseconds: 3000)),
         builder: (context, snapshot) {

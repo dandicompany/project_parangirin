@@ -41,7 +41,7 @@ class AuthPageState extends State<AuthPage> {
             //   context,MaterialPageRoute<void>(
             //     builder: (BuildContext context) => BabyInfoName()));
             // }
-            return BabyInfoName();
+            return BabyInfoName(); 
           } else {
             // Navigator.of(context).pop();
             logger.d("Auge Page: User verified");

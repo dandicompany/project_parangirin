@@ -40,6 +40,10 @@ class _LoginPageState extends State<LoginPage> {
     //  printScreenInformation();
     print(_state);
     fp = Provider.of<FirebaseProvider>(context);
+    if (fp.checkVerifiedUser()){
+      Navigator.of(context).pop();
+      return SizedBox.shrink();
+    }
     _checkState();
     _textCon.clear();
     // bool _isButtonDisabled = false;

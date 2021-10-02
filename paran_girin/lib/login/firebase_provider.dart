@@ -348,6 +348,20 @@ class FirebaseProvider with ChangeNotifier {
     logger.d("answer added");
   }
 
+  Future<void> deleteAnswer(String question, String path) async {
+    logger.d("deleting answer");
+    Answer answer = Answer(DateTime.now().millisecondsSinceEpoch, path, false);
+    DocumentReference ansRef =
+        await firestore.collection('answers').add(answer.toJson());
+    _info.currentChild.answers[question] = ansRef.id;
+    DocumentReference childRef =
+        firestore.collection('children').doc(_info.userInDB.currentChild);
+    childRef.set(_info.currentChild.toJson());
+    // firestore.collection('answers').document(docID).delete();
+    // firestore.collection('children').document(docID).delete();
+    logger.d("answer deleted");
+  }
+
   Future<void> addChild(String name, String nickName, int birthday) async {
     logger.d("adding child");
     Child child = Child(name, null, nickName, birthday, null);
@@ -411,7 +425,7 @@ class FirebaseProvider with ChangeNotifier {
         logger.d("user email not verified");
       }
       if (! confirmedProvider.contains(_user.providerData[0].providerId)){
-        logger.d("provider mail verified");
+        logger.d("provider mail not verified");
       }
       return confirmedProvider.contains(_user.providerData[0].providerId) ||
           _user.emailVerified;
@@ -587,6 +601,10 @@ class FirebaseProvider with ChangeNotifier {
 
   logScreenView(int pid_prev, int pid) async {
     await fanalytics.logEvent(name: "screen_view", parameters: <String, int>{"firebase_previous_screen": pid_prev, "firebase_screen": pid});
+  }
+
+  logScreenViewString(String  screenClass, String screenName) async {
+    await fanalytics.logEvent(name: "screen_view", parameters: <String, String>{"screen_class": screenClass, "screen_name": screenName});
   }
 
   logOnboardingStart() async {
