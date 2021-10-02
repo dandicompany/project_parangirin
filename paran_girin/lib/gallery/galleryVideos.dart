@@ -236,7 +236,7 @@ class NoVideo extends StatelessWidget {
               text: " 파란기린과 대화하기 ",
               isInvert: false,
               press: () {
-                Navigator.of(context).push(
+                Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => HomeAvatarBig()));
               })
         ],

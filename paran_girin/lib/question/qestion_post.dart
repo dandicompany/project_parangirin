@@ -181,7 +181,7 @@ class _QuestionPostState extends State<QuestionPost> {
                     text: " 파란기린과 대화하기 ",
                     isInvert: false,
                     press: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => Initialization(widget.qid)));
                     })
                   : DisabledButton(

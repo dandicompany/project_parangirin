@@ -12,9 +12,9 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-var file = File("assets/videoEx/sample1.mp4");
+// var file = File("assets/videoEx/sample1.mp4");
 // "/data/user/0/com.example.paran_girin/app_flutter/2021-03-14 22:23:56.187923.mp4");
-var path = 'assets/videoEx/sample1.mp4';
+// var path = 'assets/videoEx/sample1.mp4';
 DateFormat dateFormat = DateFormat("yyyy년 MM월 dd일");
 
 class VideoShowWidget extends StatefulWidget {
@@ -128,11 +128,11 @@ class _VideoShowWidgetState extends State<VideoShowWidget> {
                     child: Container(
                       // height: ScreenUtil().setHeight(600),
                       height: ScreenUtil().setHeight(570),
-                      child: ChewieListItem(
-                        // videoPlayerController: VideoPlayerController.file(file),
-                        videoPlayerController: VideoPlayerController.file(file),
-                        looping: false,
-                      ),
+                      // child: ChewieListItem(
+                      //   // videoPlayerController: VideoPlayerController.file(file),
+                      //   videoPlayerController: VideoPlayerController.file(file),
+                      //   looping: false,
+                      // ),
                     ),
                   ),
               ],
@@ -155,8 +155,13 @@ class _VideoShowWidgetState extends State<VideoShowWidget> {
 
     if (filePath.isNotEmpty) {
       await Share.shareFiles(filePath,
-          text: "${fp.getUserInfo().currentChild.nickName}이가 파란기린의 ${widget.question.title} 질문에 대해 이렇게 대답했어요.\n파란기린 앱 링크",
-          subject: dateFormat.format(DateTime.fromMillisecondsSinceEpoch(widget.answer.date)),
+          text: "${fp
+              .getUserInfo()
+              .currentChild
+              .nickName}이가 파란기린의 ${widget.question
+              .title} 질문에 대해 이렇게 대답했어요.\n파란기린 앱 링크",
+          subject: dateFormat.format(
+              DateTime.fromMillisecondsSinceEpoch(widget.answer.date)),
           sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
     } else {
       // await Share.share(
