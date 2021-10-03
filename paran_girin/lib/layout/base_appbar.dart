@@ -156,7 +156,6 @@ class _PopupAfterBbom extends State<PopupAfterBbom> {
               ],
             )
         )
-
       ],
     );
   }

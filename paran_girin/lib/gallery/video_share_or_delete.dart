@@ -5,8 +5,9 @@ import 'package:paran_girin/theme/app_theme.dart';
 
 class VideoShareOrDelete extends StatefulWidget {
   var share;
+  var delete;
 
-  VideoShareOrDelete({Key key, this.share}) : super(key: key);
+  VideoShareOrDelete({Key key, this.share, this.delete}) : super(key: key);
   @override
   _VideoShareOrDeleteState createState() => _VideoShareOrDeleteState();
 }
@@ -58,7 +59,7 @@ class _VideoShareOrDeleteState extends State<VideoShareOrDelete> {
                     bottomLeft: Radius.circular(15),
                     bottomRight: Radius.circular(15)
                   ),
-                  onTap: () => {}, // add delete
+                  onTap: widget.delete, // add delete
                   textColor: Colors.red,
                   opacity: 0.85
                 ),
