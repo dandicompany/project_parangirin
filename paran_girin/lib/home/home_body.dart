@@ -101,8 +101,10 @@ class _HomeBody extends State<HomeBody> {
                   text: "우리 아이 뽐내기",
                   isInvert: true,
                   press: () {
-                    Navigator.of(context).push(
-                        FadePageRoute(widget: SharingMyAnswers()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SharingMyAnswers(),
+                        settings: RouteSettings(name: 'home/ppomMain'),
+                      ));
                     if (firstTime == false){
                       showDialog(
                           context: context,
@@ -136,8 +138,10 @@ class _HomeBody extends State<HomeBody> {
                           text: "생각을 공유해주세요!",
                           isInvert: true,
                           press: () {
-                            Navigator.of(context).push(
-                                FadePageRoute(widget: SendComments()));
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => SendComments(),
+                              settings: RouteSettings(name: 'home/sendComments'),
+                            ));
                           },
                         ),
                         SizedBox(height: ScreenUtil().setHeight(14)),
@@ -265,8 +269,10 @@ class HomeAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseProvider fp = Provider.of<FirebaseProvider>(context);
     return InkWell(
-      onTap: () {
+      onTap: () async {
+        await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'home/homeAvatarBig'});
         Navigator.of(context).push(FadePageRoute(widget: HomeAvatarBig()));
       },
       child: Container(

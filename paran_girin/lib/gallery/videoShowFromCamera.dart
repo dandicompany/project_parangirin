@@ -86,7 +86,8 @@ class _VideoShowFromCameraState extends State<VideoShowFromCamera> {
                             builder: (BuildContext context)
                             {
                               return VideoShareOrDelete(
-                                share: () {
+                                share: () async {
+                                  await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'video/share'});
                                   _onShare(context);
                                 }
                               );

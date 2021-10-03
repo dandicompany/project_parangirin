@@ -4,8 +4,10 @@ import 'package:paran_girin/gallery/gallery_page.dart';
 import 'package:paran_girin/home/home_page.dart';
 import 'package:paran_girin/layout/tab_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/my/mypage.dart';
 import 'package:paran_girin/question/category_page.dart';
+import 'package:provider/provider.dart';
 
 class DefaultLayout extends StatefulWidget {
   @override
@@ -24,6 +26,7 @@ class _DefaultLayoutState extends State<DefaultLayout>
 
   @override
   Widget build(BuildContext context) {
+
     return WillPopScope(
       onWillPop: () async {
         DateTime now = DateTime.now();
@@ -62,13 +65,31 @@ class _DefaultLayoutState extends State<DefaultLayout>
   }
 
   Widget _buildPageView(context) {
+    FirebaseProvider fp = Provider.of<FirebaseProvider>(context);
+
     return Positioned.fill(
         child: PageView.builder(
       physics: NeverScrollableScrollPhysics(),
-      onPageChanged: (idx) {
+      onPageChanged: (idx) async {
         setState(() {
           _selectedTabIndex = idx;
         });
+        switch (idx) {
+          case 0:
+            await fp.getFAnalytics().logEvent(name: 'Click', parameters: <String, String>{'button': 'home'});  
+            break;
+          case 1:
+            await fp.getFAnalytics().logEvent(name: 'Click', parameters: <String, String>{'button': 'question'});  
+            break;
+          case 2:
+            await fp.getFAnalytics().logEvent(name: 'Click', parameters: <String, String>{'button': 'gallery'});  
+            break;
+          case 3:
+            await fp.getFAnalytics().logEvent(name: 'Click', parameters: <String, String>{'button': 'my'});  
+            break;
+          default:
+            return HomePage();
+        }
       },
       controller: _pageController,
       itemCount: 4,

@@ -374,7 +374,9 @@ class _PrivacyPolicy extends State<PrivacyPolicy2> {
                             setState(() {
                               if (button1 == true && button2 == true && button3==true){
                                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                    builder: (context) => LoginPage()));
+                                    builder: (context) => LoginPage(),
+                                    settings: RouteSettings(name: 'onboarding/onboardingMain'),
+                                  ));
                                     // builder: (context) => AuthPage()));
                               }
                             }),

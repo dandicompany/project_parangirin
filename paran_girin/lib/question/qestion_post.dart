@@ -6,7 +6,9 @@ import 'package:paran_girin/layout/base_appbar.dart';
 import 'package:paran_girin/layout/default_button.dart';
 import 'package:paran_girin/layout/default_icon_button.dart';
 import 'package:paran_girin/layout/disabled_button.dart';
+import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:paran_girin/theme/app_theme.dart';
+import 'package:provider/provider.dart';
 
 class QuestionPost extends StatefulWidget {
   final String tag;
@@ -46,6 +48,7 @@ class _QuestionPostState extends State<QuestionPost> {
   Widget build(BuildContext context) {
     todayDone = widget.available;
     List<String> tags = widget.tag.substring(1).split("#");
+    FirebaseProvider fp = Provider.of<FirebaseProvider>(context);
 
     return Scaffold(
         appBar: BaseAppBar(title: widget.categoryTitle),
@@ -88,7 +91,10 @@ class _QuestionPostState extends State<QuestionPost> {
 
                     // story drop down
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        if (!_storyVisible){
+                          await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'question/story'});
+                        }
                         setState(() {
                           _storyVisible = !_storyVisible;
                         });
@@ -129,7 +135,10 @@ class _QuestionPostState extends State<QuestionPost> {
                     SizedBox(height: ScreenUtil().setHeight(10)),
                     // guide drop down
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        if (!_guideVisible){
+                          await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'question/guide'});
+                        }
                         setState(() {
                           _guideVisible = !_guideVisible;
                         });
@@ -181,8 +190,11 @@ class _QuestionPostState extends State<QuestionPost> {
                     text: " 파란기린과 대화하기 ",
                     isInvert: false,
                     press: () {
+                      print("widget.qid: ${widget.qid}");
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Initialization(widget.qid)));
+                        builder: (context) => Initialization(widget.qid),
+                        settings: RouteSettings(name: 'question/talkStart'),
+                      ));
                     })
                   : DisabledButton(
                     text: "내일 대답할 수 있어요",

@@ -137,24 +137,31 @@ class _LoginPageState extends State<LoginPage> {
     logger.d(_state);
     switch (_state) {
       case enum_state.CHECKACC:
-        return () {
+        return () async {
           _email = _textCon.text;
           print(_email);
           _checkAccount(_email);
+          if (_state == enum_state.SIGNUP) {
+            await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'register/verification'});
+          }
+          if (_state == enum_state.SIGNIN) {
+            await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'login/password'});
+          }
         };
       case enum_state.SIGNIN:
-        return () {
+        return () async {
           _pw = _textCon.text;
           _signIn(_email, _pw);
         };
       case enum_state.SIGNUP:
-        return () {
+        return () async {
           _pw = _textCon.text;
           _pw_check = _textCon2.text;
           logger.d("checking double password");
           logger.d(_pw_check);
           if (_formKey.currentState.validate()) {
             _signUp(_email, _pw);
+            await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'register/name'});
           }
         };
       case enum_state.VERI:

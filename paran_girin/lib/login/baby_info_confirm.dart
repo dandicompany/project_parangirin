@@ -85,8 +85,11 @@ class _BabyInfoConfirmState extends State<BabyInfoConfirm> {
               width: double.infinity,
               child: FlatButton(
                 onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => DefaultLayout()));
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => DefaultLayout(),
+                      settings: RouteSettings(name: 'home'),
+                    ));
                 },
                 height: ScreenUtil().setHeight(65),
                 child: Text(

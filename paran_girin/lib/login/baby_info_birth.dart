@@ -175,9 +175,8 @@ class _BabyInfoBirthState extends State<BabyInfoBirth> {
               color: AppTheme.colors.primary2,
               width: double.infinity,
               child: FlatButton(
-                onPressed: () async {
+                onPressed: () {
                   if (this.selected) {
-                    await fp.addChild(this.name, this.nickName, this.birthdate);
                     logger.d("before pushing");
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => BabyInfoConfirm()));

@@ -62,7 +62,7 @@ class _MyPageState extends State<MyPage> {
                     await fp.getFAnalytics().logEvent(name: 'Click', parameters: <String, String>{'button': '자녀관리'});  
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => ChildrenInfo(),
-                        settings: RouteSettings(name: 'my/자녀관리'),
+                        settings: RouteSettings(name: 'my/childrenInfo'),
                       ));
                   }),
               // ProfileMenu(
@@ -125,7 +125,7 @@ class _MyPageState extends State<MyPage> {
               ProfileMenu(
                   text: "로그아웃",
                   press: () async {
-                    await fp.getFAnalytics().logEvent(name: 'buttonClick', parameters: <String, String>{'button': 'logout'});
+                    await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'my/logout'});
                     fp.resetStaticInfoOnNextLoad();
                     fp.signOut();
                     // Navigator.of(context).pop();
