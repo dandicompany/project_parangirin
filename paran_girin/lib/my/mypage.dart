@@ -59,7 +59,7 @@ class _MyPageState extends State<MyPage> {
                     // sample firebase logging
                     // fp.logScreenViewString('마이페이지', '자녀관리');
                     // FirebaseAnalyticsObserver()._sendScreenView();
-                    await fp.getFAnalytics().logEvent(name: 'Click', parameters: <String, String>{'button': '자녀관리'});
+                    // await fp.getFAnalytics().logEvent(name: 'Click', parameters: <String, String>{'button': '자녀관리'});
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => ChildrenInfo(),
                         settings: RouteSettings(name: 'my/childrenInfo'),

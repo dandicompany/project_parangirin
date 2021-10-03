@@ -105,12 +105,14 @@ class _SendCommentsState extends State<SendComments> {
                     borderRadius: BorderRadius.circular(4)),
                 color: AppTheme.colors.primary2,
                 // onPressed: press,
-                onPressed: () {
+                onPressed: () async {
                   String content = textCon.text;
                   if (isCreative) {
                     fp.addOpinionQuestion(content);
+                    await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'sendComments/question'});
                   } else {
                     fp.addOpinionWish(content);
+                    await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'sendComments/wish'});
                   }
                   textCon.text = "";
                   showDialog(context: context,

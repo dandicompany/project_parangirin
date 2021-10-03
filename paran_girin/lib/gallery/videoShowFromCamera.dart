@@ -95,7 +95,8 @@ class _VideoShowFromCameraState extends State<VideoShowFromCamera> {
                                   await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'video/share'});
                                   _onShare(context2);
                                 },
-                                delete: () {
+                                delete: () async {
+                                  await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'video/delete'});
                                   _onDelete(context2);
                                   video_removed = true;
                                 },
