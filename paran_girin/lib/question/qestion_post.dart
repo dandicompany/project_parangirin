@@ -191,7 +191,7 @@ class _QuestionPostState extends State<QuestionPost> {
                     isInvert: false,
                     press: () {
                       print("widget.qid: ${widget.qid}");
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => Initialization(widget.qid),
                         settings: RouteSettings(name: 'question/talkStart'),
                       ));

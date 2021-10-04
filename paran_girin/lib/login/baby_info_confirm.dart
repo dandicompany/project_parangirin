@@ -13,12 +13,22 @@ import 'package:paran_girin/models/schema.dart';
 DateFormat dateFormat = DateFormat("yyyy년 MM월 dd일");
 
 class BabyInfoConfirm extends StatefulWidget {
+  final String name, nickName;
+  final int birthdate;
+
+  BabyInfoConfirm(this.name, this.nickName, this.birthdate);
+
+  
   @override
-  _BabyInfoConfirmState createState() => _BabyInfoConfirmState();
+  _BabyInfoConfirmState createState() => _BabyInfoConfirmState(name, nickName, birthdate);
 }
 
 class _BabyInfoConfirmState extends State<BabyInfoConfirm> {
   FirebaseProvider fp;
+  String name, nickName;
+  int birthdate;
+  _BabyInfoConfirmState(this.name, this.nickName, this.birthdate);
+
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
@@ -59,7 +69,7 @@ class _BabyInfoConfirmState extends State<BabyInfoConfirm> {
                 ),
                 SizedBox(height: ScreenUtil().setHeight(101)),
                 Text(
-                  "아이의 이름은 ${_info.currentChild.name}(이)에요\n\n파란기린은 아이를 ${_info.currentChild.nickName}(이)라고 부를게요\n\n${_info.currentChild.nickName}은(는) ${dateFormat.format(DateTime.fromMillisecondsSinceEpoch(_info.currentChild.birthday))} 에 태어났어요",
+                  "아이의 이름은 ${this.name}(이)에요\n\n파란기린은 아이를 ${this.nickName}(이)라고 부를게요\n\n${this.nickName}은(는) ${dateFormat.format(DateTime.fromMillisecondsSinceEpoch(this.birthdate))} 에 태어났어요",
                   style: TextStyle(
                       fontSize: ScreenUtil().setSp(16.0),
                       fontWeight: FontWeight.w300,
@@ -84,7 +94,9 @@ class _BabyInfoConfirmState extends State<BabyInfoConfirm> {
               color: AppTheme.colors.primary2,
               width: double.infinity,
               child: FlatButton(
-                onPressed: () {
+                onPressed: () async {
+                  await fp.addChild(this.name, this.nickName, this.birthdate);
+                  await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'register/complete'});
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => DefaultLayout(),

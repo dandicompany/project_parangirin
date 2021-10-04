@@ -179,7 +179,7 @@ class _BabyInfoBirthState extends State<BabyInfoBirth> {
                   if (this.selected) {
                     logger.d("before pushing");
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => BabyInfoConfirm()));
+                        builder: (context) => BabyInfoConfirm(this.name, this.nickName, this.birthdate)));
                   }
                 },
                 height: ScreenUtil().setHeight(65),

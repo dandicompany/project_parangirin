@@ -75,7 +75,6 @@ class _MyPageState extends State<MyPage> {
               ProfileMenu(
                   text: "공지사항",
                   press: () {
-
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => Notice(),
                           settings: RouteSettings(name: 'my/notice'),

@@ -100,7 +100,7 @@ class _HomeBody extends State<HomeBody> {
                 child: DefaultButton(
                   text: "우리 아이 뽐내기",
                   isInvert: true,
-                  press: () {
+                  press: () async {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => SharingMyAnswers(),
                         settings: RouteSettings(name: 'home/ppomMain'),
@@ -137,7 +137,7 @@ class _HomeBody extends State<HomeBody> {
                         DefaultButton(
                           text: "생각을 공유해주세요!",
                           isInvert: true,
-                          press: () {
+                          press: () async {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => SendComments(),
                               settings: RouteSettings(name: 'home/sendComments'),

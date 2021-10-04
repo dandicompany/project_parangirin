@@ -128,11 +128,11 @@ class _VideoShowWidgetState extends State<VideoShowWidget> {
                     child: Container(
                       // height: ScreenUtil().setHeight(600),
                       height: ScreenUtil().setHeight(570),
-                      // child: ChewieListItem(
-                      //   // videoPlayerController: VideoPlayerController.file(file),
-                      //   videoPlayerController: VideoPlayerController.file(file),
-                      //   looping: false,
-                      // ),
+                      child: ChewieListItem(
+                        // videoPlayerController: VideoPlayerController.file(file),
+                        videoPlayerController: VideoPlayerController.file(file),
+                        looping: false,
+                      ),
                     ),
                   ),
               ],
