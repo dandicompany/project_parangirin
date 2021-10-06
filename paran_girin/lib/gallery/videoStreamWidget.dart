@@ -66,11 +66,11 @@ class VideoStreamWidget extends StatelessWidget {
             ),
             child: Container(
               height: ScreenUtil().setHeight(600),
-              // child: ChewieListItem(
-              //   // videoPlayerController: VideoPlayerController.file(file),
-              //   videoPlayerController: VideoPlayerController.network(url),
-              //   looping: true,
-              // ),
+              child: ChewieListItem(
+                // videoPlayerController: VideoPlayerController.file(file),
+                videoPlayerController: VideoPlayerController.network(url),
+                looping: true,
+              ),
             ),
           ),
         ],

@@ -37,8 +37,8 @@ class PostCard extends StatelessWidget {
       thumb = info.post_thumbnails[basename(post.thumbURL)];
     }
     if ((child != null)) {
-      background = "assets/background/lv7.jpg";
-      avatar = "assets/avatars/hi.gif";
+      background = "assets/background/lv2.jpg";
+      avatar = "assets/avatars/speaking.gif";
       // background = "assets/background/${child.background}";
       // avatar = "assets/avatars/${child.avatar}";
     } else {

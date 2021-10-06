@@ -34,7 +34,8 @@ class _BabyInfoState extends State<BabyInfo> {
             margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(16)),
             child: DefaultButton(
               text: "가입 완료하기",
-              press: () {
+              press: () async {
+                await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'register/complete'});
                 logger.d("before adding child");
                 fp.addChild(_nameCon.text, _ageCon.text, null);
                 //fp.reloadUser();

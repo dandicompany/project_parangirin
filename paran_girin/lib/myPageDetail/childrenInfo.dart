@@ -118,7 +118,8 @@ class _ChildrenInfoState extends State<ChildrenInfo> {
               child: DefaultButton(
                   text: "자녀 추가하기",
                   isInvert: false,
-                  press: () {
+                  press: () async {
+                    await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'my/childrenInfo/addChild'});
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => BabyInfoName()));
                   }),

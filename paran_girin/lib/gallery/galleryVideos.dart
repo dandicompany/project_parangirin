@@ -36,6 +36,7 @@ class GalleryVideo extends StatefulWidget {
 
 class _CalenderState extends State<GalleryVideo> {
   bool buttonClickedState = true;
+  bool buttonClickedState1 = true;
   bool buttonClickedState2 = true;
   bool buttonClickedState3 = true;
   bool buttonClickedState4 = true;
@@ -51,22 +52,24 @@ class _CalenderState extends State<GalleryVideo> {
   Widget build(BuildContext context) {
     // TODO: implement build
     fp = Provider.of<FirebaseProvider>(context);
-    artNum = 0;
     bodyNum = 0;
     natureNum = 0;
+    artNum = 0;
     socialNum = 0;
     commuNum = 0;
+    var selectedCategory = [];
+  
     for (var key in fp.getUserInfo().currentChild.answers.keys) {
       Question q = fp.getStaticInfo().questions[key];
       switch (q.category) {
-        case "예술":
-          artNum += 1;
-          break;
         case "신체":
           bodyNum += 1;
           break;
         case "자연탐구":
           natureNum += 1;
+          break;
+        case "예술":
+          artNum += 1;
           break;
         case "의사소통":
           commuNum += 1;
@@ -77,7 +80,22 @@ class _CalenderState extends State<GalleryVideo> {
         default:
       }
     }
-    sum = bodyNum + natureNum + artNum + socialNum + artNum;
+    sum = 0 + (buttonClickedState ? bodyNum : 0) + (buttonClickedState1 ? natureNum : 0) + (buttonClickedState2 ? artNum : 0) + (buttonClickedState3 ? commuNum : 0) + (buttonClickedState3 ? socialNum : 0);
+    if (buttonClickedState) {
+      selectedCategory.add("신쳬");
+    }
+    if (buttonClickedState1) {
+      selectedCategory.add("자연탐구");
+    }
+    if (buttonClickedState) {
+      selectedCategory.add("예술");
+    }
+    if (buttonClickedState) {
+      selectedCategory.add("의사소통");
+    }
+    if (buttonClickedState) {
+      selectedCategory.add("사회관계");
+    }
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -116,7 +134,7 @@ class _CalenderState extends State<GalleryVideo> {
                     child: FlatButton(
                       onPressed: () {
                         setState(() {
-                          buttonClickedState2 = !buttonClickedState2;
+                          buttonClickedState1 = !buttonClickedState1;
                         });
                       },
                       shape: RoundedRectangleBorder(
@@ -139,7 +157,7 @@ class _CalenderState extends State<GalleryVideo> {
                     child: FlatButton(
                       onPressed: () {
                         setState(() {
-                          buttonClickedState3 = !buttonClickedState3;
+                          buttonClickedState2 = !buttonClickedState2;
                         });
                       },
                       shape: RoundedRectangleBorder(
@@ -181,7 +199,7 @@ class _CalenderState extends State<GalleryVideo> {
                     child: FlatButton(
                       onPressed: () {
                         setState(() {
-                          buttonClickedState3 = !buttonClickedState3;
+                          buttonClickedState4 = !buttonClickedState4;
                         });
                       },
                       shape: RoundedRectangleBorder(
@@ -198,7 +216,7 @@ class _CalenderState extends State<GalleryVideo> {
                   ),
                 ],
               ),
-              sum == 0 ? NoVideo() : YesVideo(),
+              sum == 0 ? NoVideo() : YesVideo(selectedCategory),
             ],
           ),
         ),
@@ -247,13 +265,17 @@ class NoVideo extends StatelessWidget {
 
 class YesVideo extends StatelessWidget {
   FirebaseProvider fp;
+  var selectedCategory = [];
+  YesVideo(this.selectedCategory);
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
     Map<String, Answer> answers = fp.getStaticInfo().answers;
     List<MapEntry<String, Answer>> entries = List<MapEntry<String, Answer>>();
     for (var entry in answers.entries) {
-      entries.add(entry);
+      if(selectedCategory.contains(fp.getStaticInfo().questions[entry.key].category)){
+        entries.add(entry);
+      }
     }
     entries.sort((a, b) => a.value.date.compareTo(b.value.date));
     answers = Map.fromEntries(entries);
@@ -273,11 +295,13 @@ class YesVideo extends StatelessWidget {
                 return null;
               }
               logger.d("answers loaded");
-              String thumbURL = (await getTemporaryDirectory()).path;
+
+              
               // answer.thumbnail = null;
               // (await getApplicationDocumentsDirectory()).path;
               // logger.d("path identified: " + answer.thumbnail);
               try {
+                String thumbURL = (await getTemporaryDirectory()).path;
                 logger.d(answer.videoURL);
                 final thumb = await VideoThumbnail.thumbnailFile(
                   video: answer.videoURL,
@@ -291,6 +315,7 @@ class YesVideo extends StatelessWidget {
                 answer.thumbnail = File(thumb);
               } catch (e) {
                 logger.d(e);
+                return null;
               }
 
               // answer.thumbnail = thumb.pat
@@ -301,6 +326,9 @@ class YesVideo extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.done) {
                 logger.d(snapshot.data);
                 Answer answer = snapshot.data;
+                if (answer == null){
+                  return SizedBox.shrink();
+                }
                 Question question = fp.getStaticInfo().questions[key];
                 if (answer == null) {
                   return SizedBox.shrink();

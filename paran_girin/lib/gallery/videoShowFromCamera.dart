@@ -91,10 +91,12 @@ class _VideoShowFromCameraState extends State<VideoShowFromCamera> {
                             builder: (BuildContext context2)
                             {
                               return VideoShareOrDelete(
-                                share: () {
+                                share: () async {
+                                  await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'video/share'});
                                   _onShare(context2);
                                 },
-                                delete: () {
+                                delete: () async {
+                                  await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'video/delete'});
                                   _onDelete(context2);
                                   video_removed = true;
                                 },
@@ -151,11 +153,11 @@ class _VideoShowFromCameraState extends State<VideoShowFromCamera> {
                     child: Container(
                       // height: ScreenUtil().setHeight(600),
                       height: ScreenUtil().setHeight(570),
-                      // child: ChewieListItem(
-                      //   // videoPlayerController: VideoPlayerController.file(file),
-                      //   videoPlayerController: VideoPlayerController.file(file),
-                      //   looping: false,
-                      // ),
+                      child: ChewieListItem(
+                        // videoPlayerController: VideoPlayerController.file(file),
+                        videoPlayerController: VideoPlayerController.file(file),
+                        looping: false,
+                      ),
                     ),
                   ),
               ],

@@ -37,9 +37,9 @@ String formatTime(int milliseconds) {
 Future<Widget> videoFunc() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
-
-  firstCamera = cameras.first;
+  logger.d(cameras);
   final frontCamera = cameras[1];
+  // final frontCamera = null;
 
   logger.d("!!!!!!!!!!!!!!!!!!!!!!!");
   return TakePictureScreen(camera: frontCamera);
@@ -58,15 +58,19 @@ class InitializationState extends State<Initialization> {
   @override
   Widget build(BuildContext context) {
     question = _question;
+    logger.d("QID: $question");
     logger.d("여긴가");
     return FutureBuilder(
         future: videoFunc(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             logger.d("page loaded");
+            print(snapshot.data);
             return snapshot.data;
+            // return Container(width: 0.0, height: 0.0);
+            // return SizedBox.shrink();
           } else {
-            return SplashScreen();
+            return SizedBox.shrink();
           }
         });
   }
@@ -220,8 +224,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 //   //", 나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지. 이 외에도 정말 많아. 혹시 너도 동물이 되어보고 싶은 적 없어? 하루동안 동물이 된다면, 어떤 동물이 되고싶니?",),
                 // ),
                 if (girin_state == false)
-                  GirinSpeak(nick,fp.getStaticInfo().questions[question]),
-                  TextToSpeech(text: "안녕, "+ nick + "친구?" +fp.getStaticInfo().questions[question].narration1.replaceAll("안녕 __name__!", "") + "   준비가 되었다면 빨간 버튼을 누르고 대답해줘!"),
+                  GirinSpeak(nick, fp.getStaticInfo().questions[question]),
+                  // TextToSpeech(text: "안녕, "+ nick + "친구?" +fp.getStaticInfo().questions[question].narration1.replaceAll("안녕 __name__!", "") + "   준비가 되었다면 빨간 버튼을 누르고 대답해줘!"),
                 if (girin_state == true)
                   GirinNod(),
                 //Container(
@@ -386,7 +390,7 @@ class Outtro extends StatelessWidget {
   Widget build(BuildContext context) {
     logger.d("여긴가!!!");
     return FutureBuilder(
-      future: Future.delayed(Duration(milliseconds: 17000)),
+      future: Future.delayed(Duration(milliseconds: 13000)),
       builder: (context, snapshot) {
         // Checks whether the future is resolved, ie the duration is over
         if (snapshot.connectionState == ConnectionState.done) {
@@ -489,29 +493,50 @@ class GirinSpeak extends StatelessWidget {
   Widget build(BuildContext context) {
     logger.d(q);
     logger.d("여긴가???????");
-    return FutureBuilder(
-        future: Future.delayed(Duration(milliseconds: 3000)),
-        builder: (context, snapshot) {
-          // Checks whether the future is resolved, ie the duration is over
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Stack(children: [
-              //Align(
-              //    child: TextToSpeech(
-              //        // text: "나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지."),
-              //        text: q.narration1.replaceAll("안녕 __name__!", "") + "   준비가 되었다면 빨간 버튼을 누르고 대답해줘!")),
-              Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: ScreenUtil().setWidth(512),
-                    height: ScreenUtil().setHeight(512),
-                    child: Image.asset("assets/avatars/speaking.gif",
-                        fit: BoxFit.cover),
-                  ))
-            ]);
-          } else {
-            return GirinHi(nick);
-          }
-        });
+    // return FutureBuilder(
+    //   future: Future.delayed(Duration(milliseconds: 3000)),
+    //   builder: (context, snapshot) {
+    //     // Checks whether the future is resolved, ie the duration is over
+    //     if (snapshot.connectionState == ConnectionState.done) {
+    //       return Stack(children: [
+    //         Align(
+    //             child: TextToSpeech(
+    //                 // text: "나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지."),
+    //                 text: q.narration1.replaceAll("안녕 __name__!", "") + "   준비가 되었다면 빨간 버튼을 누르고 대답해줘!")),
+    //         Align(
+    //             alignment: Alignment.center,
+    //             child: Container(
+    //               width: ScreenUtil().setWidth(512),
+    //               height: ScreenUtil().setHeight(512),
+    //               child: Image.asset("assets/avatars/speaking.gif",
+    //                   fit: BoxFit.cover),
+    //             ))
+    //       ]);
+    //     } else {
+    //       return GirinHi(nick);
+    //     }
+    //   });
+    return Stack(children: [
+      Align(
+          child: TextToSpeech(
+              // text: "나 뿐만 아니라 옆집 토끼아저씨, 앞집 송아지가족, 내 친구 코끼리까지."),
+              text: q.narration1.replaceAll("__name__!", nick + "\n") + "   준비가 되었다면 빨간 버튼을 누르고 대답해줘!")),
+      Align(
+          alignment: Alignment.center,
+          child: Container(
+            width: ScreenUtil().setWidth(512),
+            height: ScreenUtil().setHeight(512),
+            child: FutureBuilder(
+              future: Future.delayed(Duration(milliseconds: 3000)),
+              builder: (context, snapshot){
+                if (snapshot.connectionState == ConnectionState.done){
+                  return Image.asset("assets/avatars/speaking.gif",
+                fit: BoxFit.cover);
+                } else {
+                  return Image.asset("assets/avatars/hi.gif", fit: BoxFit.cover);
+                }}),
+          ))
+    ]);
   }
 }
 
@@ -591,7 +616,9 @@ class _VideoSavePopup extends State<VideoSavePopup> {
                   child: Text("나중에 확인할래요", style: TextStyle(color: AppTheme.colors.base3, fontSize: ScreenUtil().setSp(12)),),
                   onPressed: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => DefaultLayout()));
+                        builder: (context) => DefaultLayout(),
+                        settings: RouteSettings(name: 'home'),
+                      ));
                     },
                 )
             )

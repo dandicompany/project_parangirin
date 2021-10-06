@@ -59,11 +59,11 @@ class _MyPageState extends State<MyPage> {
                     // sample firebase logging
                     // fp.logScreenViewString('마이페이지', '자녀관리');
                     // FirebaseAnalyticsObserver()._sendScreenView();
-                    await fp.getFAnalytics().logEvent(name: 'Click', parameters: <String, String>{'button': '자녀관리'});
+                    // await fp.getFAnalytics().logEvent(name: 'Click', parameters: <String, String>{'button': '자녀관리'});
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ChildrenInfo(),
-                      settings: RouteSettings(name: 'my/자녀관리'),
-                    ));
+                        builder: (context) => ChildrenInfo(),
+                        settings: RouteSettings(name: 'my/childrenInfo'),
+                      ));
                   }),
               // ProfileMenu(
               //     text: "알림 설정",
@@ -75,7 +75,6 @@ class _MyPageState extends State<MyPage> {
               ProfileMenu(
                   text: "공지사항",
                   press: () {
-
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => Notice(),
                           settings: RouteSettings(name: 'my/notice'),
@@ -125,7 +124,7 @@ class _MyPageState extends State<MyPage> {
               ProfileMenu(
                   text: "로그아웃",
                   press: () async {
-                    await fp.getFAnalytics().logEvent(name: 'buttonClick', parameters: <String, String>{'button': 'logout'});
+                    await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'my/logout'});
                     fp.resetStaticInfoOnNextLoad();
                     fp.signOut();
                     // Navigator.of(context).pop();

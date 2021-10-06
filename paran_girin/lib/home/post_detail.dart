@@ -38,6 +38,7 @@ class _PostDetail extends State<PostDetail> {
   final String avatar;
   FirebaseProvider fp;
   bool playingVideo = false;
+  File profile;
   final contents =
       '''다른 친구들은 어떻게 대답했는지 확인해볼까요? 이 질문으로 대화하고 싶다면 아래 버튼을 눌러 파란기린과 대화해보세요!''';
 
@@ -73,6 +74,7 @@ class _PostDetail extends State<PostDetail> {
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
+    profile = profile = fp.getStaticInfo().post_profiles[fp.getStaticInfo().post_children[post.child].profileURL];
     // Post model에 Question 정보 없어도 되나?
     // Child.answers를 이용해서 이 질문에 대답했는지 안했는지 판단하기
     bool questionDone = fp.getStaticInfo().answers.containsKey(post.qid);
@@ -178,9 +180,9 @@ class _PostDetail extends State<PostDetail> {
               child: Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: (fp.getStaticInfo().profile == null)
+                    backgroundImage: (profile == null)
                         ? AssetImage("assets/images/thumbnail_baby.png")
-                        : FileImage(fp.getStaticInfo().profile),
+                        : FileImage(profile),
                     // FileImage(fp.getStaticInfo().profile),
                     radius: ScreenUtil().setWidth(16),
                   ),
@@ -190,7 +192,9 @@ class _PostDetail extends State<PostDetail> {
                       style: TextStyle(
                           fontSize: ScreenUtil().setSp(12),
                           fontWeight: FontWeight.w300,
-                          color: AppTheme.colors.base2)),
+                          // color: AppTheme.colors.base2
+                          color: Colors.black
+                          )),
                 ],
               ),
             ),

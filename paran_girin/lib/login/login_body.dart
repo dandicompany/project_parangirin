@@ -17,6 +17,7 @@ class LoginBody extends StatelessWidget {
       this.textPress,
       this.textCon,
       this.next,
+      this.emailChecker, 
       this.getInput = true})
       : super(key: key);
 
@@ -25,7 +26,7 @@ class LoginBody extends StatelessWidget {
   final bool getInput;
   final GestureTapCallback textPress;
   final TextEditingController textCon;
-  final Function next;
+  final Function next, emailChecker;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +90,7 @@ class LoginBody extends StatelessWidget {
                 height: ScreenUtil().setHeight(28),
               ),
               getInput
-                  ? (isEmail ? EmailForm(textCon, next) : PasswordForm(textCon, next, null, null))
+                  ? (isEmail ? EmailForm(textCon, this.emailChecker, next) : PasswordForm(textCon, next, null, null))
                   : SizedBox.shrink(),
               SizedBox(
                 width: double.infinity,
@@ -243,16 +244,18 @@ class LoginBody2 extends StatelessWidget {
 
 class EmailForm extends StatefulWidget {
   final TextEditingController textCon;
+  var emailChecker;
   var next;
-  EmailForm(this.textCon, this.next);
+  EmailForm(this.textCon, this.emailChecker, this.next);
   @override
-  _EmailFormState createState() => _EmailFormState(textCon, next);
+  _EmailFormState createState() => _EmailFormState(textCon, emailChecker, next);
 }
 
 class _EmailFormState extends State<EmailForm> {
   TextEditingController textCon;
   var next;
-  _EmailFormState(this.textCon, this.next);
+  var emailChecker;
+  _EmailFormState(this.textCon, this.emailChecker, this.next);
   Color iconColor;
 
   @override
@@ -266,8 +269,10 @@ class _EmailFormState extends State<EmailForm> {
           },
           validator: (text){
             print("validating email");
-            if (!EmailValidator.validate(text)){
-              var text = "잘못된 이메일 형식입니다.";
+            if (this.emailChecker != null){
+              var text = this.emailChecker();
+            // if (!EmailValidator.validate(textCon.text)){
+            //   var text = "잘못된 이메일 형식입니다.";
               logger.d(text);
               setState(() { 
                 this.iconColor = Colors.red; 

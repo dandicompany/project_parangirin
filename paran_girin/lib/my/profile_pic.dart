@@ -64,6 +64,9 @@ class _ProfilePic extends State<ProfilePic> {
   void takePhoto(ImageSource source) async {
     final pickedFile =
         await ImagePicker.pickImage(source: source, imageQuality: 5);
+    if (pickedFile == null){
+      return;
+    }
     fp.getUploadManager().uploadImage(pickedFile).then((value) {
       fp.getUserInfo().currentChild.profileURL = value;
       fp

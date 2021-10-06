@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -41,8 +42,13 @@ class _LoginPageState extends State<LoginPage> {
     print(_state);
     fp = Provider.of<FirebaseProvider>(context);
     if (fp.checkVerifiedUser()){
+      logger.d("pop here");
       Navigator.of(context).pop();
-      return SizedBox.shrink();
+      // Navigator.of(context).pushReplacement(MaterialPageRoute(
+      //   builder: (context) => DefaultLayout(),
+      // ));
+
+      return DefaultLayout();
     }
     _checkState();
     _textCon.clear();
@@ -137,24 +143,31 @@ class _LoginPageState extends State<LoginPage> {
     logger.d(_state);
     switch (_state) {
       case enum_state.CHECKACC:
-        return () {
+        return () async {
           _email = _textCon.text;
           print(_email);
           _checkAccount(_email);
+          if (_state == enum_state.SIGNUP) {
+            await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'register/verification'});
+          }
+          if (_state == enum_state.SIGNIN) {
+            await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'login/password'});
+          }
         };
       case enum_state.SIGNIN:
-        return () {
+        return () async {
           _pw = _textCon.text;
           _signIn(_email, _pw);
         };
       case enum_state.SIGNUP:
-        return () {
+        return () async {
           _pw = _textCon.text;
           _pw_check = _textCon2.text;
           logger.d("checking double password");
           logger.d(_pw_check);
           if (_formKey.currentState.validate()) {
             _signUp(_email, _pw);
+            await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'register/name'});
           }
         };
       case enum_state.VERI:
@@ -176,6 +189,18 @@ class _LoginPageState extends State<LoginPage> {
             actionText: "",
             loginInfo: "로그인 혹은 회원가입을 위해\n이메일을 입력해주세요",
             isEmail: true,
+            // emailChecker: (){
+            //   logger.d("email checker!!");
+            //   if (!EmailValidator.validate(_textCon.text)){
+            //     return "잘못된 이메일 형식입니다.";
+            //   } else {
+            //     return null;
+            //   }
+            // },
+            emailChecker: (){
+                logger.d("email checker!!");
+                return emailChecker(_textCon);
+              },
             textPress: () {},
             textCon: _textCon,
             next: onClick()
@@ -185,6 +210,8 @@ class _LoginPageState extends State<LoginPage> {
             title: "참 오랜만이에요!",
             description: "혹시 비밀번호를 잊으셨나요? ",
             actionText: "비밀번호 재설정하기",
+            // description: "",
+            // actionText: "",
             loginInfo: "이어서 비밀번호를 입력하고\n로그인을 완료하세요",
             isEmail: false,
             textPress: () {
@@ -217,10 +244,11 @@ class _LoginPageState extends State<LoginPage> {
               loginInfo: "가입을 위해\n새로운 비밀번호를 입력해주세요",
               loginInfo2: "확인을 위해\n한 번 더 비밀번호를 입력해주세요",
               textCon: _textCon,
-              textCon2: _textCon2, // 수정 필@
+              textCon2: _textCon2, 
               next: onClick(),
               formKey: _formKey,
               pwChecker: (){
+                logger.d("password checker!!");
                 return pwChecker(_textCon, _textCon2);
               },
               actionText: "다른 이메일로 가입하기",
@@ -282,6 +310,19 @@ class _LoginPageState extends State<LoginPage> {
     }
     logger.d("pw check passed");
     return null;
+  }
+
+  String emailChecker(textCon){
+    var email = textCon.text;
+    logger.d("checking email");
+    if (email.contains('@')) {
+      if (email.substring(email.length - 1) == '@'){
+        logger.d("email ended with @");
+        return "잘못된 이메일 형식입니다.";
+      }
+      return null;
+    }
+    return "잘못된 이메일 형식입니다.";
   }
 
   void change2CheckAcc() {

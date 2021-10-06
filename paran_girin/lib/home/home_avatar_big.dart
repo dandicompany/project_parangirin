@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paran_girin/Video/videoTest.dart';
@@ -37,7 +39,17 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
     DateTime now = DateTime.now();
-    String todayQid = (now.day % fp.getStaticInfo().questions.length).toString();
+    int nextLv = 0;
+    while (true){
+      if (fp.getUserInfo().currentChild.answers.containsKey(nextLv.toString())){
+        nextLv += 1;
+      } else {
+        break;
+      }
+    }
+    nextLv = min(nextLv,fp.getStaticInfo().questions.length -  1);
+
+    String todayQid = (nextLv% fp.getStaticInfo().questions.length).toString();
     logger.d("-----------------------&&&SOS 이곳은 HomeAvatarBig &&&---------------------------");
     logger.d(todayQid);
     todayDone = fp.getUserInfo().currentChild.answers.containsKey(todayQid);
@@ -201,7 +213,8 @@ class _HomeAvatarBigState extends State<HomeAvatarBig> {
                         text: "추천 질문으로 대화하기",
                         icon: "assets/icons/camera.svg",
                         isInvert: true,
-                        press: () {
+                        press: () async {
+                          await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'home/todayQuestion'});
                           // Navigator.of(context).push(MaterialPageRoute(
                           //     builder: (context) => Initialization(todayQid)));
                           Navigator.pushReplacement<void, void>(

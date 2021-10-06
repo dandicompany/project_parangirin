@@ -20,7 +20,9 @@ class _CategoryPageState extends State<CategoryPage> {
   Function constructOnTap(context, String category) {
     return () {
       Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => QuestionPage(categoryTitle: category)));
+          builder: (context) => QuestionPage(categoryTitle: category),
+          settings: RouteSettings(name: "questionCategory/$category"),
+        ));
     };
   }
 
@@ -70,6 +72,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       question: question.question ?? "질문없음",
                       storyText: question.story ?? "스토리없음",
                       guide: question.guide ?? "가이드없음",
+                      qid: question.qid.toString(),
                       available: available,
                     )));
           },
