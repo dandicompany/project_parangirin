@@ -83,8 +83,8 @@ class FirebaseProvider with ChangeNotifier {
     User user = fAuth.currentUser;
     if (user != null) {
       try {
-        // await user.reload();
-        // user = fAuth.currentUser;
+        await user.reload();
+        user = fAuth.currentUser;
         // logger.d("reloaded!");
         // logger.d(user);
         // setUser(user);
@@ -92,8 +92,13 @@ class FirebaseProvider with ChangeNotifier {
         setUser(user);
       } on Exception {
         logger.d("deleted user");
+        _user_loaded = false;
         setUser(null);
       }
+    } else {
+        logger.d("deleted user");
+        _user_loaded = false;
+        setUser(null);
     }
   }
 
@@ -149,11 +154,12 @@ class FirebaseProvider with ChangeNotifier {
     //   }
     // }
 
-    posts.forEach((element) async {
+    for (var element in posts) {
       Post post = Post.fromJson(element.data());
       _static.posts.add(post);
       logger.d("post added");
       Child child = Child.fromJson(await getFromFB("children", post.child));
+      logger.d("hiiiiii"); // 여기부터 log가 안 뜸... 
       _static.post_children[post.child] = child;
       logger.d("profileURL in child: ${child.profileURL}");
       logger.d("thumbURL in post: ${post.thumbURL}");
@@ -169,17 +175,16 @@ class FirebaseProvider with ChangeNotifier {
       assert (thumb != null);
       if (child.profileURL != null) {
         _static.post_profiles[child.profileURL] = null;
-        refProfile.writeToFile(profile).then((element) async {
-          if (element.state == TaskState.success) {
-            _static.post_profiles[child.profileURL] = await profile.create();
-            logger.d("${child.profileURL} profile loaded");
-            logger.d(element.bytesTransferred);
-            logger.d(await profile.length());
-            notifyListeners();
-          } else if (element.state == TaskState.error) {
-            logger.d("error while downloading profiles");
-          }
-        });
+        var elem = await refProfile.writeToFile(profile);
+        if (elem.state == TaskState.success) {
+          _static.post_profiles[child.profileURL] = await profile.create();
+          logger.d("${child.profileURL} profile loaded");
+          logger.d(elem.bytesTransferred);
+          logger.d(await profile.length());
+          // notifyListeners();
+        } else if (elem.state == TaskState.error) {
+          logger.d("error while downloading profiles");
+        }
       } else {
         logger.d("not profile url");
       }
@@ -187,21 +192,20 @@ class FirebaseProvider with ChangeNotifier {
       _static.post_thumbnails[post.thumbURL] = null;
       logger.d("trying to load thumbnail");
       logger.d("post thumb url: ${post.thumbURL}");
-      refThumb.writeToFile(thumb).then((element) async {
-        if (element.state == TaskState.success) {
-          _static.post_thumbnails[post.thumbURL] = await thumb.create();
-          logger.d("${post.thumbURL} thumbail loaded");
-          logger.d(element.bytesTransferred);
-          logger.d(await thumb.length());
-          notifyListeners();
-        } else if (element.state == TaskState.error) {
-          logger.d("error while downloading thumbnails");
-        } else {
-          logger.d("unexpected result in loading thumbnails");
-          logger.d(element.state);
-        }
-      });
-    });
+      var elem = await refThumb.writeToFile(thumb);
+      if (elem.state == TaskState.success) {
+        _static.post_thumbnails[post.thumbURL] = await thumb.create();
+        logger.d("${post.thumbURL} thumbail loaded");
+        logger.d(elem.bytesTransferred);
+        logger.d(await thumb.length());
+        // notifyListeners();
+      } else if (elem.state == TaskState.error) {
+        logger.d("error while downloading thumbnails");
+      } else {
+        logger.d("unexpected result in loading thumbnails");
+        logger.d(elem.state);
+      }
+    };
 
     snapshot = await firestore.collection('questions').get();
     List<QueryDocumentSnapshot> questions = snapshot.docs.toList();
@@ -282,15 +286,14 @@ class FirebaseProvider with ChangeNotifier {
     _static.answers.clear();
     for (var key in answers.keys) {
       var value = answers[key];
-      getFromFB("answers", value).then((value) {
-        Answer ans = Answer.fromJson(value);
-        print(ans);
-        if (ans == null) {
-          logger.d("no ans");
-        }
-        _static.answers[key] = ans;
-        notifyListeners();
-      });
+      var val = await getFromFB("answers", value);
+      Answer ans = Answer.fromJson(val);
+      print(ans);
+      if (ans == null) {
+        logger.d("no ans");
+      }
+      _static.answers[key] = ans;
+      // notifyListeners();
     }
     String profileURL = _info.currentChild.profileURL;
     _static.profile = null;
@@ -298,13 +301,10 @@ class FirebaseProvider with ChangeNotifier {
       Reference ref = firestorage.ref(profileURL);
       File file =
           File(join((await getTemporaryDirectory()).path, "profile.png"));
-      ref.writeToFile(file).then((value) {
-        if (value.state == TaskState.success) {
-          _static.profile = file;
-        }
-      }).catchError((error) {
-        logger.d(error);
-      });
+      var val = await ref.writeToFile(file);
+      if (val.state == TaskState.success) {
+        _static.profile = file;
+      }
     }
     _user_loaded = true;
     logger.d("finished");
@@ -388,6 +388,7 @@ class FirebaseProvider with ChangeNotifier {
   Future<Map<String, dynamic>> getFromFB(String colName, String docName) async {
     DocumentReference userRef = firestore.collection(colName).doc(docName);
     DocumentSnapshot snap = await userRef.get();
+
     if (snap.exists) {
       logger.d(snap.data());
       return snap.data();
@@ -399,21 +400,22 @@ class FirebaseProvider with ChangeNotifier {
   Future<bool> initializeUserState() async {
     // _user = fAuth.currentUser;
     if (_user == null) {
+      logger.d("user null in initializeUserState");
       return false;
     }
-    try {
-      logger.d("!initializing...");
-      await _user.reload();
-      _user = fAuth.currentUser;
-      logger.d("reloaded");
-      await loadInfoFromUser();
-      logger.d("initialized");
-      return false;
-    } on Exception {
-      logger.d("deleted user");
-      setUser(null);
-      return false;
-    }
+    // try {
+    logger.d("!initializing...");
+    await _user.reload();
+    _user = fAuth.currentUser;
+    logger.d("reloaded");
+    await loadInfoFromUser();
+    logger.d("initialized");
+    return false;
+    // } on Exception{
+    //   logger.d("deleted user");
+    //   setUser(null);
+    //   return false;
+    // }
   }
 
   bool checkVerifiedUser() {
@@ -427,6 +429,7 @@ class FirebaseProvider with ChangeNotifier {
       if (! confirmedProvider.contains(_user.providerData[0].providerId)){
         logger.d("provider mail not verified");
       }
+      logger.d("provider mail verified: ", confirmedProvider.contains(_user.providerData[0].providerId));
       return confirmedProvider.contains(_user.providerData[0].providerId) ||
           _user.emailVerified;
     }
@@ -533,7 +536,7 @@ class FirebaseProvider with ChangeNotifier {
   // Firebase로부터 로그아웃
   signOut() async {
     await fAuth.signOut();
-    setUser(null);
+    reloadUser();
   }
 
   // 사용자에게 비밀번호 재설정 메일을 영어로 전송 시도

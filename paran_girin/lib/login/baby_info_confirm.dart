@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:paran_girin/layout/default_button.dart';
 import 'package:paran_girin/layout/default_layout.dart';
+import 'package:paran_girin/login/auth_page.dart';
 import 'package:paran_girin/login/baby_info_name.dart';
 import 'package:paran_girin/myPageDetail/childrenInfo.dart';
 import 'package:paran_girin/theme/app_theme.dart';
@@ -97,11 +98,13 @@ class _BabyInfoConfirmState extends State<BabyInfoConfirm> {
                 onPressed: () async {
                   await fp.addChild(this.name, this.nickName, this.birthdate);
                   await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'register/complete'});
+                  await fp.reloadUser();
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => DefaultLayout(),
+                      builder: (context) => AuthPage(),
                       settings: RouteSettings(name: 'home'),
                     ));
+                  // Navigator.of(context).pop();
                 },
                 height: ScreenUtil().setHeight(65),
                 child: Text(

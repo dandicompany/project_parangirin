@@ -3,8 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:paran_girin/layout/default_button.dart';
+import 'package:paran_girin/login/auth_page.dart';
 import 'package:paran_girin/login/login_body.dart';
 import 'package:paran_girin/models/schema.dart';
+import 'package:paran_girin/onboarding/onboarding_screen.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,12 +45,9 @@ class _LoginPageState extends State<LoginPage> {
     fp = Provider.of<FirebaseProvider>(context);
     if (fp.checkVerifiedUser()){
       logger.d("pop here");
-      Navigator.of(context).pop();
-      // Navigator.of(context).pushReplacement(MaterialPageRoute(
-      //   builder: (context) => DefaultLayout(),
-      // ));
-
-      return DefaultLayout();
+      // return MaterialPage(child: null) MaterialPageRoute(
+      //   builder: (context) => DefaultLayout());
+      return SizedBox.shrink();
     }
     _checkState();
     _textCon.clear();
@@ -157,7 +156,10 @@ class _LoginPageState extends State<LoginPage> {
       case enum_state.SIGNIN:
         return () async {
           _pw = _textCon.text;
-          _signIn(_email, _pw);
+          var res = await _signIn(_email, _pw);
+          if (res) {
+            Navigator.of(context).pop();
+          }
         };
       case enum_state.SIGNUP:
         return () async {
@@ -175,6 +177,7 @@ class _LoginPageState extends State<LoginPage> {
         return () {
           logger.d("verification clicked");
           fp.reloadUser();
+          Navigator.of(context).pop();
         };
     }
   }
@@ -258,6 +261,9 @@ class _LoginPageState extends State<LoginPage> {
                 // Navigator.of(context)
                 //     .push(MaterialPageRoute(builder: (context) => LoginPage()));
                 fp.signOut();
+                setState(() {
+                  _state = enum_state.CHECKACC;
+                });
               },
             );
       case enum_state.VERI:
@@ -273,6 +279,9 @@ class _LoginPageState extends State<LoginPage> {
             // Navigator.of(context)
             //     .push(MaterialPageRoute(builder: (context) => LoginPage()));
             fp.signOut();
+            setState(() {
+              _state = enum_state.CHECKACC;
+            });
           },
           textCon: _textCon,
           getInput: false,
@@ -441,7 +450,7 @@ class _LoginPageState extends State<LoginPage> {
     } else {}
   }
 
-  void _signIn(String id, String pw) async {
+  Future<bool> _signIn(String id, String pw) async {
     _scaffoldKey.currentState
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(
@@ -460,6 +469,7 @@ class _LoginPageState extends State<LoginPage> {
       _textCon.clear();
       _textCon2.clear();
     }
+    return result;
   }
 
 
@@ -467,6 +477,7 @@ class _LoginPageState extends State<LoginPage> {
     return InkWell(
       onTap: () {
         fp.signInWithFacebookAccount();
+        Navigator.of(context).pop();
       },
       child: Image.asset(
         "assets/icons/facebook.png",
@@ -480,6 +491,7 @@ class _LoginPageState extends State<LoginPage> {
     return InkWell(
       onTap: () {
         fp.signInWithGoogleAccount();
+        Navigator.of(context).pop();
       },
       child: SvgPicture.asset(
         "assets/icons/google.svg",

@@ -26,6 +26,8 @@ var cameras;
 bool cameraview = true;
 String question;
 
+// var frontCamera;
+
 String formatTime(int milliseconds) {
   var secs = milliseconds ~/ 1000;
   var hours = (secs ~/ 3600).toString().padLeft(2, '0');
@@ -34,11 +36,13 @@ String formatTime(int milliseconds) {
   return "$hours:$minutes:$seconds";
 }
 
+// Future<void> videoFunc() async {
 Future<Widget> videoFunc() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
-  logger.d(cameras);
+  logger.d("cameras:", cameras);
   final frontCamera = cameras[1];
+  // frontCamera = await cameras[1];
   // final frontCamera = null;
 
   logger.d("!!!!!!!!!!!!!!!!!!!!!!!");
@@ -60,19 +64,19 @@ class InitializationState extends State<Initialization> {
     question = _question;
     logger.d("QID: $question");
     logger.d("여긴가");
-    return FutureBuilder(
-        future: videoFunc(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            logger.d("page loaded");
-            print(snapshot.data);
-            return snapshot.data;
-            // return Container(width: 0.0, height: 0.0);
-            // return SizedBox.shrink();
-          } else {
-            return SizedBox.shrink();
-          }
-        });
+    return Scaffold(
+      body: FutureBuilder(
+          future: videoFunc(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              logger.d("page loaded");
+              print(snapshot.data);
+              return snapshot.data;
+            } else {
+              return SizedBox.shrink();
+            }
+          }),
+    );
   }
 }
 

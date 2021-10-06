@@ -83,7 +83,7 @@ class _CalendarState extends State<Calendar> {
     logger.d(answers);
     _answers = fp.getStaticInfo().answers;
     meetings = 0;
-    for (var key in answers.keys) {
+    for (var key in _answers.keys) {
       Answer ans = _answers[key];
       if (ans == null) {
         return null;

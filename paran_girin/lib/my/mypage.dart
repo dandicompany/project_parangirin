@@ -14,6 +14,7 @@ import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/myPageDetail/pushAlarm.dart';
+import 'package:paran_girin/login/auth_page.dart';
 
 class MyPage extends StatefulWidget {
   @override
@@ -127,7 +128,6 @@ class _MyPageState extends State<MyPage> {
                     await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'my/logout'});
                     fp.resetStaticInfoOnNextLoad();
                     fp.signOut();
-                    // Navigator.of(context).pop();
                   }),
               SizedBox(height: ScreenUtil().setHeight(16)),
               // version information
