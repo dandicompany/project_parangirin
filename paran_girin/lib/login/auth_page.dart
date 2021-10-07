@@ -42,8 +42,8 @@ class AuthPageState extends State<AuthPage> {
         logger.d("user: ${fp.getUser()}");
         logger.d(fp.getUserInfo().id);
         logger.d(fp.getUser().uid);
-        // if (fp.getUserInfo().userInDB.children.length == 0) {
-        if (fp.getUserInfo().userInDB.children == null) {
+        if (fp.getUserInfo().userInDB.children.length == 0) {
+        // if (fp.getUserInfo().userInDB.children == null) {
           // Navigator.of(context).pop(); // 에러남
           // () {Navigator.pushReplacement<void, void>(
           //   context,MaterialPageRoute<void>(

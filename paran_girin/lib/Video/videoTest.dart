@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:paran_girin/gallery/videoShowFromCamera.dart';
@@ -64,8 +65,9 @@ class InitializationState extends State<Initialization> {
     question = _question;
     logger.d("QID: $question");
     logger.d("여긴가");
-    return Scaffold(
-      body: FutureBuilder(
+    return 
+    // Scaffold(body: 
+    FutureBuilder(
           future: videoFunc(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
@@ -75,7 +77,8 @@ class InitializationState extends State<Initialization> {
             } else {
               return SizedBox.shrink();
             }
-          }),
+          }
+          // ),
     );
   }
 }
@@ -197,6 +200,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   void saveVideo() async {
     fp.addAnswer(question, filePath);
+    // DocumentReference ansRef = fp.addAnswer(question, filePath) as DocumentReference;
+    // // DocumentReference ansRef = await firestore.collection('answers').doc(element.reference.id);
+    // String dbPath = await fp.getUploadManager().uploadVideo(filePath);
+    //   // String thumbnail = await fp.getUploadManager().upload
+    //   String thumbURL =
+    //       await fp.getUploadManager().uploadImage(answer.thumbnail);
     fp.reloadUser();
   }
 
@@ -314,7 +323,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                       filePath = join(
                                           (await getApplicationDocumentsDirectory())
                                               .path,
-                                          '${DateTime.now().millisecondsSinceEpoch}.mp4');
+                                          // '${DateTime.now().millisecondsSinceEpoch}.mp4');
+                                          '${fp.getUserInfo().id}_${fp.getStaticInfo().questions[question].qid}.mp4');
                                       logger.d(filePath);
                                       setState(() {
                                         girin_state = true;

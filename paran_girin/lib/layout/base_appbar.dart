@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:paran_girin/home/sharing_my_answers.dart';
+// import 'package:paran_girin/home/sharing_my_answers.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 
 
@@ -10,7 +10,7 @@ class BaseAppBar extends StatefulWidget implements PreferredSizeWidget {
       this.title,
       this.showSend = false,
       this.isSend = false,
-      this.onSend = null})
+      this.onSend})
       : super(key: key);
 
   final String title;

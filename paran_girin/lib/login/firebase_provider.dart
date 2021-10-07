@@ -159,7 +159,6 @@ class FirebaseProvider with ChangeNotifier {
       _static.posts.add(post);
       logger.d("post added");
       Child child = Child.fromJson(await getFromFB("children", post.child));
-      logger.d("hiiiiii"); // 여기부터 log가 안 뜸... 
       _static.post_children[post.child] = child;
       logger.d("profileURL in child: ${child.profileURL}");
       logger.d("thumbURL in post: ${post.thumbURL}");
@@ -339,6 +338,14 @@ class FirebaseProvider with ChangeNotifier {
   Future<void> addAnswer(String question, String path) async {
     logger.d("adding answer");
     Answer answer = Answer(DateTime.now().millisecondsSinceEpoch, path, false);
+    String dbURL = await getUploadManager().uploadVideo(answer.videoURL);
+      // String thumbnail = await fp.getUploadManager().upload
+    String thumbURL =
+        await getUploadManager().uploadImage(answer.thumbnail);
+    logger.d("dbURL", dbURL);
+    logger.d("thumbURL", thumbURL);
+    answer.dbURL = dbURL;
+    answer.thumbURL = thumbURL;
     DocumentReference ansRef =
         await firestore.collection('answers').add(answer.toJson());
     _info.currentChild.answers[question] = ansRef.id;
@@ -346,6 +353,8 @@ class FirebaseProvider with ChangeNotifier {
         firestore.collection('children').doc(_info.userInDB.currentChild);
     childRef.set(_info.currentChild.toJson());
     logger.d("answer added");
+    
+    // return ansRef;
   }
 
   Future<void> deleteAnswer(String question, String path) async {

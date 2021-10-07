@@ -11,6 +11,7 @@ class StaticInfo {
   Map<String, File> post_profiles = Map<String, File>();
   Map<String, Answer> answers = Map<String, Answer>();
   File profile;
+  String profileURL;
 }
 
 class UserModel {
@@ -55,7 +56,7 @@ class Child {
         this.profileURL = json['profileURL'],
         this.birthday = json['birthday'],
         this.avatar = json['avatar'] ?? 'nod.gif',
-        this.background = json['background'] ?? 'background-7.jpg',
+        this.background = json['background'] ?? 'lv2.jpg',
         this.answers = (json['answers'] == null)
             ? Map<String, String>()
             : json['answers'].cast<String, String>();
@@ -133,15 +134,19 @@ class Question {
 class Answer {
   int date;
   String videoURL;
+  String dbURL;
+  String thumbURL;
   File thumbnail;
   bool posted;
   Answer(this.date, this.videoURL, this.posted);
   Answer.fromJson(Map<String, dynamic> json)
       : this.date = json['date'],
         this.videoURL = json['videoURL'],
+        this.dbURL = json['dbURL'],
+        this.thumbURL = json['thumbURL'],
         this.posted = json['posted'];
   Map<String, dynamic> toJson() =>
-      {'date': date, 'videoURL': videoURL, 'posted': posted};
+      {'date': date, 'videoURL': videoURL, 'dbURL': dbURL, 'thumbURL': thumbURL, 'posted': posted};
 
   bool containsKeyWord(String key) {
     Map<String, dynamic> json = this.toJson();

@@ -37,10 +37,10 @@ class PostCard extends StatelessWidget {
       thumb = info.post_thumbnails[basename(post.thumbURL)];
     }
     if ((child != null)) {
-      background = "assets/background/lv2.jpg";
-      avatar = "assets/avatars/speaking.gif";
-      // background = "assets/background/${child.background}";
-      // avatar = "assets/avatars/${child.avatar}";
+      // background = "assets/background/lv2.jpg";
+      // avatar = "assets/avatars/speaking.gif";
+      background = "assets/background/${child.background}";
+      avatar = "assets/avatars/${child.avatar}";
     } else {
       logger.d("child null");
       if (profile == null) {
