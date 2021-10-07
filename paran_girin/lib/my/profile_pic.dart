@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,9 +27,13 @@ class _ProfilePic extends State<ProfilePic> {
     fp = Provider.of<FirebaseProvider>(context);
     galleryFile = fp.getStaticInfo().profile;
     String profile = fp.getUserInfo().currentChild.profileURL;
+    String currentChildId = fp.getUserInfo().userInDB.currentChild;
     // File profile = fp.getStaticInfo().profile[profileURL];
-    logger.d(profile);
+    // logger.d(profile);
+    // if (fp.getStaticInfo().profileURL == null) {
+    //   logger.d(profile);
     getPhoto(profile);
+    // }
 
     return SizedBox(
         width: ScreenUtil().setWidth(120),
@@ -41,7 +46,10 @@ class _ProfilePic extends State<ProfilePic> {
               borderRadius: BorderRadius.circular(100),
               child: fp.getStaticInfo().profileURL == null
                     ? Image.asset("assets/images/default_profile.png")
-                    :Image.network(fp.getStaticInfo().profileURL),
+                    :Image.network(
+                      fp.getStaticInfo().profileURL,
+                      fit: BoxFit.cover,
+                      ),
             ),
             // CircleAvatar(
             //     // backgroundImage: profile == null
@@ -65,7 +73,7 @@ class _ProfilePic extends State<ProfilePic> {
                     color: Colors.white,
                     onPressed: () {
                       // takePhoto(ImageSource.gallery);
-                      pickPhoto(ImageSource.gallery);
+                      pickPhoto(ImageSource.gallery, currentChildId);
                     },
                     child: SvgPicture.asset(
                       "assets/icons/camera.svg",
@@ -99,14 +107,13 @@ class _ProfilePic extends State<ProfilePic> {
   }
 
   // 2021.10.07 Jiyun
-  void pickPhoto(ImageSource source) async {
-    String downloadURL;
+  void pickPhoto(ImageSource source, String currentChildId) async {
     final pickedFile = await ImagePicker().getImage(source: source, imageQuality: 5);
     if (pickedFile == null){
       return;
     }
 
-    String profileURL = '${DateTime.now().millisecondsSinceEpoch}.png';
+    String profileURL = '$currentChildId.png';
     try {
       final firebaseStorageRef = FirebaseStorage.instance
                                   .ref()
@@ -118,31 +125,31 @@ class _ProfilePic extends State<ProfilePic> {
 
       await uploadTask.whenComplete(() => null);
 
-      
-      downloadURL = await firebaseStorageRef.getDownloadURL();
-
       logger.d(pickedFile.path);
-      fp.getUserInfo().currentChild.profileURL = profileURL;
       // fp.getUserInfo().currentChild.profileURL = downloadURL;
       // fp.getUserInfo().currentChild.profileURL = pickedFile.path;
       // fp.getUserInfo().currentChild.profileURL = "hey";
       Fluttertoast.showToast(
         msg: "프로필 사진이 성공적으로 업로드되었습니다.",
         toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.black,
         textColor: Colors.white,
-        fontSize: 16.0
+        fontSize: 14.0
       );
 
     } catch (e) {
       logger.d(e);
     }
     setState(() {
-      // fp.getStaticInfo().profile = Image.network(downloadURL);
-      // fp.getStaticInfo().profile = File(downloadURL);
-      // fp.getStaticInfo().profile = File(pickedFile.path);
+      logger.d(profileURL);
+      FirebaseFirestore.instance.collection('children')
+                                // .doc(fp.getUserInfo().userInDB.currentChild)
+                                .doc(currentChildId)
+                                .update({'profileURL': profileURL});
+      
+      fp.getUserInfo().currentChild.profileURL = profileURL;
     });
   }
 
