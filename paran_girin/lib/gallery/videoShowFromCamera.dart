@@ -183,7 +183,7 @@ class _VideoShowFromCameraState extends State<VideoShowFromCamera> {
 
     if (filePath.isNotEmpty) {
       await Share.shareFiles(filePath,
-          text: "${fp.getUserInfo().currentChild.nickName}이가 파란기린의 ${question.title} 질문에 대해 이렇게 대답했어요.\n파란기린 앱 링크",
+          text: "${fp.getUserInfo().currentChild.nickName}어린이가 파란기린의 '${question.title}' 질문에 대해 이렇게 대답했어요.\n\n파란기린이 궁금하다면?\nhttps://www.instagram.com/parangirin_official/\n",
           subject: dateFormat.format(DateTime.fromMillisecondsSinceEpoch(widget.answer.date)),
           sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
     } else {

@@ -338,6 +338,14 @@ class FirebaseProvider with ChangeNotifier {
         await firestore.collection('posts').add(post.toJson());
   }
 
+  Future<void> addBbom(String qid, String path) async {
+    logger.d("adding post");
+    Post post = Post(DateTime.now().millisecondsSinceEpoch, qid, title,
+        _info.userInDB.currentChild, path, null, null);
+    DocumentReference postRef =
+        await firestore.collection('bbom').add(post.toJson());
+  }
+
   Future<void> addAnswer(String question, String path) async {
     logger.d("adding answer");
     Answer answer = Answer(DateTime.now().millisecondsSinceEpoch, path, false);
@@ -363,26 +371,37 @@ class FirebaseProvider with ChangeNotifier {
 
 
     MediaInfo mediaInfo = await VideoCompress.compressVideo(path,
-        quality: VideoQuality.LowQuality,
+        quality: VideoQuality.MediumQuality,
         deleteOrigin: false, // It's false by default
         frameRate: 25);
     logger.d(mediaInfo.filesize);
-    
+
+    file = File(mediaInfo.path);
 
     String dbURL = "${DateTime.now().millisecondsSinceEpoch}.mp4";
-    String thumbURL = "${DateTime.now().millisecondsSinceEpoch}.png";
+    // String thumbURL = "${DateTime.now().millisecondsSinceEpoch}.png";
+
+    // final thumb = await VideoThumbnail.thumbnailFile(
+    //   video: answer.videoURL,
+    //   thumbnailPath: thumbURL,
+    //   imageFormat: ImageFormat.PNG,
+    //   maxHeight: 100, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+    //   quality: 100,
+    // );
+    
 
     Reference videoRef = FirebaseStorage.instance.ref().child("answers").child(_info.userInDB.currentChild).child(dbURL);
-    final videoUploadTask = videoRef.putFile(File(path), SettableMetadata(contentType: 'video/mp4'));
+    // final videoUploadTask = videoRef.putFile(File(path), SettableMetadata(contentType: 'video/mp4'));
+    final videoUploadTask = videoRef.putFile(File(mediaInfo.path), SettableMetadata(contentType: 'video/mp4'));
     
-    Reference thumRef = FirebaseStorage.instance.ref().child("answers").child(_info.userInDB.currentChild).child(thumbURL);
-    // final thumbUploadTask = thumRef.putFile(?, SettableMetadata(contentType: 'image/png'));
+    // Reference thumRef = FirebaseStorage.instance.ref().child("answers").child(_info.userInDB.currentChild).child(thumbURL);
+    // final thumbUploadTask = thumRef.putFile(File(thumb), SettableMetadata(contentType: 'image/png'));
     
     await videoUploadTask.whenComplete(() => null);
     // await thumbUploadTask.whenComplete(() => null);
 
     Fluttertoast.showToast(
-        msg: "영상이 성공적으로 업로드되었습니다.",
+        msg: "영상이 성공적으로 저장되었습니다.",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
@@ -395,8 +414,11 @@ class FirebaseProvider with ChangeNotifier {
     // answer.thumbURL = thumbURL;
        
     firestore.collection('answers').doc(ansRef.id)
-              .update({'dbURL': dbURL, 'thumbURL': thumbURL});
+              .update({'dbURL': dbURL});
+              // .update({'dbURL': dbURL, 'thumbURL': thumbURL});
     
+    logger.d("finish to upload video");
+
     // return ansRef;
   }
 

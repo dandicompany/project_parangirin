@@ -76,20 +76,15 @@ class _BabyInfoNicknameState extends State<BabyInfoNickname> {
                   keyboardType: TextInputType.name,
                   style: TextStyle(fontSize: ScreenUtil().setSp(18)),
                   // obscureText: true, // for password
-                  onChanged: (nextText){
-                    setState(() {
-                      // if(_nickCon.text.trim() != ""){
-                      //   isSelected = true;
-                      // }else{
-                      //   isSelected = false;
-                      // }
-                      _nickCon.text = nextText.substring(0,6);
-                      _nickCon.selection = TextSelection.fromPosition(TextPosition(offset: 6));
-                    });
-                    },
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(6)
-                  ],
+                  // onChanged: (nextText){
+                  //   setState(() {
+                  //     _nickCon.text = nextText.substring(0,6);
+                  //     _nickCon.selection = TextSelection.fromPosition(TextPosition(offset: 6));
+                  //   });
+                  //   },
+                  // inputFormatters: [
+                  //   LengthLimitingTextInputFormatter(6)
+                  // ],
                 ),
               ],
             ),

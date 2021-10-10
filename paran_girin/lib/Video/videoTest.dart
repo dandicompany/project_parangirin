@@ -323,8 +323,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                       filePath = join(
                                           (await getApplicationDocumentsDirectory())
                                               .path,
-                                          // '${DateTime.now().millisecondsSinceEpoch}.mp4');
-                                          '${fp.getUserInfo().id}_${fp.getStaticInfo().questions[question].qid}.mp4');
+                                          '${DateTime.now().millisecondsSinceEpoch}.mp4');
+                                          // '${fp.getUserInfo().id}_${fp.getStaticInfo().questions[question].qid}.mp4');
                                       logger.d(filePath);
                                       setState(() {
                                         girin_state = true;

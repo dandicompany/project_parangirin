@@ -39,6 +39,8 @@ class _NoticeState extends State<Notice> {
                       List<NoticeItem> noticeItems = List<NoticeItem>();
                       notices.forEach((element) {
                         noticeItems.add(NoticeItem.fromJson(element.data()));
+                        logger.d("notice component");
+                        logger.d(NoticeItem.fromJson(element.data()));
                       });
                       noticeItems.sort((a, b) => a.date.compareTo(b.date));
                       return ListView.builder(

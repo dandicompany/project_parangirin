@@ -135,7 +135,7 @@ class Answer {
   int date;
   String videoURL;
   String dbURL;
-  String thumbURL;
+  // String thumbURL;
   File thumbnail;
   bool posted;
   Answer(this.date, this.videoURL, this.posted);
@@ -143,10 +143,11 @@ class Answer {
       : this.date = json['date'],
         this.videoURL = json['videoURL'],
         this.dbURL = json['dbURL'],
-        this.thumbURL = json['thumbURL'],
+        // this.thumbURL = json['thumbURL'],
         this.posted = json['posted'];
   Map<String, dynamic> toJson() =>
-      {'date': date, 'videoURL': videoURL, 'dbURL': dbURL, 'thumbURL': thumbURL, 'posted': posted};
+      {'date': date, 'videoURL': videoURL, 'dbURL': dbURL, 'posted': posted};
+      // {'date': date, 'videoURL': videoURL, 'dbURL': dbURL, 'thumbURL': thumbURL, 'posted': posted};
 
   bool containsKeyWord(String key) {
     Map<String, dynamic> json = this.toJson();

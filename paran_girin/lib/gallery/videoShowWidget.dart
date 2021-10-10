@@ -158,7 +158,7 @@ class _VideoShowWidgetState extends State<VideoShowWidget> {
           text: "${fp
               .getUserInfo()
               .currentChild
-              .nickName}이가 파란기린의 ${widget.question
+              .nickName} 어린이가 파란기린의 ${widget.question
               .title} 질문에 대해 이렇게 대답했어요.\n파란기린 앱 링크",
           subject: dateFormat.format(
               DateTime.fromMillisecondsSinceEpoch(widget.answer.date)),

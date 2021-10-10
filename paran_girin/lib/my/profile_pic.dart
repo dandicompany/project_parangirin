@@ -29,6 +29,7 @@ class _ProfilePic extends State<ProfilePic> {
     String profile = fp.getUserInfo().currentChild.profileURL;
     String currentChildId = fp.getUserInfo().userInDB.currentChild;
     getPhoto(profile);
+    logger.d(fp.getStaticInfo().profileURL);
     
 
     return SizedBox(
@@ -143,13 +144,30 @@ class _ProfilePic extends State<ProfilePic> {
     });
   }
 
+  // initState() {
+  //   // 부모의 initState호출
+  //   super.initState();
+  //   // 이 클래스애 리스너 추가
+  //   fp = Provider.of<FirebaseProvider>(context);
+  //   String profile = fp.getUserInfo().currentChild.profileURL;
+
+  //   getPhoto(profile);
+  // }
+
   void getPhoto(String profileURL) async {
-    final firebaseStorageRef = FirebaseStorage.instance
+    logger.d("get profile");
+    String downloadURL;
+
+    if (profileURL == null) {
+      downloadURL = null;
+    }
+    else {
+      final firebaseStorageRef = FirebaseStorage.instance
                                   .ref()
                                   .child('profile')
                                   .child(profileURL);
-    
-    final downloadURL = await firebaseStorageRef.getDownloadURL();
+      downloadURL = await firebaseStorageRef.getDownloadURL();
+    }
 
     setState(() {
       fp.getStaticInfo().profileURL = downloadURL;
