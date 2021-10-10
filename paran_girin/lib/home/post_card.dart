@@ -27,8 +27,8 @@ class PostCard extends StatelessWidget {
     fp = Provider.of<FirebaseProvider>(context);
     StaticInfo info = fp.getStaticInfo();
     child = info.post_children[post.child];
-    logger.d(child);
-    logger.d(child.profileURL);
+    // logger.d(child);
+    // logger.d(child.profileURL);
     profile = info.post_profiles[child.profileURL];
     if (post.thumbURL == null){
       logger.d("post.thumbURL is null");

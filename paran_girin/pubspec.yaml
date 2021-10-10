@@ -67,6 +67,8 @@ dependencies:
   circular_check_box:
   firebase_analytics: ^7.0.0
   email_validator: ^1.0.6
+  url_launcher: 
+  open_url:
 
 dev_dependencies:
   flutter_test:

@@ -206,14 +206,16 @@ class NoticeItem {
   String id;
   String title;
   String content;
-  NoticeItem(this.date, this.id, this.title, this.content);
+  bool hasURL;
+  NoticeItem(this.date, this.id, this.title, this.content, this.hasURL);
   NoticeItem.fromJson(Map<String, dynamic> json)
       : this.date = json['date'],
         this.id = json['id'],
         this.title = json['title'],
-        this.content = json['content'];
+        this.content = json['content'],
+        this.hasURL = json['hasURL'];
   Map<String, dynamic> toJson() =>
-      {'date': date, 'id': id, 'title': title, 'content': content};
+      {'date': date, 'id': id, 'title': title, 'content': content, 'hasURL': hasURL};
 }
 
 class FaqItem {
