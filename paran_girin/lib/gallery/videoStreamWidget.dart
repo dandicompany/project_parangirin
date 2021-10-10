@@ -33,31 +33,52 @@ class VideoStreamWidget extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: ScreenUtil().setHeight(70),
-              left: ScreenUtil().setWidth(28),
+              top: ScreenUtil().setHeight(44),
+              left: ScreenUtil().setWidth(16),
             ),
             child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(
+                Column(crossAxisAlignment: CrossAxisAlignment.start, 
                 children: [
-                  Text(
-                    // '계란을 우주로 보낸다면?',
-                    question.title,
-                    style: TextStyle(
-                        fontSize: ScreenUtil().setSp(24),
-                        color: AppTheme.colors.base1),
+                  Container(
+                  // top: ScreenUtil().setHeight(44),
+                  // left: ScreenUtil().setWidth(16),
+                  child: Navigator.of(context).canPop()
+                      ? IconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          color: AppTheme.colors.base1,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        iconSize: ScreenUtil().radius(20),
+                      )
+                    : null,
                   ),
-                ],
-              ),
-              // Text(DateTime.fromMillisecondsSinceEpoch(post.date).toString(),
-              //     style: new TextStyle(
-              //         fontSize: ScreenUtil().setSp(12),
-              //         color: AppTheme.colors.base3)),
-              SizedBox(height: ScreenUtil().setHeight(20)),
-              Text(question.tag,
-                  style: new TextStyle(
-                      fontSize: ScreenUtil().setSp(14),
-                      color: AppTheme.colors.primary2)),
+              Padding(
+                padding: EdgeInsets.only(left: ScreenUtil().setWidth(12)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      // '계란을 우주로 보낸다면?',
+                      question.title,
+                      style: TextStyle(
+                          fontSize: ScreenUtil().setSp(24),
+                          color: AppTheme.colors.base1),
+                    ),
+                    SizedBox(width: double.infinity,
+                      height: ScreenUtil().setHeight(20)),
+                    Text(question.tag,
+                      style: new TextStyle(
+                        fontSize: ScreenUtil().setSp(14),
+                        color: AppTheme.colors.primary2
+                      )
+                    ),
+                  ],
+                ),
+                
+              )
             ]),
           ),
           Padding(

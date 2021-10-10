@@ -367,7 +367,7 @@ class _PasswordFormState extends State<PasswordForm> {
           onFieldSubmitted: (term){
             next();},
           validator: (text){
-            print("validating password");
+            logger.d("validating password", this.pwChecker);
             if (this.pwChecker != null){
               var text = this.pwChecker();
               logger.d(text);

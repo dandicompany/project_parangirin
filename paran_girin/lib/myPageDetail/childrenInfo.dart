@@ -120,6 +120,7 @@ class _ChildrenInfoState extends State<ChildrenInfo> {
                   isInvert: false,
                   press: () async {
                     await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'my/childrenInfo/addChild'});
+                    Navigator.of(context).pop();
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => BabyInfoName()));
                   }),

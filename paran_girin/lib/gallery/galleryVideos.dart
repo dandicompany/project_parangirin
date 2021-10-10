@@ -8,6 +8,7 @@ import 'package:paran_girin/gallery/myVideoLayout.dart';
 import 'package:paran_girin/gallery/videoShowFromCamera.dart';
 import 'package:paran_girin/gallery/videoShowWidget.dart';
 import 'package:paran_girin/layout/default_icon_button.dart';
+import 'package:paran_girin/question/qestion_post.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/layout/flatbuttonShadow.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
@@ -52,6 +53,7 @@ class _CalenderState extends State<GalleryVideo> {
   Widget build(BuildContext context) {
     // TODO: implement build
     fp = Provider.of<FirebaseProvider>(context);
+    Question noVideoQuestion = fp.getStaticInfo().questions[0];
     bodyNum = 0;
     natureNum = 0;
     artNum = 0;
@@ -216,7 +218,7 @@ class _CalenderState extends State<GalleryVideo> {
                   ),
                 ],
               ),
-              sum == 0 ? NoVideo() : YesVideo(selectedCategory),
+              sum == 0 ? NoVideo(noVideoQuestion) : YesVideo(selectedCategory),
             ],
           ),
         ),
@@ -226,6 +228,9 @@ class _CalenderState extends State<GalleryVideo> {
 }
 
 class NoVideo extends StatelessWidget {
+  Question q;
+  NoVideo(this.q);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -254,8 +259,21 @@ class NoVideo extends StatelessWidget {
               text: " 파란기린과 대화하기 ",
               isInvert: false,
               press: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomeAvatarBig()));
+                // Navigator.of(context).pushReplacement(
+                //     MaterialPageRoute(builder: (context) => HomeAvatarBig()));
+                // 아 놔 이거 왜 에러 남.....
+                Navigator.pushReplacement<void, void>(
+                        context,MaterialPageRoute<void>(
+                          builder: (BuildContext context) => QuestionPost(
+                              tag: (this.q.tag != null) ? q.tag : "태그 없음",
+                              categoryTitle: this.q.category ?? "카테고리 없음",
+                              image: "assets/images/category_nature.png",
+                              qTitle: this.q.title ?? "제목 없음",
+                              question: this.q.question ?? "질문 없음",
+                              storyText: this.q.story ?? "스토리 없음",
+                              guide: this.q.guide ?? "가이드 없음",
+                              qid: this.q.qid.toString(),
+                              available: true,)));
               })
         ],
       ),

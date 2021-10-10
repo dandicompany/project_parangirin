@@ -123,7 +123,7 @@ class UploadManager {
     logger.d(file.length());
     final String savedDir = dirname(file.path);
     final String filename = basename(file.path);
-    final tag = "video upload ${_tasks.length + 1} size: ${file.path}";
+    final tag = "image upload ${_tasks.length + 1} size: ${file.path}";
     final url = _uploadUrl(binary: false, name: filename);
 
     var fileItem = FileItem(
@@ -131,6 +131,8 @@ class UploadManager {
       savedDir: savedDir,
       fieldname: "file",
     );
+
+    logger.d(filename);
 
     var taskId = await uploader.enqueue(
       url: url,
@@ -156,7 +158,7 @@ class UploadManager {
         deleteOrigin: false, // It's false by default
         frameRate: 25);
     // File thumbnail = await VideoCompress.getFileThumbnail(video.path);
-
+    logger.d("hey");
     logger.d(mediaInfo.filesize);
     final String savedDir = dirname(mediaInfo.path);
     final String filename = basename(mediaInfo.path);
