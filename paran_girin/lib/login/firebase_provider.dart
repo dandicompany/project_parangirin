@@ -2,6 +2,8 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +15,7 @@ import 'dart:convert';
 import 'package:paran_girin/gallery/video_uploader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
+import 'package:video_compress/video_compress.dart';
 import 'dart:io';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:path/path.dart';
@@ -338,14 +341,13 @@ class FirebaseProvider with ChangeNotifier {
   Future<void> addAnswer(String question, String path) async {
     logger.d("adding answer");
     Answer answer = Answer(DateTime.now().millisecondsSinceEpoch, path, false);
-    String dbURL = await getUploadManager().uploadVideo(answer.videoURL);
-      // String thumbnail = await fp.getUploadManager().upload
-    String thumbURL =
-        await getUploadManager().uploadImage(answer.thumbnail);
-    logger.d("dbURL", dbURL);
-    logger.d("thumbURL", thumbURL);
-    answer.dbURL = dbURL;
-    answer.thumbURL = thumbURL;
+    // String dbURL = await getUploadManager().uploadVideo(answer.videoURL);
+    //   // String thumbnail = await fp.getUploadManager().upload
+    // String thumbURL =
+    //     await getUploadManager().uploadImage(answer.thumbnail);
+    // logger.d("dbURL", dbURL);
+    // logger.d("thumbURL", thumbURL);
+
     DocumentReference ansRef =
         await firestore.collection('answers').add(answer.toJson());
     _info.currentChild.answers[question] = ansRef.id;
@@ -353,6 +355,47 @@ class FirebaseProvider with ChangeNotifier {
         firestore.collection('children').doc(_info.userInDB.currentChild);
     childRef.set(_info.currentChild.toJson());
     logger.d("answer added");
+
+    logger.d("uploading video");
+
+    File file = File(path);
+    logger.d(file.lengthSync());
+
+
+    MediaInfo mediaInfo = await VideoCompress.compressVideo(path,
+        quality: VideoQuality.LowQuality,
+        deleteOrigin: false, // It's false by default
+        frameRate: 25);
+    logger.d(mediaInfo.filesize);
+    
+
+    String dbURL = "${DateTime.now().millisecondsSinceEpoch}.mp4";
+    String thumbURL = "${DateTime.now().millisecondsSinceEpoch}.png";
+
+    Reference videoRef = FirebaseStorage.instance.ref().child("answers").child(_info.userInDB.currentChild).child(dbURL);
+    final videoUploadTask = videoRef.putFile(File(path), SettableMetadata(contentType: 'video/mp4'));
+    
+    Reference thumRef = FirebaseStorage.instance.ref().child("answers").child(_info.userInDB.currentChild).child(thumbURL);
+    // final thumbUploadTask = thumRef.putFile(?, SettableMetadata(contentType: 'image/png'));
+    
+    await videoUploadTask.whenComplete(() => null);
+    // await thumbUploadTask.whenComplete(() => null);
+
+    Fluttertoast.showToast(
+        msg: "영상이 성공적으로 업로드되었습니다.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 14.0
+      );
+
+    // answer.dbURL = dbURL;
+    // answer.thumbURL = thumbURL;
+       
+    firestore.collection('answers').doc(ansRef.id)
+              .update({'dbURL': dbURL, 'thumbURL': thumbURL});
     
     // return ansRef;
   }

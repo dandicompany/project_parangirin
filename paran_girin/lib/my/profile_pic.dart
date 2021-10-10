@@ -20,20 +20,16 @@ class ProfilePic extends StatefulWidget {
 }
 
 class _ProfilePic extends State<ProfilePic> {
-  File galleryFile;
+  // File galleryFile;
   FirebaseProvider fp;
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
-    galleryFile = fp.getStaticInfo().profile;
+    // galleryFile = fp.getStaticInfo().profile;
     String profile = fp.getUserInfo().currentChild.profileURL;
     String currentChildId = fp.getUserInfo().userInDB.currentChild;
-    // File profile = fp.getStaticInfo().profile[profileURL];
-    // logger.d(profile);
-    // if (fp.getStaticInfo().profileURL == null) {
-    //   logger.d(profile);
     getPhoto(profile);
-    // }
+    
 
     return SizedBox(
         width: ScreenUtil().setWidth(120),
@@ -86,10 +82,8 @@ class _ProfilePic extends State<ProfilePic> {
   }
 
   void takePhoto(ImageSource source) async {
-    final pickerFile = await ImagePicker().getImage(source: source, imageQuality: 5);
-    final pickedFile = File(pickerFile.path);
-    // final pickedFile =
-    //     await ImagePicker.pickImage(source: source, imageQuality: 5);
+    final pickedFile =
+        await ImagePicker.pickImage(source: source, imageQuality: 5);
     if (pickedFile == null){
       return;
     }
@@ -125,10 +119,6 @@ class _ProfilePic extends State<ProfilePic> {
 
       await uploadTask.whenComplete(() => null);
 
-      logger.d(pickedFile.path);
-      // fp.getUserInfo().currentChild.profileURL = downloadURL;
-      // fp.getUserInfo().currentChild.profileURL = pickedFile.path;
-      // fp.getUserInfo().currentChild.profileURL = "hey";
       Fluttertoast.showToast(
         msg: "프로필 사진이 성공적으로 업로드되었습니다.",
         toastLength: Toast.LENGTH_SHORT,
