@@ -102,6 +102,7 @@ class _QuestionPostState extends State<QuestionPost> {
                       child: Container(
                         width: ScreenUtil().setWidth(375 - 22 * 2),
                         height: ScreenUtil().setHeight(24),
+                        color: Colors.transparent,
                         child: Row(
                           children: [
                             SvgPicture.asset(
@@ -150,6 +151,7 @@ class _QuestionPostState extends State<QuestionPost> {
                       child: Container(
                         width: ScreenUtil().setWidth(375 - 22 * 2),
                         height: ScreenUtil().setHeight(24),
+                        color: Colors.transparent,
                         child: Row(
                           children: [
                             SvgPicture.asset(
