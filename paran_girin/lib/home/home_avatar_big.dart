@@ -6,7 +6,7 @@ import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/layout/default_icon_button.dart';
 import 'package:paran_girin/myPageDetail/privacy_policy.dart';
 import 'package:paran_girin/onboarding/privacyPolicy.dart';
-import 'package:paran_girin/question/qestion_post.dart';
+import 'package:paran_girin/question/question_post.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';

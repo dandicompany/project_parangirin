@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paran_girin/layout/base_appbar.dart';
-import 'package:paran_girin/question/qestion_post.dart';
+import 'package:paran_girin/question/question_post.dart';
 import 'package:paran_girin/question/question_card.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/login/firebase_provider.dart';

@@ -8,7 +8,7 @@ import 'package:logger/logger.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:paran_girin/models/schema.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import "package:http/http.dart" as http;
 import "package:googleapis_auth/auth_io.dart" as gauth;
 import 'dart:convert';
@@ -30,7 +30,7 @@ class FirebaseProvider with ChangeNotifier {
   final FirebaseAuth fAuth = FirebaseAuth.instance; // Firebase 인증 플러그인의 인스턴스
   final FirebaseAnalytics fanalytics = FirebaseAnalytics();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FacebookAuth _facebookAuth = FacebookAuth.instance;
+  // final FacebookAuth _facebookAuth = FacebookAuth.instance;
   final UploadManager _uploadManager = UploadManager();
   User _user; // Firebase에 로그인 된 사용자
   UserModel _info;
@@ -587,25 +587,26 @@ class FirebaseProvider with ChangeNotifier {
       return false;
     }
   }
+  
 
-  Future<bool> signInWithFacebookAccount() async {
-    try {
-      AccessToken accessToken = await _facebookAuth.login();
-      AuthCredential credential =
-          FacebookAuthProvider.credential(accessToken.token);
-      UserCredential authResult = await fAuth.signInWithCredential(credential);
-      User user = authResult.user;
-      logger.d(user);
-      // await loadInfoFromUser();
-      setUser(user);
-      return true;
-    } on Exception catch (e) {
-      logger.e(e.toString());
-      List<String> result = e.toString().split(", ");
-      // setLastFBMessage(interpretFBMessage(e.code));
-      return false;
-    }
-  }
+  // Future<bool> signInWithFacebookAccount() async {
+  //   try {
+  //     AccessToken accessToken = await _facebookAuth.login();
+  //     AuthCredential credential =
+  //         FacebookAuthProvider.credential(accessToken.token);
+  //     UserCredential authResult = await fAuth.signInWithCredential(credential);
+  //     User user = authResult.user;
+  //     logger.d(user);
+  //     // await loadInfoFromUser();
+  //     setUser(user);
+  //     return true;
+  //   } on Exception catch (e) {
+  //     logger.e(e.toString());
+  //     List<String> result = e.toString().split(", ");
+  //     // setLastFBMessage(interpretFBMessage(e.code));
+  //     return false;
+  //   }
+  // }
 
   // Firebase로부터 로그아웃
   signOut() async {

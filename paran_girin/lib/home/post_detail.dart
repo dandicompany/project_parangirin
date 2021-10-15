@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:intl/intl.dart';
 import 'package:paran_girin/Video/videoTest.dart';
-import 'package:paran_girin/gallery/videoShowFromCamera.dart';
 import 'package:paran_girin/gallery/videoShowWidget.dart';
 import 'package:paran_girin/layout/default_icon_button.dart';
 import 'package:paran_girin/layout/disabled_button.dart';
@@ -277,12 +276,10 @@ class _PostDetail extends State<PostDetail> {
                                   Answer answer =
                                       fp.getStaticInfo().answers[post.qid];
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => VideoShowFromCamera(
+                                      builder: (context) => VideoShowWidget(
                                           qid: post.qid,
                                           answer: answer))); 
                                           //VideoPlayerScreen()));
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //     builder: (context) => VideoShowWidget()));
                                 },
                                 child: Text(
                                   "대답한 영상 보기",

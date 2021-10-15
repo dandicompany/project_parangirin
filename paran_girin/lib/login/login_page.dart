@@ -76,26 +76,27 @@ class _LoginPageState extends State<LoginPage> {
                 if (_state == enum_state.CHECKACC)
                   Column(
                     children: [
-                      Text(
-                        '또는 SNS 계정으로 함께 해요',
-                        style: TextStyle(
-                            fontFamily: 'Noto Sans KR',
-                            fontWeight: FontWeight.w500,
-                            fontSize: ScreenUtil().setSp(14),
-                            color: AppTheme.colors.base2
-                        )
-                      ),
-                      SizedBox(height: ScreenUtil().setHeight(15)),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(105)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            _googleButton(),
-                            _facebookButton(),
-                          ]
-                        ),
-                      ),
+                      // Text(
+                      //   '또는 SNS 계정으로 함께 해요',
+                      //   style: TextStyle(
+                      //       fontFamily: 'Noto Sans KR',
+                      //       fontWeight: FontWeight.w500,
+                      //       fontSize: ScreenUtil().setSp(14),
+                      //       color: AppTheme.colors.base2
+                      //   )
+                      // ),
+                      // SizedBox(height: ScreenUtil().setHeight(15)),
+                      // Container(
+                      //   margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(105)),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: <Widget>[
+                      //       _googleButton(),
+                      //       // _facebookButton(),
+                      //     ]
+                      //   ),
+                      // ),
+                      // _googleButton()
                     ],
                   )
                 ]
@@ -473,19 +474,19 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 
-  Widget _facebookButton() {
-    return InkWell(
-      onTap: () {
-        fp.signInWithFacebookAccount();
-        Navigator.of(context).pop();
-      },
-      child: Image.asset(
-        "assets/icons/facebook.png",
-        width: ScreenUtil().setWidth(62),
-        height: ScreenUtil().setHeight(62),
-      )
-    );
-  }
+  // Widget _facebookButton() {
+  //   return InkWell(
+  //     onTap: () {
+  //       fp.signInWithFacebookAccount();
+  //       Navigator.of(context).pop();
+  //     },
+  //     child: Image.asset(
+  //       "assets/icons/facebook.png",
+  //       width: ScreenUtil().setWidth(62),
+  //       height: ScreenUtil().setHeight(62),
+  //     )
+  //   );
+  // }
 
   Widget _googleButton() {
     return InkWell(
@@ -493,10 +494,39 @@ class _LoginPageState extends State<LoginPage> {
         fp.signInWithGoogleAccount();
         Navigator.of(context).pop();
       },
-      child: SvgPicture.asset(
-        "assets/icons/google.svg",
-        width: ScreenUtil().setWidth(62),
-        height: ScreenUtil().setHeight(62),
+        child: Container(
+          width: ScreenUtil().setWidth(343),
+          height: ScreenUtil().setHeight(60),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100.0),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                offset: Offset(0.0, 1.0), //(x,y)
+                blurRadius: 3.0,
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              SizedBox(width: ScreenUtil().setWidth(16)),
+              SvgPicture.asset(
+                "assets/icons/google.svg",
+                width: ScreenUtil().setWidth(50),
+                height: ScreenUtil().setHeight(50),
+              ),
+              SizedBox(width: ScreenUtil().setWidth(56)),
+              Text(
+                "Google로 계속하기",
+                style: TextStyle(
+                  color: AppTheme.colors.base2,
+                  fontWeight: FontWeight.w400,
+                  fontSize: ScreenUtil().setSp(16)
+                ),
+              )
+            ],
+          ),
       )
     );
   }

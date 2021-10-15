@@ -5,10 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:paran_girin/Video/videoTest.dart';
 import 'package:paran_girin/gallery/myVideoLayout.dart';
-import 'package:paran_girin/gallery/videoShowFromCamera.dart';
 import 'package:paran_girin/gallery/videoShowWidget.dart';
 import 'package:paran_girin/layout/default_icon_button.dart';
-import 'package:paran_girin/question/qestion_post.dart';
+import 'package:paran_girin/question/question_post.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:paran_girin/layout/flatbuttonShadow.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
@@ -358,7 +357,7 @@ class YesVideo extends StatelessWidget {
                   onTap: () {
                     fp.getFAnalytics().logEvent(name: "gallery_play", parameters: <String, int>{"question_num": question.qid});
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => VideoShowFromCamera(
+                        builder: (context) => VideoShowWidget(
                             qid: key, 
                             answer: answer))); 
                             //VideoPlayerScreen()));

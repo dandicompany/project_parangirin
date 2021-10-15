@@ -4,7 +4,6 @@ import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:paran_girin/gallery/videoShowFromCamera.dart';
 import 'package:paran_girin/gallery/videoShowWidget.dart';
 import 'package:paran_girin/home/home_avatar_big.dart';
 import 'package:paran_girin/layout/default_layout.dart';
@@ -615,7 +614,7 @@ class _VideoSavePopup extends State<VideoSavePopup> {
                   onPressed: () {
                     Navigator.pushReplacement<void, void>(
                       context,MaterialPageRoute<void>(
-                        builder: (BuildContext context) => VideoShowFromCamera(
+                        builder: (BuildContext context) => VideoShowWidget(
                           qid: question, 
                           answer: fp.getStaticInfo().answers[question])
                           )

@@ -46,7 +46,7 @@ dependencies:
   logger: ^0.9.4
   provider: ^3.1.0+1
   google_sign_in: ^4.0.11
-  flutter_facebook_auth: ^2.0.1
+  # flutter_facebook_auth: ^2.0.1
   image_picker:
   firebase_storage:
   filesize: ^1.0.4
@@ -95,7 +95,7 @@ flutter:
       - assets/icons/circle.svg
       - assets/icons/check-circle.svg
       - assets/icons/google.svg
-      - assets/icons/facebook.svg
+      # - assets/icons/facebook.svg
       - assets/images/
       - assets/background/
       - assets/videoEx/sample1.mp4

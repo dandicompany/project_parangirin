@@ -99,22 +99,26 @@ class _QuestionPostState extends State<QuestionPost> {
                           _storyVisible = !_storyVisible;
                         });
                       },
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            _storyVisible
-                                ? "assets/icons/arrow-up.svg"
-                                : "assets/icons/arrow-down.svg",
-                            width: ScreenUtil().setWidth(24),
-                            height: ScreenUtil().setHeight(24),
-                          ),
-                          Text(
-                            " 스토리",
-                            style: TextStyle(
-                                fontSize: ScreenUtil().setSp(18),
-                                color: AppTheme.colors.primary2),
-                          )
-                        ],
+                      child: Container(
+                        width: ScreenUtil().setWidth(375 - 22 * 2),
+                        height: ScreenUtil().setHeight(24),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              _storyVisible
+                                  ? "assets/icons/arrow-up.svg"
+                                  : "assets/icons/arrow-down.svg",
+                              width: ScreenUtil().setWidth(24),
+                              height: ScreenUtil().setHeight(24),
+                            ),
+                            Text(
+                              " 스토리",
+                              style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(18),
+                                  color: AppTheme.colors.primary2),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Divider(
@@ -143,22 +147,26 @@ class _QuestionPostState extends State<QuestionPost> {
                           _guideVisible = !_guideVisible;
                         });
                       },
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            _guideVisible
-                                ? "assets/icons/arrow-up.svg"
-                                : "assets/icons/arrow-down.svg",
-                            width: ScreenUtil().setWidth(24),
-                            height: ScreenUtil().setHeight(24),
-                          ),
-                          Text(
-                            " 부모님 가이드",
-                            style: TextStyle(
-                                fontSize: ScreenUtil().setSp(18),
-                                color: AppTheme.colors.primary2),
-                          )
-                        ],
+                      child: Container(
+                        width: ScreenUtil().setWidth(375 - 22 * 2),
+                        height: ScreenUtil().setHeight(24),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              _guideVisible
+                                  ? "assets/icons/arrow-up.svg"
+                                  : "assets/icons/arrow-down.svg",
+                              width: ScreenUtil().setWidth(24),
+                              height: ScreenUtil().setHeight(24),
+                            ),
+                            Text(
+                              " 부모님 가이드",
+                              style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(18),
+                                  color: AppTheme.colors.primary2),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Divider(

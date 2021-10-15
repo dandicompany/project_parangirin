@@ -5,7 +5,7 @@ import 'package:paran_girin/question/category_card.dart';
 import 'package:paran_girin/question/question_page.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:paran_girin/question/qestion_post.dart';
+import 'package:paran_girin/question/question_post.dart';
 import 'package:paran_girin/question/question_card.dart';
 import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
