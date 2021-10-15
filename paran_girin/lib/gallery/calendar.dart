@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:paran_girin/gallery/videoShowFromCamera.dart';
+import 'package:paran_girin/gallery/videoShowWidget.dart';
 import 'package:paran_girin/theme/app_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -13,7 +13,6 @@ import 'package:paran_girin/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:paran_girin/models/schema.dart';
 import 'package:paran_girin/layout/splash.dart';
-import 'package:paran_girin/gallery/videoShowWidget.dart';
 import 'package:paran_girin/gallery/videoStreamWidget.dart';
 
 int num = 0;
@@ -207,7 +206,7 @@ class _CalendarState extends State<Calendar> {
                             print(_calendarController.selectedDay.toString());
                             Answer answer = _answers[events[0]];
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => VideoShowFromCamera(
+                                builder: (context) => VideoShowWidget(
                                     qid: events[0],
                                     answer: answer))); 
                                     //VideoPlayerScreen()));

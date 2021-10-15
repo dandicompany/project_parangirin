@@ -135,7 +135,7 @@ class Answer {
   int date;
   String videoURL;
   String dbURL;
-  String thumbURL;
+  // String thumbURL;
   File thumbnail;
   bool posted;
   Answer(this.date, this.videoURL, this.posted);
@@ -143,10 +143,11 @@ class Answer {
       : this.date = json['date'],
         this.videoURL = json['videoURL'],
         this.dbURL = json['dbURL'],
-        this.thumbURL = json['thumbURL'],
+        // this.thumbURL = json['thumbURL'],
         this.posted = json['posted'];
   Map<String, dynamic> toJson() =>
-      {'date': date, 'videoURL': videoURL, 'dbURL': dbURL, 'thumbURL': thumbURL, 'posted': posted};
+      {'date': date, 'videoURL': videoURL, 'dbURL': dbURL, 'posted': posted};
+      // {'date': date, 'videoURL': videoURL, 'dbURL': dbURL, 'thumbURL': thumbURL, 'posted': posted};
 
   bool containsKeyWord(String key) {
     Map<String, dynamic> json = this.toJson();
@@ -205,14 +206,16 @@ class NoticeItem {
   String id;
   String title;
   String content;
-  NoticeItem(this.date, this.id, this.title, this.content);
+  bool hasURL;
+  NoticeItem(this.date, this.id, this.title, this.content, this.hasURL);
   NoticeItem.fromJson(Map<String, dynamic> json)
       : this.date = json['date'],
         this.id = json['id'],
         this.title = json['title'],
-        this.content = json['content'];
+        this.content = json['content'],
+        this.hasURL = json['hasURL'];
   Map<String, dynamic> toJson() =>
-      {'date': date, 'id': id, 'title': title, 'content': content};
+      {'date': date, 'id': id, 'title': title, 'content': content, 'hasURL': hasURL};
 }
 
 class FaqItem {

@@ -71,11 +71,12 @@ class _SharingMyAnswersState extends State<SharingMyAnswers> {
     selectedAnswers.entries.forEach((element) async {
       String key = element.key;
       Answer answer = element.value;
-      String path = await fp.getUploadManager().uploadVideo(answer.videoURL);
+
+      // String path = await fp.getUploadManager().uploadVideo(answer.videoURL);
       // String thumbnail = await fp.getUploadManager().upload
-      String thumbURL =
-          await fp.getUploadManager().uploadImage(answer.thumbnail);
-      fp.addPost(key, path, thumbURL, null);
+      // String thumbURL =
+      //     await fp.getUploadManager().uploadImage(answer.thumbnail);
+      fp.addBbom(key, answer.dbURL);
     });
   }
 }

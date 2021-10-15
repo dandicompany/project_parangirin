@@ -61,8 +61,7 @@ class VideoStreamWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      // '계란을 우주로 보낸다면?',
-                      question.title,
+                      question.question,
                       style: TextStyle(
                           fontSize: ScreenUtil().setSp(24),
                           color: AppTheme.colors.base1),

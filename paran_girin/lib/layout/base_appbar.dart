@@ -59,7 +59,7 @@ class _BaseAppBar extends State<BaseAppBar> {
                     padding: EdgeInsets.only(right: ScreenUtil().setWidth(17)),
                     child: InkWell(
                       onTap: (){
-                        widget.onSend;
+                        widget.onSend();
                         showDialog(context: context,
                             builder: (BuildContext context)
                             {

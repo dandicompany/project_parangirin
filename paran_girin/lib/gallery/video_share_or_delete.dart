@@ -32,37 +32,40 @@ class _VideoShareOrDeleteState extends State<VideoShareOrDelete> {
     return Stack(
       children: <Widget>[
         Positioned(
-          bottom: ScreenUtil().setHeight(38),
+          bottom: ScreenUtil().setHeight(5),
+          // bottom: ScreenUtil().setHeight(38),
           // left: (MediaQuery.of(context).size.width- ScreenUtil().setWidth(360))/2,
           child: Container(
             width: ScreenUtil().setWidth(360),
-            height: ScreenUtil().setWidth(180),
+            // height: ScreenUtil().setWidth(180),
+            height: ScreenUtil().setWidth(120),
             child: Column(
               children: [
                 PopButton(
                   title: "공유하기",
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15)
-                  ),
+                  borderRadius: BorderRadius.circular(14),
+                  // borderRadius: BorderRadius.only(
+                  //   topLeft: Radius.circular(15),
+                  //   topRight: Radius.circular(15)
+                  // ),
                   onTap: widget.share,
                   opacity: 0.85
                 ),
-                Divider(
-                  height: 1.0,
-                  indent: ScreenUtil().setWidth(8),
-                  endIndent: ScreenUtil().setWidth(8),
-                ),
-                PopButton(
-                  title: "삭제",
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15)
-                  ),
-                  onTap: widget.delete, // add delete
-                  textColor: Colors.red,
-                  opacity: 0.85
-                ),
+                // Divider(
+                //   height: 1.0,
+                //   indent: ScreenUtil().setWidth(8),
+                //   endIndent: ScreenUtil().setWidth(8),
+                // ),
+                // PopButton(
+                //   title: "삭제",
+                //   borderRadius: BorderRadius.only(
+                //     bottomLeft: Radius.circular(15),
+                //     bottomRight: Radius.circular(15)
+                //   ),
+                //   onTap: widget.delete, // add delete
+                //   textColor: Colors.red,
+                //   opacity: 0.85
+                // ),
                 SizedBox(height: ScreenUtil().setHeight(8)),
                 PopButton(
                   title: "닫기",

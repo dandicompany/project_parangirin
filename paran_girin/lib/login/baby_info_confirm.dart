@@ -55,7 +55,10 @@ class _BabyInfoConfirmState extends State<BabyInfoConfirm> {
                           color: AppTheme.colors.base2),
                     ),
                     GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          await fp.addChild(this.name, this.nickName, this.birthdate);
+                          await fp.getFAnalytics().logEvent(name: 'button_click', parameters: <String, String>{'button': 'register/addmorechild'});
+                          await fp.reloadUser();
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => BabyInfoName()));
                         },
