@@ -7,6 +7,86 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:334982258294:android:c6738581a11f75f9e00957",
+        "android_client_info": {
+          "package_name": "com.dandi.parangirin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334982258294-lpliaqrc5gti3k8a1btk71hc664l03ji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2rIfTq_nUdKGFOv1AT6omH2gP7Q9Awyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334982258294-lpliaqrc5gti3k8a1btk71hc664l03ji.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "334982258294-3p9lf28h8rsg88fcvo1tnoeg2bq88qft.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.company.paran-girin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334982258294:android:e4c1520550b09813e00957",
+        "android_client_info": {
+          "package_name": "com.example.paranGirin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334982258294-lp6nom8eilhkam0om9l6tdpmd05idp1d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.paranGirin",
+            "certificate_hash": "828e1ef1203a9d4b43e692c03762c3be35eee888"
+          }
+        },
+        {
+          "client_id": "334982258294-lpliaqrc5gti3k8a1btk71hc664l03ji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2rIfTq_nUdKGFOv1AT6omH2gP7Q9Awyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334982258294-lpliaqrc5gti3k8a1btk71hc664l03ji.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "334982258294-3p9lf28h8rsg88fcvo1tnoeg2bq88qft.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.company.paran-girin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:334982258294:android:651966a29e1e0b17e00957",
         "android_client_info": {
           "package_name": "com.example.paran_girin"
@@ -37,6 +117,13 @@
             {
               "client_id": "334982258294-lpliaqrc5gti3k8a1btk71hc664l03ji.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "334982258294-3p9lf28h8rsg88fcvo1tnoeg2bq88qft.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.company.paran-girin"
+              }
             }
           ]
         }
@@ -66,6 +153,13 @@
             {
               "client_id": "334982258294-lpliaqrc5gti3k8a1btk71hc664l03ji.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "334982258294-3p9lf28h8rsg88fcvo1tnoeg2bq88qft.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.company.paran-girin"
+              }
             }
           ]
         }

@@ -7,3 +7,6 @@
 */
 
 "CFBundleDisplayName" = "파란기린";
+NSPhotoLibraryUsageDescription = "프로필 설정을 위해 사진앨범 접근 권한을 허용해주세요.";
+NSCameraUsageDescription = "아이의 대화를 촬영하기 위해 카메라 권한을 허용해주세요.";
+NSMicrophoneUsageDescription = "아이의 대화를 촬영하기 위해 마이크 권한을 허용해주세요.";
