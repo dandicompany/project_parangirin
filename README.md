@@ -24,8 +24,7 @@
 ## 파란기린을 만든 사람들
 파란기린은 카이스트 재학생으로 이루어진 **Team Dandi**와 함께 합니다.
 
-<img width="500" alt="image" src="https://user-images.githubusercontent.com/50884017/158810027-7094bbf8-dafd-4b69-b644-f6551a3b04cc.png">
-<img width="500" alt="image" src="https://user-images.githubusercontent.com/50884017/158810055-6d27f6bd-d91a-4d9e-9a99-8e5786204427.png">
+<img width="500" height="240" alt="image" src="https://user-images.githubusercontent.com/50884017/158810027-7094bbf8-dafd-4b69-b644-f6551a3b04cc.png"> <img width="500" height="240" alt="image" src="https://user-images.githubusercontent.com/50884017/158810055-6d27f6bd-d91a-4d9e-9a99-8e5786204427.png">
 
 이 중 개발자는 3명으로, 역할은 다음과 같습니다.
 - 박지윤(@di-uni): 프론트엔드, 앱스토어 출시 담당, 영상 및 프로필사진 업로드
