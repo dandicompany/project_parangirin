@@ -27,8 +27,8 @@
 <img width="500" height="240" alt="image" src="https://user-images.githubusercontent.com/50884017/158810027-7094bbf8-dafd-4b69-b644-f6551a3b04cc.png"> <img width="500" height="240" alt="image" src="https://user-images.githubusercontent.com/50884017/158810055-6d27f6bd-d91a-4d9e-9a99-8e5786204427.png">
 
 이 중 개발자는 3명으로, 역할은 다음과 같습니다.
-- 박지윤(@di-uni): 프론트엔드, 앱스토어 출시 담당, 영상 및 프로필사진 업로드
-- 김호빈(@ghqls1237): 프론트엔드, 플레이스토어 출시 담당, 영상 촬영 및 tts
+- 박지윤(@di-uni): 프론트엔드(온보딩, 회원가입/로그인, 메인, 질문, 설정, 하단 메뉴바), 앱스토어 출시 담당, 영상 및 프로필사진 업로드
+- 김호빈(@ghqls1237): 프론트엔드(캘린더), 플레이스토어 출시 담당, 영상 촬영 및 tts
 - 황민영(@Daniel-H-99): 백엔드, 파이어베이스와의 연결, auth 담당
 
 기획과정이 더 궁금하시다면, [파란기린 블로그](https://blog.naver.com/dandicompany2021)를 참고해주세요!
