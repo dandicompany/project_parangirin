@@ -30,7 +30,7 @@
   - 우리 아이 뽐내기를 누르면 우리 아이의 대화 영상도 생각 뽐내기에 올라갈 수 있어요!   
 
 메인페이지 / 오늘의 질문 / 파란기린과 대화하기 / 생각 뽐내기   
-<img width="200" alt="메인" src="https://user-images.githubusercontent.com/50884017/159412015-bbf91653-fd1f-4f21-861f-21f164b257be.gif"> <img width="200" alt="오늘의 질문" src="https://user-images.githubusercontent.com/50884017/159397137-dc876dcf-aa09-4f0a-b336-6eba68b03a94.gif"> <img width="200" alt="대화" src="https://user-images.githubusercontent.com/50884017/159398830-6668b8ec-28df-4467-a276-727f6d644475.gif"> <img width="200" alt="생각뽐내기" src="https://user-images.githubusercontent.com/50884017/159411990-a173f7df-1e10-4cd0-8cb6-faa6564be1dd.gif">    
+<img width="200" alt="메인" src="https://user-images.githubusercontent.com/50884017/159417223-280bdbac-a98d-468f-88a3-1da293023ff8.gif"> <img width="200" alt="오늘의 질문" src="https://user-images.githubusercontent.com/50884017/159397137-dc876dcf-aa09-4f0a-b336-6eba68b03a94.gif"> <img width="200" alt="대화" src="https://user-images.githubusercontent.com/50884017/159398830-6668b8ec-28df-4467-a276-727f6d644475.gif"> <img width="200" alt="생각뽐내기" src="https://user-images.githubusercontent.com/50884017/159411990-a173f7df-1e10-4cd0-8cb6-faa6564be1dd.gif">    
 
 ### 질문 / 앨범 / 마이페이지
 - 질문 페이지에는 다섯 가지 카테고리로 분류된 질문들이 있습니다.
@@ -47,7 +47,10 @@
 <img width="200" alt="질문" src="https://user-images.githubusercontent.com/50884017/159398807-abb81166-0654-49be-a9ce-7af05882a47b.gif"> <img width="200" alt="캘린더" src="https://user-images.githubusercontent.com/50884017/159399362-2d955f3e-4e75-41ae-860c-49a7f28b7f38.gif"> <img width="200" alt="마이페이지(1)" src="https://user-images.githubusercontent.com/50884017/159409791-f0e3a8cb-2851-4a1c-850a-201fa05a0d9d.gif"> <img width="200" alt="마이페이지(2)" src="https://user-images.githubusercontent.com/50884017/159411331-d5a28eca-4229-4d1b-96d4-dbaba467d83c.gif">
 
 
-## 기술 스택
+
+## 기술 스택!
+
+
 
 - Flutter: 크로스 플랫폼이라는 장점을 활용해서 안드로이드와 ios 앱 개발을 동시에 진행하였습니다.
 - firebase: 사용자 데이터와 로그 수집, auth를 관리합니다.
