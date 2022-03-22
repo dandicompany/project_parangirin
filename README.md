@@ -16,6 +16,15 @@
 
 ## Demo Video
 
+<!-- <img width="200" src="(https://user-images.githubusercontent.com/50884017/159397737-93c6bd2b-d7f4-44e1-b272-04dddb7fa046.gif"> -->
+
+![메인](https://user-images.githubusercontent.com/50884017/159397737-93c6bd2b-d7f4-44e1-b272-04dddb7fa046.gif)
+![오늘의_질문](https://user-images.githubusercontent.com/50884017/159397137-dc876dcf-aa09-4f0a-b336-6eba68b03a94.gif)
+![생각뽐내기](https://user-images.githubusercontent.com/50884017/159398493-a8a1f803-8e8b-4871-8eaa-6747312e5f66.gif)
+![질문](https://user-images.githubusercontent.com/50884017/159398807-abb81166-0654-49be-a9ce-7af05882a47b.gif)
+![대화](https://user-images.githubusercontent.com/50884017/159398830-6668b8ec-28df-4467-a276-727f6d644475.gif)
+![캘린더](https://user-images.githubusercontent.com/50884017/159399362-2d955f3e-4e75-41ae-860c-49a7f28b7f38.gif)
+
 ## Structure
 - server: firebase
 - 
